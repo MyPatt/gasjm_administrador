@@ -1,4 +1,4 @@
-package com.asaz.gasjm
+package com.asaz.gasjm_administrador
 
 import io.flutter.embedding.android.FlutterActivity
 

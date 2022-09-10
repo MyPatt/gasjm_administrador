@@ -14,7 +14,7 @@ class GpsAccessPage extends StatelessWidget {
       
         return !state.isGpsEnabled
             ? const _EnableGpsMessage()
-            : UbicacionPage();
+            : const UbicacionPage();
       })),
     );
   }

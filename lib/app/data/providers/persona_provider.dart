@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
-import 'package:gasjm/app/data/models/detallerepartidor_model.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/data/models/persona_model.dart';
-import 'package:gasjm/app/data/models/ubicacionrepartidor_model.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart'; 
+import 'package:gasjm/app/data/models/persona_model.dart'; 
 import 'package:get/get.dart';
 
 class PersonaProvider {

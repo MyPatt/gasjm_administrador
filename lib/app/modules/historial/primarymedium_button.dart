@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class PrimaryMediumButton extends StatelessWidget {
-  PrimaryMediumButton({
+  const PrimaryMediumButton({Key? key, 
     required this.texto,
     required this.onPressed,
-  });
+  }) : super(key: key);
   final void Function() onPressed;
   final String texto;
   @override

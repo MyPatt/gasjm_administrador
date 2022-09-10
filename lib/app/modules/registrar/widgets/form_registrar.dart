@@ -138,7 +138,7 @@ class FormRegistrar extends StatelessWidget {
                                       if (_.claveFormRegistrar.currentState
                                               ?.validate() ==
                                           true) {
-                                        _.registrarRepartidor();
+                                        _.registrarAdministrador();
                                       }
                                     }),
                                 if (estadoProceso)

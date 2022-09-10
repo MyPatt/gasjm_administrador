@@ -22,41 +22,14 @@ class PersonaProvider {
     required PersonaModel persona,
   }) async {
     //InsertarRepartidor
-        // //Ingresar datos de usuario
+    // //Ingresar datos de usuario
     final uid =
         Get.find<AutenticacionController>().autenticacionUsuario.value!.uid;
 
-  await  _firestoreInstance.collection("persona").doc(uid).set(persona.toMap()); 
-
-    //insertar ubicacion del repartidor
-    UbicacionRepartidorModel _ubicacionRepartidorModel =
-        UbicacionRepartidorModel(
-      idRepartidor: persona.cedulaPersona,
-      fechaUbicacionRepartidor: Timestamp.now(),
-      direccionUbicacionRepartidor:
-          persona.direccionPersona ?? Direccion(latitud: 0, longitud: 0),
-    );
-
-    final _resultadoUbicacion = await _firestoreInstance
-        .collection('ubicacionRepartidor')
-        .add(_ubicacionRepartidorModel.toMap());
     await _firestoreInstance
-        .collection('ubicacionRepartidor')
-        .doc(_resultadoUbicacion.id)
-        .update({"idUbicacionRepartidor": _resultadoUbicacion.id});
-
-    //insertar estado del repartidor
-    DetalleRepartidor _detalle = DetalleRepartidor(
-        idRepartidor: persona.cedulaPersona,
-        idEstadoRepartidor: "estadoRepartidor1");
-
-    final _resultado = await _firestoreInstance
-        .collection('estadoRepartidor')
-        .add(_detalle.toMap());
-    await _firestoreInstance
-        .collection('estadoRepartidor')
-        .doc(_resultado.id)
-        .update({"idDetalleRepartidor": _resultado.id});
+        .collection("persona")
+        .doc(uid)
+        .set(persona.toMap());
   }
 
   //
@@ -106,6 +79,22 @@ class PersonaProvider {
       return (resultado.docs)
           .map((item) => PersonaModel.fromMap(item.data()))
           .toList();
+    }
+    return null;
+  }
+
+//Retorna datos personales publicos de la persona
+  Future<String?> getDatoPersonaPorField(
+      {required String field,
+      required String dato,
+      required String getField}) async {
+    final resultado = await _firestoreInstance
+        .collection("persona")
+        .where(field, isEqualTo: dato)
+        .get();
+    if ((resultado.docs.isNotEmpty)) {
+      String dato = resultado.docs.first.get(getField).toString();
+      return dato;
     }
     return null;
   }

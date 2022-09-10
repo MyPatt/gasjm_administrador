@@ -11,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InicioController extends GetxController {
   /* VARIABLES */
@@ -21,9 +22,6 @@ class InicioController extends GetxController {
   final _personaRepository = Get.find<PersonaRepository>();
 
   //Para obtener datos del usuario conectado
-
-  Rx<PersonaModel?> usuario = Rx(null);
-  final _controladorUsuario = Get.find<UsuarioController>();
 
   //Google Maps
   late StreamSubscription<Position> _posicionStreamSubscripcion;
@@ -47,7 +45,7 @@ class InicioController extends GetxController {
   Position? _lastPosition;
 
   //Marcador para el repartidor actual
-  final _marcadorRepartidorId = const MarkerId("MakerIdRepartidor");
+  MarkerId _marcadorRepartidorId = const MarkerId("MakerIdRepartidor");
   late BitmapDescriptor iconoMarcadorRepartidor;
 /*METODOS PROPIOS DEL CONTROLADOR */
 
@@ -66,8 +64,8 @@ class InicioController extends GetxController {
 
 /*METODO PARA CARGAR DATOS DE INICIO */
   void _cargarDatosIniciales() {
-    _getUsuarioActual();
     Future.wait([
+      _getUsuarioActual(),
       _getLocalizacionActual(),
       _cargarDatosParaMarcadorRepartidor(),
     ]);
@@ -78,10 +76,15 @@ class InicioController extends GetxController {
     _initLocationUpdate();
   }
 
-  /* METODOS PARA OBTENER DATOS DEL USUARIO */
-  _getUsuarioActual() {
-    usuario.value = _controladorUsuario.usuario.value;
-    //   usuario.value = await _personaRepository.getUsuario();
+  /* METODOS PARA OBTENER CEDULA DEL USUARIO */
+  Future<void> _getUsuarioActual() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final cedulaUsuarioActual = prefs.getString("cedula_usuario");
+    _marcadorRepartidorId =
+        MarkerId(cedulaUsuarioActual.toString());
+    print("====");
+    print(_marcadorRepartidorId.value);
   }
 
   /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/

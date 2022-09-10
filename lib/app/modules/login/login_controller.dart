@@ -28,11 +28,7 @@ class LoginController extends GetxController {
 
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
+ 
 
   @override
   void onClose() {
@@ -82,13 +78,13 @@ class LoginController extends GetxController {
     }
     cargandoParaCorreo.value = false;
   }
-
+  
   //Obtener correo de forma local
   _obtenerCorreo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final s = prefs.getString("correo_usuario");
-    correoTextoController.text = s ?? '';
+    correoTextoController.text = s.toString();
   }
 
   //Remover correo de forma local

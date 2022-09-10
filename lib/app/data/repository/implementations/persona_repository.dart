@@ -10,13 +10,21 @@ class PersonaRepositoryImpl extends PersonaRepository {
       _provider.deletePersona(persona: persona);
 
   @override
-  Future<PersonaModel?> getPersonaPorCedula({required String cedula}) =>
+  Future<PersonaModel?> getDatosPersonaPorCedula({required String cedula}) =>
       _provider.getPersonaPorCedula(cedula: cedula);
 
   @override
   Future<List<PersonaModel>?> getPersonaPorField(
           {required String field, required String dato}) =>
       _provider.getPersonaPorField(field: field, dato: dato);
+
+  @override
+  Future<String?> getDatoPersonaPorField(
+          {required String field,
+          required String dato,
+          required String getField}) =>
+      _provider.getDatoPersonaPorField(
+          field: field, dato: dato, getField: getField);
 
   @override
   Future<List<PersonaModel>?> getPersonas() => _provider.getPersonas();
@@ -32,7 +40,7 @@ class PersonaRepositoryImpl extends PersonaRepository {
   @override
   Future<String?> getNombresPersonaPorCedula({required String cedula}) =>
       _provider.getNombresPersonaPorCedula(cedula: cedula);
-      
+
   @override
   Future<PersonaModel?> getUsuario() => _provider.getUsuarioActual();
 }

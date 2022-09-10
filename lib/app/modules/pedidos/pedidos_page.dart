@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/repartidor/menu_appbar.dart';
-import 'package:gasjm/app/global_widgets/repartidor/menu_lateral.dart';
+import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/modules/pedidos/widgets/bottom_repartidor.dart';
 import 'package:gasjm/app/modules/pedidos/widgets/aceptados_page.dart'; 
 import 'package:gasjm/app/modules/pedidos/widgets/enespera_page.dart';

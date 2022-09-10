@@ -4,6 +4,8 @@ import 'package:gasjm/app/modules/identificacion/widgets/content.dart';
 import 'package:get/get.dart';
 
 class IdentificacionPage extends StatelessWidget {
+  const IdentificacionPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<IdentificacionController>(
@@ -20,7 +22,7 @@ class IdentificacionPage extends StatelessWidget {
             child: SizedBox(
               height: MediaQuery.of(context).size.height -
                   MediaQuery.of(context).padding.top,
-              child: Content(),
+              child: const Content(),
             ),
           ),
         ),

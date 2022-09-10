@@ -10,6 +10,7 @@ class PersonaModel {
       this.direccionPersona,
       this.celularPersona,
       this.fechaNaciPersona,
+      this.estadoPersona="activo", 
       required this.idPerfil,
       required this.contrasenaPersona});
 
@@ -21,6 +22,7 @@ class PersonaModel {
   final Direccion? direccionPersona;
   final String? celularPersona;
   final String? fechaNaciPersona;
+  final String? estadoPersona;
   final String idPerfil;
   final String contrasenaPersona;
 
@@ -33,6 +35,7 @@ class PersonaModel {
         direccionPersona: Direccion.fromMap(json["direccion"]),
         celularPersona: json["celular"],
         fechaNaciPersona: json["fechaNacimiento"],
+        estadoPersona: json["estado"],
         idPerfil: json["idPerfil"],
         contrasenaPersona: json['contrasena'],
       );
@@ -46,6 +49,7 @@ class PersonaModel {
         "direccion": direccionPersona?.toMap(),
         "celular": celularPersona,
         "fechaNacimiento": fechaNaciPersona,
+        "estado": estadoPersona,
         "idPerfil": idPerfil,
         "contrasena": contrasenaPersona
       };

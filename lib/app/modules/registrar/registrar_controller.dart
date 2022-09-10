@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
+
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
@@ -25,7 +26,7 @@ class RegistrarController extends GetxController {
   //Variable para guardar la cedula
   late String cedula = '';
   //late String perfil = '';
-  final perfil = "repartidor";
+  final perfil = "administrador";
 
   //Existe algun error si o no
   final errorParaCorreo = Rx<String?>(null);
@@ -34,19 +35,9 @@ class RegistrarController extends GetxController {
 
   @override
   void onInit() {
-    _obtenerCedulaYPerfil();
+    _obtenerCedula();
 
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
 //Visualizar texto de lacontrasena
@@ -69,36 +60,38 @@ class RegistrarController extends GetxController {
 
   //Metodo para registrar
 
-  Future<void> registrarRepartidor() async {
+  Future<void> registrarAdministrador() async {
     //Obtener datos
     final nombre = nombreTextoController.text;
     final apellido = apellidoTextoController.text;
     final correo = correoElectronicoTextoController.text;
     final contrasena = contrasenaTextoController.text;
-    //
-      LocationData location =await Location.instance.getLocation();
-    Direccion direccionPersona=Direccion(latitud: location.latitude??0, longitud: location.longitude??0);
-
-    //Guardar en model
-    PersonaModel usuarioDatos = PersonaModel(
-        cedulaPersona: cedula,
-        nombrePersona: nombre,
-        apellidoPersona: apellido,
-        idPerfil: perfil,
-        contrasenaPersona: contrasena,
-        correoPersona: correo,
-        direccionPersona:direccionPersona );
 
 //
     try {
       cargandoParaCorreo.value = true;
-
       errorParaCorreo.value = null;
+      //
+      //
+      LocationData location = await Location.instance.getLocation();
+      Direccion direccionPersona = Direccion(
+          latitud: location.latitude ?? 0.0,
+          longitud: location.longitude ?? 0.0);
+
+      //Guardar en model
+      PersonaModel usuarioDatos = PersonaModel(
+          cedulaPersona: cedula,
+          nombrePersona: nombre,
+          apellidoPersona: apellido,
+          idPerfil: perfil,
+          contrasenaPersona: contrasena,
+          correoPersona: correo,
+          direccionPersona: direccionPersona); 
 
 //En firebase
       await _authRepository.registrarUsuario(usuarioDatos);
-//Remover datos locales
-      _removerCedula();
+ 
+      //
 
       //Mensaje de ingreso
       Mensajes.showGetSnackbar(
@@ -108,6 +101,8 @@ class RegistrarController extends GetxController {
             Icons.waving_hand_outlined,
             color: Colors.white,
           ));
+
+      //
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         errorParaCorreo.value = 'La contraseña es demasiado débil';
@@ -117,18 +112,26 @@ class RegistrarController extends GetxController {
       } else {
         errorParaCorreo.value = "Se produjo un error inesperado.";
       }
+    } catch (e) {
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          duracion: const Duration(seconds: 4),
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
     }
     cargandoParaCorreo.value = false;
   }
 
 //Obtener cedula de forma local
-  _obtenerCedulaYPerfil() async {
+  _obtenerCedula() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final s = prefs.getString("cedula_usuario");
-    //final p = await prefs.getString("perfil_usuario");
-    cedula = s ?? '';
-    //perfil = p ?? '';
+    final s = prefs.getString("cedula_usuario"); 
+    cedula = s ?? ''; 
   }
 
   //Eliminar la cedula del usuario de forma local

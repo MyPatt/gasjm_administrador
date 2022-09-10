@@ -108,7 +108,7 @@ class PedidosController extends GetxController {
   Future<String> _getNombresCliente(String cedula) async {
     final nombre =
         await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
-    return nombre ?? '';
+    return nombre ?? 'Usuario';
   }
 
   void rechazarPedidoEnEspera(String idPedido) async {

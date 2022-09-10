@@ -45,19 +45,24 @@ class FormIdentificacion extends StatelessWidget {
                           "Ingrese su número de identificación para iniciar sesión"),
                   SizedBox(
                       height: Responsive.getScreenSize(context).height * .05),
-                  InputText(
-                    controller: _.cedulaTextoController,
-                    autofocus: true,
-                    iconPrefix: Icons.credit_card,
-                    keyboardType: TextInputType.phone,
-                    textInputAction: TextInputAction.done,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    validator: Validacion.validarCedula,
-                    labelText: "Cédula",
-                    onChanged: _.onChangedIdentificacion,
-                  ),
+                  Obx(() {
+                    return AbsorbPointer(
+                      absorbing: _.cargando.value,
+                      child: InputText(
+                        controller: _.cedulaTextoController,
+                        autofocus: true,
+                        iconPrefix: Icons.credit_card,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.done,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        validator: Validacion.validarCedula,
+                        labelText: "Cédula",
+                        onChanged: _.onChangedIdentificacion,
+                      ),
+                    );
+                  }),
                   SizedBox(
                       height: Responsive.getScreenSize(context).height * .05),
                   Obx(() {
@@ -69,7 +74,7 @@ class FormIdentificacion extends StatelessWidget {
                             texto: "Siguiente",
                             onPressed: () {
                               if (_.formKey.currentState?.validate() == true) {
-                                _.cargarPerfil();
+                                _.cargarRegistroOLogin();
                               }
                             }),
                         if (estadoProceso)

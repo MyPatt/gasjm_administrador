@@ -64,16 +64,14 @@ class InicioController extends GetxController {
 
 /*METODO PARA CARGAR DATOS DE INICIO */
   void _cargarDatosIniciales() {
+    //
+    _gpsEnabled = true;
     Future.wait([
       _getUsuarioActual(),
       _getLocalizacionActual(),
       _cargarDatosParaMarcadorRepartidor(),
+      _initLocationUpdate()
     ]);
-
-    //
-    _gpsEnabled = true;
-
-    _initLocationUpdate();
   }
 
   /* METODOS PARA OBTENER CEDULA DEL USUARIO */
@@ -81,10 +79,7 @@ class InicioController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final cedulaUsuarioActual = prefs.getString("cedula_usuario");
-    _marcadorRepartidorId =
-        MarkerId(cedulaUsuarioActual.toString());
-    print("====");
-    print(_marcadorRepartidorId.value);
+    _marcadorRepartidorId = MarkerId(cedulaUsuarioActual.toString());
   }
 
   /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/

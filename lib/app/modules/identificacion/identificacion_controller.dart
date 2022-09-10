@@ -16,19 +16,18 @@ class IdentificacionController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
 //Guardar cedula de forma local
-  _guardarCedula() async {
+  Future<void> _guardarCedula() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("cedula_usuario", cedulaTextoController.text);
   }
 
   //Guardar correo de forma local
-  _guardarCorreo() async {
+  Future<void> _guardarCorreo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final correo = await _userRepository.getDatoPersonaPorField(
         field: "cedula", dato: cedulaTextoController.text, getField: "correo");
     await prefs.setString("correo_usuario", correo.toString());
-    print("------------");
-    print(correo.toString());
+    
   }
 
 //Buscar si tiene cuenta o no
@@ -51,26 +50,42 @@ class IdentificacionController extends GetxController {
           getField: "idPerfil");
 
       if (dato == null) {
-        //En caso de no encontrar datos, continuar a la pagina de registro
-        _guardarCedula();
+        var existeAdmin = await _userRepository.getDatoPersonaPorField(
+            field: "idPerfil", dato: "administrador", getField: "idPerfil");
 
-        Get.offNamed(AppRoutes.registrar);
+        if (existeAdmin == null) {
+          //En caso de no encontrar datos, continuar a la pagina de registro
+          Future.wait([_guardarCedula()]);
+
+          Get.offNamed(AppRoutes.registrar);
+        } else {
+          Mensajes.showGetSnackbar(
+              titulo: 'Información',
+              mensaje:
+                  'Ya existe un administrador registrado, ingrese su cédula para iniciar sesión.',
+              duracion: const Duration(seconds: 7),
+              icono: const Icon(
+                Icons.info_outlined,
+                color: Colors.white,
+              ));
+        }
       } else {
         //Cedula ya registrada ir a la pagina de inicio de sesion
         if (dato == "administrador") {
-          _guardarCorreo();
-            _guardarCedula();
+             Future.wait([ _guardarCorreo(),_guardarCedula()]);
+         
 
           Mensajes.showGetSnackbar(
               titulo: 'Información',
               mensaje:
-                  'Cédula ya registrada, ingrese su contraseña para iniciar sesión o cree una nueva cuenta  con una cédula diferente.',
+                  'Cédula ya registrada, ingrese su contraseña para iniciar sesión.',
               duracion: const Duration(seconds: 7),
               icono: const Icon(
                 Icons.info_outlined,
                 color: Colors.white,
               ));
 
+          await Future.delayed(const Duration(seconds: 1));
           Get.offNamed(AppRoutes.login);
         } else {
           Mensajes.showGetSnackbar(

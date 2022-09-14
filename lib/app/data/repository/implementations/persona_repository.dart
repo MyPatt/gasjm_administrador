@@ -27,7 +27,7 @@ class PersonaRepositoryImpl extends PersonaRepository {
           field: field, dato: dato, getField: getField);
 
   @override
-  Future<List<PersonaModel>?> getPersonas() => _provider.getPersonas();
+  Future<List<PersonaModel>> getPersonas() => _provider.getPersonas();
 
   @override
   Future<void> insertPersona({required PersonaModel persona}) =>

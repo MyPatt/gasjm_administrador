@@ -142,7 +142,7 @@ class InicioController extends GetxController {
     //Obtener la lista de los pedidos en espera y aceptados
     final listaPedidos = await _pedidoRepository.getPedidosEnEsperaYAceptados();
 
-    listaPedidos?.forEach((elemento) async {
+    listaPedidos.forEach((elemento) async {
       final nombreCliente = await _personaRepository.getNombresPersonaPorCedula(
           cedula: elemento.idCliente);
 

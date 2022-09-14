@@ -23,4 +23,13 @@ class AppTheme {
       backgroundColor: Colors.white,
       primaryColor: blueDark,
       brightness: Brightness.dark);
+
+
 }
+//
+const itemsBottonNavigation = <String>[
+  'assets/icons/find_home.svg',
+  'assets/icons/heart.svg',
+  'assets/icons/location.svg',
+  'assets/icons/message.svg',
+];

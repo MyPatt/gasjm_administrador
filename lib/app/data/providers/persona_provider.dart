@@ -43,15 +43,15 @@ class PersonaProvider {
   }
 
   //
-  Future<List<PersonaModel>?> getPersonas() async {
+  Future<List<PersonaModel>> getPersonas() async {
     final snapshot = await _firestoreInstance.collection('persona').get();
 
-    if (snapshot.docs.isNotEmpty) {
+   
       return (snapshot.docs)
           .map((item) => PersonaModel.fromMap(item.data()))
           .toList();
-    }
-    return null;
+    
+   
   }
 
   //

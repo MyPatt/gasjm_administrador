@@ -11,6 +11,6 @@ abstract class PersonaRepository {
   Future<String?> getDatoPersonaPorField({required String field, required String dato,
           required String getField});
 
-  Future<List<PersonaModel>?> getPersonas();
+  Future<List<PersonaModel>> getPersonas();
   Future<PersonaModel?> getUsuario();
 }

@@ -7,7 +7,7 @@ class PedidoRepositoryImpl extends PedidoRepository {
   final _provider = Get.find<PedidoProvider>();
 
   @override
-  Future<List<PedidoModel>?> getPedidosEnEsperaYAceptados() =>
+  Future<List<PedidoModel>> getPedidosEnEsperaYAceptados() =>
       _provider.getPedidosEnEsperaYAceptados();
 
   @override

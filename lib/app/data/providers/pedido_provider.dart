@@ -31,7 +31,7 @@ class PedidoProvider {
   }
 
   //
-  Future<List<PedidoModel>?> getPedidosEnEsperaYAceptados() async {
+  Future<List<PedidoModel>> getPedidosEnEsperaYAceptados() async {
     final resultado = await _firestoreInstance
         .collection('pedido')
         .where("idEstadoPedido", whereIn: ["estado1", "estado2"]).get();

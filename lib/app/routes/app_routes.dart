@@ -5,6 +5,8 @@ class AppRoutes {
   static const login = "/login";
   static const registrar = "/registrar";
   static const inicio = "/inicio";
+  static const detail = "/detail";
+  static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";
   static const ir = "/ir";
 

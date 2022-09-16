@@ -44,6 +44,6 @@ final categoriesDates = [
   CategoryModel(
     id: 3,
     name: 'Calendario',
-    path: ' ',
+    path: ' de ',
   ), 
 ];

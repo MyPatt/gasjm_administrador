@@ -1,4 +1,4 @@
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,9 @@ class CategoryCopy extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 _.selectedIndexFecha(index);
+                if (index.isEqual(3)) {
+                  _.selectDate(context);
+                }
               },
               child: ItemCategory(
                 category: categoriesDates[index],
@@ -88,6 +91,18 @@ class ItemCategory extends StatelessWidget {
                             ? AppTheme.blueDark
                             : AppTheme.light.withOpacity(.5),
                       )
+                    /*  ? IconButton(
+                        padding: const EdgeInsets.all(0.0),
+                        alignment: Alignment.center,
+                        icon: const Icon(Icons.calendar_month_sharp),
+                        color: isSelected
+                            // ? Colors.white
+                            ? AppTheme.blueDark
+                            : AppTheme.light.withOpacity(.5),
+                        onPressed: () {
+                          Future.wait([_.selectDate(context)]);
+                        },
+                      )*/
                     : Text(
                         category.name,
                         overflow: TextOverflow.ellipsis,

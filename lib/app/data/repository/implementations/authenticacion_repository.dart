@@ -99,7 +99,6 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
     return _usuarioDeFirebase(resultadoAutenticacion.user);
   }*/
 
-  @override
   Future<AutenticacionUsuario?> registrarUsuarioConGoogle(
       UsuarioModel usuario) async {
     final usuarioGoogle = await GoogleSignIn().signIn();

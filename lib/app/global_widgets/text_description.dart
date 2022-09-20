@@ -16,11 +16,14 @@ class TextDescription extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.center,
-
       style: Theme.of(context)
           .textTheme
+          .caption
+          ?.copyWith(color: color, fontWeight: FontWeight.normal),
+      /*  style: Theme.of(context)
+          .textTheme
           .subtitle2
-          ?.copyWith(color: color, fontWeight: FontWeight.w400),
+          ?.copyWith(color: color, fontWeight: FontWeight.w400),*/
     );
   }
 }

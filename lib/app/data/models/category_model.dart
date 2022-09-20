@@ -1,4 +1,52 @@
+/*class CategoryModel {
+  int id;
+  String name;
+  String path;
 
+  CategoryModel(this.id, this.name, this.path);
+}
+
+final categories = [
+  CategoryModel(
+    0,
+    'Pedidos',
+    'assets/icons/botella-con-gas.svg',
+  ),
+  CategoryModel(
+    1,
+    'Clientes',
+    'assets/icons/cliente.svg',
+  ),
+  CategoryModel(
+    2,
+    'Repartidores',
+    'assets/icons/repartidor.svg',
+  ),
+];
+
+final categoriesDates = [
+  CategoryModel(
+    0,
+    'Día',
+    ' del ',
+  ),
+  CategoryModel(
+    1,
+    'Semana',
+    ' de la ',
+  ),
+  CategoryModel(
+    2,
+    'Mes',
+    ' del ',
+  ),
+  CategoryModel(
+    3,
+    'Calendario',
+    ' de ',
+  ),
+];
+*/
 class CategoryModel {
   final int id;
   final String name;
@@ -22,7 +70,7 @@ final categories = [
     id: 2,
     name: 'Repartidores',
     path: 'assets/icons/repartidor.svg',
-  ), 
+  ),
 ];
 
 final categoriesDates = [
@@ -40,10 +88,10 @@ final categoriesDates = [
     id: 2,
     name: 'Mes',
     path: ' del ',
-  ), 
+  ),
   CategoryModel(
     id: 3,
     name: 'Calendario',
     path: ' de ',
-  ), 
+  ),
 ];

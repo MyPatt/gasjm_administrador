@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart'; 
 
 class AppState extends StatefulWidget {
+  const AppState({Key? key}) : super(key: key);
+
   @override
   AppPermission createState() => AppPermission();
 }
@@ -43,6 +45,7 @@ class AppPermission extends State<AppState> {
     }*/
   }
 
+  @override
   Widget build(BuildContext context) {
     return Center(
         child: Column(

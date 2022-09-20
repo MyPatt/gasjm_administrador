@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/theme/text_theme.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/button_small.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
@@ -117,11 +116,12 @@ class PedidosEnEsperaPage extends StatelessWidget {
                                   children: <Widget>[
                                     TextSubtitle(
                                       text: e.nombreUsuario ?? 'Cliente',
-                                      style: TextoTheme.subtitleStyle2,
+                                     // style: TextoTheme.subtitleStyle2,
                                     ),
                                     TextSubtitle(
                                         text: e.cantidadPedido.toString(),
-                                        style: TextoTheme.subtitleStyle2)
+                                      //  style: TextoTheme.subtitleStyle2
+                                      )
                                   ],
                                 ),
                                 Row(
@@ -194,7 +194,7 @@ class PedidosEnEsperaPage extends StatelessWidget {
           title: const TextSubtitle(
             text: 'Rechazar pedido',
             textAlign: TextAlign.justify,
-            style: TextoTheme.subtitleStyle2,
+         //   style: TextoTheme.subtitleStyle2,
           ),
           content: SingleChildScrollView(
             child: ListBody(

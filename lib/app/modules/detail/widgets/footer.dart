@@ -1,5 +1,6 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart'; 
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
@@ -12,7 +13,7 @@ class Footer extends StatelessWidget {
   Footer({
     required this.house,
   });
-  final PedidoModel house;
+  final CategoryModel house;
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -33,7 +34,7 @@ class Footer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              'price',
+              house.id.toString(),
               style: Theme.of(context).textTheme.headline5?.copyWith(
                   color: AppTheme.blueDark, fontWeight: FontWeight.bold),
             ),
@@ -107,13 +108,13 @@ class Footer extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   maxLines: 1,
                   validator: null,
-                  labelText: "Date",
+                  labelText: "Date", 
                   filled: false,
                   enabledBorderColor: Colors.black26,
                   focusedBorderColor: AppTheme.cyan,
                   fontSize: 14.0,
                   fontColor: Colors.black45,
-                  onChanged: _.onChangedDate,
+                //  onChanged: _.onChangedDate,
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .02),
@@ -137,8 +138,8 @@ class Footer extends StatelessWidget {
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),
                 PrimaryButton(
-                  texto: "Register",
-                  onPressed: _.register,
+                  texto: "Register", onPressed: () {  },
+                 // onPressed: _.register,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * .03),
               ],

@@ -18,19 +18,6 @@ class SplashController extends GetxController {
   }
 
 //
-  @override
-  void onInit() {
- /*   WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkPermission();
-    });
-    addListener(() {
-      if (routeName != null) {
-        //  Navigator.pushReplacementNamed(context, routeName);
-        print("<<<ROUTE NAME>>>\n");
-      }
-    });*/
-    super.onInit();
-  }
 
  
 }

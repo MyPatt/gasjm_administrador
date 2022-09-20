@@ -1,9 +1,8 @@
 import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/modules/home/home_controller.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
+import 'package:gasjm/app/modules/home/home_controller.dart'; 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/button_favorite.dart';
 import 'package:gasjm/app/global_widgets/facilite.dart';
 import 'package:get/get.dart';
@@ -13,19 +12,21 @@ import 'package:get/get.dart';
 //https://i.pinimg.com/236x/3a/60/60/3a6060012698f64272c5e3ecb4baf461.jpg"
 
 class Houses extends StatelessWidget {
+  const Houses({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (_) => SliverPadding(
-        padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight * 1.5),
+        padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight * 1.5),
         sliver: Obx(
           () => SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => Container(),
-              //ItemHouse(house: _.houses[index]),
-              childCount: 2
-              //_.houses.length,
-            ),
+            delegate:
+                SliverChildBuilderDelegate((context, index) => Container(),
+                    //ItemHouse(house: _.houses[index]),
+                    childCount: 2
+                    //_.houses.length,
+                    ),
           ),
         ),
       ),
@@ -34,9 +35,9 @@ class Houses extends StatelessWidget {
 }
 
 class ItemHouse extends StatelessWidget {
-  const ItemHouse({
+   const ItemHouse({Key? key, 
     required this.house,
-  });
+  }) : super(key: key);
 
   final PedidoModel house;
 
@@ -44,9 +45,10 @@ class ItemHouse extends StatelessWidget {
   Widget build(BuildContext context) {
     final arrPhotos = house.idCliente.split(',');
     return GestureDetector(
-      onTap: () => Get.toNamed(AppRoutes.detail, arguments: house),
+      onTap: () {},
+      //=> Get.toNamed(AppRoutes.detail, arguments: house),
       child: Padding(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           top: 20,
           left: 20.0,
           right: 20.0,
@@ -86,7 +88,7 @@ class _Location extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         padding: EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 7.5,
@@ -158,7 +160,8 @@ class _DetailHouse extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 14,
-                              backgroundImage: NetworkImage("https://i.pinimg.com/236x/76/48/92/764892a84ae8e6342559c7106d257f69.jpg,"),
+                              backgroundImage: NetworkImage(
+                                  "https://i.pinimg.com/236x/76/48/92/764892a84ae8e6342559c7106d257f69.jpg,"),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 10),
@@ -174,9 +177,12 @@ class _DetailHouse extends StatelessWidget {
                         ),
                         Text(
                           '\$${house.cantidadPedido.toStringAsFixed(0)}',
-                          style: Theme.of(context).textTheme.headline5?.copyWith(
-                              color: AppTheme.blueDark,
-                              fontWeight: FontWeight.bold),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline5
+                              ?.copyWith(
+                                  color: AppTheme.blueDark,
+                                  fontWeight: FontWeight.bold),
                         )
                       ],
                     ),

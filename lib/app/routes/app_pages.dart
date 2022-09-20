@@ -1,3 +1,4 @@
+ 
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_binding.dart';
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_page.dart';
 import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_binding.dart';
@@ -69,9 +70,10 @@ class AppPages {
       binding: HomeBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
-    ),  GetPage(
+    ), 
+     GetPage(
       name: AppRoutes.detail,
-      page: () =>  DetailPage(),
+      page: () =>  const DetailPage(),
       binding: DetailBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),

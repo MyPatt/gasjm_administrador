@@ -24,7 +24,7 @@ class UbicacionPage extends StatelessWidget {
             child: SizedBox(
               height: MediaQuery.of(context).size.height -
                   MediaQuery.of(context).padding.top,
-              child: Content(),
+              child: const Content(),
               /* child: Center(child:Content()
                  
                     BlocBuilder<GpsBloc, GpsState>(builder: (context, state) {

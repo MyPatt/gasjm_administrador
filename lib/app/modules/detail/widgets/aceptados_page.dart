@@ -4,16 +4,20 @@ import 'package:gasjm/app/core/theme/text_theme.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
+import 'package:gasjm/app/global_widgets/button_favorite.dart';
 import 'package:gasjm/app/global_widgets/button_small.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/pedidos/pedidos_controller.dart';
+import 'package:gasjm/app/modules/detail/detail_controller.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class PedidosAceptadosPage extends StatelessWidget {
-  PedidosAceptadosPage({Key? key}) : super(key: key);
-  final PedidosController controladorDePedidos = Get.put(PedidosController());
+  final DetailController controladorDePedidos = Get.put(DetailController());
   double height = 0;
+
+  PedidosAceptadosPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final _height = Responsive.getScreenSize(context).height * .02;
@@ -71,7 +75,7 @@ class PedidosAceptadosPage extends StatelessWidget {
                             controladorDePedidos
                                 .ordenarListaFiltradaDePedidosAceptados();
 
-                           // print(controladorDePedidos  .valorSeleccionadoItemDeOrdenamiento.value);
+                            // print(controladorDePedidos  .valorSeleccionadoItemDeOrdenamiento.value);
                           }),
 
                       //Cantidad de total de pedidos en espera
@@ -98,20 +102,6 @@ class PedidosAceptadosPage extends StatelessWidget {
               ))
             ]),
           ),
-          Positioned(
-            bottom: 3,
-            right: 5,
-            child: FloatingActionButton(
-                backgroundColor: Colors.white,
-                tooltip: "Agregar un pedido",
-                child: const Icon(
-                  Icons.add_outlined,
-                  color: AppTheme.blueBackground,
-                ),
-                onPressed: () {
-                  //   Get.to(() => AddGamePage());
-                }),
-          ),
         ])));
   }
 
@@ -122,16 +112,21 @@ class PedidosAceptadosPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            /*Text(
+                pedido.nombreUsuario ?? 'Cliente',
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  color: AppTheme.blueDark, fontWeight: FontWeight.w700),
+            ),*/
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 TextSubtitle(
                   text: pedido.nombreUsuario ?? 'Cliente',
-              //    style: TextoTheme.subtitleStyle2,
+                  //style: TextoTheme.subtitleStyle2,
                 ),
                 TextSubtitle(
-                    text: pedido.cantidadPedido.toString(),
-                //    style: TextoTheme.subtitleStyle2
+                  text: pedido.cantidadPedido.toString(),
+                  //style: TextoTheme.subtitleStyle2
                 )
               ],
             ),
@@ -150,31 +145,42 @@ class PedidosAceptadosPage extends StatelessWidget {
                 const TextDescription(text: '300m')
               ],
             ),
+            Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ButtonSmall(
+                const TextDescription(
+                  text: "Repartidor: Freddy Bonilla",
+                ),
+                ButtonFavorite(
+                    child: TextDescription(
+                      text: 'Ver detalles',
+                      color: AppTheme.blueBackground,
+                    ),
+                    onTap: () => _showDialogoParaVerDetalles(context, pedido))
+
+                /*  ButtonSmall(
                     texto: "Cancelar",
                     color: AppTheme.light,
                     width: Responsive.getScreenSize(context).width * .4,
                     onPressed: () {
                       _showDialogoParaRechazar(context, pedido.idPedido);
                     }),
-                ButtonSmall(
-                    texto: "Finalizar",
+               ButtonSmall(
+                    texto: "Detalles",
                     width: Responsive.getScreenSize(context).width * .4,
                     onPressed: () =>
-                        controladorDePedidos.actualizarEstadoPedidoAceptado(
+                        /* controladorDePedidos.actualizarEstadoPedidoAceptado(
                             pedido.idPedido,
-                            "estado5",
-                            Mensajes.showGetSnackbar(
-                              titulo: "Mensaje",
-                              mensaje: "Pedido finalizado con éxito,",
-                              icono: const Icon(
-                                Icons.check_circle_outline_outlined,
-                                color: Colors.white,
-                              ),
-                            )))
+                            "estado5",*/
+                        Mensajes.showGetSnackbar(
+                          titulo: "Mensaje",
+                          mensaje: "Pedido finalizado con éxito,",
+                          icono: const Icon(
+                            Icons.check_circle_outline_outlined,
+                            color: Colors.white,
+                          ),
+                        ))*/
               ],
             ),
           ],
@@ -187,22 +193,88 @@ class PedidosAceptadosPage extends StatelessWidget {
     controladorDePedidos.cargarListaPedidosAceptados();
   }
 
-  Future<void> _showDialogoParaRechazar(BuildContext context, String id) async {
+  Future<void> _showDialogoParaVerDetalles(
+      BuildContext context, PedidoModel pedido) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const TextSubtitle(
-            text: 'Cancelar pedido',
-            textAlign: TextAlign.justify,
-          //  style: TextoTheme.subtitleStyle2,
+          title: Column(
+            children: const [
+              TextSubtitle(
+                text: 'Pedido: 001',
+                textAlign: TextAlign.justify,
+                // style: TextoTheme.subtitleStyle2,
+              ),
+              Divider(),
+            ],
           ),
           content: SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
-                TextDescription(
-                    text: '¿Está seguro de cancelar la entrega del pedido?')
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    const Icon(
+                      Icons.person_outline_outlined,
+                      size: 18.0,
+                      color: AppTheme.light,
+                      semanticLabel: 'Cliente',
+                    ),
+                    TextDescription(
+                      text: pedido.nombreUsuario ?? 'Cliente',
+
+                      //style: TextoTheme.subtitleStyle2,
+                    ),
+                  ],
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      TextDescription(
+                          text: DateFormat('d/M/y')
+                              .format(pedido.fechaHoraPedido.toDate())),
+                      TextDescription(text: ' '),
+                      TextDescription(
+                          text: DateFormat.Hm()
+                              .format(pedido.fechaHoraPedido.toDate()))
+                    ]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    TextDescription(
+                        text: pedido.direccionUsuario ?? 'Sin ubicación'),
+                    const TextDescription(text: '5 min')
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    TextDescription(
+                        text: 'Para ${pedido.diaEntregaPedido.toLowerCase()}'),
+                    const TextDescription(text: '300m')
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    TextDescription(
+                      text: '${pedido.cantidadPedido} cilindros',
+                      //style: TextoTheme.subtitleStyle2
+                    ),
+                    TextDescription(
+                        text: 'Total: \$ ' + pedido.totalPedido.toString())
+                  ],
+                ),
+                Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const TextDescription(
+                      text: "Repartidor: Freddy Bonilla",
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -210,7 +282,7 @@ class PedidosAceptadosPage extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               child: const Text(
-                'No',
+                'Cerrar',
                 style: TextStyle(
                   color: AppTheme.light,
                 ),
@@ -219,24 +291,10 @@ class PedidosAceptadosPage extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: const Text(
-                'Si',
-                style: TextStyle(
-                  color: AppTheme.blueBackground,
-                ),
-              ),
-              onPressed: () => _onCancelarEntregaPedido(context, id),
-            ),
           ],
         );
       },
     );
-  }
-
-  Future<void> _onCancelarEntregaPedido(BuildContext context, String id) async {
-    controladorDePedidos.actualizarEstadoPedidoAceptado(id, "estado4");
-    Navigator.of(context).pop();
   }
 
   List<DropdownMenuItem<String>> _buildDropdownMenu(List<String> items) {

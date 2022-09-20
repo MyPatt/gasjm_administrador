@@ -1,8 +1,7 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/sliver_header_delegate.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart'; 
 
 class Search extends StatelessWidget {
   @override
@@ -25,13 +24,16 @@ class Search extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(right: 5.0),
-                child: SvgPicture.asset('assets/icons/search-home.svg'),
+                child: Icon(
+                  Icons.search_outlined,
+                  color: AppTheme.blueDark,
+                ),
               ),
               Expanded(
                 child: CupertinoTextField(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  decoration: BoxDecoration(),
-                  placeholder: 'What are you looking for?',
+                  decoration: const BoxDecoration(),
+                  placeholder: 'Buscar',
                   placeholderStyle: Theme.of(context)
                       .textTheme
                       .subtitle1
@@ -45,10 +47,10 @@ class Search extends StatelessWidget {
                       ),
                 ),
               ),
-              Icon(
-                Icons.settings_input_component_outlined,
+              /*Icon(
+                Icons.folder_delete_outlined,
                 color: AppTheme.blueDark,
-              )
+              )*/
             ],
           ),
         ),

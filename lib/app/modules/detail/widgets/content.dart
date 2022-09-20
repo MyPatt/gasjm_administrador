@@ -2,13 +2,11 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart'; 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:meta/meta.dart' show required;
-
+import 'package:gasjm/app/data/models/category_model.dart'; 
 class Content extends StatelessWidget {
   Content({required this.house});
 
-  final PedidoModel house;
+  final CategoryModel house;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -42,7 +40,7 @@ class Content extends StatelessWidget {
                         ),
                         SizedBox(width: 10.0),
                         Text(
-                          'house.location',
+                          house.path,
                           style: Theme.of(context).textTheme.subtitle1?.copyWith(
                               color: AppTheme.blueDark,
                               fontWeight: FontWeight.w500),
@@ -51,7 +49,7 @@ class Content extends StatelessWidget {
                     ),
                     SizedBox(height: 5.0),
                     Text(
-                      'house.name',
+                      house.name,
                       style: Theme.of(context).textTheme.headline5?.copyWith(
                           color: AppTheme.blueDark,
                           fontWeight: FontWeight.w800),
@@ -60,7 +58,7 @@ class Content extends StatelessWidget {
                 ),
                 CircleAvatar(
                   radius: 28.0,
-                  backgroundImage: NetworkImage('house.avatar'),
+                  backgroundImage: NetworkImage("https://i.pinimg.com/236x/7a/a6/f6/7aa6f6d4966f2b61e57d64bdbca59298.jpg"),
                 ),
               ],
             ),
@@ -73,7 +71,7 @@ class Content extends StatelessWidget {
               ),
             ),
             Text(
-              'house.description',
+              house.name,
               textAlign: TextAlign.justify,
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: AppTheme.blueDark,

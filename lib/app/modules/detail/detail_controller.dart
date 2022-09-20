@@ -1,23 +1,67 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:dio/dio.dart';
-import 'package:gasjm/app/data/models/estadopedido_model.dart';
+import 'package:gasjm/app/core/utils/mensajes.dart';
+import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
+import 'package:gasjm/app/data/repository/pedido_repository.dart';
+import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class DetailController extends GetxController { 
+class DetailController extends GetxController {
+  late CategoryModel _house;
+  CategoryModel get house => _house;
 
-  late PedidoModel _house  ;
-  PedidoModel get house => _house;
+   final _pedidosRepository = Get.find<PedidoRepository>();
+  final _personaRepository = Get.find<PersonaRepository>();
 
-  late String _date;
+  final cargandoPedidosEnEspera = true.obs;
+  final cargandoPedidosAceptados = true.obs;
+  //Filtro para pedidos aceptados
+  final RxList<PedidoModel> _listaPedidosAceptados = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosAceptados => _listaPedidosAceptados;
 
+  final RxList<PedidoModel> _listaFiltradaPedidosAceptados =
+      <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaFiltradaPedidosAceptados =>
+      _listaFiltradaPedidosAceptados;
+  //Lista para ordenar los pedidos por diferentes categorias
+
+  List<String> dropdownItemsDeOrdenamiento = [
+    "Ordenar por fecha",
+    "Ordenar por cantidad",
+    "Ordenar por tiempo",
+    "Ordenar por dirección",
+    "Ordenar por cliente"
+  ];
+  RxString valorSeleccionadoItemDeOrdenamiento = 'Ordenar por'.obs;
+  RxString valorSeleccionadoItemDeOrdenamientoAceptados = 'Ordenar por'.obs;
+  //Lista para filtrar los pedidos por dias
+
+  List<String> dropdownItemsDeFiltro = [
+    "Todos",
+    "Ahora",
+    "Mañana",
+  ];
+
+  RxString valorSeleccionadoItemDeFiltro = 'Todos'.obs;
+  RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
   @override
   void onInit() {
     print("onInit DetailController");
-   
-    this._house = Get.arguments as PedidoModel;
 
-    print(_house.idCliente);
+    this._house = Get.arguments as CategoryModel;
+  valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
+    valorSeleccionadoItemDeOrdenamientoAceptados.value =
+        dropdownItemsDeOrdenamiento[0];
+    valorSeleccionadoItemDeFiltro.value = dropdownItemsDeFiltro[0];
+    valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];
+    cargarListaPedidosAceptados();
+    
+    print(_house.id);
     super.onInit();
   }
 
@@ -31,29 +75,114 @@ class DetailController extends GetxController {
     super.onClose();
   }
 
-  void onChangedDate(String value) => _date = value;
+//
+  void cargarListaFiltradaDePedidosAceptados() {
+    final filtroDia = valorSeleccionadoItemDeFiltroAceptados.value;
+    final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
+    _cargarListaFiltradaDePedidos(_listaPedidosAceptados,
+        _listaFiltradaPedidosAceptados, filtroDia, ordenarCategoria);
+  }
 
+  void _cargarListaFiltradaDePedidos(
+      RxList<PedidoModel> listaPorFiltrar,
+      RxList<PedidoModel> litaFiltrada,
+      String filtroDia,
+      String ordenarCategoria) {
+    if (filtroDia == "Todos") {
+      litaFiltrada.value = listaPorFiltrar.value;
+      ordenarListaFiltradaDePedidos(litaFiltrada.value, ordenarCategoria);
+
+      return;
+    }
+  }
+  void ordenarListaFiltradaDePedidos(
+      List<PedidoModel> listaFiltrada, String ordenarCategoria) {
+    if (ordenarCategoria == dropdownItemsDeOrdenamiento[0]) {
+      listaFiltrada
+          .sort((a, b) => a.fechaHoraPedido.compareTo(b.fechaHoraPedido));
+
+      return;
+    }
+
+    if (ordenarCategoria == dropdownItemsDeOrdenamiento[1]) {
+      listaFiltrada
+          .sort((a, b) => a.cantidadPedido.compareTo(b.cantidadPedido));
+
+      return;
+    }
+    if (ordenarCategoria == dropdownItemsDeOrdenamiento[2]) {
+      listaFiltrada
+          .sort((a, b) => a.tiempoEntrega!.compareTo(b.tiempoEntrega ?? 0));
+
+      return;
+    }
+    if (ordenarCategoria == dropdownItemsDeOrdenamiento[3]) {
+      listaFiltrada.sort((a, b) =>
+          a.direccionUsuario!.compareTo(b.direccionUsuario.toString()));
+      return;
+    }
+    if (ordenarCategoria == dropdownItemsDeOrdenamiento[4]) {
+      listaFiltrada.sort(
+          (a, b) => a.nombreUsuario!.compareTo(b.nombreUsuario.toString()));
+      return;
+    }
+  }
   
-
-  register() async {
+  ordenarListaFiltradaDePedidosAceptados() {
+    final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
+    ordenarListaFiltradaDePedidos(
+        _listaFiltradaPedidosAceptados, ordenarCategoria);
+  }
+  void cargarListaPedidosAceptados() async {
     try {
-      
-      Get.back();
-      Get.snackbar(
-        'Message',
-        'result',
-        duration: Duration(seconds: 5),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: AppTheme.cyan,
-      );
-    } on DioError catch (e) {
-      Get.snackbar(
-        'Message',
-       "message",
-        duration: Duration(seconds: 5),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: AppTheme.cyan,
-      );
+      cargandoPedidosAceptados.value = true;
+      final lista = (await _pedidosRepository.getPedidoPorField(
+              field: 'idEstadoPedido', dato: 'estado2')) ??
+          [];
+
+      //
+      for (var i = 0; i < lista.length; i++) {
+        final nombre = await _getNombresCliente(lista[i].idCliente);
+        final direccion = await _getDireccionXLatLng(
+            LatLng(lista[i].direccion.latitud, lista[i].direccion.longitud));
+        lista[i].nombreUsuario = nombre;
+        lista[i].direccionUsuario = direccion;
+      }
+
+      _listaPedidosAceptados.value = lista;
+      // _listaFiltradaPedidosAceptados.value = _listaPedidosAceptados.value;
+      cargarListaFiltradaDePedidosAceptados();
+    } on FirebaseException {
+      Mensajes.showGetSnackbar(
+          titulo: "Error",
+          mensaje: "Se produjo un error inesperado.",
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
+    cargandoPedidosAceptados.value = false;
+  }
+  Future<String> _getNombresCliente(String cedula) async {
+    final nombre =
+        await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
+    return nombre ?? 'Usuario';
+  }
+  Future<String> _getDireccionXLatLng(LatLng posicion) async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
+    Placemark lugar = placemark[0];
+
+//
+    return _getDireccion(lugar);
+  }
+
+  String _getDireccion(Placemark lugar) {
+    //
+    if (lugar.subLocality?.isEmpty == true) {
+      return lugar.street.toString();
+    } else {
+      return '${lugar.street}, ${lugar.subLocality}';
     }
   }
 }

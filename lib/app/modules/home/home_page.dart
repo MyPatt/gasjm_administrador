@@ -13,7 +13,7 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppTheme.background,
         //Menú deslizable a la izquierda con opciones del  usuario
         drawer: const MenuLateral(),
-        //Barra de herramientas de opciones para  agenda y  historial
+        //Barra de herramientas de opciones
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,
           actions: const [MenuAppBar()],
@@ -54,8 +54,9 @@ class _HomePageState extends State<HomePage> {
                                 categoriesDates[_.isSelectedIndexFecha.value]
                                     .name
                                     .toLowerCase(),
-                        more: "Ver más",
-                        onTap: () => Get.toNamed(AppRoutes.detail),
+                        more: "Ver todo",
+                        onTap: () => Get.toNamed(AppRoutes.detail,
+                            arguments: categories[_.isSelectedIndex.value]),
                       )),
 
                   //   Houses(),

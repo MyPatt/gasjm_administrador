@@ -133,11 +133,5 @@ class RegistrarController extends GetxController {
     final s = prefs.getString("cedula_usuario"); 
     cedula = s ?? ''; 
   }
-
-  //Eliminar la cedula del usuario de forma local
-  _removerCedula() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.remove("cedula_usuario");
-    //  await prefs.remove("perfil_usuario");
-  }
+ 
 }

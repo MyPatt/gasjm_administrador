@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class ButtonFavorite extends StatelessWidget {
   const ButtonFavorite({
     Key? key,
-    this.size = 40,
+    this.size = 90,
     this.child,
     this.onTap,
   }) : super(key: key);
@@ -17,25 +18,16 @@ class ButtonFavorite extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: size,
-        height: size,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 12,
+          width: size,
+          padding:const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(
+              color: AppTheme.blueBackground,
             ),
-          ],
-        ),
-        child: child ??
-            SvgPicture.asset(
-              'assets/icons/heart.svg',
-              color: Colors.pink,
-            ),
-      ),
+          ),
+          child: child),
     );
   }
 }

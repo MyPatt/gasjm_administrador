@@ -36,11 +36,9 @@ class AppBarActions extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.0),
               ),
               child: Text(
-                'Aviable',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    ?.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                'Disponible',
+                style: Theme.of(context).textTheme.headline6?.copyWith(
+                    color: Colors.white, fontWeight: FontWeight.w600),
               ),
             ),
             CircleAvatar(

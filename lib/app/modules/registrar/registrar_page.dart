@@ -29,7 +29,7 @@ class RegistrarPage extends StatelessWidget {
             child: SizedBox(
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.top,
-                child: Content()),
+                child: const Content()),
           ),
         ),
       ),

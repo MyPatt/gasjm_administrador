@@ -12,7 +12,7 @@ import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'widgets/search.dart';
+import '../detail/widgets/search.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -46,35 +46,36 @@ class _HomePageState extends State<HomePage> {
           actions: const [MenuAppBar()],
           title: const Text('GasJ&M'),
         ),
-        body: Stack(
+        body:
+            /*Stack(
           children: [
             //_cart(),
             _animatedBody(_height, _borderRadius, context),
           ],
         ),
+*/
 
-/*
-        Stack(
+            Stack(
           children: [
             Positioned.fill(
               child: CustomScrollView(
                 slivers: [
-                  /* Header(),
-                  Search(),*/
-                  Category(),
-                  /* ContentTitle(
+                  Header(),
+                  Search(),
+                  //   Category(),
+                  ContentTitle(
                     title: "Nearby to you",
                     more: "View more",
-                  ),*/
-                  //  Houses(),
-                  _animatedBody(_height, _borderRadius, context),
+                    onTap: () {},
+                  ),
+                //  Houses(),
+                  //  _animatedBody(_height, _borderRadius, context),
                 ],
               ),
             ),
             //ButtonNavigator()
           ],
         ),
-        */
       ),
     );
   }

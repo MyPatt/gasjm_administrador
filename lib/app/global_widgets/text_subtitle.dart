@@ -6,21 +6,24 @@ class TextSubtitle extends StatelessWidget {
   final String text;
   final Color? color;
   final TextAlign? textAlign;
-  final TextStyle? style;
+  //final TextStyle? style;
 
-  const TextSubtitle(
-      {Key? key,
-      required this.text,
-      this.color = AppTheme.blueDark,
-      this.textAlign=TextAlign.center,
-      this.style = TextoTheme.subtitleStyle1})
-      : super(key: key);
+  const TextSubtitle({
+    Key? key,
+    required this.text,
+    this.color = AppTheme.blueDark,
+    this.textAlign = TextAlign.center,
+    //this.style = TextoTheme.subtitleStyle1
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       textAlign: textAlign,
-      style: style,
+      style: Theme.of(context)
+          .textTheme
+          .caption
+          ?.copyWith(color: AppTheme.blueDark, fontWeight: FontWeight.w700),
     );
   }
 }

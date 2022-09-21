@@ -52,9 +52,7 @@ class PedidosAceptadosPage extends StatelessWidget {
                             controladorDePedidos
                                 .valorSeleccionadoItemDeFiltroAceptados
                                 .value = value ?? "";
-                            //
-                           
-                            //
+
                             controladorDePedidos
                                 .cargarListaFiltradaDePedidosAceptados();
                           }),
@@ -174,7 +172,7 @@ class PedidosAceptadosPage extends StatelessWidget {
                     onPressed: () =>
                         /* controladorDePedidos.actualizarEstadoPedidoAceptado(
                             pedido.idPedido,
-                            "estado5",*/
+                            "estado3",*/
                         Mensajes.showGetSnackbar(
                           titulo: "Mensaje",
                           mensaje: "Pedido finalizado con éxito,",

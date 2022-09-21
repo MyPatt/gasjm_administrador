@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:dio/dio.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
@@ -28,6 +26,15 @@ class DetailController extends GetxController {
       <PedidoModel>[].obs;
   RxList<PedidoModel> get listaFiltradaPedidosAceptados =>
       _listaFiltradaPedidosAceptados;
+
+//Pedidos finalizados
+
+  final RxList<PedidoModel> _listaPedidosEnEspera = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosEnEspera => _listaPedidosEnEspera;
+
+  final RxList<PedidoModel> _listaFiltradaPedidosEnEspera = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaFiltradaPedidosEnEspera =>
+      _listaFiltradaPedidosEnEspera;
   //Lista para ordenar los pedidos por diferentes categorias
 
   List<String> dropdownItemsDeOrdenamiento = [
@@ -37,6 +44,7 @@ class DetailController extends GetxController {
     "Ordenar por dirección",
     "Ordenar por cliente"
   ];
+
   RxString valorSeleccionadoItemDeOrdenamiento = 'Ordenar por'.obs;
   RxString valorSeleccionadoItemDeOrdenamientoAceptados = 'Ordenar por'.obs;
   //Lista para filtrar los pedidos por dias
@@ -51,9 +59,8 @@ class DetailController extends GetxController {
   RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
   @override
   void onInit() {
-    print("onInit DetailController");
-
     this._house = Get.arguments as CategoryModel;
+    cargarListaPedidosEnEspera();
     valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =
         dropdownItemsDeOrdenamiento[0];
@@ -61,7 +68,6 @@ class DetailController extends GetxController {
     valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];
     cargarListaPedidosAceptados();
 
-    print(_house.id);
     super.onInit();
   }
 
@@ -79,8 +85,7 @@ class DetailController extends GetxController {
   void cargarListaFiltradaDePedidosAceptados() {
     final filtroDia = valorSeleccionadoItemDeFiltroAceptados.value;
     final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
-    print(filtroDia);
-    print(ordenarCategoria);
+
     _cargarListaFiltradaDePedidos(_listaPedidosAceptados,
         _listaFiltradaPedidosAceptados, filtroDia, ordenarCategoria);
   }
@@ -96,7 +101,7 @@ class DetailController extends GetxController {
 
       return;
     }
-        List<PedidoModel> resultado = [];
+    List<PedidoModel> resultado = [];
 
     resultado = listaPorFiltrar
         .where((pedido) => pedido.diaEntregaPedido == filtroDia)
@@ -198,5 +203,56 @@ class DetailController extends GetxController {
     } else {
       return '${lugar.street}, ${lugar.subLocality}';
     }
+  }
+
+  /* METODOS PARA PEDIDOS FINALIZADOS */
+
+  void cargarListaPedidosEnEspera() async {
+    try {
+      cargandoPedidosEnEspera.value = true;
+      final lista = (await _pedidosRepository.getPedidoPorField(
+              field: 'idEstadoPedido', dato: 'estado3')) ??
+          [];
+
+      //
+      for (var i = 0; i < lista.length; i++) {
+        final nombre = await _getNombresCliente(lista[i].idCliente);
+        final direccion = await _getDireccionXLatLng(
+            LatLng(lista[i].direccion.latitud, lista[i].direccion.longitud));
+        lista[i].nombreUsuario = nombre;
+        lista[i].direccionUsuario = direccion;
+      }
+
+      _listaPedidosEnEspera.value = lista;
+      //Cargar la lista filtrada al inicio todos
+//      _listaFiltradaPedidosEnEspera.value = _listaPedidosEnEspera;
+      cargarListaFiltradaDePedidosEnEspera();
+
+      //
+      print(_listaFiltradaPedidosEnEspera.value.length);
+    } on FirebaseException {
+      Mensajes.showGetSnackbar(
+          titulo: "Error",
+          mensaje: "Se produjo un error inesperado.",
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
+    cargandoPedidosEnEspera.value = false;
+  }
+
+  void cargarListaFiltradaDePedidosEnEspera() {
+    final filtroDia = valorSeleccionadoItemDeFiltro.value;
+    final ordenarCategoria = valorSeleccionadoItemDeOrdenamiento.value;
+    _cargarListaFiltradaDePedidos(_listaPedidosEnEspera,
+        _listaFiltradaPedidosEnEspera, filtroDia, ordenarCategoria);
+  }
+
+  ordenarListaFiltradaDePedidosEnEspera() {
+    final ordenarCategoria = valorSeleccionadoItemDeOrdenamiento.value;
+
+    ordenarListaFiltradaDePedidos(
+        _listaFiltradaPedidosEnEspera, ordenarCategoria);
   }
 }

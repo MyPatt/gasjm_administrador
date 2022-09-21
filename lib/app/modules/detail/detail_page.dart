@@ -3,7 +3,9 @@ import 'package:gasjm/app/modules/detail/detail_controller.dart';
 import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart';
 import 'package:gasjm/app/modules/detail/widgets/appbar_actions.dart';
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart';
 import 'package:gasjm/app/modules/detail/widgets/search.dart';
+ 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
@@ -43,7 +45,7 @@ class DetailPage extends StatelessWidget {
                     body: TabBarView(
                       children: [
                         PedidosAceptadosPage(),
-                        PedidosAceptadosPage(),
+                        PedidosAFinalizadosPage()
                       ],
                     )))
             : Scaffold(

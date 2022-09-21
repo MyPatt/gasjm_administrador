@@ -181,14 +181,7 @@ class PedidosController extends GetxController {
 
       return;
     }
-    List<PedidoModel> resultado = [];
 
-    resultado = listaPorFiltrar
-        .where((pedido) => pedido.diaEntregaPedido == filtroDia)
-        .toList();
-
-    litaFiltrada.value = resultado;
-    ordenarListaFiltradaDePedidos(litaFiltrada.value, ordenarCategoria);
   }
 
   ordenarListaFiltradaDePedidosEnEspera() {

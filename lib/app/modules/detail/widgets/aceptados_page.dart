@@ -53,6 +53,8 @@ class PedidosAceptadosPage extends StatelessWidget {
                                 .valorSeleccionadoItemDeFiltroAceptados
                                 .value = value ?? "";
                             //
+                           
+                            //
                             controladorDePedidos
                                 .cargarListaFiltradaDePedidosAceptados();
                           }),

@@ -15,7 +15,7 @@ class DetailController extends GetxController {
   late CategoryModel _house;
   CategoryModel get house => _house;
 
-   final _pedidosRepository = Get.find<PedidoRepository>();
+  final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
 
   final cargandoPedidosEnEspera = true.obs;
@@ -54,13 +54,13 @@ class DetailController extends GetxController {
     print("onInit DetailController");
 
     this._house = Get.arguments as CategoryModel;
-  valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
+    valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =
         dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeFiltro.value = dropdownItemsDeFiltro[0];
     valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];
     cargarListaPedidosAceptados();
-    
+
     print(_house.id);
     super.onInit();
   }
@@ -79,6 +79,8 @@ class DetailController extends GetxController {
   void cargarListaFiltradaDePedidosAceptados() {
     final filtroDia = valorSeleccionadoItemDeFiltroAceptados.value;
     final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
+    print(filtroDia);
+    print(ordenarCategoria);
     _cargarListaFiltradaDePedidos(_listaPedidosAceptados,
         _listaFiltradaPedidosAceptados, filtroDia, ordenarCategoria);
   }
@@ -94,7 +96,16 @@ class DetailController extends GetxController {
 
       return;
     }
+        List<PedidoModel> resultado = [];
+
+    resultado = listaPorFiltrar
+        .where((pedido) => pedido.diaEntregaPedido == filtroDia)
+        .toList();
+
+    litaFiltrada.value = resultado;
+    ordenarListaFiltradaDePedidos(litaFiltrada.value, ordenarCategoria);
   }
+
   void ordenarListaFiltradaDePedidos(
       List<PedidoModel> listaFiltrada, String ordenarCategoria) {
     if (ordenarCategoria == dropdownItemsDeOrdenamiento[0]) {
@@ -127,12 +138,13 @@ class DetailController extends GetxController {
       return;
     }
   }
-  
+
   ordenarListaFiltradaDePedidosAceptados() {
     final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
     ordenarListaFiltradaDePedidos(
         _listaFiltradaPedidosAceptados, ordenarCategoria);
   }
+
   void cargarListaPedidosAceptados() async {
     try {
       cargandoPedidosAceptados.value = true;
@@ -163,11 +175,13 @@ class DetailController extends GetxController {
     }
     cargandoPedidosAceptados.value = false;
   }
+
   Future<String> _getNombresCliente(String cedula) async {
     final nombre =
         await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
     return nombre ?? 'Usuario';
   }
+
   Future<String> _getDireccionXLatLng(LatLng posicion) async {
     List<Placemark> placemark =
         await placemarkFromCoordinates(posicion.latitude, posicion.longitude);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +46,19 @@ class HomeController extends GetxController {
       print(selectedDate.value);
     } else {
       print(d.isBlank);
+    }
+  }
+
+  void navegarDashboard() {
+    switch (isSelectedIndex.value) {
+      case 0:
+        Get.toNamed(AppRoutes.detail,
+            arguments: categories[isSelectedIndex.value]);
+        break;
+      case 1:
+        Get.toNamed(AppRoutes.cliente,arguments: categories[isSelectedIndex.value]);
+        break;
+      default:
     }
   }
 }

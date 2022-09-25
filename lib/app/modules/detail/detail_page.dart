@@ -5,6 +5,8 @@ import 'package:gasjm/app/modules/detail/widgets/appbar_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart';
 import 'package:gasjm/app/modules/detail/widgets/search.dart';
+import 'package:gasjm/app/routes/app_pages.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
  
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -21,8 +23,8 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DetailController>(
-        builder: (_) => _.house.id.isEqual(0)
-            ? DefaultTabController(
+        builder: (_) => 
+        DefaultTabController(
                 length: 2,
                 child: Scaffold(
                     backgroundColor: AppTheme.background,
@@ -47,35 +49,9 @@ class DetailPage extends StatelessWidget {
                         PedidosAceptadosPage(),
                         PedidosAFinalizadosPage()
                       ],
-                    )))
-            : Scaffold(
-                backgroundColor: AppTheme.background,
-
-                //
-                appBar: AppBar(
-                  backgroundColor: AppTheme.blueBackground,
-                  // actions: const [MenuAppBar()],
-                  title: Text(_.house.name),
-                ),
-                body: Stack(children: [
-                  Positioned.fill(
-                      child: CustomScrollView(
-                    slivers: [
-                      Search(),
-                      SliverToBoxAdapter(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              //Cantidad de total de pedidos en espera
-                              TextDescription(
-                                text: 'Aceptados',
-                                textAlign: TextAlign.end,
-                              ),
-                            ]),
-                      ),
-                    ],
-                  ))
-                ]),
-              ));
+                    )
+                    )
+                    )
+            );
   }
 }

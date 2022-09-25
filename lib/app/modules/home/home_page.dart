@@ -55,8 +55,9 @@ class _HomePageState extends State<HomePage> {
                                     .name
                                     .toLowerCase(),
                         more: "Ver todo",
-                        onTap: () => Get.toNamed(AppRoutes.detail,
-                            arguments: categories[_.isSelectedIndex.value]),
+                        onTap: ()=>_.navegarDashboard(),
+                      /*  onTap: () => Get.toNamed(AppRoutes.detail,
+                            arguments: categories[_.isSelectedIndex.value]),*/
                       )),
 
                   //   Houses(),

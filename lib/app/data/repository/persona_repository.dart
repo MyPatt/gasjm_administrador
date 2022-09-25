@@ -6,10 +6,10 @@ abstract class PersonaRepository {
   Future<void> deletePersona({required String persona});
   Future<PersonaModel?> getDatosPersonaPorCedula({required String cedula});
   Future<String?> getNombresPersonaPorCedula({required String cedula});
-  Future<List<PersonaModel>?> getPersonaPorField(
+  Future<List<PersonaModel>> getPersonasPorField(
       {required String field, required String dato});
-  Future<String?> getDatoPersonaPorField({required String field, required String dato,
-          required String getField});
+  Future<String?> getDatoPersonaPorField(
+      {required String field, required String dato, required String getField});
 
   Future<List<PersonaModel>> getPersonas();
   Future<PersonaModel?> getUsuario();

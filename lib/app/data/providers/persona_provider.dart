@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gasjm/app/data/controllers/autenticacion_controller.dart'; 
-import 'package:gasjm/app/data/models/persona_model.dart'; 
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
+import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:get/get.dart';
 
 class PersonaProvider {
@@ -46,12 +46,9 @@ class PersonaProvider {
   Future<List<PersonaModel>> getPersonas() async {
     final snapshot = await _firestoreInstance.collection('persona').get();
 
-   
-      return (snapshot.docs)
-          .map((item) => PersonaModel.fromMap(item.data()))
-          .toList();
-    
-   
+    return (snapshot.docs)
+        .map((item) => PersonaModel.fromMap(item.data()))
+        .toList();
   }
 
   //
@@ -66,18 +63,17 @@ class PersonaProvider {
     return null;
   }
 
-  Future<List<PersonaModel>?> getPersonaPorField(
+  Future<List<PersonaModel>> getPersonasPorField(
       {required String field, required String dato}) async {
     final resultado = await _firestoreInstance
         .collection("persona")
         .where(field, isEqualTo: dato)
         .get();
-    if ((resultado.docs.isNotEmpty)) {
+ 
       return (resultado.docs)
           .map((item) => PersonaModel.fromMap(item.data()))
           .toList();
-    }
-    return null;
+    
   }
 
 //Retorna datos personales publicos de la persona

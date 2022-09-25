@@ -9,13 +9,13 @@ class TextDescription extends StatelessWidget {
       {Key? key,
       required this.text,
       this.color = Colors.black38,
-      this.textAlign})
+      this.textAlign = TextAlign.center})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
       style: Theme.of(context)
           .textTheme
           .caption

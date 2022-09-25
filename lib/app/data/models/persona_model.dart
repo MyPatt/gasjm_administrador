@@ -36,8 +36,7 @@ class PersonaModel {
         celularPersona: json["celular"],
         fechaNaciPersona: json["fechaNacimiento"],
         estadoPersona: json["estado"],
-        idPerfil: json["idPerfil"],
-        contrasenaPersona: json['contrasena'],
+        idPerfil: json["idPerfil"], contrasenaPersona: 'idPerfil', 
       );
 
   Map<String, dynamic> toMap() => {

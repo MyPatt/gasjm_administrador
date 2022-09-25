@@ -3,6 +3,8 @@ import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_binding.dart';
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_page.dart';
 import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_binding.dart';
 import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_page.dart';
+import 'package:gasjm/app/modules/cliente/cliente_binding.dart';
+import 'package:gasjm/app/modules/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/detail/detail_binding.dart';
 import 'package:gasjm/app/modules/detail/detail_page.dart';
 import 'package:gasjm/app/modules/home/home_binding.dart';
@@ -66,7 +68,7 @@ class AppPages {
     ),
       GetPage(
       name: AppRoutes.inicio,
-      page: () =>  HomePage(),
+      page: () =>  const HomePage(),
       binding: HomeBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
@@ -75,6 +77,13 @@ class AppPages {
       name: AppRoutes.detail,
       page: () =>  const DetailPage(),
       binding: DetailBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+     GetPage(
+      name: AppRoutes.cliente,
+      page: () =>   ClientePage(),
+      binding: ClienteBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ), 

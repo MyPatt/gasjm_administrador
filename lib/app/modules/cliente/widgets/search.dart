@@ -1,6 +1,4 @@
-import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
-
 import 'package:flutter/material.dart';
 
 class Search extends StatelessWidget {
@@ -9,20 +7,27 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10.0,
-        vertical: 10.0,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
-      child: const InputText( 
-        labelText: 'Buscar',
-        keyboardType: TextInputType.text,
-        iconPrefix: Icons.search_outlined,
-        textInputAction: TextInputAction.search,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: const [
+          Expanded(
+            child: InputText(
+              labelText: 'Buscar',
+              iconPrefix: Icons.search_outlined,
+            ),
+          ),
+
+          /*Icon(
+              Icons.folder_delete_outlined,
+              color: AppTheme.blueDark,
+            )*/
+        ],
       ),
     );
   }

@@ -31,7 +31,7 @@ class ClientePage extends StatelessWidget {
               body: Stack(children: [
                 Column(
                   children: [
-                    const Search(),
+                     Search(),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[

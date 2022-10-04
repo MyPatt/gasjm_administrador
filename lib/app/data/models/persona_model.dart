@@ -10,7 +10,7 @@ class PersonaModel {
       this.direccionPersona,
       this.celularPersona,
       this.fechaNaciPersona,
-      this.estadoPersona="activo", 
+      this.estadoPersona = "activo",
       required this.idPerfil,
       required this.contrasenaPersona});
 
@@ -36,7 +36,8 @@ class PersonaModel {
         celularPersona: json["celular"],
         fechaNaciPersona: json["fechaNacimiento"],
         estadoPersona: json["estado"],
-        idPerfil: json["idPerfil"], contrasenaPersona: 'idPerfil', 
+        idPerfil: json["idPerfil"],
+        contrasenaPersona: json["contrasena"],
       );
 
   Map<String, dynamic> toMap() => {

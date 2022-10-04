@@ -31,24 +31,13 @@ class ClientePage extends StatelessWidget {
               body: Stack(children: [
                 Column(
                   children: [
-                     Search(),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Obx(() => TextDescription(
-                                text: _
-                                    .listaFiltradaPedidosEnEspera.value.length
-                                    .toString(),
-                                textAlign: TextAlign.end,
-                              ))
-                        ]),
+                    const Search(),
                     Expanded(
                         child: Obx(
                       () => ListView(
-                        children: controladorDePedidos
-                            .listaFiltradaPedidosEnEspera
-                            .map((e) {
-                          return _cardPedido(e);
+                        children:
+                            controladorDePedidos.listaFiltradaClientes.map((e) {
+                          return _cardPedido(e, controladorDePedidos);
                         }).toList(),
                       ),
                     ))
@@ -59,7 +48,8 @@ class ClientePage extends StatelessWidget {
   }
 }
 
-Widget _cardPedido(PersonaModel persona) {
+Widget _cardPedido(
+    PersonaModel persona, ClienteController controladorDePedidos) {
   return Padding(
     padding:
         const EdgeInsets.only(right: 8.0, left: 8.0, top: 4.0, bottom: 4.0),
@@ -80,12 +70,16 @@ Widget _cardPedido(PersonaModel persona) {
           text: '${persona.nombrePersona} ${persona.apellidoPersona}',
           textAlign: TextAlign.justify,
         ),
-        subtitle: const TextDescription(
-            text: 'RoundedRectangleBorder', textAlign: TextAlign.justify),
-        trailing: const Icon(
-          Icons.keyboard_arrow_right_outlined,
-          // size: 30,
-        ),
+        subtitle: TextDescription(
+            text: persona.cedulaPersona, textAlign: TextAlign.justify),
+        trailing: IconButton(
+            onPressed: () {
+              controladorDePedidos.cargarDetalleDelCliente(persona);
+            },
+            icon: const Icon(
+              Icons.keyboard_arrow_right_outlined,
+              // size: 30,
+            )),
       ),
     ),
   );

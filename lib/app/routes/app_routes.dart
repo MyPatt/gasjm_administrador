@@ -7,7 +7,7 @@ class AppRoutes {
   static const inicio = "/inicio";
   static const detail = "/detail";
   static const cliente = "/cliente";
-
+  static const detalleCliente = "/detallecliente";
 
   static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";

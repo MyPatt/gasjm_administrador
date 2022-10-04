@@ -9,11 +9,10 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  date_field: ^3.0.1
   bloc: ^8.0.3
   charts_flutter: ^0.12.0
   cloud_firestore: ^1.0.7
-  
+  date_field: ^3.0.1
   dio: null
   equatable: ^2.0.3
   firebase_auth: ^2.0.0
@@ -33,6 +32,7 @@ dependencies:
   flutter_spinkit: null
   flutter_svg: ^0.22.0
   flutter_typeahead: ^4.1.0
+  flutter_vector_icons: ^2.0.0
   fluttertoast: ^8.0.6
   geocoding: ^2.0.1
   geolocator: ^7.1.0

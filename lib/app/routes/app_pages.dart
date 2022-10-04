@@ -1,4 +1,3 @@
- 
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_binding.dart';
 import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_page.dart';
 import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_binding.dart';
@@ -7,6 +6,8 @@ import 'package:gasjm/app/modules/cliente/cliente_binding.dart';
 import 'package:gasjm/app/modules/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/detail/detail_binding.dart';
 import 'package:gasjm/app/modules/detail/detail_page.dart';
+import 'package:gasjm/app/modules/editar_cliente/editar_cliente_binding.dart';
+import 'package:gasjm/app/modules/editar_cliente/editar_cliente_page.dart';
 import 'package:gasjm/app/modules/home/home_binding.dart';
 import 'package:gasjm/app/modules/home/home_page.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_binding.dart';
@@ -14,11 +15,11 @@ import 'package:gasjm/app/modules/identificacion/identificacion_page.dart';
 import 'package:gasjm/app/modules/inicio/inicio_binding.dart';
 import 'package:gasjm/app/modules/inicio/inicio_page.dart';
 import 'package:gasjm/app/modules/ir/ir_binding.dart';
-import 'package:gasjm/app/modules/ir/ir_page.dart'; 
+import 'package:gasjm/app/modules/ir/ir_page.dart';
 import 'package:gasjm/app/modules/login/login_binding.dart';
 import 'package:gasjm/app/modules/login/login_page.dart';
 import 'package:gasjm/app/modules/pedidos/pedidos_binding.dart';
-import 'package:gasjm/app/modules/pedidos/pedidos_page.dart'; 
+import 'package:gasjm/app/modules/pedidos/pedidos_page.dart';
 import 'package:gasjm/app/modules/registrar/registrar_binding.dart';
 import 'package:gasjm/app/modules/registrar/registrar_page.dart';
 import 'package:gasjm/app/modules/request_permission/request_permission_binding.dart';
@@ -39,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.ubicacion,
-      page: () =>const UbicacionPage(),
+      page: () => const UbicacionPage(),
       binding: UbicacionBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
@@ -51,7 +52,6 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
- 
     GetPage(
       name: AppRoutes.registrar,
       page: () => const RegistrarPage(),
@@ -66,45 +66,51 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-      GetPage(
+    GetPage(
       name: AppRoutes.inicio,
-      page: () =>  const HomePage(),
+      page: () => const HomePage(),
       binding: HomeBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
-    ), 
-     GetPage(
+    ),
+    GetPage(
       name: AppRoutes.detail,
-      page: () =>  const DetailPage(),
+      page: () => const DetailPage(),
       binding: DetailBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-     GetPage(
+    GetPage(
       name: AppRoutes.cliente,
-      page: () =>   ClientePage(),
+      page: () => ClientePage(),
       binding: ClienteBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
-    ), 
+    ),
+    GetPage(
+      name: AppRoutes.detalleCliente,
+      page: () => EditarClientePage(),
+      binding: EditarClienteBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
     GetPage(
       name: AppRoutes.inicioRepartidor,
-      page: () =>  InicioPage(),
+      page: () => InicioPage(),
       binding: InicioBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
-    ), 
-     GetPage(
-      name: AppRoutes.ir,
-      page: () =>  IrPage(),
-      binding: IrBinding(),
-      transition: Transition.noTransition
-    ),  GetPage(
-      name: AppRoutes.pedidos,
-      page: () => const PedidosPage(),
-      binding: PedidosBinding(),
-      transition: Transition.noTransition
     ),
+    GetPage(
+        name: AppRoutes.ir,
+        page: () => IrPage(),
+        binding: IrBinding(),
+        transition: Transition.noTransition),
+    GetPage(
+        name: AppRoutes.pedidos,
+        page: () => const PedidosPage(),
+        binding: PedidosBinding(),
+        transition: Transition.noTransition),
     GetPage(
       name: AppRoutes.agenda,
       page: () => const AgendaClientePage(),
@@ -112,7 +118,6 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-
     GetPage(
       name: AppRoutes.editaragenda,
       page: () => const EditarAgendaPage(),
@@ -127,7 +132,5 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-
-    
   ];
 }

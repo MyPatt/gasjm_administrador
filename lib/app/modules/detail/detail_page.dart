@@ -1,19 +1,11 @@
-import 'package:gasjm/app/global_widgets/text_description.dart';
+ 
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
-import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart';
-import 'package:gasjm/app/modules/detail/widgets/appbar_actions.dart';
+import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart'; 
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart';
-import 'package:gasjm/app/modules/detail/widgets/search.dart';
-import 'package:gasjm/app/routes/app_pages.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
+import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart'; 
  
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-
-import 'widgets/content.dart';
-import 'widgets/footer.dart';
-import 'widgets/detalle_pedido.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({
@@ -54,4 +46,6 @@ class DetailPage extends StatelessWidget {
                     )
             );
   }
+
+  
 }

@@ -136,7 +136,8 @@ Widget _buildDrawerHeader() {
             ),
           ),
         ),
-      ]));
+      ])
+      );
 }
 
 Widget _buildDrawerItem(

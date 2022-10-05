@@ -27,13 +27,15 @@ class PersonaProvider {
         .collection("persona")
         .doc(uid)
         .set(persona.toMap());
+
+    _firestoreInstance.collection("persona").doc(uid).update({"uid": uid});
   }
 
   //
   Future<void> updatePersona({required PersonaModel persona}) async {
     await _firestoreInstance
         .collection('persona')
-        .doc(persona.cedulaPersona)
+        .doc(persona.uidPersona)
         .update(persona.toMap());
   }
 
@@ -67,13 +69,13 @@ class PersonaProvider {
       {required String field, required String dato}) async {
     final resultado = await _firestoreInstance
         .collection("persona")
+        .where("estado", isEqualTo: "activo")
         .where(field, isEqualTo: dato)
         .get();
- 
-      return (resultado.docs)
-          .map((item) => PersonaModel.fromMap(item.data()))
-          .toList();
-    
+
+    return (resultado.docs)
+        .map((item) => PersonaModel.fromMap(item.data()))
+        .toList();
   }
 
 //Retorna datos personales publicos de la persona

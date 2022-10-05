@@ -17,8 +17,11 @@ class EditarClientePage extends StatelessWidget {
           // actions: const [MenuAppBar()],
           title: const Text('Editar cliente'),
           actions: [
+            //Eliminar cliente
             IconButton(
-                onPressed: () {}, icon: const Icon(Icons.delete_outlined)),
+                onPressed: () {
+                  
+                }, icon: const Icon(Icons.delete_outlined)),
           ],
         ),
         body: SafeArea(
@@ -28,7 +31,7 @@ class EditarClientePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 height: MediaQuery.of(context).size.height -
                     MediaQuery.of(context).padding.top,
-                child: PerfilCliente()),
+                child: const PerfilCliente()),
           ),
         ),
       ),

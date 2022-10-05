@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
@@ -83,14 +84,15 @@ class RegistrarController extends GetxController {
           cedulaPersona: cedula,
           nombrePersona: nombre,
           apellidoPersona: apellido,
+          estadoPersona: "activo",
           idPerfil: perfil,
           contrasenaPersona: contrasena,
           correoPersona: correo,
-          direccionPersona: direccionPersona); 
+          direccionPersona: direccionPersona);
 
 //En firebase
       await _authRepository.registrarUsuario(usuarioDatos);
- 
+
       //
 
       //Mensaje de ingreso
@@ -130,8 +132,7 @@ class RegistrarController extends GetxController {
   _obtenerCedula() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final s = prefs.getString("cedula_usuario"); 
-    cedula = s ?? ''; 
+    final s = prefs.getString("cedula_usuario");
+    cedula = s ?? '';
   }
- 
 }

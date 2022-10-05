@@ -22,7 +22,7 @@ abstract class Mensajes {
         colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
         duration: duracion,
-        borderRadius: 0,
+        borderRadius: 15,
         icon: icono);
   }
 }

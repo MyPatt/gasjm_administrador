@@ -57,13 +57,9 @@ class PerfilCliente extends StatelessWidget {
                                     InputText(
                                       controller: _.cedulaTextoController,
                                       iconPrefix: Icons.credit_card,
-                                      keyboardType: TextInputType.phone,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      validator: Validacion.validarCedula,
+                                      readOnly: true,
+                                      enabled: false,
                                       labelText: "Cédula",
-                                      onChanged: _.onChangedIdentificacion,
                                     ),
                                     SizedBox(
                                         height:
@@ -192,37 +188,29 @@ class PerfilCliente extends StatelessWidget {
                                             Responsive.getScreenSize(context)
                                                     .height *
                                                 .05),
-                                    PrimaryButton(
-                                        texto: "Guardar",
-                                        onPressed: () {
-                                          if (_.claveFormRegistrar.currentState
-                                                  ?.validate() ==
-                                              true) {
-                                            //   _.registrarAdministrador();
-                                          }
-                                        }),
-                                    //    Obx(() {
-                                    // final estadoProceso = _.cargandoParaCorreo.value;
-                                    // return
-                                    /*  Stack(
+
+                                    Obx(() {
+                                      final estadoProceso =
+                                          _.cargandoParaCorreo.value;
+                                      return Stack(
                                         alignment: Alignment.center,
                                         children: [
                                           PrimaryButton(
-                                              texto: "Registrar",
+                                              texto: "Actualizar",
                                               onPressed: () {
                                                 if (_.claveFormRegistrar
                                                         .currentState
                                                         ?.validate() ==
                                                     true) {
-                                                  //   _.registrarAdministrador();
+                                                  _.actualizarCliente();
                                                 }
-                                              }),*/
-                                    /*  if (estadoProceso)
-                            const CircularProgressIndicator(
-                                backgroundColor: Colors.white),*/
-                                    // ],
-                                    //)
-                                    // :}),
+                                              }),
+                                          if (estadoProceso)
+                                            const CircularProgressIndicator(
+                                                backgroundColor: Colors.white),
+                                        ],
+                                      );
+                                    }),
                                   ]),
                             );
                           }),
@@ -288,7 +276,7 @@ class PerfilCliente extends StatelessWidget {
             height: 30,
           ),
           //TODO: mOSTRAR los pedidos
-      /*    Container(
+          /*    Container(
             //height: height * 0.5,
             width: width,
             decoration: BoxDecoration(
@@ -399,7 +387,8 @@ class PerfilCliente extends StatelessWidget {
               ),
             ),
           ),
-      */    SizedBox(
+      */
+          SizedBox(
             height: 30,
           ),
         ],

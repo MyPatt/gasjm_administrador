@@ -10,8 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DetailController extends GetxController {
-  late CategoryModel _house;
-  CategoryModel get house => _house;
+ 
 
   final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
@@ -59,7 +58,7 @@ class DetailController extends GetxController {
   RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
   @override
   void onInit() {
-    this._house = Get.arguments as CategoryModel;
+    
     cargarListaPedidosEnEspera();
     valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =

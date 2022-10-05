@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/global_widgets/text_description.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_controller.dart';
 import 'package:gasjm/app/modules/editar_cliente/widgets/perfil_cliente.dart';
 import 'package:get/get.dart';
 
 class EditarClientePage extends StatelessWidget {
-  const EditarClientePage({key}) : super(key: key);
-
+  EditarClientePage({key}) : super(key: key);
+  final EditarClienteController controladorDePedidos =
+      Get.put(EditarClienteController());
   @override
   Widget build(BuildContext context) {
     return GetBuilder<EditarClienteController>(
@@ -20,8 +23,9 @@ class EditarClientePage extends StatelessWidget {
             //Eliminar cliente
             IconButton(
                 onPressed: () {
-                  
-                }, icon: const Icon(Icons.delete_outlined)),
+                  _showDialogoParaEliminarCliente(context, _.cliente.uidPersona??_.cliente.cedulaPersona);
+                },
+                icon: const Icon(Icons.delete_outlined)),
           ],
         ),
         body: SafeArea(
@@ -35,6 +39,54 @@ class EditarClientePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showDialogoParaEliminarCliente(BuildContext context, String id) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const TextSubtitle(
+            text: 'Eliminar cliente',
+            textAlign: TextAlign.justify,
+            //   style: TextoTheme.subtitleStyle2,
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                TextDescription(text: '¿Está seguro de eliminar el cliente?')
+              ],
+            ),
+          ),
+          actionsAlignment: MainAxisAlignment.end,
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'No',
+                style: TextStyle(
+                  color: AppTheme.light,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+                child: const Text(
+                  'Si ',
+                  style: TextStyle(
+                    color: AppTheme.blueBackground,
+                  ),
+                ),
+                onPressed: () {
+                  controladorDePedidos.eliminarCliente(id);
+                  Navigator.of(context).pop();
+                }),
+          ],
+        );
+      },
     );
   }
 }

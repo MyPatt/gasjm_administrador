@@ -3,6 +3,8 @@ import 'package:gasjm/app/data/models/persona_model.dart';
 abstract class PersonaRepository {
   Future<void> insertPersona({required PersonaModel persona});
   Future<void> updatePersona({required PersonaModel persona});
+  Future<void> updateEstadoPersona(
+      {required String uid, required String estado});
   Future<void> deletePersona({required String persona});
   Future<PersonaModel?> getDatosPersonaPorCedula({required String cedula});
   Future<String?> getNombresPersonaPorCedula({required String cedula});

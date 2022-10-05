@@ -1,16 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
-import 'package:gasjm/app/data/repository/authenticacion_repository.dart';
-import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 
 class EditarClienteController extends GetxController {
 //Clave del formulario de resgistro de usuario
@@ -31,9 +27,7 @@ class EditarClienteController extends GetxController {
   late PersonaModel _cliente;
   PersonaModel get cliente => _cliente;
 
-  final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
-  final _authRepository = Get.find<AutenticacionRepository>();
 
   final cargandoClientes = true.obs;
 
@@ -50,7 +44,7 @@ class EditarClienteController extends GetxController {
   //Se cago si o no
   final cargandoParaCorreo = RxBool(false);
 
-  /** METODOS PROPDIO */
+  /* METODOS PROPIOS */
   @override
   void onInit() {
     _cliente = Get.arguments as PersonaModel;
@@ -67,6 +61,14 @@ class EditarClienteController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+    cedulaTextoController.clear();
+    nombreTextoController.clear();
+    apellidoTextoController.clear();
+    direccionTextoController.clear();
+    fechaNacimientoTextoController.clear();
+    celularTextoController.clear();
+    correoElectronicoTextoController.clear();
+    contrasenaTextoController.clear();
   }
 
   /* METODOS PARA CLIENTES */
@@ -176,19 +178,18 @@ class EditarClienteController extends GetxController {
 
       //Guardar en model
       PersonaModel usuarioDatos = PersonaModel(
-        uidPersona: cliente.uidPersona,
-        cedulaPersona: cedulaPersona,
-        nombrePersona: nombrePersona,
-        apellidoPersona: apellidoPersona,
-        idPerfil: idPerfil,
-        contrasenaPersona: contrasenaPersona,
-        correoPersona: correoPersona,
-        fotoPersona: fotoPersona,
-        direccionPersona:cliente.direccionPersona,
-        celularPersona: celularPersona,
-        fechaNaciPersona: fechaNaciPersona,
-        estadoPersona:cliente.estadoPersona
-      );
+          uidPersona: cliente.uidPersona,
+          cedulaPersona: cedulaPersona,
+          nombrePersona: nombrePersona,
+          apellidoPersona: apellidoPersona,
+          idPerfil: idPerfil,
+          contrasenaPersona: contrasenaPersona,
+          correoPersona: correoPersona,
+          fotoPersona: fotoPersona,
+          direccionPersona: cliente.direccionPersona,
+          celularPersona: celularPersona,
+          fechaNaciPersona: fechaNaciPersona,
+          estadoPersona: cliente.estadoPersona);
 
 //En firebase
       await _personaRepository.updatePersona(persona: usuarioDatos);
@@ -215,7 +216,7 @@ class EditarClienteController extends GetxController {
         errorParaCorreo.value = "Se produjo un error inesperado.";
       }
     } catch (e) {
-      Mensajes.showGetSnackbar(
+    /*  Mensajes.showGetSnackbar(
           titulo: 'Alerta',
           mensaje:
               'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
@@ -223,8 +224,32 @@ class EditarClienteController extends GetxController {
           icono: const Icon(
             Icons.error_outline_outlined,
             color: Colors.white,
-          ));
+          ));*/
     }
     cargandoParaCorreo.value = false;
+  }
+
+  Future<void> eliminarCliente(String id) async {
+    try {
+      print(id);
+      await _personaRepository.updateEstadoPersona(
+          uid: id, estado: "eliminado");
+      Mensajes.showGetSnackbar(
+          titulo: "Mensaje",
+          mensaje: "Cliente eliminado con éxito..",
+          icono: const Icon(
+            Icons.delete_outline_outlined,
+            color: Colors.white,
+          ));
+      Get.toNamed(AppRoutes.cliente);
+    } on FirebaseException catch (e) {
+      Mensajes.showGetSnackbar(
+          titulo: "Alerta",
+          mensaje: "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.",
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
   }
 }

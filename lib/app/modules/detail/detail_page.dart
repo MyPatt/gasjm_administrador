@@ -25,7 +25,7 @@ class DetailPage extends StatelessWidget {
                     appBar: AppBar(
                       backgroundColor: AppTheme.blueBackground,
                       // actions: const [MenuAppBar()],
-                      title: Text(_.house.name),
+                      title: Text("Pedidos"),
                       bottom: const TabBar(
                         indicatorColor: Colors.white,
                         tabs: [

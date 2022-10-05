@@ -43,4 +43,9 @@ class PersonaRepositoryImpl extends PersonaRepository {
 
   @override
   Future<PersonaModel?> getUsuario() => _provider.getUsuarioActual();
+
+  @override
+  Future<void> updateEstadoPersona(
+          {required String uid, required String estado}) =>
+      _provider.updateEstadoPersona(uid: uid, estado: estado);
 }

@@ -26,7 +26,7 @@ class ClienteController extends GetxController {
   /** METODOS PROPDIO */
   @override
   void onInit() {
-    _categoria = Get.arguments as CategoryModel;
+   // _categoria = Get.arguments as CategoryModel;
     _cargarListaDeClientes();
 
     super.onInit();
@@ -72,6 +72,6 @@ class ClienteController extends GetxController {
   }
 
   void cargarDetalleDelCliente(PersonaModel cliente) {
-    Get.toNamed(AppRoutes.detalleCliente, arguments: cliente);
+    Get.offNamed(AppRoutes.detalleCliente, arguments: cliente);
   }
 }

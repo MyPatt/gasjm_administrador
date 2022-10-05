@@ -119,4 +119,11 @@ class PersonaProvider {
     }
     return null;
   }
+
+  updateEstadoPersona({required String uid, required String estado}) async {
+    await _firestoreInstance
+        .collection('persona')
+        .doc(uid)
+        .update({"estado": estado});
+  }
 }

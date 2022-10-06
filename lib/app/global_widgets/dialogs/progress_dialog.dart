@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 
 abstract class ProgressDialog {
   static void show(BuildContext context, String texto) {
@@ -11,18 +12,20 @@ abstract class ProgressDialog {
           child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: Colors.black12,
+              color: Colors.white,
               alignment: Alignment.center,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const CircularProgressIndicator(
                       color: AppTheme.blueBackground,
-                      backgroundColor: Colors.white, 
+                      backgroundColor: Colors.white,
                     ),
-                    TextDescription(
+          SizedBox(height: MediaQuery.of(context).size.height * .05),
+
+                    TextSubtitle(
                       text: texto,
-                      color: Colors.white,
+                      color: AppTheme.blueDark,
                     )
                   ])),
           onWillPop: () async => false),

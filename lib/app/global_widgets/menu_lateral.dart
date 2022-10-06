@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/global_widgets/dialogs/progress_dialog.dart';
+import 'package:gasjm/app/global_widgets/primary_button.dart';
 
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
@@ -9,14 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //Menú deslizable a la izquierda con opciones del  usuario
 class MenuLateral extends StatelessWidget {
-  const MenuLateral({key}) : super(key: key);
+  const MenuLateral({key, required this.modo}) : super(key: key);
+  final String modo;
 
   @override
   Widget build(BuildContext context) {
-     var usuario= Get.find<AutenticacionController>()
-                      .autenticacionUsuario
-                      .value
-                      ?.nombre;
+    var usuario =
+        Get.find<AutenticacionController>().autenticacionUsuario.value?.nombre;
+
     return Drawer(
         child: Container(
       color: Colors.white,
@@ -30,7 +31,7 @@ class MenuLateral extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Text(
-             usuario??'',
+              usuario ?? '',
               style: const TextStyle(
                   color: AppTheme.blueDark, fontWeight: FontWeight.w500),
             ),
@@ -81,13 +82,22 @@ class MenuLateral extends StatelessWidget {
               await prefs.clear();
             },
           ),
-          ListTile(
-            title: const Text(
-              'v: 1.0.0',
-              style: TextStyle(color: Colors.black38),
-            ),
-            onTap: () {},
+          SizedBox(height: MediaQuery.of(context).size.height * .15),
+          PrimaryButton(
+            texto: modo,
+            onPressed: () async {
+              ProgressDialog.show(context, "Cargando...");
+              await Future.delayed(const Duration(seconds: 2));
+
+              if (modo == 'Modo administrador') {
+                Get.offNamed(AppRoutes.inicio);
+                return;
+              } else {
+                Get.offNamed(AppRoutes.inicioRepartidor);
+              }
+            },
           ),
+          SizedBox(height: MediaQuery.of(context).size.height * .05),
         ],
       ),
     ));
@@ -136,8 +146,7 @@ Widget _buildDrawerHeader() {
             ),
           ),
         ),
-      ])
-      );
+      ]));
 }
 
 Widget _buildDrawerItem(

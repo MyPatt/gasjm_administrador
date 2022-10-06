@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
       builder: (_) => Scaffold(
         backgroundColor: AppTheme.background,
         //Menú deslizable a la izquierda con opciones del  usuario
-        drawer: const MenuLateral(),
+        drawer: const MenuLateral(modo: 'Modo repartidor',),
         //Barra de herramientas de opciones
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,
@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
                                     .name
                                     .toLowerCase(),
                         more: "Ver todo",
-                        onTap: ()=>_.navegarDashboard(),
-                      /*  onTap: () => Get.toNamed(AppRoutes.detail,
+                        onTap: () => _.navegarDashboard(),
+                        /*  onTap: () => Get.toNamed(AppRoutes.detail,
                             arguments: categories[_.isSelectedIndex.value]),*/
                       )),
 

@@ -4,7 +4,6 @@ import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
 import 'package:flutter/services.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,7 @@ class FormUsuario extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<PerfilController>(
       builder: (_) => Container(
-        height: 740,
+        height: 790,
         //  width: innerWidth,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
@@ -29,17 +28,18 @@ class FormUsuario extends StatelessWidget {
             key: _.claveFormRegistrar,
             child: Column(
                 mainAxisSize: MainAxisSize.max,
-                // mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SizedBox(
-                    height: 80,
-                  ),
                   InputText(
                     controller: _.cedulaTextoController,
                     iconPrefix: Icons.credit_card,
-                    readOnly: true,
-                    enabled: false,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(10),
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    validator: Validacion.validarCedula,
                     labelText: "Cédula",
                   ),
                   SizedBox(
@@ -48,6 +48,7 @@ class FormUsuario extends StatelessWidget {
                     iconPrefix: Icons.person_outlined,
                     keyboardType: TextInputType.name,
                     inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(10),
                       FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
                     ],
                     labelText: "Nombre",
@@ -60,6 +61,7 @@ class FormUsuario extends StatelessWidget {
                     iconPrefix: Icons.person_outlined,
                     keyboardType: TextInputType.name,
                     inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(10),
                       FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
                     ],
                     labelText: "Apellido",
@@ -97,11 +99,12 @@ class FormUsuario extends StatelessWidget {
                     iconPrefix: Icons.phone_android_outlined,
                     keyboardType: TextInputType.phone,
                     inputFormatters: <TextInputFormatter>[
+                      LengthLimitingTextInputFormatter(10),
                       FilteringTextInputFormatter.digitsOnly,
                     ],
                     labelText: "Celular",
                     controller: _.celularTextoController,
-                    // validator: Validacion.validarApellido,
+                     validator: Validacion.validarCelular,
                   ),
                   SizedBox(
                       height: Responsive.getScreenSize(context).height * .02),

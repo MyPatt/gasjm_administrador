@@ -100,6 +100,15 @@ class InputText extends StatelessWidget {
           errorBorder: UnderlineInputBorder(
             borderRadius: BorderRadius.circular(6.0),
             borderSide: const BorderSide(
+              width: .5,
+              color: Colors.red,
+            ),
+          ),
+          
+          focusedErrorBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(6.0),
+            borderSide: const BorderSide(
+              width: .5,
               color: Colors.red,
             ),
           ),

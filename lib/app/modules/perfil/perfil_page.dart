@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/global_widgets/text_description.dart';
-import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/perfil/widgets/contenido_perfil.dart';
 import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
 import 'package:gasjm/app/routes/app_routes.dart';

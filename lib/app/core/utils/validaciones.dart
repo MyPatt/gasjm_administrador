@@ -121,17 +121,33 @@ class Validacion {
     }
     if (value.isEmpty) {
       return 'Ingrese una cantidad';
-    }  
+    }
     return null;
   }
+
   //Validar que la direccion sea valida
-    static String? validarDireccion(String? value) {
+  static String? validarDireccion(String? value) {
     if (value == null) {
       return null;
     }
-    if (value.isEmpty || value=='Buscando dirección...') {
+    if (value.isEmpty || value == 'Buscando dirección...') {
       return 'Seleccione en el mapa una dirección';
-    }  
+    }
+    return null;
+  }
+
+  //Metodo para validar el numero celular que tenga 10 digitos
+
+  static String? validarCelular(String? value) {
+    if (value == null) {
+      return null;
+    }
+    if (value.isEmpty) {
+      return null;
+    }
+    if (value.length < 10 || value.length > 10) {
+      return 'El número celular debe tener 10 caracteres';
+    }
     return null;
   }
 }

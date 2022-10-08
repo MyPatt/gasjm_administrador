@@ -55,11 +55,12 @@ class FormIdentificacion extends StatelessWidget {
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.done,
                         inputFormatters: <TextInputFormatter>[
+                          LengthLimitingTextInputFormatter(10),
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         validator: Validacion.validarCedula,
                         labelText: "Cédula",
-                        onChanged: _.onChangedIdentificacion,
+                        // onChanged: _.onChangedIdentificacion,
                       ),
                     );
                   }),

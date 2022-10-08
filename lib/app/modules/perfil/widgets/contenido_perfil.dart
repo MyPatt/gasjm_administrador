@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/perfil/widgets/form_usuario.dart';
 import 'package:gasjm/app/modules/perfil/widgets/imagen_usuario.dart';
 
@@ -13,17 +12,16 @@ class PerfilUsuario extends StatelessWidget {
       child: ListView(
         children: [
           SizedBox(
-            height: 810.00,
+            height: 870.00,
             child: LayoutBuilder(
               builder: (context, constraints) {
                 // double innerHeight = constraints.maxHeight;
-                double innerWidth = constraints.maxWidth;
+                //   double innerWidth = constraints.maxWidth;
                 return Stack(
                   //fit: StackFit.expand,
                   children: const <Widget>[
                     Positioned(
                         bottom: 0, left: 0, right: 0, child: FormUsuario()),
-            
                     Positioned(
                         top: 0, left: 0, right: 0, child: ImagenUsuario()),
                   ],

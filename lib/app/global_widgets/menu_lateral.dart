@@ -50,7 +50,8 @@ class MenuLateral extends StatelessWidget {
               icon: Icons.person_outline,
               text: 'Mi cuenta',
               onTap: () =>
-                  {Navigator.pushReplacementNamed(context, AppRoutes.agenda)}),
+               Get.offNamed(AppRoutes.perfil)),
+                  
           _buildDrawerItem(
               icon: Icons.message_outlined,
               text: 'Mensajes',
@@ -82,7 +83,7 @@ class MenuLateral extends StatelessWidget {
               await prefs.clear();
             },
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * .15),
+          SizedBox(height: MediaQuery.of(context).size.height * .19),
           PrimaryButton(
             texto: modo,
             onPressed: () async {

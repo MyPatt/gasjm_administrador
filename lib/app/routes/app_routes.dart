@@ -8,6 +8,8 @@ class AppRoutes {
   static const detail = "/detail";
   static const cliente = "/cliente";
   static const detalleCliente = "/detallecliente";
+  static const perfil = "/perfil";
+  static const contrasena = "/contrasena";
 
   static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";

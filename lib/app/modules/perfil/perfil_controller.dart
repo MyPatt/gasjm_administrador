@@ -33,7 +33,7 @@ class PerfilController extends GetxController {
 
   final _personaRepository = Get.find<PersonaRepository>();
 
-  final cargandoClientes = true.obs;
+ 
 
 //Listas observables de los clientes
 
@@ -44,9 +44,9 @@ class PerfilController extends GetxController {
   RxList<PersonaModel> get listaFiltradaClientes => _listaFiltradaClientes;
 
   //Existe algun error si o no
-  final errorParaCorreo = Rx<String?>(null);
+  final errorDeDatos = Rx<String?>(null);
   //Se cago si o no
-  final cargandoParaCorreo = RxBool(false);
+  final cargandoDatos = RxBool(false);
 
   /* Variables para google maps */
   TextEditingController direccionAuxTextoController = TextEditingController();
@@ -120,8 +120,7 @@ class PerfilController extends GetxController {
             Icons.error_outline_outlined,
             color: Colors.white,
           ));
-    }
-    cargandoClientes.value = false;
+    } 
   }
 
 //
@@ -182,7 +181,7 @@ class PerfilController extends GetxController {
   //
   //Metodo para actualizar datos
 
-  Future<void> actualizarCliente() async {
+  Future<void> guardarCliente() async {
     //Obtener datos
     final String cedulaPersona = cedulaTextoController.text;
     final String nombrePersona = nombreTextoController.text;
@@ -198,8 +197,8 @@ class PerfilController extends GetxController {
 
 //
     try {
-      cargandoParaCorreo.value = true;
-      errorParaCorreo.value = null;
+      cargandoDatos.value = true;
+      errorDeDatos.value = null;
       //
 
       //Guardar en model
@@ -234,15 +233,14 @@ class PerfilController extends GetxController {
       //
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        errorParaCorreo.value = 'La contraseña es demasiado débil';
+        errorDeDatos.value = 'La contraseña es demasiado débil';
       } else if (e.code == 'email-already-in-use') {
-        errorParaCorreo.value =
-            'La cuenta ya existe para ese correo electrónico';
+        errorDeDatos.value = 'La cuenta ya existe para ese correo electrónico';
       } else {
-        errorParaCorreo.value = "Se produjo un error inesperado.";
+        errorDeDatos.value = "Se produjo un error inesperado.";
       }
     } catch (e) {
-      /*  Mensajes.showGetSnackbar(
+      Mensajes.showGetSnackbar(
           titulo: 'Alerta',
           mensaje:
               'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
@@ -250,9 +248,9 @@ class PerfilController extends GetxController {
           icono: const Icon(
             Icons.error_outline_outlined,
             color: Colors.white,
-          ));*/
+          ));
     }
-    cargandoParaCorreo.value = false;
+    cargandoDatos.value = false;
   }
 
   /* ACTUALIZAR DIRECCION - GOOGLE MAP*/

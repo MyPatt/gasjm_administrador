@@ -125,11 +125,11 @@ class FormContrasena extends StatelessWidget {
                                                     .height *
                                                 .02),
                                     Obx(() => Visibility(
-                                        visible: _.errorParaCorreo.value
-                                                ?.isNotEmpty ==
-                                            true,
+                                        visible:
+                                            _.errorDeDatos.value?.isNotEmpty ==
+                                                true,
                                         child: TextDescription(
-                                          text: _.errorParaCorreo.value ?? '',
+                                          text: _.errorDeDatos.value ?? '',
                                           color: Colors.red,
                                         ))),
 
@@ -140,7 +140,7 @@ class FormContrasena extends StatelessWidget {
                                                 .05),
                                     Obx(() {
                                       final estadoProceso =
-                                          _.cargandoParaCorreo.value;
+                                          _.cargandoDatos.value;
                                       return Stack(
                                         alignment: Alignment.center,
                                         children: [

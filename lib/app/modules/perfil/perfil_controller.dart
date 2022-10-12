@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/mensajes.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/core/utils/map_style.dart';
+import 'package:gasjm/app/core/utils/mensajes.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
@@ -45,16 +48,33 @@ class PerfilController extends GetxController {
   //Se cago si o no
   final cargandoParaCorreo = RxBool(false);
 
+  /* Variables para google maps */
+  TextEditingController direccionAuxTextoController = TextEditingController();
+  Direccion direccionPersona = Direccion(latitud: 0, longitud: 0);
+
+  final Rx<LatLng> _posicionInicialCliente =
+      const LatLng(-12.122711, -77.027475).obs;
+
+  Rx<LatLng> get posicionInicialCliente => _posicionInicialCliente.value.obs;
+  final Rx<LatLng> _posicionAuxCliente =
+      const LatLng(-12.122711, -77.027475).obs;
+
+  Rx<LatLng> get posicionAuxCliente => _posicionAuxCliente.value.obs;
+
+  final Map<MarkerId, Marker> _marcadores = {};
+  Set<Marker> get marcadores => _marcadores.values.toSet();
+
+  late String id = 'MakerIdAdministrador';
+
   /* METODOS PROPIOS */
   @override
- void onInit()  {
-
+  void onInit() {
+    Future.wait([_cargarDatosDelFormCliente()]);
     super.onInit();
   }
 
   @override
   void onReady() {
-    Future.wait([_cargarDatosDelFormCliente()]);
     super.onReady();
   }
 
@@ -74,9 +94,8 @@ class PerfilController extends GetxController {
   /* METODOS PARA CLIENTES */
 
   Future<void> _cargarDatosDelFormCliente() async {
-
     try {
-      _usuario=(await    _personaRepository.getUsuario())!;
+      _usuario = (await _personaRepository.getUsuario())!;
       //
       cedulaTextoController.text = usuario.cedulaPersona;
       nombreTextoController.text = usuario.nombrePersona;
@@ -85,11 +104,15 @@ class PerfilController extends GetxController {
           usuario.direccionPersona?.latitud ?? 0,
           usuario.direccionPersona?.longitud ?? 0));
       direccionTextoController.text = direccion;
+
+      _posicionInicialCliente.value = LatLng(
+          usuario.direccionPersona?.latitud ?? 0,
+          usuario.direccionPersona?.longitud ?? 0);
       fechaNacimientoTextoController.text = usuario.fechaNaciPersona ?? '';
       celularTextoController.text = usuario.celularPersona ?? '';
       correoElectronicoTextoController.text = usuario.correoPersona ?? '';
       contrasenaTextoController.text = usuario.contrasenaPersona;
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       Mensajes.showGetSnackbar(
           titulo: "Error",
           mensaje: "Se produjo un error inesperado.",
@@ -166,7 +189,7 @@ class PerfilController extends GetxController {
     final String apellidoPersona = apellidoTextoController.text;
     final String? correoPersona = correoElectronicoTextoController.text;
     final String? fotoPersona = '';
-    //final Direccion? direccionPersona=direccionTextoController.text;
+
     final String? celularPersona = celularTextoController.text;
     final String? fechaNaciPersona = fechaNacimientoTextoController.text;
     //final String? estadoPersona = cliente.estadoPersona;
@@ -189,7 +212,7 @@ class PerfilController extends GetxController {
           contrasenaPersona: contrasenaPersona,
           correoPersona: correoPersona,
           fotoPersona: fotoPersona,
-          direccionPersona: usuario.direccionPersona,
+          direccionPersona: direccionPersona,
           celularPersona: celularPersona,
           fechaNaciPersona: fechaNaciPersona,
           estadoPersona: usuario.estadoPersona);
@@ -232,28 +255,68 @@ class PerfilController extends GetxController {
     cargandoParaCorreo.value = false;
   }
 
-  Future<void> eliminarCliente(String id) async {
-    try {
-      print(id);
-      await _personaRepository.updateEstadoPersona(
-          uid: id, estado: "eliminado");
-      Mensajes.showGetSnackbar(
-          titulo: "Mensaje",
-          mensaje: "Cliente eliminado con éxito..",
-          icono: const Icon(
-            Icons.delete_outline_outlined,
-            color: Colors.white,
-          ));
-      Get.toNamed(AppRoutes.cliente);
-    } on FirebaseException catch (e) {
-      Mensajes.showGetSnackbar(
-          titulo: "Alerta",
-          mensaje:
-              "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
+  /* ACTUALIZAR DIRECCION - GOOGLE MAP*/
+
+  void onMapaCreado(GoogleMapController controller) {
+    controller.setMapStyle(estiloMapa);
+    // _agregarMarcadorCliente();
+    // notifyListeners();
+  }
+
+  Future<void> agregarMarcadorCliente() async {
+    final markerId = MarkerId(id);
+
+    final marker = Marker(
+        markerId: markerId,
+        position: _posicionAuxCliente.value,
+        draggable: true,
+        icon: BitmapDescriptor.defaultMarkerWithHue(
+            AppTheme.blueBackground.blue.toDouble())
+        // icon: _marcadorCliente,
+        );
+
+    _marcadores[markerId] = marker;
+  }
+
+  void onCameraMove(CameraPosition position) async {
+    _posicionAuxCliente.value = position.target;
+
+    final markerId = MarkerId(id);
+    final marker = _marcadores[markerId];
+
+    Marker updatedMarker = marker?.copyWith(
+            positionParam: position.target,
+            iconParam: BitmapDescriptor.defaultMarkerWithHue(
+                AppTheme.blueBackground.blue.toDouble())) ??
+        Marker(
+          markerId: markerId,
+        );
+
+    _marcadores[markerId] = updatedMarker;
+  }
+
+  void getMovimientoCamara() async {
+    List<Placemark> placemark = await placemarkFromCoordinates(
+        _posicionAuxCliente.value.latitude, _posicionAuxCliente.value.longitude,
+        localeIdentifier: "en_US");
+    direccionAuxTextoController.text = placemark[0].name!;
+  }
+
+  seleccionarNuevaDireccion() {
+    direccionTextoController.text = direccionAuxTextoController.text;
+    _posicionInicialCliente.value = _posicionAuxCliente.value;
+    direccionPersona = Direccion(
+        latitud: posicionInicialCliente.value.latitude,
+        longitud: posicionInicialCliente.value.longitude);
+
+    ///
+    Get.back();
+  }
+
+  cargarDireccionActual() {
+    _posicionAuxCliente.value = posicionInicialCliente.value;
+    print(_posicionInicialCliente.value);
+    print(_posicionAuxCliente.value);
+    Get.toNamed(AppRoutes.direccion);
   }
 }

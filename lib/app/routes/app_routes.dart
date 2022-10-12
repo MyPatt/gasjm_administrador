@@ -10,6 +10,7 @@ class AppRoutes {
   static const detalleCliente = "/detallecliente";
   static const perfil = "/perfil";
   static const contrasena = "/contrasena";
+  static const direccion = "/direccion";
 
   static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";

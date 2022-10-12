@@ -104,15 +104,18 @@ class FormUsuario extends StatelessWidget {
                     ],
                     labelText: "Celular",
                     controller: _.celularTextoController,
-                     validator: Validacion.validarCelular,
+                    validator: Validacion.validarCelular,
                   ),
                   SizedBox(
                       height: Responsive.getScreenSize(context).height * .02),
-                  InputText(
-                    iconPrefix: Icons.room_outlined,
-                    labelText: "Dirección",
-                    controller: _.direccionTextoController,
-                    // validator: Validacion.validarApellido,
+                  GestureDetector(
+                    child: InputText(
+                      iconPrefix: Icons.room_outlined, enabled: false,
+                      labelText: "Dirección",
+                      controller: _.direccionTextoController,
+                      // validator: Validacion.validarApellido,
+                    ),
+                    onTap: ()=>_.cargarDireccionActual(),
                   ),
 
                   SizedBox(

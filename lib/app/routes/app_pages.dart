@@ -23,6 +23,7 @@ import 'package:gasjm/app/modules/pedidos/pedidos_page.dart';
 import 'package:gasjm/app/modules/perfil/perfil_binding.dart';
 import 'package:gasjm/app/modules/perfil/perfil_page.dart';
 import 'package:gasjm/app/modules/perfil/widgets/form_contrasena.dart';
+import 'package:gasjm/app/modules/perfil/widgets/form_direccion.dart';
 import 'package:gasjm/app/modules/registrar/registrar_binding.dart';
 import 'package:gasjm/app/modules/registrar/registrar_page.dart';
 import 'package:gasjm/app/modules/request_permission/request_permission_binding.dart';
@@ -97,16 +98,24 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-        GetPage(
+    GetPage(
       name: AppRoutes.perfil,
       page: () => PerfilPage(),
       binding: PerfilBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
-    ),    GetPage(
+    ),
+    GetPage(
       name: AppRoutes.contrasena,
-      page: () =>   FormContrasena(),
-     // binding: PerfilBinding(),
+      page: () => const FormContrasena(),
+      // binding: PerfilBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.direccion,
+      page: () => const FormDireccion(),
+      // binding: PerfilBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

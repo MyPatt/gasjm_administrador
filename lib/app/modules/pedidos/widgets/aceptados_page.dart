@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/theme/text_theme.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';

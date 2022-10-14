@@ -5,8 +5,7 @@ import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
-import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
+import 'package:gasjm/app/global_widgets/primary_button.dart'; 
 import 'package:get/get.dart';
 
 class FormContrasena extends StatelessWidget {

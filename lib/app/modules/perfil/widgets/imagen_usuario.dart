@@ -1,19 +1,19 @@
- 
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
-import 'package:image_picker/image_picker.dart';import 'package:cached_network_image/cached_network_image.dart';
 import 'package:get/get.dart';
+
 class ImagenUsuario extends StatelessWidget {
-   ImagenUsuario({Key? key}) : super(key: key);
- final userController = Get.find<PerfilController>();
+  ImagenUsuario({Key? key}) : super(key: key);
+  final userController = Get.find<PerfilController>();
 
   @override
   Widget build(BuildContext context) {
-     final imageObx = Obx((){
+    /*  final imageObx = Obx(() {
       Widget image = Image.asset(
-         'assets/icons/profile.png',
+        'assets/icons/profile.png',
         fit: BoxFit.fill,
       );
 
@@ -22,8 +22,8 @@ class ImagenUsuario extends StatelessWidget {
           userController.pickedImage.value,
           fit: BoxFit.fill,
         );
-      } 
-      /*else if (userController.user.value?.image?.isNotEmpty == true) {
+      }
+      else if (userController.user.value?.image?.isNotEmpty == true) {
         image = CachedNetworkImage(
           imageUrl: userController.user.value!.image!,
           progressIndicatorBuilder: (_, __, progress) =>
@@ -31,48 +31,94 @@ class ImagenUsuario extends StatelessWidget {
           errorWidget: (_, __, ___) => const Icon(Icons.error),
           fit: BoxFit.fill,
         );
-      }*/
+      }
       return image;
-    });
+    });*/
     return GetBuilder<PerfilController>(
-      builder: (_) => 
-       Center(
+      builder: (_) => Center(
         child: CircleAvatar(
           radius: 75.0,
           backgroundColor: AppTheme.light,
           child: CircleAvatar(
             radius: 74.50,
             backgroundColor: Colors.white,
-            child: Obx(()=>
-                CircleAvatar(
-                child: Align(
-                  alignment: Alignment.bottomRight,
+            child: Obx(
+              () => Stack(children: [
+                buildImage(_.usuario?.fotoPersona, _.pickedImage.value),
+                Positioned(
                   child: CircleAvatar(
                       backgroundColor: Colors.white,
-                      radius: 17.0,
+                      radius: 14.0,
                       child: IconButton(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(3.0),
+                        iconSize: 18.0,
+                        icon: const Icon(
+                          Icons.photo_camera,
+                          color: AppTheme.light,
+                        ),
                         onPressed: () {
                           _.cargarImagen();
                         },
-                        icon: Icon(
-                          Icons.camera_alt,
-                          size: 20.0,
-                          color: AppTheme.light,
-                        ),
                       )),
-                ),
-                radius: 70.0,
-                backgroundImage:   FileImage(_.pickedImage.value)
-                /*_.pickedImage.value!=null?
-                   FileImage(_.pickedImage.value!):
-                 AssetImage(
-                  'assets/icons/profile.png',
-                ),*/
-              ),
+                  right: 5,
+                  bottom: 5,
+                )
+              ]),
             ),
           ),
         ),
       ),
     );
   }
+
+  // Builds Profile Image
+  Widget buildImage(String? fotoPersona, File? file) {
+    final image = fotoPersona == null
+        ? const CircleAvatar(
+            backgroundColor: AppTheme.light,
+            radius: 70,
+            child: CircleAvatar(
+                backgroundColor: AppTheme.light,
+                radius: 50,
+                backgroundImage: AssetImage(
+                  'assets/icons/placehoderperfil.png',
+                )),
+          )
+        : CircleAvatar(
+            backgroundColor: AppTheme.light,
+            radius: 70,
+            backgroundImage: FileImage(file!));
+
+    return image;
+  }
 }
+/*
+ CircleAvatar(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 17.0,
+                      child: IconButton(
+                            iconSize: 20.0,
+                      
+                        icon:const Icon(
+                          Icons.camera_alt,
+                      
+                          color: AppTheme.light,
+                        ),  onPressed: () {
+                          _.cargarImagen();
+                        },
+                      )),
+                ),
+                radius: 70.0,
+                //backgroundImage:_.usuario.fotoPersona==null?  
+               
+                backgroundImage:   FileImage(_.pickedImage.value)
+                /*_.pickedImage.value!=null?
+                   FileImage(_.pickedImage.value!):
+                 AssetImage(
+                  'assets/icons/profile.png',
+                ),*/
+              ) */

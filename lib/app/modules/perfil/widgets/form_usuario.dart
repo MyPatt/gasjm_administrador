@@ -148,7 +148,7 @@ class FormUsuario extends StatelessWidget {
                                 if (_.claveFormRegistrar.currentState
                                         ?.validate() ==
                                     true) {
-                                  _.guardarCliente();
+                                  _.guardarUsuario();
                                 }
                               }),
                           if (estadoProceso)

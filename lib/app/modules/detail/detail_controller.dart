@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/mensajes.dart';
-import 'package:gasjm/app/data/models/category_model.dart';
+import 'package:gasjm/app/core/utils/mensajes.dart'; 
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';

@@ -1,11 +1,7 @@
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/data/models/persona_model.dart';
-import 'package:gasjm/app/global_widgets/button_navigator.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/global_widgets/content_title.dart';
-import 'package:gasjm/app/modules/home/home_controller.dart';
-import 'package:gasjm/app/modules/home/widgets/category.dart';
-import 'package:gasjm/app/modules/home/widgets/header.dart';
-import 'package:gasjm/app/modules/home/widgets/houses.dart';
+import 'package:gasjm/app/modules/home/home_controller.dart'; 
+import 'package:gasjm/app/modules/home/widgets/header.dart'; 
 
 import 'package:gasjm/app/global_widgets/repartidor/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';

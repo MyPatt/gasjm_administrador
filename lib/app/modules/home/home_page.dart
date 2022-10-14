@@ -8,8 +8,7 @@ import 'package:gasjm/app/modules/home/widgets/category%20copy.dart';
 import 'package:gasjm/app/modules/home/widgets/category.dart';
 import 'package:gasjm/app/global_widgets/repartidor/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
+import 'package:flutter/material.dart'; 
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {

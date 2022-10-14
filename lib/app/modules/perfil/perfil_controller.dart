@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -32,8 +31,8 @@ class PerfilController extends GetxController {
   //Variables para ocultar el texto de la contrasena
   final RxBool _contrasenaOculta = true.obs;
   RxBool get contrasenaOculta => _contrasenaOculta;
-  late PersonaModel _usuario;
-  PersonaModel get usuario => _usuario;
+  PersonaModel? _usuario = null;
+  PersonaModel? get usuario => _usuario;
 
   final _personaRepository = Get.find<PersonaRepository>();
 
@@ -70,8 +69,7 @@ class PerfilController extends GetxController {
 
   //USER IMAGE
   final picker = ImagePicker();
-  Rx<File> pickedImage = Rx(new File(
-                'assets/icons/profile.png'));
+  Rx<File?> pickedImage = Rx(null);
 
   /* METODOS PROPIOS */
   @override
@@ -104,22 +102,24 @@ class PerfilController extends GetxController {
     try {
       _usuario = (await _personaRepository.getUsuario())!;
       //
-      cedulaTextoController.text = usuario.cedulaPersona;
-      nombreTextoController.text = usuario.nombrePersona;
-      apellidoTextoController.text = usuario.apellidoPersona;
+      cedulaTextoController.text = usuario?.cedulaPersona ?? '';
+      nombreTextoController.text = usuario?.nombrePersona ?? '';
+      apellidoTextoController.text = usuario?.apellidoPersona ?? '';
+      ;
 
-      fechaNacimientoTextoController.text = usuario.fechaNaciPersona ?? '';
-      celularTextoController.text = usuario.celularPersona ?? '';
-      correoElectronicoTextoController.text = usuario.correoPersona ?? '';
+      fechaNacimientoTextoController.text = usuario?.fechaNaciPersona ?? '';
+      celularTextoController.text = usuario?.celularPersona ?? '';
+      correoElectronicoTextoController.text = usuario?.correoPersona ?? '';
       String direccion = await _getDireccionXLatLng(LatLng(
-          usuario.direccionPersona?.latitud ?? 0,
-          usuario.direccionPersona?.longitud ?? 0));
+          usuario?.direccionPersona?.latitud ?? 0,
+          usuario?.direccionPersona?.longitud ?? 0));
       direccionTextoController.text = direccion;
 
       _posicionInicialCliente.value = LatLng(
-          usuario.direccionPersona?.latitud ?? 0,
-          usuario.direccionPersona?.longitud ?? 0);
-      contrasenaTextoController.text = usuario.contrasenaPersona;
+          usuario?.direccionPersona?.latitud ?? 0,
+          usuario?.direccionPersona?.longitud ?? 0);
+      contrasenaTextoController.text = usuario?.contrasenaPersona ?? '';
+      ;
     } on FirebaseException {
       Mensajes.showGetSnackbar(
           titulo: "Error",
@@ -190,7 +190,7 @@ class PerfilController extends GetxController {
   //
   //Metodo para actualizar datos
 
-  Future<void> guardarCliente() async {
+  Future<void> guardarUsuario() async {
     //Obtener datos
     final String cedulaPersona = cedulaTextoController.text;
     final String nombrePersona = nombreTextoController.text;
@@ -201,7 +201,7 @@ class PerfilController extends GetxController {
     final String? celularPersona = celularTextoController.text;
     final String? fechaNaciPersona = fechaNacimientoTextoController.text;
     //final String? estadoPersona = cliente.estadoPersona;
-    final String idPerfil = usuario.idPerfil;
+    final String idPerfil = usuario?.idPerfil ?? 'administrador';
     final String contrasenaPersona = contrasenaTextoController.text;
 
 //
@@ -212,7 +212,7 @@ class PerfilController extends GetxController {
 
       //Guardar en model
       PersonaModel usuarioDatos = PersonaModel(
-          uidPersona: usuario.uidPersona,
+          uidPersona: usuario?.uidPersona,
           cedulaPersona: cedulaPersona,
           nombrePersona: nombrePersona,
           apellidoPersona: apellidoPersona,
@@ -223,7 +223,7 @@ class PerfilController extends GetxController {
           direccionPersona: direccionPersona,
           celularPersona: celularPersona,
           fechaNaciPersona: fechaNaciPersona,
-          estadoPersona: usuario.estadoPersona);
+          estadoPersona: usuario?.estadoPersona);
 
 //En firebase
       await _personaRepository.updatePersona(persona: usuarioDatos);
@@ -328,14 +328,13 @@ class PerfilController extends GetxController {
   }
 
   Future<void> cargarImagen() async {
-     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-  
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
     print("********");
     print(pickedImage?.name);
     print(pickedImage?.path);
     if (pickedImage != null) {
       setImage(File(pickedImage.path));
- 
     }
   }
 

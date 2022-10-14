@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
-import 'package:intl/intl.dart';
+import 'package:gasjm/app/routes/app_routes.dart'; 
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {

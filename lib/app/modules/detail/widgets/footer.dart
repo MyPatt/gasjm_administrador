@@ -1,13 +1,11 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/data/models/category_model.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart'; 
+import 'package:gasjm/app/data/models/category_model.dart'; 
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:meta/meta.dart' show required;
+import 'package:get/get_state_manager/get_state_manager.dart'; 
 
 class Footer extends StatelessWidget {
   Footer({

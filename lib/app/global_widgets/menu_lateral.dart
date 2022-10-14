@@ -128,18 +128,7 @@ Widget _buildDrawerHeader() {
               radius: 40.0,
               backgroundColor: Colors.white,
               child: CircleAvatar(
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 12.0,
-                    child: Icon(
-                      Icons.camera_alt,
-                      size: 15.0,
-                      color: Color(0xFF404040),
-                    ),
-                  ),
-                ),
+                
                 radius: 38.0,
                 backgroundImage: NetworkImage(
                     'https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY'),

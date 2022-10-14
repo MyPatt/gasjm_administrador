@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -9,6 +12,7 @@ import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PerfilController extends GetxController {
@@ -32,8 +36,6 @@ class PerfilController extends GetxController {
   PersonaModel get usuario => _usuario;
 
   final _personaRepository = Get.find<PersonaRepository>();
-
- 
 
 //Listas observables de los clientes
 
@@ -66,15 +68,20 @@ class PerfilController extends GetxController {
 
   late String id = 'MakerIdAdministrador';
 
+  //USER IMAGE
+  final picker = ImagePicker();
+  Rx<File> pickedImage = Rx(new File(
+                'assets/icons/profile.png'));
+
   /* METODOS PROPIOS */
   @override
   void onInit() {
-    Future.wait([_cargarDatosDelFormCliente()]);
     super.onInit();
   }
 
   @override
   void onReady() {
+    Future.wait([_cargarDatosDelFormCliente()]);
     super.onReady();
   }
 
@@ -100,6 +107,10 @@ class PerfilController extends GetxController {
       cedulaTextoController.text = usuario.cedulaPersona;
       nombreTextoController.text = usuario.nombrePersona;
       apellidoTextoController.text = usuario.apellidoPersona;
+
+      fechaNacimientoTextoController.text = usuario.fechaNaciPersona ?? '';
+      celularTextoController.text = usuario.celularPersona ?? '';
+      correoElectronicoTextoController.text = usuario.correoPersona ?? '';
       String direccion = await _getDireccionXLatLng(LatLng(
           usuario.direccionPersona?.latitud ?? 0,
           usuario.direccionPersona?.longitud ?? 0));
@@ -108,9 +119,6 @@ class PerfilController extends GetxController {
       _posicionInicialCliente.value = LatLng(
           usuario.direccionPersona?.latitud ?? 0,
           usuario.direccionPersona?.longitud ?? 0);
-      fechaNacimientoTextoController.text = usuario.fechaNaciPersona ?? '';
-      celularTextoController.text = usuario.celularPersona ?? '';
-      correoElectronicoTextoController.text = usuario.correoPersona ?? '';
       contrasenaTextoController.text = usuario.contrasenaPersona;
     } on FirebaseException {
       Mensajes.showGetSnackbar(
@@ -120,7 +128,7 @@ class PerfilController extends GetxController {
             Icons.error_outline_outlined,
             color: Colors.white,
           ));
-    } 
+    }
   }
 
 //
@@ -161,6 +169,7 @@ class PerfilController extends GetxController {
   }
 
   Future<String> _getDireccionXLatLng(LatLng posicion) async {
+    print(posicion);
     List<Placemark> placemark =
         await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
     Placemark lugar = placemark[0];
@@ -316,5 +325,22 @@ class PerfilController extends GetxController {
     print(_posicionInicialCliente.value);
     print(_posicionAuxCliente.value);
     Get.toNamed(AppRoutes.direccion);
+  }
+
+  Future<void> cargarImagen() async {
+     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+  
+    print("********");
+    print(pickedImage?.name);
+    print(pickedImage?.path);
+    if (pickedImage != null) {
+      setImage(File(pickedImage.path));
+ 
+    }
+  }
+
+  void setImage(File imageFile) async {
+    pickedImage.value = imageFile;
+    //  emit(state.copyWith(pickedImage: imageFile));
   }
 }

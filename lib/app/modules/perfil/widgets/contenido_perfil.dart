@@ -19,8 +19,8 @@ class PerfilUsuario extends StatelessWidget {
                 //   double innerWidth = constraints.maxWidth;
                 return Stack(
                   //fit: StackFit.expand,
-                  children: const <Widget>[
-                    Positioned(
+                  children:  <Widget>[
+                    const Positioned(
                         bottom: 0, left: 0, right: 0, child: FormUsuario()),
                     Positioned(
                         top: 0, left: 0, right: 0, child: ImagenUsuario()),

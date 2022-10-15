@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/providers/persona_provider.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
@@ -34,8 +36,8 @@ class PersonaRepositoryImpl extends PersonaRepository {
       _provider.insertPersona(persona: persona);
 
   @override
-  Future<void> updatePersona({required PersonaModel persona}) =>
-      _provider.updatePersona(persona: persona);
+  Future<void> updatePersona({required PersonaModel persona,File? image}) =>
+      _provider.updatePersona(persona: persona,image: image);
 
   @override
   Future<String?> getNombresPersonaPorCedula({required String cedula}) =>

@@ -44,7 +44,8 @@ class ImagenUsuario extends StatelessWidget {
             backgroundColor: Colors.white,
             child: Obx(
               () => Stack(children: [
-                buildImage(_.usuario?.fotoPersona, _.pickedImage.value),
+                buildImage(_.existeImagenPerfil.value, _.pickedImage.value,
+                    _.usuario?.fotoPersona),
                 Positioned(
                   child: CircleAvatar(
                       backgroundColor: Colors.white,
@@ -73,9 +74,13 @@ class ImagenUsuario extends StatelessWidget {
   }
 
   // Builds Profile Image
-  Widget buildImage(String? fotoPersona, File? file) {
-    final image = fotoPersona == null
-        ? const CircleAvatar(
+  Widget buildImage(bool existeImagenPerfil, File? file, String? url) {
+    final imagenInicio = existeImagenPerfil == true
+        ? CircleAvatar(
+            backgroundColor: AppTheme.light,
+            radius: 70,
+            backgroundImage: NetworkImage(url!))
+        : const CircleAvatar(
             backgroundColor: AppTheme.light,
             radius: 70,
             child: CircleAvatar(
@@ -84,13 +89,14 @@ class ImagenUsuario extends StatelessWidget {
                 backgroundImage: AssetImage(
                   'assets/icons/placehoderperfil.png',
                 )),
-          )
+          );
+
+    return file == null
+        ? imagenInicio
         : CircleAvatar(
             backgroundColor: AppTheme.light,
             radius: 70,
-            backgroundImage: FileImage(file!));
-
-    return image;
+            backgroundImage: FileImage(file));
   }
 }
 /*

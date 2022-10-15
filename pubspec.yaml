@@ -19,7 +19,6 @@ dependencies:
   firebase_core: ^1.4.0
   firebase_database: ^7.2.2
   firebase_dynamic_links: ^2.0.0
-  firebase_storage: ^8.0.1
   fl_chart: ^0.40.5
   flutter:
     sdk: flutter
@@ -47,6 +46,7 @@ dependencies:
   rating_dialog: ^2.0.1
   shared_preferences: ^2.0.6
   image_picker: ^0.8.4+4
+  firebase_storage: ^10.2.1
   cached_network_image: ^3.1.0+1
 
 dev_dependencies:

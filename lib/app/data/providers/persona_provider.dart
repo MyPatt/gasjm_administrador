@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
-import 'package:gasjm/app/data/models/persona_model.dart';
+import 'package:gasjm/app/data/models/persona_model.dart';import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-
+import 'package:path/path.dart' as path;
 class PersonaProvider {
   //Instancia de firestore
   final _firestoreInstance = FirebaseFirestore.instance;
+   //Instancia de storage
+  FirebaseStorage get _storageInstance  => FirebaseStorage.instance;
 
   //Par devolver el usuario actual conectado
   User get usuarioActual {
@@ -32,11 +36,19 @@ class PersonaProvider {
   }
 
   //
-  Future<void> updatePersona({required PersonaModel persona}) async {
-    await _firestoreInstance
+  Future<void> updatePersona({required PersonaModel persona,File? image}) async {
+         await _firestoreInstance
         .collection('persona')
         .doc(persona.uidPersona)
         .update(persona.toMap());
+   if (image != null) {
+      final imagePath = '${usuarioActual.uid}/perfil/${path.basename(image.path)}';
+      final storageRef = _storageInstance.ref(imagePath);
+      await storageRef.putFile(image);
+      final url = await storageRef.getDownloadURL();
+    _firestoreInstance.collection("persona").doc(usuarioActual.uid).update({"foto": url}); 
+    }
+  
   }
 
   //

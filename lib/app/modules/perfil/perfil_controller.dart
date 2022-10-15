@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
@@ -70,6 +71,7 @@ class PerfilController extends GetxController {
   //USER IMAGE
   final picker = ImagePicker();
   Rx<File?> pickedImage = Rx(null);
+  Rx<bool> existeImagenPerfil = false.obs;
 
   /* METODOS PROPIOS */
   @override
@@ -105,8 +107,12 @@ class PerfilController extends GetxController {
       cedulaTextoController.text = usuario?.cedulaPersona ?? '';
       nombreTextoController.text = usuario?.nombrePersona ?? '';
       apellidoTextoController.text = usuario?.apellidoPersona ?? '';
-      ;
+      //
+      if (usuario?.fotoPersona != null) {
+        existeImagenPerfil.value = true;
+      }
 
+      //
       fechaNacimientoTextoController.text = usuario?.fechaNaciPersona ?? '';
       celularTextoController.text = usuario?.celularPersona ?? '';
       correoElectronicoTextoController.text = usuario?.correoPersona ?? '';
@@ -196,7 +202,6 @@ class PerfilController extends GetxController {
     final String nombrePersona = nombreTextoController.text;
     final String apellidoPersona = apellidoTextoController.text;
     final String? correoPersona = correoElectronicoTextoController.text;
-    final String? fotoPersona = '';
 
     final String? celularPersona = celularTextoController.text;
     final String? fechaNaciPersona = fechaNacimientoTextoController.text;
@@ -219,14 +224,14 @@ class PerfilController extends GetxController {
           idPerfil: idPerfil,
           contrasenaPersona: contrasenaPersona,
           correoPersona: correoPersona,
-          fotoPersona: fotoPersona,
           direccionPersona: direccionPersona,
           celularPersona: celularPersona,
           fechaNaciPersona: fechaNaciPersona,
           estadoPersona: usuario?.estadoPersona);
 
 //En firebase
-      await _personaRepository.updatePersona(persona: usuarioDatos);
+      await _personaRepository.updatePersona(
+          persona: usuarioDatos, image: pickedImage.value);
 
       //
 
@@ -248,6 +253,8 @@ class PerfilController extends GetxController {
       } else {
         errorDeDatos.value = "Se produjo un error inesperado.";
       }
+    } on FirebaseException catch (e) {
+      errorDeDatos.value = e.message;
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',
@@ -340,6 +347,7 @@ class PerfilController extends GetxController {
 
   void setImage(File imageFile) async {
     pickedImage.value = imageFile;
+    
     //  emit(state.copyWith(pickedImage: imageFile));
   }
 }

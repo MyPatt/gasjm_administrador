@@ -131,7 +131,16 @@ class PersonaProvider {
     }
     return null;
   }
-
+  Future<String?> getImagenUsuarioActual() async {
+    final snapshot = await _firestoreInstance
+        .collection('persona')
+        .doc(usuarioActual.uid)
+        .collection("foto").get();
+    if (snapshot.docs.isNotEmpty) {
+      return snapshot.docs.first.data().toString();
+    }
+    return null;
+  }
   updateEstadoPersona({required String uid, required String estado}) async {
     await _firestoreInstance
         .collection('persona')

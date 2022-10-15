@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/providers/persona_provider.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart'; 
 
 class PersonaRepositoryImpl extends PersonaRepository {
   final _provider = Get.find<PersonaProvider>();
@@ -45,6 +45,9 @@ class PersonaRepositoryImpl extends PersonaRepository {
 
   @override
   Future<PersonaModel?> getUsuario() => _provider.getUsuarioActual();
+
+@override
+  Future<String?> getImagenUsuarioActual()=>_provider.getImagenUsuarioActual();
 
   @override
   Future<void> updateEstadoPersona(

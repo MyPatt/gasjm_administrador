@@ -57,10 +57,15 @@ class PedidosController extends GetxController {
   RxString valorSeleccionadoItemDeFiltro = 'Todos'.obs;
   RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
 
-  /* METODOS PROPIOS DEL CONTROLADOR*/
-
+//
+  String? imagenUsuario;
+  //
+  /* METODOS PROPIOS */
   @override
-  void onInit() {
+  Future<void> onInit() async {
+    super.onInit();
+
+   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
     cargarListaPedidosEnEspera();
     valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =

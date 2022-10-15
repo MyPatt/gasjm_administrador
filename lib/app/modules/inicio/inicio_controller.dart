@@ -45,11 +45,15 @@ class InicioController extends GetxController {
   //Marcador para el repartidor actual
   MarkerId _marcadorRepartidorId = const MarkerId("MakerIdRepartidor");
   late BitmapDescriptor iconoMarcadorRepartidor;
-/*METODOS PROPIOS DEL CONTROLADOR */
-
+//
+  String? imagenUsuario;
+  //
+  /* METODOS PROPIOS */
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+
+   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
     _cargarDatosIniciales();
   }
 

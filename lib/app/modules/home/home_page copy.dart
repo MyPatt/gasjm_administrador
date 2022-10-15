@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       builder: (_) => Scaffold(
         backgroundColor: AppTheme.background,
         //Menú deslizable a la izquierda con opciones del  usuario
-        drawer: const MenuLateral(modo: 'Modo repartidor',),
+        drawer: const MenuLateral(modo: 'Modo repartidor', foto: CircleAvatar(),),
         //Barra de herramientas de opciones para  agenda y  historial
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,

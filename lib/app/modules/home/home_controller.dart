@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
-import 'package:gasjm/app/routes/app_routes.dart'; 
+import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -18,7 +19,19 @@ class HomeController extends GetxController {
           '/' +
           fechaInicial.value.year.toString())
       .obs;
+//
+  final _personaRepository = Get.find<PersonaRepository>();
+  String? imagenUsuario;
+  //
+  /* METODOS PROPIOS */
+  @override
+  Future<void> onInit() async {
+    super.onInit();
 
+   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
+  }
+
+//
   selectedIndex(int index) {
     isSelectedIndex.value = index;
   }
@@ -55,7 +68,8 @@ class HomeController extends GetxController {
             arguments: categories[isSelectedIndex.value]);
         break;
       case 1:
-        Get.toNamed(AppRoutes.cliente,arguments: categories[isSelectedIndex.value]);
+        Get.toNamed(AppRoutes.cliente,
+            arguments: categories[isSelectedIndex.value]);
         break;
       default:
     }

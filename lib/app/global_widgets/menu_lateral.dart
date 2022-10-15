@@ -10,8 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //Menú deslizable a la izquierda con opciones del  usuario
 class MenuLateral extends StatelessWidget {
-  const MenuLateral({key, required this.modo}) : super(key: key);
+  const MenuLateral({key, required this.modo, required this.foto}) : super(key: key);
   final String modo;
+  final Widget foto;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class MenuLateral extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          _buildDrawerHeader(),
+          _buildDrawerHeader(foto),
           const SizedBox(
             height: 15,
           ),
@@ -105,7 +106,7 @@ class MenuLateral extends StatelessWidget {
   }
 }
 
-Widget _buildDrawerHeader() {
+Widget _buildDrawerHeader(Widget foto) {
   return DrawerHeader(
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
@@ -121,18 +122,19 @@ Widget _buildDrawerHeader() {
             border: Border(bottom: BorderSide.none, top: BorderSide.none),
           ),
         ),
-        const Align(
+         Align(
           alignment: Alignment.bottomCenter,
           child: SizedBox(
             child: CircleAvatar(
               radius: 40.0,
               backgroundColor: Colors.white,
-              child: CircleAvatar(
+              child: foto
+             /* CircleAvatar(
                 
                 radius: 38.0,
                 backgroundImage: NetworkImage(
                     'https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY'),
-              ),
+              ),*/
             ),
           ),
         ),

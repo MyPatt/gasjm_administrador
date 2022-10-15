@@ -50,11 +50,15 @@ class IrController extends GetxController {
   final posicionMarcadorRepartidor = const LatLng(-0.2053476, -79.4894387).obs;
   Position? _lastPosition;
   final _marcadorRepartidorId = const MarkerId("MakerIdRepartidor");
-/*METODOS PROPIOS DEL CONTROLADOR */
-
+//
+  String? imagenUsuario;
+  //
+  /* METODOS PROPIOS */
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+
+   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
     _cargarDatosIniciales();
   }
 

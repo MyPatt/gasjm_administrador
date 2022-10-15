@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       builder: (_) => Scaffold(
         backgroundColor: AppTheme.background,
         //Menú deslizable a la izquierda con opciones del  usuario
-        drawer: const MenuLateral(modo: 'Modo repartidor',),
+        drawer:   MenuLateral(modo: 'Modo repartidor', foto: buildImage(_.imagenUsuario),),
         //Barra de herramientas de opciones
         appBar: AppBar(
           backgroundColor: AppTheme.blueBackground,
@@ -112,5 +112,24 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+  Widget buildImage(String? imagenPerfil) {
+ return  imagenPerfil == null
+       ?const CircleAvatar(
+            backgroundColor: AppTheme.light,
+            radius: 38.0,
+            child: CircleAvatar(
+                backgroundColor: AppTheme.light,
+                radius: 35.0,
+                backgroundImage: AssetImage(
+                  'assets/icons/placehoderperfil.png',
+                )),
+          ):
+           CircleAvatar(
+            backgroundColor: AppTheme.light,
+           radius: 38.0,
+            backgroundImage: NetworkImage(imagenPerfil));
+
+   
   }
 }

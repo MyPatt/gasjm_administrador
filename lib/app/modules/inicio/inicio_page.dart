@@ -17,7 +17,7 @@ class InicioPage extends StatelessWidget {
     return GetBuilder<InicioController>(
         builder: (_) => Scaffold(
             //Menú deslizable a la izquierda con opciones del  usuario
-            drawer: const MenuLateral(modo: 'Modo administrador',),
+            drawer:  MenuLateral(modo: 'Modo administrador', foto: buildImage(_.imagenUsuario),),
             //Barra de herramientas de opciones para  agenda y  historial
             appBar: AppBar(
               backgroundColor: AppTheme.blueBackground,
@@ -38,5 +38,24 @@ class InicioPage extends StatelessWidget {
             ]),
             //Navegacion del repartidor
             bottomNavigationBar: const BottomNavigationRepartidor()));
+  }
+ Widget buildImage(String? imagenPerfil) {
+ return  imagenPerfil == null
+       ?const CircleAvatar(
+            backgroundColor: AppTheme.light,
+            radius: 38.0,
+            child: CircleAvatar(
+                backgroundColor: AppTheme.light,
+                radius: 35.0,
+                backgroundImage: AssetImage(
+                  'assets/icons/placehoderperfil.png',
+                )),
+          ):
+           CircleAvatar(
+            backgroundColor: AppTheme.light,
+           radius: 38.0,
+            backgroundImage: NetworkImage(imagenPerfil));
+
+   
   }
 }

@@ -58,14 +58,14 @@ class PedidosController extends GetxController {
   RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
 
 //
-  String? imagenUsuario;
+  RxString imagenUsuario = ''.obs;
   //
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
     super.onInit();
 
-   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
+    Future.wait([_cargarFotoPerfil()]);
     cargarListaPedidosEnEspera();
     valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =
@@ -77,7 +77,9 @@ class PedidosController extends GetxController {
   }
 
   /* METODOS PARA PEDIDOS EN ESPERA */
-
+  Future<void> _cargarFotoPerfil() async {
+    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
+  }
   void cargarListaPedidosEnEspera() async {
     try {
       cargandoPedidosEnEspera.value = true;

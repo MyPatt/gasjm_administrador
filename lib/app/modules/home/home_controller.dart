@@ -5,9 +5,6 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  RxBool _isLoading = true.obs;
-  RxBool get isLoading => _isLoading;
-
   RxInt isSelectedIndex = 0.obs;
   RxInt isSelectedIndexFecha = 0.obs;
 
@@ -21,14 +18,17 @@ class HomeController extends GetxController {
       .obs;
 //
   final _personaRepository = Get.find<PersonaRepository>();
-  String? imagenUsuario;
+  RxString imagenUsuario=''.obs;
   //
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
     super.onInit();
+    Future.wait([_cargarFotoPerfil()]);
+  }
 
-   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
+  Future<void> _cargarFotoPerfil() async {
+    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
   }
 
 //

@@ -8,27 +8,26 @@ import 'package:gasjm/app/modules/home/widgets/category%20copy.dart';
 import 'package:gasjm/app/modules/home/widgets/category.dart';
 import 'package:gasjm/app/global_widgets/repartidor/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
+ 
+ @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (_) => Scaffold(
         backgroundColor: AppTheme.background,
         //Menú deslizable a la izquierda con opciones del  usuario
-        drawer:   MenuLateral(modo: 'Modo repartidor', foto: buildImage(_.imagenUsuario),),
+        drawer: MenuLateral(
+          modo: 'Modo repartidor',
+          foto:  Obx(()=> buildImage(_.imagenUsuario.value)),
+        ),
         //Barra de herramientas de opciones
         appBar: AppBar(
-          backgroundColor: AppTheme.blueBackground,
+          backgroundColor:AppTheme.blueBackground,
           actions: const [MenuAppBar()],
           title: const Text('GasJ&M'),
         ),
@@ -113,9 +112,12 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   Widget buildImage(String? imagenPerfil) {
- return  imagenPerfil == null
-       ?const CircleAvatar(
+    print("-*-");
+    print(imagenPerfil);
+    return imagenPerfil == null
+        ? const CircleAvatar(
             backgroundColor: AppTheme.light,
             radius: 38.0,
             child: CircleAvatar(
@@ -124,12 +126,10 @@ class _HomePageState extends State<HomePage> {
                 backgroundImage: AssetImage(
                   'assets/icons/placehoderperfil.png',
                 )),
-          ):
-           CircleAvatar(
+          )
+        : CircleAvatar(
             backgroundColor: AppTheme.light,
-           radius: 38.0,
+            radius: 38.0,
             backgroundImage: NetworkImage(imagenPerfil));
-
-   
   }
 }

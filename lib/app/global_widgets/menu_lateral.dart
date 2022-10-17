@@ -128,7 +128,7 @@ Widget _buildDrawerHeader(Widget foto) {
             child: CircleAvatar(
               radius: 40.0,
               backgroundColor: Colors.white,
-              child: foto
+              child: (foto)
              /* CircleAvatar(
                 
                 radius: 38.0,

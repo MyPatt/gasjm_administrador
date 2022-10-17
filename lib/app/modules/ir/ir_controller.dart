@@ -51,14 +51,14 @@ class IrController extends GetxController {
   Position? _lastPosition;
   final _marcadorRepartidorId = const MarkerId("MakerIdRepartidor");
 //
-  String? imagenUsuario;
+  RxString imagenUsuario = ''.obs;
   //
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
     super.onInit();
 
-   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
+    Future.wait([_cargarFotoPerfil()]);
     _cargarDatosIniciales();
   }
 
@@ -70,6 +70,9 @@ class IrController extends GetxController {
   }
 
 /*METODO PARA CARGAR DATOS DE INICIO */
+  Future<void> _cargarFotoPerfil() async {
+    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
+  }
   void _cargarDatosIniciales() {
     _getUsuarioActual();
     _getLocalizacionActual();
@@ -136,8 +139,12 @@ class IrController extends GetxController {
 
     //Obtener la lista de los pedidos en espera y aceptados
 
-    final listaPedidosAceptados = await _pedidoRepository
-        .getPedidosPorDosQueries(field1: "idEstadoPedido", dato1: "estado2",field2: "diaEntregaPedido", dato2: "Ahora");
+    final listaPedidosAceptados =
+        await _pedidoRepository.getPedidosPorDosQueries(
+            field1: "idEstadoPedido",
+            dato1: "estado2",
+            field2: "diaEntregaPedido",
+            dato2: "Ahora");
 
     listaPedidosAceptados?.forEach((elemento) async {
       final nombreCliente = await _personaRepository.getNombresPersonaPorCedula(

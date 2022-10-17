@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/map_style.dart'; 
+import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
@@ -46,14 +46,14 @@ class InicioController extends GetxController {
   MarkerId _marcadorRepartidorId = const MarkerId("MakerIdRepartidor");
   late BitmapDescriptor iconoMarcadorRepartidor;
 //
-  String? imagenUsuario;
+  RxString imagenUsuario = ''.obs;
   //
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
     super.onInit();
 
-   imagenUsuario=await _personaRepository.getImagenUsuarioActual();
+    Future.wait([_cargarFotoPerfil()]);
     _cargarDatosIniciales();
   }
 
@@ -65,6 +65,9 @@ class InicioController extends GetxController {
   }
 
 /*METODO PARA CARGAR DATOS DE INICIO */
+  Future<void> _cargarFotoPerfil() async {
+    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
+  }
   void _cargarDatosIniciales() {
     //
     _gpsEnabled = true;

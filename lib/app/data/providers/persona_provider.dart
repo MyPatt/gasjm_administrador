@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
-import 'package:gasjm/app/data/models/persona_model.dart';import 'package:firebase_storage/firebase_storage.dart';
+import 'package:gasjm/app/data/models/persona_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as path;
+
 class PersonaProvider {
   //Instancia de firestore
   final _firestoreInstance = FirebaseFirestore.instance;
-   //Instancia de storage
-  FirebaseStorage get _storageInstance  => FirebaseStorage.instance;
+  //Instancia de storage
+  FirebaseStorage get _storageInstance => FirebaseStorage.instance;
 
   //Par devolver el usuario actual conectado
   User get usuarioActual {
@@ -36,19 +38,23 @@ class PersonaProvider {
   }
 
   //
-  Future<void> updatePersona({required PersonaModel persona,File? image}) async {
-         await _firestoreInstance
+  Future<void> updatePersona(
+      {required PersonaModel persona, File? image}) async {
+    await _firestoreInstance
         .collection('persona')
         .doc(persona.uidPersona)
         .update(persona.toMap());
-   if (image != null) {
-      final imagePath = '${usuarioActual.uid}/perfil/${path.basename(image.path)}';
+    if (image != null) {
+      final imagePath =
+          '${usuarioActual.uid}/perfil/${path.basename(image.path)}';
       final storageRef = _storageInstance.ref(imagePath);
       await storageRef.putFile(image);
       final url = await storageRef.getDownloadURL();
-    _firestoreInstance.collection("persona").doc(usuarioActual.uid).update({"foto": url}); 
+      _firestoreInstance
+          .collection("persona")
+          .doc(usuarioActual.uid)
+          .update({"foto": url});
     }
-  
   }
 
   //
@@ -131,20 +137,35 @@ class PersonaProvider {
     }
     return null;
   }
+
   Future<String?> getImagenUsuarioActual() async {
     final snapshot = await _firestoreInstance
         .collection('persona')
         .doc(usuarioActual.uid)
-        .collection("foto").get();
+        .collection("foto")
+        .get();
     if (snapshot.docs.isNotEmpty) {
-      return snapshot.docs.first.data().toString();
+      var r = snapshot.docs.first.data().toString();
+      print("\\\\\\");
+      print(r);
+      return r;
     }
     return null;
   }
+
   updateEstadoPersona({required String uid, required String estado}) async {
     await _firestoreInstance
         .collection('persona')
         .doc(uid)
         .update({"estado": estado});
+  }
+
+  updateContrasenaPersona(
+      {required String uid, required String contrasena}) async {
+    await _firestoreInstance
+        .collection('persona')
+        .doc(uid)
+        .update({"contrasena": contrasena});
+   await FirebaseAuth.instance.currentUser?.updatePassword(contrasena);
   }
 }

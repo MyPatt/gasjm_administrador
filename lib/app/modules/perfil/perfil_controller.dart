@@ -28,10 +28,19 @@ class PerfilController extends GetxController {
   final fechaNacimientoTextoController = TextEditingController();
   final celularTextoController = TextEditingController();
   final correoElectronicoTextoController = TextEditingController();
-  final contrasenaTextoController = TextEditingController();
-  //Variables para ocultar el texto de la contrasena
-  final RxBool _contrasenaOculta = true.obs;
-  RxBool get contrasenaOculta => _contrasenaOculta;
+
+  //Variables para form contrasena
+  final contrasenaActualTextoController = TextEditingController();
+  final contrasenaNueva1TextoController = TextEditingController();
+  final contrasenaNueva2TextoController = TextEditingController();
+  //ocultar el texto de la contrasena
+  final RxBool _contrasenaActualOculta = true.obs;
+  RxBool get contrasenaActualOculta => _contrasenaActualOculta;
+  final RxBool _contrasenaNuevaOculta1 = true.obs;
+  RxBool get contrasenaNuevaOculta1 => _contrasenaNuevaOculta1;
+  final RxBool _contrasenaNuevaOculta2 = true.obs;
+  RxBool get contrasenaNuevaOculta2 => _contrasenaNuevaOculta2;
+  //
   PersonaModel? _usuario = null;
   PersonaModel? get usuario => _usuario;
 
@@ -49,6 +58,11 @@ class PerfilController extends GetxController {
   final errorDeDatos = Rx<String?>(null);
   //Se cago si o no
   final cargandoDatos = RxBool(false);
+
+  //Existe algun error si o no
+  final errorDeContrasena = Rx<String?>(null);
+  //Se cago si o no
+  final cargandoDeContrasena = RxBool(false);
 
   /* Variables para google maps */
   TextEditingController direccionAuxTextoController = TextEditingController();
@@ -95,7 +109,7 @@ class PerfilController extends GetxController {
     fechaNacimientoTextoController.clear();
     celularTextoController.clear();
     correoElectronicoTextoController.clear();
-    contrasenaTextoController.clear();
+    contrasenaActualTextoController.clear();
   }
 
   /* METODOS PARA CLIENTES */
@@ -124,8 +138,8 @@ class PerfilController extends GetxController {
       _posicionInicialCliente.value = LatLng(
           usuario?.direccionPersona?.latitud ?? 0,
           usuario?.direccionPersona?.longitud ?? 0);
-      contrasenaTextoController.text = usuario?.contrasenaPersona ?? '';
-      ;
+      //contrasenaActualTextoController.text = usuario?.contrasenaPersona ?? '';
+
     } on FirebaseException {
       Mensajes.showGetSnackbar(
           titulo: "Error",
@@ -169,11 +183,22 @@ class PerfilController extends GetxController {
   }
 
   //
-  //Visualizar texto de lacontrasena
-  void mostrarContrasena() {
-    _contrasenaOculta.value = _contrasenaOculta.value ? false : true;
+  //Visualizar texto de la contrasena
+
+  mostrarContrasenaActual() {
+    _contrasenaActualOculta.value =
+        _contrasenaActualOculta.value ? false : true;
   }
 
+  mostrarContrasenaNueva1() {
+    contrasenaNuevaOculta1.value = contrasenaNuevaOculta1.value ? false : true;
+  }
+
+  mostrarContrasenaNueva2() {
+    contrasenaNuevaOculta2.value = contrasenaNuevaOculta2.value ? false : true;
+  }
+
+  //
   Future<String> _getDireccionXLatLng(LatLng posicion) async {
     print(posicion);
     List<Placemark> placemark =
@@ -207,7 +232,7 @@ class PerfilController extends GetxController {
     final String? fechaNaciPersona = fechaNacimientoTextoController.text;
     //final String? estadoPersona = cliente.estadoPersona;
     final String idPerfil = usuario?.idPerfil ?? 'administrador';
-    final String contrasenaPersona = contrasenaTextoController.text;
+    final String contrasenaPersona = contrasenaActualTextoController.text;
 
 //
     try {
@@ -238,7 +263,7 @@ class PerfilController extends GetxController {
       //Mensaje de ingreso
       Mensajes.showGetSnackbar(
           titulo: 'Mensaje',
-          mensaje: '¡Se actualizo con éxito!',
+          mensaje: '¡Se guardo con éxito!',
           icono: const Icon(
             Icons.save_outlined,
             color: Colors.white,
@@ -347,7 +372,53 @@ class PerfilController extends GetxController {
 
   void setImage(File imageFile) async {
     pickedImage.value = imageFile;
-    
+
     //  emit(state.copyWith(pickedImage: imageFile));
+  }
+
+  Future<void> restablecerContrasena() async {
+    final contrasenaActual = contrasenaActualTextoController.text;
+    final contrasenaNueva1 = contrasenaNueva1TextoController.text;
+    final contrasenaNueva2 = contrasenaNueva2TextoController.text;
+    try {
+      cargandoDeContrasena.value = true;
+      errorDeContrasena.value = null;
+      if (contrasenaActual == usuario?.contrasenaPersona) {
+        if (contrasenaNueva1 == contrasenaNueva2) {
+          //update
+          await _personaRepository.updateContrasenaPersona(
+              uid: _usuario?.uidPersona ?? '', contrasena: contrasenaNueva1);
+          //Mensaje de ingreso
+          print("object");
+          Mensajes.showGetSnackbar(
+              titulo: 'Mensaje',
+              mensaje: '¡Se guardo con éxito!',
+              icono: const Icon(
+                Icons.save_outlined,
+                color: Colors.white,
+              ));
+        } else {
+          errorDeContrasena.value = "Las contraseñas no coinciden";
+        }
+      } else {
+        errorDeContrasena.value = "Contraseña actual incorrecta";
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        errorDeContrasena.value = 'La contraseña es demasiado débil';
+      }
+    } catch (e) {
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          duracion: const Duration(seconds: 4),
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
+     await Future.delayed(const Duration(seconds: 2));
+    cargandoDeContrasena.value = false;
   }
 }

@@ -5,7 +5,7 @@ import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
-import 'package:gasjm/app/global_widgets/primary_button.dart'; 
+import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:get/get.dart';
 
 class FormContrasena extends StatelessWidget {
@@ -34,139 +34,163 @@ class FormContrasena extends StatelessWidget {
                     child: Padding(
                         padding:
                             EdgeInsets.only(bottom: constraint.maxHeight * .1),
-                        child: Form(
-                          key: _.claveFormContrasena,
-                          child: CustomScrollView(slivers: [
-                            SliverFillRemaining(
-                              hasScrollBody: false,
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Obx(
-                                      () => InputText(
-                                        iconPrefix: Icons.lock_outlined,
-                                        keyboardType: TextInputType.text,
-                                        obscureText: _.contrasenaOculta.value,
-                                        textInputAction: TextInputAction.done,
-                                        controller: _.contrasenaTextoController,
-                                        validator: Validacion.validarContrasena,
-                                        maxLines: 1,
-                                        labelText: "Contraseña actual",
-                                        suffixIcon: GestureDetector(
-                                          onTap: _.mostrarContrasena,
-                                          child: Icon(
-                                            _.contrasenaOculta.value
-                                                ? Icons.visibility_outlined
-                                                : Icons.visibility_off_outlined,
-                                            color: AppTheme.light,
+                        child: Obx(
+                          () => AbsorbPointer(
+                            absorbing: _.cargandoDeContrasena.value,
+                            child: Form(
+                              key: _.claveFormContrasena,
+                              child: CustomScrollView(slivers: [
+                                SliverFillRemaining(
+                                  hasScrollBody: false,
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Obx(
+                                          () => InputText(
+                                            iconPrefix: Icons.lock_outlined,
+                                            keyboardType: TextInputType.text,
+                                            obscureText:
+                                                _.contrasenaActualOculta.value,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: _
+                                                .contrasenaActualTextoController,
+                                            validator:
+                                                Validacion.validarContrasena,
+                                            maxLines: 1,
+                                            labelText: "Contraseña actual",
+                                            suffixIcon: GestureDetector(
+                                              onTap: _.mostrarContrasenaActual,
+                                              child: Icon(
+                                                _.contrasenaActualOculta.value
+                                                    ? Icons.visibility_outlined
+                                                    : Icons
+                                                        .visibility_off_outlined,
+                                                color: AppTheme.light,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height:
-                                            Responsive.getScreenSize(context)
+                                        SizedBox(
+                                            height: Responsive.getScreenSize(
+                                                        context)
                                                     .height *
                                                 .02),
-                                    Obx(
-                                      () => InputText(
-                                        iconPrefix: Icons.lock_outlined,
-                                        keyboardType: TextInputType.text,
-                                        obscureText: _.contrasenaOculta.value,
-                                        textInputAction: TextInputAction.done,
-                                        controller: _.contrasenaTextoController,
-                                        validator: Validacion.validarContrasena,
-                                        maxLines: 1,
-                                        labelText: "Contraseña nueva",
-                                        suffixIcon: GestureDetector(
-                                          onTap: _.mostrarContrasena,
-                                          child: Icon(
-                                            _.contrasenaOculta.value
-                                                ? Icons.visibility_outlined
-                                                : Icons.visibility_off_outlined,
-                                            color: AppTheme.light,
+                                        Obx(
+                                          () => InputText(
+                                            iconPrefix: Icons.lock_reset,
+                                            keyboardType: TextInputType.text,
+                                            obscureText:
+                                                _.contrasenaNuevaOculta1.value,
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            controller: _
+                                                .contrasenaNueva1TextoController,
+                                            validator:
+                                                Validacion.validarContrasena,
+                                            maxLines: 1,
+                                            labelText: "Contraseña nueva",
+                                            suffixIcon: GestureDetector(
+                                              onTap: _.mostrarContrasenaNueva1,
+                                              child: Icon(
+                                                _.contrasenaNuevaOculta1.value
+                                                    ? Icons.visibility_outlined
+                                                    : Icons
+                                                        .visibility_off_outlined,
+                                                color: AppTheme.light,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height:
-                                            Responsive.getScreenSize(context)
+                                        SizedBox(
+                                            height: Responsive.getScreenSize(
+                                                        context)
                                                     .height *
                                                 .02),
-                                    Obx(
-                                      () => InputText(
-                                        iconPrefix: Icons.lock_outlined,
-                                        keyboardType: TextInputType.text,
-                                        obscureText: _.contrasenaOculta.value,
-                                        textInputAction: TextInputAction.done,
-                                        controller: _.contrasenaTextoController,
-                                        validator: Validacion.validarContrasena,
-                                        maxLines: 1,
-                                        labelText: "Contraseña nueva",
-                                        suffixIcon: GestureDetector(
-                                          onTap: _.mostrarContrasena,
-                                          child: Icon(
-                                            _.contrasenaOculta.value
-                                                ? Icons.visibility_outlined
-                                                : Icons.visibility_off_outlined,
-                                            color: AppTheme.light,
+                                        Obx(
+                                          () => InputText(
+                                            iconPrefix: Icons.lock_reset,
+                                            keyboardType: TextInputType.text,
+                                            obscureText:
+                                                _.contrasenaNuevaOculta2.value,
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            controller: _
+                                                .contrasenaNueva2TextoController,
+                                            validator:
+                                                Validacion.validarContrasena,
+                                            maxLines: 1,
+                                            labelText: "Contraseña nueva",
+                                            suffixIcon: GestureDetector(
+                                              onTap: _.mostrarContrasenaNueva2,
+                                              child: Icon(
+                                                _.contrasenaNuevaOculta2.value
+                                                    ? Icons.visibility_outlined
+                                                    : Icons
+                                                        .visibility_off_outlined,
+                                                color: AppTheme.light,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        height:
-                                            Responsive.getScreenSize(context)
+                                        SizedBox(
+                                            height: Responsive.getScreenSize(
+                                                        context)
                                                     .height *
                                                 .02),
-                                    Obx(() => Visibility(
-                                        visible:
-                                            _.errorDeDatos.value?.isNotEmpty ==
+                                        Obx(() => Visibility(
+                                            visible: _.errorDeContrasena.value
+                                                    ?.isNotEmpty ==
                                                 true,
-                                        child: TextDescription(
-                                          text: _.errorDeDatos.value ?? '',
-                                          color: Colors.red,
-                                        ))),
+                                            child: TextDescription(
+                                              text: _.errorDeContrasena.value ??
+                                                  '',
+                                              color: Colors.red,
+                                            ))),
 
-                                    SizedBox(
-                                        height:
-                                            Responsive.getScreenSize(context)
+                                        SizedBox(
+                                            height: Responsive.getScreenSize(
+                                                        context)
                                                     .height *
                                                 .05),
-                                    Obx(() {
-                                      final estadoProceso =
-                                          _.cargandoDatos.value;
-                                      return Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          PrimaryButton(
-                                              texto: "Guardar",
-                                              onPressed: () {
-                                                if (_.claveFormContrasena
-                                                        .currentState
-                                                        ?.validate() ==
-                                                    true) {
-                                                  //  _.registrarAdministrador();
-                                                }
-                                              }),
-                                          if (estadoProceso)
-                                            const CircularProgressIndicator(
-                                                backgroundColor: Colors.white),
-                                        ],
-                                      );
-                                    }),
-                                    //
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
+                                        Obx(() {
+                                          final estadoProceso =
+                                              _.cargandoDeContrasena.value;
+                                          return Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              PrimaryButton(
+                                                  texto: "Guardar",
+                                                  onPressed: () {
+                                                    if (_.claveFormContrasena
+                                                            .currentState
+                                                            ?.validate() ==
+                                                        true) {
+                                                      _.restablecerContrasena();
+                                                    }
+                                                  }),
+                                              if (estadoProceso)
+                                                const CircularProgressIndicator(
+                                                    backgroundColor:
+                                                        Colors.white),
+                                            ],
+                                          );
+                                        }),
+                                        //
+                                        SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
                                                 .05),
-                                  ]),
+                                      ]),
+                                ),
+                              ]),
                             ),
-                          ]),
+                          ),
                         )),
                   );
                 },

@@ -53,4 +53,9 @@ class PersonaRepositoryImpl extends PersonaRepository {
   Future<void> updateEstadoPersona(
           {required String uid, required String estado}) =>
       _provider.updateEstadoPersona(uid: uid, estado: estado);
+
+        @override
+  Future<void> updateContrasenaPersona(
+          {required String uid, required String contrasena}) =>
+      _provider.updateContrasenaPersona(uid: uid, contrasena: contrasena);
 }

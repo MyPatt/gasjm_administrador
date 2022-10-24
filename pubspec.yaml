@@ -10,7 +10,9 @@ environment:
 
 dependencies:
   bloc: ^8.0.3
+  cached_network_image: ^3.1.0+1
   charts_flutter: ^0.12.0
+  charts_flutter_new: ^0.12.0
   cloud_firestore: ^1.0.7
   date_field: ^3.0.1
   dio: null
@@ -19,6 +21,7 @@ dependencies:
   firebase_core: ^1.4.0
   firebase_database: ^7.2.2
   firebase_dynamic_links: ^2.0.0
+  firebase_storage: ^10.2.1
   fl_chart: ^0.40.5
   flutter:
     sdk: flutter
@@ -38,6 +41,7 @@ dependencies:
   get: ^4.1.4
   google_maps_flutter: ^2.0.6
   google_sign_in: ^5.0.3
+  image_picker: ^0.8.4+4
   intl: null
   location: ^4.3.0
   permission_handler: ^8.1.6
@@ -45,9 +49,6 @@ dependencies:
   provider: ^6.0.0
   rating_dialog: ^2.0.1
   shared_preferences: ^2.0.6
-  image_picker: ^0.8.4+4
-  firebase_storage: ^10.2.1
-  cached_network_image: ^3.1.0+1
 
 dev_dependencies:
   change_app_package_name: ^0.1.3

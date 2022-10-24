@@ -22,7 +22,7 @@ class MenuAppBar extends StatelessWidget {
                       // Este método requiere del contexto y la ruta
                       Navigator.push(context, route);
                     },
-                    icon: const Icon(Icons.history_outlined)),
+                    icon: const Icon(Icons.notifications_none_outlined)),
                 const SizedBox(
                   width: 10,
                 ),

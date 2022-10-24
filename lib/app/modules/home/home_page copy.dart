@@ -3,7 +3,7 @@ import 'package:gasjm/app/global_widgets/content_title.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart'; 
 import 'package:gasjm/app/modules/home/widgets/header.dart'; 
 
-import 'package:gasjm/app/global_widgets/repartidor/menu_appbar.dart';
+import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

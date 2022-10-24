@@ -18,8 +18,11 @@ class HomeController extends GetxController {
       .obs;
 //
   final _personaRepository = Get.find<PersonaRepository>();
-  RxString imagenUsuario=''.obs;
-  //
+  RxString imagenUsuario = ''.obs;
+
+  //Variables para el chart de Pedidos
+  //   final List<PricePoint> points;
+
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
@@ -28,7 +31,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> _cargarFotoPerfil() async {
-    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
+    imagenUsuario.value =
+        await _personaRepository.getImagenUsuarioActual() ?? '';
   }
 
 //
@@ -53,11 +57,7 @@ class HomeController extends GetxController {
     );
 
     if (d != null) {
-      fechaInicial.value = d;
-      //
-      print(selectedDate.value);
-    } else {
-      print(d.isBlank);
+      fechaInicial.value = d; 
     }
   }
 
@@ -75,3 +75,5 @@ class HomeController extends GetxController {
     }
   }
 }
+
+/* CHART DE PEDIDOS */

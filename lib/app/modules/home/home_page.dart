@@ -2,20 +2,21 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
+import 'package:gasjm/app/data/models/puntos_model.dart';
 import 'package:gasjm/app/global_widgets/content_title.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:gasjm/app/modules/home/widgets/category%20copy.dart';
 import 'package:gasjm/app/modules/home/widgets/category.dart';
-import 'package:gasjm/app/global_widgets/repartidor/menu_appbar.dart';
+import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/modules/home/widgets/chart_pedidos.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
- 
- @override
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (_) => Scaffold(
@@ -23,11 +24,11 @@ class HomePage extends StatelessWidget {
         //Menú deslizable a la izquierda con opciones del  usuario
         drawer: MenuLateral(
           modo: 'Modo repartidor',
-          foto:  Obx(()=> buildImage(_.imagenUsuario.value)),
+          foto: Obx(() => buildImage(_.imagenUsuario.value)),
         ),
         //Barra de herramientas de opciones
         appBar: AppBar(
-          backgroundColor:AppTheme.blueBackground,
+          backgroundColor: AppTheme.blueBackground,
           actions: const [MenuAppBar()],
           title: const Text('GasJ&M'),
         ),
@@ -76,29 +77,10 @@ class HomePage extends StatelessWidget {
                           const SizedBox(
                             height: 25,
                           ),
-                          SizedBox(
-                            width: double.infinity,
-                            height:
-                                Responsive.getScreenSize(context).height * .54,
-                            child: LineChart(
-                              LineChartData(
-                                  borderData: FlBorderData(show: false),
-                                  lineBarsData: [
-                                    LineChartBarData(colors: [
-                                      AppTheme.blueBackground
-                                    ], spots: [
-                                      const FlSpot(0, 1),
-                                      const FlSpot(1, 3),
-                                      const FlSpot(2, 10),
-                                      const FlSpot(3, 7),
-                                      const FlSpot(4, 12),
-                                      const FlSpot(5, 13),
-                                      const FlSpot(6, 17),
-                                      const FlSpot(7, 15),
-                                      const FlSpot(8, 20)
-                                    ])
-                                  ]),
-                            ),
+//ChartPedido(puntos: pedidoPuntos),
+                          ChartPedido(),
+                          const SizedBox(
+                            height: 25,
                           ),
                         ],
                       ),
@@ -114,8 +96,6 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildImage(String? imagenPerfil) {
-    print("-*-");
-    print(imagenPerfil);
     return imagenPerfil == null
         ? const CircleAvatar(
             backgroundColor: AppTheme.light,

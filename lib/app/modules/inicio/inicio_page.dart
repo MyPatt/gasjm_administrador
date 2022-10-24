@@ -3,7 +3,7 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
 import 'package:gasjm/app/modules/inicio/widgets/bottom_repartidor.dart';
-import 'package:gasjm/app/global_widgets/repartidor/menu_appbar.dart';
+import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/modules/inicio/widgets/navegacion_content.dart';
 import 'package:get/get.dart';
 

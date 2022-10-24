@@ -77,8 +77,7 @@ class HomePage extends StatelessWidget {
                           const SizedBox(
                             height: 25,
                           ),
-//ChartPedido(puntos: pedidoPuntos),
-                          ChartPedido(),
+                          ChartPedido(puntos: pedidoPuntos),
                           const SizedBox(
                             height: 25,
                           ),

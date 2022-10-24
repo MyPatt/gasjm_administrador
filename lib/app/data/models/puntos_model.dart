@@ -1,6 +1,6 @@
 class PedidoPuntos {
-  final double x;
-  final double y;
+  final int x;
+  final int y;
 
   PedidoPuntos({required this.x, required this.y});
 
@@ -23,7 +23,7 @@ class PedidoPuntos {
 }
 
 List<PedidoPuntos> get pedidoPuntos {
-  final dataY = [0, 2];
+  final List<int> dataY = [2, 0, 0, 0, 5, 5, 0, 11, 7];
   final dat = [
     4, 7, 8,
     0,
@@ -39,8 +39,18 @@ List<PedidoPuntos> get pedidoPuntos {
     11,
     // 0, 0, 0, 0, 0, 0, 0, 0, 0
   ];
-
-  return dataY.map((e) {
+  List<PedidoPuntos> _puntosAux = [];
+  for (var i = 0; i < dataY.length; i++) {
+    _puntosAux.add(PedidoPuntos(x: i, y: dataY[i]));
+    print("*");
+    print(i);
+  }
+  return _puntosAux;
+  /* return dataY.map((e) {
+    var i = 0;
+    i++;
+    print("-");
+    print(i);
     return PedidoPuntos(x: dataY.indexOf(e).toDouble(), y: e.toDouble());
-  }).toList();
+  }).toList();*/
 }

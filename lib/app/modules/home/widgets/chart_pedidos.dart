@@ -10,7 +10,8 @@ class ChartPedido extends StatelessWidget {
 
   List<int> get showIndexes => puntos.map((e) => e.x.toInt()).toList();
 
-  List<FlSpot> get allSpots => puntos.map((e) => FlSpot((e.x), e.y)).toList();
+  List<FlSpot> get allSpots =>
+      puntos.map((e) => FlSpot((e.x.toDouble()), e.y.toDouble())).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +103,7 @@ class ChartPedido extends StatelessWidget {
                 ),
               ),
               lineBarsData: lineBarsData,
-              minY: 0,
-              minX: 0,
+             
               titlesData: FlTitlesData(
                 leftTitles: SideTitles(
                   showTitles: false,

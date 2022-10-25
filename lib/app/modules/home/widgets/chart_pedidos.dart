@@ -45,7 +45,7 @@ class ChartPedido extends StatelessWidget {
           // padding: const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 0),
           alignment: Alignment.center,
           //  color: AppTheme.blueDark,
-          margin: EdgeInsets.only(top: 32.0, left: 30, right: 30),
+          margin: const EdgeInsets.only(top: 32.0, left: 30, right: 30),
           width: Responsive.getScreenSize(context).width * 1.50,
           height: Responsive.getScreenSize(context).height * .54,
           child: LineChart(

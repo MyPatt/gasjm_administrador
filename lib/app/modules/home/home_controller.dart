@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
+import 'package:gasjm/app/data/models/puntos_model.dart';
+import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
@@ -21,7 +24,10 @@ class HomeController extends GetxController {
   RxString imagenUsuario = ''.obs;
 
   //Variables para el chart de Pedidos
+  final RxList<PedidoPuntos> _pedidoPuntos = <PedidoPuntos>[].obs;
+  RxList<PedidoPuntos> get pedidoPuntos => _pedidoPuntos;
   //   final List<PricePoint> points;
+  final _pedidoRepository = Get.find<PedidoRepository>();
 
   /* METODOS PROPIOS */
   @override
@@ -30,6 +36,13 @@ class HomeController extends GetxController {
     Future.wait([_cargarFotoPerfil()]);
   }
 
+  @override
+  Future<void> onReady() async {
+    super.onReady();
+    _getCantidadesPorHorasDelDia();
+  }
+
+  /* METODOS  */
   Future<void> _cargarFotoPerfil() async {
     imagenUsuario.value =
         await _personaRepository.getImagenUsuarioActual() ?? '';
@@ -57,7 +70,7 @@ class HomeController extends GetxController {
     );
 
     if (d != null) {
-      fechaInicial.value = d; 
+      fechaInicial.value = d;
     }
   }
 
@@ -74,6 +87,51 @@ class HomeController extends GetxController {
       default:
     }
   }
-}
 
 /* CHART DE PEDIDOS */
+//Obtener cantidad de pedidos por horas del dia actual
+  Future<void> _getCantidadesPorHorasDelDia() async {
+    //Obtener el numero de la hora actual
+    final numeroHoraActual = DateTime.now().hour;
+    
+    //(Horario de atenciom de 6 am a 20 pm)
+    //Si la hora actual es menor 6  mostrar la primera hora en 0
+    if (numeroHoraActual < 6) {
+      for (var i = 0; i < 2; i++) {
+        _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
+      }
+    //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
+
+    } else if (numeroHoraActual > 20) {
+      //<15(20-6=14) horas del dia de atencion, por cada hora consultar en firebase la cantidad de pedidos
+      for (var i = 0; i < 15; i++) {
+        var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
+            DateTime.now().month, DateTime.now().day, (6 + i)));
+        var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
+            horaFechaInicial: hora);
+        _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+      }
+      //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
+    } else {
+      int p = numeroHoraActual - 5;
+  
+      for (var i = 0; i < p; i++) {
+        var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
+            DateTime.now().month, DateTime.now().day, (6 + i)));
+        var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
+            horaFechaInicial: hora);
+        _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+      }
+    }
+    final horaActual = Timestamp.fromDate(DateTime(DateTime.now().year,
+        DateTime.now().month, DateTime.now().day, DateTime.now().hour));
+
+    final horaInicio = Timestamp.fromDate(DateTime(2022, 8, 20, 14));
+
+    var cantidad = await _pedidoRepository.getCantidadPedidosPorHora(
+        horaFechaInicial: horaActual
+        //Timestamp.fromDate(DateTime.now())
+        );
+ 
+  }
+}

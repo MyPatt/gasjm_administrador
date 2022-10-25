@@ -59,7 +59,7 @@ class PedidoProvider {
     final resultado = await _firestoreInstance
         .collection("pedido")
         .where(field1, isEqualTo: dato1)
-       .where(field2, isEqualTo: dato2)
+        .where(field2, isEqualTo: dato2)
         .get();
     if ((resultado.docs.isNotEmpty)) {
       return (resultado.docs)
@@ -81,5 +81,19 @@ class PedidoProvider {
           .toList();
     }
     return null;
+  }
+
+  //Retornar la cantidad de pedidos por hora
+  Future<int> getCantidadPedidosPorHora(
+      {required Timestamp horaFechaInicial}) async {
+    final resultado = await _firestoreInstance
+        .collection("pedido")
+        .where("fechaHoraPedido", isGreaterThanOrEqualTo: horaFechaInicial)
+        .where("fechaHoraPedido",
+            isLessThanOrEqualTo: Timestamp(horaFechaInicial.seconds + 3600, 0))
+        .where("idEstadoPedido", isEqualTo: "estado3")
+        .get();
+
+    return resultado.docs.length;
   }
 }

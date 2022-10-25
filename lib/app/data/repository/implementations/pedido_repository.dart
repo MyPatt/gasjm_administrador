@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/providers/pedido_provider.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
@@ -38,4 +39,8 @@ class PedidoRepositoryImpl extends PedidoRepository {
   Future<List<PedidoModel>?> getPedidoPorField(
           {required String field, required String dato}) =>
       _provider.getPedidoPorField(field: field, dato: dato);
+  @override
+  Future<int> getCantidadPedidosPorHora(
+          {required Timestamp horaFechaInicial}) =>
+      _provider.getCantidadPedidosPorHora(horaFechaInicial: horaFechaInicial);
 }

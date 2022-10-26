@@ -23,7 +23,7 @@ class Category extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  _.selectedIndex(index);
+                  _.seleccionarIndiceDeCategoria(index);
                 },
                 child: ItemCategory(
                   category: categories[index],

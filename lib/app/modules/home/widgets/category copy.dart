@@ -24,7 +24,7 @@ class CategoryCopy extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                _.selectedIndexFecha(index);
+                _.seleccionarIndiceDeFecha(index);
                 if (index.isEqual(3)) {
                   _.selectDate(context);
                 }
@@ -56,7 +56,7 @@ class ItemCategory extends StatelessWidget {
       builder: (_) => Obx(
         () {
           bool isSelected =
-              index == _.isSelectedIndexFecha.value ? true : false;
+              index == _.indiceDeFechaSeleccionada.value ? true : false;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             width: 65.0,
@@ -66,7 +66,7 @@ class ItemCategory extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               border: Border.all(
-                color: index == _.isSelectedIndexFecha.value
+                color: index == _.indiceDeFechaSeleccionada.value
                     ? AppTheme.light
                     : Colors.white,
               ),

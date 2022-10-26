@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   RxInt isSelectedIndex = 0.obs;
-  RxInt isSelectedIndexFecha = 0.obs;
+  RxInt indiceDeFechaSeleccionada = 0.obs;
 
   //
   Rx<DateTime> fechaInicial = DateTime.now().obs;
@@ -48,13 +48,30 @@ class HomeController extends GetxController {
         await _personaRepository.getImagenUsuarioActual() ?? '';
   }
 
-//
-  selectedIndex(int index) {
+//Metodo para actualizar el indice de la categoria del dashboard [pedido,cliente,repartidor,vehiculo]
+
+  seleccionarIndiceDeCategoria(int index) {
     isSelectedIndex.value = index;
   }
 
-  selectedIndexFecha(int index) {
-    isSelectedIndexFecha.value = index;
+//Metodo para actualizar el indice de la fecha seleccionada para mostrar el grafico estadistico [dia,semana,mes,calendario]
+  seleccionarIndiceDeFecha(int index) {
+    indiceDeFechaSeleccionada.value = index;
+    switch (index) {
+      case 0:
+        _getCantidadesPorHorasDelDia();
+        break;
+             case 1:
+        _getCantidadesPorHorasDelDia();
+        break;
+             case 2:
+        _getCantidadesPorHorasDelDia();
+        break;
+             case 3:
+        _getCantidadesPorHorasDelDia();
+        break;
+      default:
+    }
   }
 
   Future<void> selectDate(BuildContext context) async {
@@ -93,14 +110,14 @@ class HomeController extends GetxController {
   Future<void> _getCantidadesPorHorasDelDia() async {
     //Obtener el numero de la hora actual
     final numeroHoraActual = DateTime.now().hour;
-    
+
     //(Horario de atenciom de 6 am a 20 pm)
     //Si la hora actual es menor 6  mostrar la primera hora en 0
     if (numeroHoraActual < 6) {
       for (var i = 0; i < 2; i++) {
         _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
       }
-    //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
+      //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
 
     } else if (numeroHoraActual > 20) {
       //<15(20-6=14) horas del dia de atencion, por cada hora consultar en firebase la cantidad de pedidos
@@ -114,7 +131,7 @@ class HomeController extends GetxController {
       //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
     } else {
       int p = numeroHoraActual - 5;
-  
+
       for (var i = 0; i < p; i++) {
         var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
             DateTime.now().month, DateTime.now().day, (6 + i)));
@@ -123,15 +140,5 @@ class HomeController extends GetxController {
         _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
       }
     }
-    final horaActual = Timestamp.fromDate(DateTime(DateTime.now().year,
-        DateTime.now().month, DateTime.now().day, DateTime.now().hour));
-
-    final horaInicio = Timestamp.fromDate(DateTime(2022, 8, 20, 14));
-
-    var cantidad = await _pedidoRepository.getCantidadPedidosPorHora(
-        horaFechaInicial: horaActual
-        //Timestamp.fromDate(DateTime.now())
-        );
- 
   }
 }

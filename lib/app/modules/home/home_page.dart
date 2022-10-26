@@ -42,15 +42,18 @@ class HomePage extends StatelessWidget {
                   const Category(),
                   Obx(() => ContentTitle(
                         //   title: "Nearby to you",
-                        title: _.isSelectedIndexFecha.value.isEqual(3)
+                        title: _.indiceDeFechaSeleccionada.value.isEqual(3)
                             ? categories[_.isSelectedIndex.value].name +
-                                categoriesDates[_.isSelectedIndexFecha.value]
+                                categoriesDates[
+                                        _.indiceDeFechaSeleccionada.value]
                                     .path +
                                 _.selectedDate.value
                             : categories[_.isSelectedIndex.value].name +
-                                categoriesDates[_.isSelectedIndexFecha.value]
+                                categoriesDates[
+                                        _.indiceDeFechaSeleccionada.value]
                                     .path +
-                                categoriesDates[_.isSelectedIndexFecha.value]
+                                categoriesDates[
+                                        _.indiceDeFechaSeleccionada.value]
                                     .name
                                     .toLowerCase(),
                         more: "Ver todo",

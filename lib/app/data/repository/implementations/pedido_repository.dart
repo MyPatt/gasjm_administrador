@@ -43,4 +43,9 @@ class PedidoRepositoryImpl extends PedidoRepository {
   Future<int> getCantidadPedidosPorHora(
           {required Timestamp horaFechaInicial}) =>
       _provider.getCantidadPedidosPorHora(horaFechaInicial: horaFechaInicial);
+
+  @override
+  Future<int> getCantidadPedidosPorPorDiasDeLaSemana(
+          {required Timestamp diaSemanaInicial}) =>
+      _provider.getCantidadPedidosPorSemana(fechaInicial: diaSemanaInicial);
 }

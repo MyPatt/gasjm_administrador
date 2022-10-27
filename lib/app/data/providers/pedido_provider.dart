@@ -96,4 +96,23 @@ class PedidoProvider {
 
     return resultado.docs.length;
   }
+
+  //Retornar la cantidad de pedidos por hora
+  Future<int> getCantidadPedidosPorSemana(
+      {required Timestamp fechaInicial}) async {
+   /* var fecha = Timestamp.fromDate(DateTime(
+      fechaInicial.year,
+      fechaInicial.month,
+      (fechaInicial.day),
+    ));*/
+
+    final resultado = await _firestoreInstance
+        .collection("pedido")
+        .where("fechaHoraPedido", isGreaterThanOrEqualTo: fechaInicial)
+       .where("fechaHoraPedido", isLessThanOrEqualTo: Timestamp(fechaInicial.seconds+86400,0))
+        .where("idEstadoPedido", isEqualTo: "estado3")
+        .get();
+ 
+    return resultado.docs.length;
+  }
 }

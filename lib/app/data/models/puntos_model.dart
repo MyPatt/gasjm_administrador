@@ -18,40 +18,31 @@ class PedidoPuntos {
     "16:00",
     "17:00",
     "18:00",
-    "19:00" , 
+    "19:00",
     "19:00"
   ];
-}
 
-List<PedidoPuntos> get pedidoPuntos {
-  final List<int> dataY = [2, 0, 0, 0, 5, 5, 0, 11, 7];
-  final dat = [
-    4, 7, 8,
-    0,
-    2,
-    6,
-    1,
-
-    9, 1111,
-    5,
-    10,
-    13,
-    12,
-    11,
-    // 0, 0, 0, 0, 0, 0, 0, 0, 0
+  static const List<String> diasDeLaSemana = [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo",
   ];
-  List<PedidoPuntos> _puntosAux = [];
-  for (var i = 0; i < dataY.length; i++) {
-    _puntosAux.add(PedidoPuntos(x: i, y: dataY[i]));
-    print("*");
-    print(i);
-  }
-  return _puntosAux;
-  /* return dataY.map((e) {
-    var i = 0;
-    i++;
-    print("-");
-    print(i);
-    return PedidoPuntos(x: dataY.indexOf(e).toDouble(), y: e.toDouble());
-  }).toList();*/
 }

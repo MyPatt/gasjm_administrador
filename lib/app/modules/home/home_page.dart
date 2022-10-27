@@ -1,8 +1,7 @@
-import 'package:fl_chart/fl_chart.dart';
+ 
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/data/models/category_model.dart';
-import 'package:gasjm/app/data/models/puntos_model.dart';
+import 'package:gasjm/app/data/models/category_model.dart'; 
 import 'package:gasjm/app/global_widgets/content_title.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:gasjm/app/modules/home/widgets/category%20copy.dart';

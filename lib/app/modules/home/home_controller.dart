@@ -33,13 +33,12 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    Future.wait([_cargarFotoPerfil()]);
+    Future.wait([_cargarFotoPerfil(), _getCantidadesPorHorasDelDia()]);
   }
 
   @override
   Future<void> onReady() async {
     super.onReady();
-    _getCantidadesPorHorasDelDia();
   }
 
   /* METODOS  */
@@ -59,16 +58,16 @@ class HomeController extends GetxController {
     indiceDeFechaSeleccionada.value = index;
     switch (index) {
       case 0:
-        _getCantidadesPorHorasDelDia();
+        _getCantidadesPorDiasDeLaSemana();
         break;
-             case 1:
-        _getCantidadesPorHorasDelDia();
+      case 1:
+        //  _getCantidadesPorHorasDelDia();
         break;
-             case 2:
-        _getCantidadesPorHorasDelDia();
+      case 2:
+        // _getCantidadesPorHorasDelDia();
         break;
-             case 3:
-        _getCantidadesPorHorasDelDia();
+      case 3:
+        //_getCantidadesPorHorasDelDia();
         break;
       default:
     }
@@ -107,7 +106,7 @@ class HomeController extends GetxController {
 
 /* CHART DE PEDIDOS */
 //Obtener cantidad de pedidos por horas del dia actual
-  Future<void> _getCantidadesPorHorasDelDia() async {
+  Future<void> _getCantidadesPorHorasDelDiaa() async {
     //Obtener el numero de la hora actual
     final numeroHoraActual = DateTime.now().hour;
 
@@ -139,6 +138,59 @@ class HomeController extends GetxController {
             horaFechaInicial: hora);
         _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
       }
+    }
+  }
+
+  Future<void> _getCantidadesPorDiasDeLaSemana() async {
+    final numeroHoraActual = DateTime.now().weekday;
+    int p = 6 - numeroHoraActual;
+    var dia = (DateTime.now().day - p + 1);
+
+    DateTime fechaInicial = DateTime.now();
+    var fecha = Timestamp.fromDate(DateTime(
+      fechaInicial.year,
+      fechaInicial.month,
+      (fechaInicial.day),
+    ));
+
+    for (var i = 0; i < p; i++) {
+      var fecha = Timestamp.fromDate(
+          DateTime(DateTime.now().year, DateTime.now().month, (dia + i)));
+
+      var cantidadXDia = await _pedidoRepository
+          .getCantidadPedidosPorPorDiasDeLaSemana(diaSemanaInicial: fecha);
+
+      _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
+    }
+  }
+
+/////////////////////////
+  Future<void> _getCantidadesPorHorasDelDia() async {
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    final numeroHoraActual = DateTime.now().weekday;
+    int p =  numeroHoraActual;
+    var dia = (DateTime.now().day - p +1);
+
+    DateTime fechaInicial = DateTime.now();
+    var fecha = Timestamp.fromDate(DateTime(
+      fechaInicial.year,
+      fechaInicial.month,
+      (fechaInicial.day),
+    ));
+    print(p);
+    for (var i = 0; i < 7; i++) {
+      var fecha = Timestamp.fromDate(
+          DateTime(DateTime.now().year, DateTime.now().month, (dia + i)));
+
+      var cantidadXDia = await _pedidoRepository
+          .getCantidadPedidosPorPorDiasDeLaSemana(diaSemanaInicial: fecha);
+
+      _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
+
+      print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+      print(fecha);
+      print(cantidadXDia);
+      print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
     }
   }
 }

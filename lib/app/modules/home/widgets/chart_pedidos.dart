@@ -5,10 +5,10 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/puntos_model.dart';
 
 class ChartPedido extends StatelessWidget {
-  ChartPedido({Key? key, required this.puntos}) : super(key: key);
+  const ChartPedido({Key? key, required this.puntos}) : super(key: key);
   final List<PedidoPuntos> puntos;
 
-  List<int> get showIndexes => puntos.map((e) => e.x.toInt()).toList();
+  List<int> get showIndexes =>  puntos.map((e) => e.x.toInt()).toList();
 
   List<FlSpot> get allSpots =>
       puntos.map((e) => FlSpot((e.x.toDouble()), e.y.toDouble())).toList();
@@ -91,7 +91,7 @@ class ChartPedido extends StatelessWidget {
                   getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                     return lineBarsSpot.map((lineBarSpot) {
                       return LineTooltipItem(
-                        lineBarSpot.y.toString(),
+                        lineBarSpot.y.toInt().toString(),
                         const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
@@ -103,7 +103,6 @@ class ChartPedido extends StatelessWidget {
                 ),
               ),
               lineBarsData: lineBarsData,
-             
               titlesData: FlTitlesData(
                 leftTitles: SideTitles(
                   showTitles: false,
@@ -118,40 +117,11 @@ class ChartPedido extends StatelessWidget {
                         );
                   },
                   getTitles: (double a) {
+              
                     String text = '';
-
-                    for (int i = 0; i < puntos.length; i++) {
-                      if (a.toInt() == i) {
-                        text = PedidoPuntos.horasDelDia[i];
-                      }
-                    }
+                    text = PedidoPuntos.diasDeLaSemana[a.toInt()];
+               
                     return text;
-                    /*    switch (a.toInt()) {
-                      case 0:
-                        text = '00:00';
-                        break;
-                      case 1:
-                        text = '04:00';
-                        break;
-                      case 2:
-                        text = '08:00';
-                        break;
-                      case 3:
-                        text = '12:00';
-                        break;
-                      case 4:
-                        text = '16:00';
-                        break;
-                      case 5:
-                        text = '20:00';
-                        break;
-                      case 6:
-                        text = '23:59';
-                        break;
-                      default:
-                        return '';
-                    }
-*/
                   },
                 ),
                 rightTitles: SideTitles(

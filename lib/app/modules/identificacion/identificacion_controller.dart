@@ -75,7 +75,10 @@ class IdentificacionController extends GetxController {
              Future.wait([ _guardarCorreo(),_guardarCedula()]);
          
 
-          Mensajes.showGetSnackbar(
+        
+
+          await Future.delayed(const Duration(seconds: 2));
+            Mensajes.showGetSnackbar(
               titulo: 'Información',
               mensaje:
                   'Cédula ya registrada, ingrese su contraseña para iniciar sesión.',
@@ -84,8 +87,6 @@ class IdentificacionController extends GetxController {
                 Icons.info_outlined,
                 color: Colors.white,
               ));
-
-          await Future.delayed(const Duration(seconds: 1));
           Get.offNamed(AppRoutes.login);
         } else {
           Mensajes.showGetSnackbar(

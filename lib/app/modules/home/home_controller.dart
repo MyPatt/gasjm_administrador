@@ -33,7 +33,7 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    Future.wait([_cargarFotoPerfil(), _getCantidadesPorHorasDelDia()]);
+    Future.wait([_cargarFotoPerfil(), _getCantidadesPorDiasDeLaSemana()]);
   }
 
   @override
@@ -58,7 +58,7 @@ class HomeController extends GetxController {
     indiceDeFechaSeleccionada.value = index;
     switch (index) {
       case 0:
-        _getCantidadesPorDiasDeLaSemana();
+       // _getCantidadesPorDiasDeLaSemana();
         break;
       case 1:
         //  _getCantidadesPorHorasDelDia();
@@ -106,7 +106,7 @@ class HomeController extends GetxController {
 
 /* CHART DE PEDIDOS */
 //Obtener cantidad de pedidos por horas del dia actual
-  Future<void> _getCantidadesPorHorasDelDiaa() async {
+  Future<void> _getCantidadesPorHorasDelDia() async {
     //Obtener el numero de la hora actual
     final numeroHoraActual = DateTime.now().hour;
 
@@ -141,7 +141,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> _getCantidadesPorDiasDeLaSemana() async {
+  Future<void> _getCantidadesPorDiasDeLaSemanaa() async {
     final numeroHoraActual = DateTime.now().weekday;
     int p = 6 - numeroHoraActual;
     var dia = (DateTime.now().day - p + 1);
@@ -165,32 +165,33 @@ class HomeController extends GetxController {
   }
 
 /////////////////////////
-  Future<void> _getCantidadesPorHorasDelDia() async {
+  Future<void> _getCantidadesPorDiasDeLaSemana() async {
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    final numeroHoraActual = DateTime.now().weekday;
-    int p =  numeroHoraActual;
-    var dia = (DateTime.now().day - p +1);
 
-    DateTime fechaInicial = DateTime.now();
-    var fecha = Timestamp.fromDate(DateTime(
-      fechaInicial.year,
-      fechaInicial.month,
-      (fechaInicial.day),
-    ));
-    print(p);
+    DateTime fechaActual = DateTime.now();
+    //numerod del dia de la semana
+    final diaSemana = fechaActual.weekday;
+
+    //Obtener la fecha del dia lunes de la semana actual
+    var dia = (DateTime.now().day - diaSemana + 1);
+
+    //Obtener caantidad de toda la semana(7dias) desde firestore
     for (var i = 0; i < 7; i++) {
+      //ir sumando los dias
       var fecha = Timestamp.fromDate(
-          DateTime(DateTime.now().year, DateTime.now().month, (dia + i)));
-
-      var cantidadXDia = await _pedidoRepository
+          DateTime(fechaActual.year, fechaActual.month, (dia + i)));
+      var cantidadXDia = 0;
+      if (i <= diaSemana) {
+        //consulta
+      cantidadXDia = await _pedidoRepository
           .getCantidadPedidosPorPorDiasDeLaSemana(diaSemanaInicial: fecha);
+      }
 
+
+//gregar a la lista
       _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
 
-      print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-      print(fecha);
-      print(cantidadXDia);
-      print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+  
     }
   }
 }

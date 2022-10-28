@@ -79,7 +79,7 @@ class HomePage extends StatelessWidget {
                           const SizedBox(
                             height: 25,
                           ),
-                          Obx(() => ChartPedido(puntos: _.pedidoPuntos.value)),
+                          Obx(() => ChartPedido(puntos: _.pedidoPuntos.value, indice: _.indiceDeFechaSeleccionada.value,)),
                           const SizedBox(
                             height: 25,
                           ),

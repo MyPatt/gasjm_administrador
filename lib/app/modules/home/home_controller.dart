@@ -33,7 +33,7 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    Future.wait([_cargarFotoPerfil(), _getCantidadesPorDiasDeLaSemana()]);
+    Future.wait([_cargarFotoPerfil(), _getCantidadesPorHorasDelDia()]);
   }
 
   @override
@@ -56,12 +56,15 @@ class HomeController extends GetxController {
 //Metodo para actualizar el indice de la fecha seleccionada para mostrar el grafico estadistico [dia,semana,mes,calendario]
   seleccionarIndiceDeFecha(int index) {
     indiceDeFechaSeleccionada.value = index;
-    switch (index) {
+
+    switch (indiceDeFechaSeleccionada.value) {
       case 0:
-       // _getCantidadesPorDiasDeLaSemana();
+        _getCantidadesPorHorasDelDia();
+        //
         break;
       case 1:
-        //  _getCantidadesPorHorasDelDia();
+        _getCantidadesPorDiasDeLaSemana();
+        //
         break;
       case 2:
         // _getCantidadesPorHorasDelDia();
@@ -109,16 +112,19 @@ class HomeController extends GetxController {
   Future<void> _getCantidadesPorHorasDelDia() async {
     //Obtener el numero de la hora actual
     final numeroHoraActual = DateTime.now().hour;
-
+//
+    _pedidoPuntos.clear();
     //(Horario de atenciom de 6 am a 20 pm)
     //Si la hora actual es menor 6  mostrar la primera hora en 0
     if (numeroHoraActual < 6) {
-      for (var i = 0; i < 2; i++) {
-        _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
+ 
+      //  for (var i = 0; i < 2; i++) {
+      for (var i = 0; i < 15; i++) {
+         _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
+     
       }
-      //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
-
     } else if (numeroHoraActual > 20) {
+      //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
       //<15(20-6=14) horas del dia de atencion, por cada hora consultar en firebase la cantidad de pedidos
       for (var i = 0; i < 15; i++) {
         var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
@@ -127,11 +133,12 @@ class HomeController extends GetxController {
             horaFechaInicial: hora);
         _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
       }
-      //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
     } else {
-      int p = numeroHoraActual - 5;
+      //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
+      //   int p = numeroHoraActual - 5;
 
-      for (var i = 0; i < p; i++) {
+      // for (var i = 0; i < p; i++) {
+      for (var i = 0; i < 15; i++) {
         var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
             DateTime.now().month, DateTime.now().day, (6 + i)));
         var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
@@ -174,7 +181,8 @@ class HomeController extends GetxController {
 
     //Obtener la fecha del dia lunes de la semana actual
     var dia = (DateTime.now().day - diaSemana + 1);
-
+//
+    _pedidoPuntos.clear();
     //Obtener caantidad de toda la semana(7dias) desde firestore
     for (var i = 0; i < 7; i++) {
       //ir sumando los dias
@@ -183,15 +191,12 @@ class HomeController extends GetxController {
       var cantidadXDia = 0;
       if (i <= diaSemana) {
         //consulta
-      cantidadXDia = await _pedidoRepository
-          .getCantidadPedidosPorPorDiasDeLaSemana(diaSemanaInicial: fecha);
+        cantidadXDia = await _pedidoRepository
+            .getCantidadPedidosPorPorDiasDeLaSemana(diaSemanaInicial: fecha);
       }
 
-
-//gregar a la lista
+      //agregar a la lista
       _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
-
-  
     }
   }
 }

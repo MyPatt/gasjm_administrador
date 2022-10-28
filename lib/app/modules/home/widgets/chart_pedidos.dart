@@ -5,10 +5,12 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/puntos_model.dart';
 
 class ChartPedido extends StatelessWidget {
-  const ChartPedido({Key? key, required this.puntos}) : super(key: key);
+  const ChartPedido({Key? key, required this.puntos, required this.indice})
+      : super(key: key);
   final List<PedidoPuntos> puntos;
+  final int indice;
 
-  List<int> get showIndexes =>  puntos.map((e) => e.x.toInt()).toList();
+  List<int> get showIndexes => puntos.map((e) => e.x.toInt()).toList();
 
   List<FlSpot> get allSpots =>
       puntos.map((e) => FlSpot((e.x.toDouble()), e.y.toDouble())).toList();
@@ -46,7 +48,13 @@ class ChartPedido extends StatelessWidget {
           alignment: Alignment.center,
           //  color: AppTheme.blueDark,
           margin: const EdgeInsets.only(top: 32.0, left: 30, right: 30),
-          width: Responsive.getScreenSize(context).width * 1.50,
+          width:
+   
+           indice == 0
+              ? Responsive.getScreenSize(context).width * 1.9
+              :indice == 1
+                  ?    Responsive.getScreenSize(context).width * 1.0:
+                 Responsive.getScreenSize(context).width * 2 ,
           height: Responsive.getScreenSize(context).height * .54,
           child: LineChart(
             LineChartData(
@@ -117,10 +125,20 @@ class ChartPedido extends StatelessWidget {
                         );
                   },
                   getTitles: (double a) {
-              
                     String text = '';
-                    text = PedidoPuntos.diasDeLaSemana[a.toInt()];
-               
+
+                    switch (indice) {
+                      case 0:
+                        text = PedidoPuntos.horasDelDia[a.toInt()];
+                        break;
+                      case 1:
+                        text = PedidoPuntos.diasDeLaSemana[a.toInt()];
+                        break;
+                      default:
+                        text = PedidoPuntos.horasDelDia[a.toInt()];
+                        break;
+                    }
+
                     return text;
                   },
                 ),

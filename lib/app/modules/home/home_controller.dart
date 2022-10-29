@@ -117,11 +117,9 @@ class HomeController extends GetxController {
     //(Horario de atenciom de 6 am a 20 pm)
     //Si la hora actual es menor 6  mostrar la primera hora en 0
     if (numeroHoraActual < 6) {
- 
       //  for (var i = 0; i < 2; i++) {
       for (var i = 0; i < 15; i++) {
-         _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
-     
+        _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
       }
     } else if (numeroHoraActual > 20) {
       //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
@@ -135,15 +133,20 @@ class HomeController extends GetxController {
       }
     } else {
       //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
-      //   int p = numeroHoraActual - 5;
+      int p = numeroHoraActual - 5;
 
       // for (var i = 0; i < p; i++) {
       for (var i = 0; i < 15; i++) {
-        var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
-            DateTime.now().month, DateTime.now().day, (6 + i)));
-        var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
-            horaFechaInicial: hora);
-        _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+        if (i >= p) {
+          _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
+        
+        } else {
+          var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
+              DateTime.now().month, DateTime.now().day, (6 + i)));
+          var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
+              horaFechaInicial: hora);
+          _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+        }
       }
     }
   }

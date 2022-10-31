@@ -19,7 +19,7 @@ class PedidoPuntos {
     "17:00",
     "18:00",
     "19:00",
-    "19:00"
+    "20:00"
   ];
 
   static const List<String> diasDeLaSemana = [
@@ -29,21 +29,7 @@ class PedidoPuntos {
     "Jueves",
     "Viernes",
     "Sábado",
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-    "Domingo",
+    "Domingo", 
   ];
 
   static const List<String> diasDelMes = [

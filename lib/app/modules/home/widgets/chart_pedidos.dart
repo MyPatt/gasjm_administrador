@@ -135,6 +135,9 @@ class ChartPedido extends StatelessWidget {
                       case 2:
                         text = PedidoPuntos.diasDelMes[a.toInt()];
                         break;
+                      case 3:
+                        text = PedidoPuntos.horasDelDia[a.toInt()];
+                        break;
                       default:
                         text = PedidoPuntos.horasDelDia[a.toInt()];
                         break;

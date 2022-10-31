@@ -33,7 +33,7 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    Future.wait([_cargarFotoPerfil(), _getCantidadesPorHorasDelDia()]);
+    Future.wait([_cargarFotoPerfil(), _getCantidadesPorHorasDelDia(DateTime.now())]);
   }
 
   @override
@@ -59,7 +59,7 @@ class HomeController extends GetxController {
 
     switch (indiceDeFechaSeleccionada.value) {
       case 0:
-        _getCantidadesPorHorasDelDia();
+        _getCantidadesPorHorasDelDia(DateTime.now());
         //
         break;
       case 1:
@@ -70,7 +70,7 @@ class HomeController extends GetxController {
         _getCantidadesPorDiasDelMes();
         break;
       case 3:
-        //_getCantidadesPorHorasDelDia();
+         _getCantidadesPorHorasDelDia(fechaInicial.value);
         break;
       default:
     }
@@ -109,9 +109,9 @@ class HomeController extends GetxController {
 
 /* CHART DE PEDIDOS */
 //Obtener cantidad de pedidos por horas del dia actual
-  Future<void> _getCantidadesPorHorasDelDia() async {
+  Future<void> _getCantidadesPorHorasDelDia(DateTime fecha) async {
     //Obtener el numero de la hora actual
-    final numeroHoraActual = DateTime.now().hour;
+    final numeroHoraActual = fecha.hour;
 //
     _pedidoPuntos.clear();
     //(Horario de atenciom de 6 am a 20 pm)
@@ -151,8 +151,8 @@ class HomeController extends GetxController {
   }
 
 //Metodo de obtener pedidos por cada dia del mes
-  Future<void> _getCantidadesPorDiasDelMes() async {
-    DateTime fechaActual = DateTime.now();
+ Future<void> _getCantidadesPorDiasDelMes() async {
+     DateTime fechaActual = DateTime.now();
     //numerod del dia del mes
     final diaMes = fechaActual.day;
 

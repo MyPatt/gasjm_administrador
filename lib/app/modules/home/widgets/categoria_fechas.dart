@@ -24,8 +24,7 @@ class CategoryCopy extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                   print("[[[[[[[[]]]]]]]]");
-    print(index);
+           
                 _.seleccionarIndiceDeFecha(index);
                 if (index.isEqual(3)) {
                   _.selectDate(context);

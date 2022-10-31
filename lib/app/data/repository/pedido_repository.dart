@@ -15,7 +15,6 @@ abstract class PedidoRepository {
   });
   Future<List<PedidoModel>?> getPedidoPorField(
       {required String field, required String dato});
-  Future<int> getCantidadPedidosPorHora({required Timestamp horaFechaInicial});
-  Future<int> getCantidadPedidosPorPorDiasDeLaSemana({required Timestamp diaSemanaInicial});
-
+  Future<int> getCantidadPedidosPorHora({required Timestamp fechaHora});
+  Future<int> getCantidadPedidosPorPorDias({required Timestamp fechaDia});
 }

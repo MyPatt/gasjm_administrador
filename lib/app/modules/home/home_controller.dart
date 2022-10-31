@@ -67,7 +67,7 @@ class HomeController extends GetxController {
         //
         break;
       case 2:
-        // _getCantidadesPorHorasDelDia();
+        _getCantidadesPorDiasDelMes();
         break;
       case 3:
         //_getCantidadesPorHorasDelDia();
@@ -127,8 +127,8 @@ class HomeController extends GetxController {
       for (var i = 0; i < 15; i++) {
         var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
             DateTime.now().month, DateTime.now().day, (6 + i)));
-        var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
-            horaFechaInicial: hora);
+        var cantidadXHora =
+            await _pedidoRepository.getCantidadPedidosPorHora(fechaHora: hora);
         _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
       }
     } else {
@@ -139,45 +139,58 @@ class HomeController extends GetxController {
       for (var i = 0; i < 15; i++) {
         if (i >= p) {
           _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
-        
         } else {
           var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
               DateTime.now().month, DateTime.now().day, (6 + i)));
           var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
-              horaFechaInicial: hora);
+              fechaHora: hora);
           _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
         }
       }
     }
   }
 
-  Future<void> _getCantidadesPorDiasDeLaSemanaa() async {
-    final numeroHoraActual = DateTime.now().weekday;
-    int p = 6 - numeroHoraActual;
-    var dia = (DateTime.now().day - p + 1);
+//Metodo de obtener pedidos por cada dia del mes
+  Future<void> _getCantidadesPorDiasDelMes() async {
+    DateTime fechaActual = DateTime.now();
+    //numerod del dia del mes
+    final diaMes = fechaActual.day;
 
-    DateTime fechaInicial = DateTime.now();
-    var fecha = Timestamp.fromDate(DateTime(
-      fechaInicial.year,
-      fechaInicial.month,
-      (fechaInicial.day),
-    ));
+    //Obtener el total de dias del mes actual
+    var cantidadDias = DateTime(fechaActual.year, fechaActual.month + 1, 0).day;
+//
+    _pedidoPuntos.clear();
 
-    for (var i = 0; i < p; i++) {
-      var fecha = Timestamp.fromDate(
-          DateTime(DateTime.now().year, DateTime.now().month, (dia + i)));
+    //Obtener pedidos de todos los dias del mes desde firestore
+    for (var i = 0; i < cantidadDias; i++) {
+      var cantidadXDia = 0;
+      //caso de superar la fecha actual el pedido es0
+      if (i >= diaMes) {
+        //consulta
+        cantidadXDia = 0;
+      } else {
+        //ir sumando los dias
+        var fecha = Timestamp.fromDate(
+            DateTime(fechaActual.year, fechaActual.month, (i + 1)));
+        //consulta desde firestore
+        cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
+            fechaDia: fecha);
 
-      var cantidadXDia = await _pedidoRepository
-          .getCantidadPedidosPorPorDiasDeLaSemana(diaSemanaInicial: fecha);
+        print("111111111111111111111111111");
+        print(
+            DateTime.fromMillisecondsSinceEpoch(fecha.millisecondsSinceEpoch));
+        print(cantidadDias);
+        print(i);
+        print(cantidadXDia);
+      }
 
+      //agregar a la lista
       _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
     }
   }
 
 /////////////////////////
   Future<void> _getCantidadesPorDiasDeLaSemana() async {
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
     DateTime fechaActual = DateTime.now();
     //numerod del dia de la semana
     final diaSemana = fechaActual.weekday;
@@ -194,8 +207,8 @@ class HomeController extends GetxController {
       var cantidadXDia = 0;
       if (i <= diaSemana) {
         //consulta
-        cantidadXDia = await _pedidoRepository
-            .getCantidadPedidosPorPorDiasDeLaSemana(diaSemanaInicial: fecha);
+        cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
+            fechaDia: fecha);
       }
 
       //agregar a la lista

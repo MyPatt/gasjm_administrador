@@ -40,12 +40,10 @@ class PedidoRepositoryImpl extends PedidoRepository {
           {required String field, required String dato}) =>
       _provider.getPedidoPorField(field: field, dato: dato);
   @override
-  Future<int> getCantidadPedidosPorHora(
-          {required Timestamp horaFechaInicial}) =>
-      _provider.getCantidadPedidosPorHora(horaFechaInicial: horaFechaInicial);
+  Future<int> getCantidadPedidosPorHora({required Timestamp fechaHora}) =>
+      _provider.getCantidadPedidosPorHora(horaFechaInicial: fechaHora);
 
   @override
-  Future<int> getCantidadPedidosPorPorDiasDeLaSemana(
-          {required Timestamp diaSemanaInicial}) =>
-      _provider.getCantidadPedidosPorSemana(fechaInicial: diaSemanaInicial);
+  Future<int> getCantidadPedidosPorPorDias({required Timestamp fechaDia}) =>
+      _provider.getCantidadPedidosPorDia(fechaInicial: fechaDia);
 }

@@ -48,13 +48,11 @@ class ChartPedido extends StatelessWidget {
           alignment: Alignment.center,
           //  color: AppTheme.blueDark,
           margin: const EdgeInsets.only(top: 32.0, left: 30, right: 30),
-          width:
-   
-           indice == 0
+          width: indice == 0
               ? Responsive.getScreenSize(context).width * 1.9
-              :indice == 1
-                  ?    Responsive.getScreenSize(context).width * 1.0:
-                 Responsive.getScreenSize(context).width * 2 ,
+              : indice == 1
+                  ? Responsive.getScreenSize(context).width * 1.0
+                  : Responsive.getScreenSize(context).width * 3.2,
           height: Responsive.getScreenSize(context).height * .54,
           child: LineChart(
             LineChartData(
@@ -133,6 +131,9 @@ class ChartPedido extends StatelessWidget {
                         break;
                       case 1:
                         text = PedidoPuntos.diasDeLaSemana[a.toInt()];
+                        break;
+                      case 2:
+                        text = PedidoPuntos.diasDelMes[a.toInt()];
                         break;
                       default:
                         text = PedidoPuntos.horasDelDia[a.toInt()];

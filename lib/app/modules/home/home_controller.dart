@@ -175,13 +175,6 @@ class HomeController extends GetxController {
         //consulta desde firestore
         cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
             fechaDia: fecha);
-
-        print("111111111111111111111111111");
-        print(
-            DateTime.fromMillisecondsSinceEpoch(fecha.millisecondsSinceEpoch));
-        print(cantidadDias);
-        print(i);
-        print(cantidadXDia);
       }
 
       //agregar a la lista

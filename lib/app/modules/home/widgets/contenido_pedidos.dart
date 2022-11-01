@@ -1,5 +1,4 @@
- 
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:gasjm/app/modules/home/widgets/categoria_fechas.dart';
@@ -19,21 +18,18 @@ class ContenidoPedidos extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           //  padding: const EdgeInsets.all(8.0),
           margin: const EdgeInsets.only(bottom: 15.0, left: 20.0, right: 20.0),
-          height: Responsive.getScreenSize(context).height * .67,
+          height: Responsive.getScreenSize(context).height * .59,
           //
           child: ListView(
             children: [
-              const CategoriaFechas(),
               const SizedBox(
                 height: 25,
               ),
+              const CategoriaFechas(),
               Obx(() => ChartPedido(
                     puntos: _.pedidoPuntos.value,
                     indice: _.indiceDeFechaSeleccionada.value,
                   )),
-              const SizedBox(
-                height: 25,
-              ),
             ],
           ),
         ),

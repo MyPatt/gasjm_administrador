@@ -13,7 +13,7 @@ class CategoriaFechas extends StatelessWidget {
       builder: (_) => Container(
         alignment: Alignment.centerLeft,
         margin: const EdgeInsets.only(
-          top: 15.00,
+          bottom: 15.00,
         ),
         height: 35.0,
         child: ListView.builder(

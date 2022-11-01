@@ -3,6 +3,7 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/global_widgets/content_title.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
+import 'package:gasjm/app/modules/home/widgets/bottom_administrador.dart';
 import 'package:gasjm/app/modules/home/widgets/categoria_fechas.dart';
 import 'package:gasjm/app/modules/home/widgets/categoria_modulos.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
@@ -19,43 +20,44 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (_) => Scaffold(
-        backgroundColor: AppTheme.background,
-        //Menú deslizable a la izquierda con opciones del  usuario
-        drawer: MenuLateral(
-          modo: 'Modo repartidor',
-          foto: Obx(() => buildImage(_.imagenUsuario.value)),
-        ),
-        //Barra de herramientas de opciones
-        appBar: AppBar(
-          backgroundColor: AppTheme.blueBackground,
-          actions: const [MenuAppBar()],
-          title: const Text('GasJ&M'),
-        ),
-        body: CustomScrollView(
-          slivers: [
-            //Modulos de gestion por el administrador
-            const CategoriaModulos(),
-            //Primer subtitulo se adapta a la seleccion del modulo
-            Obx(() => Subtitulo(
-                  title: _.indiceDeFechaSeleccionada.value.isEqual(3)
-                      ? categories[_.isSelectedIndex.value].name +
-                          categoriesDates[_.indiceDeFechaSeleccionada.value]
-                              .path +
-                          _.selectedDate.value
-                      : categories[_.isSelectedIndex.value].name +
-                          categoriesDates[_.indiceDeFechaSeleccionada.value]
-                              .path +
-                          categoriesDates[_.indiceDeFechaSeleccionada.value]
-                              .name
-                              .toLowerCase(),
-                  more: "Ver todo",
-                  onTap: () => _.navegarDashboard(),
-                )),
-            //Modulo Pedidos
-            const ContenidoPedidos()
-          ],
-        ),
-      ),
+          backgroundColor: AppTheme.background,
+          //Menú deslizable a la izquierda con opciones del  usuario
+          drawer: MenuLateral(
+            modo: 'Modo repartidor',
+            foto: Obx(() => buildImage(_.imagenUsuario.value)),
+          ),
+          //Barra de herramientas de opciones
+          appBar: AppBar(
+            backgroundColor: AppTheme.blueBackground,
+            actions: const [MenuAppBar()],
+            title: const Text('GasJ&M'),
+          ),
+          body: CustomScrollView(
+            slivers: [
+              //Modulos de gestion por el administrador
+              const CategoriaModulos(),
+              //Primer subtitulo se adapta a la seleccion del modulo
+              Obx(() => Subtitulo(
+                    title: _.indiceDeFechaSeleccionada.value.isEqual(3)
+                        ? categories[_.isSelectedIndex.value].name +
+                            categoriesDates[_.indiceDeFechaSeleccionada.value]
+                                .path +
+                            _.selectedDate.value
+                        : categories[_.isSelectedIndex.value].name +
+                            categoriesDates[_.indiceDeFechaSeleccionada.value]
+                                .path +
+                            categoriesDates[_.indiceDeFechaSeleccionada.value]
+                                .name
+                                .toLowerCase(),
+                    more: "Ver todo",
+                    onTap: () => _.navegarDashboard(),
+                  )),
+              
+              //Modulo Pedidos
+              const ContenidoPedidos()
+            ],
+          ),
+          bottomNavigationBar: const BottomNavigationAdministrador()),
     );
   }
 

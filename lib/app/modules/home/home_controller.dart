@@ -33,7 +33,8 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    Future.wait([_cargarFotoPerfil(), _getCantidadesPorHorasDelDia(DateTime.now())]);
+    Future.wait(
+        [_cargarFotoPerfil(), _getCantidadesPorHorasDelDia(DateTime.now())]);
   }
 
   @override
@@ -70,7 +71,7 @@ class HomeController extends GetxController {
         _getCantidadesPorDiasDelMes();
         break;
       case 3:
-         _getCantidadesPorHorasDelDia(fechaInicial.value);
+        _getCantidadesPorHorasDelDia(fechaInicial.value);
         break;
       default:
     }
@@ -103,11 +104,11 @@ class HomeController extends GetxController {
         Get.toNamed(AppRoutes.cliente,
             arguments: categories[isSelectedIndex.value]);
         break;
-           case 2:
+      case 2:
         Get.toNamed(AppRoutes.repartidor,
             arguments: categories[isSelectedIndex.value]);
         break;
-           case 3:
+      case 3:
         Get.toNamed(AppRoutes.vehiculo,
             arguments: categories[isSelectedIndex.value]);
         break;
@@ -159,8 +160,8 @@ class HomeController extends GetxController {
   }
 
 //Metodo de obtener pedidos por cada dia del mes
- Future<void> _getCantidadesPorDiasDelMes() async {
-     DateTime fechaActual = DateTime.now();
+  Future<void> _getCantidadesPorDiasDelMes() async {
+    DateTime fechaActual = DateTime.now();
     //numerod del dia del mes
     final diaMes = fechaActual.day;
 
@@ -215,5 +216,39 @@ class HomeController extends GetxController {
       //agregar a la lista
       _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
     }
+  }
+
+  /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
+
+  pantallaSeleccionadaOnTap(int index) {
+    if (index == 0) {
+      return;
+    }
+    if (index == 1) {
+      _cargarIrPage();
+      return;
+    }
+    if (index == 2) {
+      _cargarPedidosPage();
+      return;
+    }
+  }
+
+  _cargarIrPage() async {
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      Get.offNamed(AppRoutes.ir);
+    } catch (e) {
+      throw Exception("Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
+    }
+    
+  }
+
+  _cargarPedidosPage() async {
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      Get.offNamed(AppRoutes.pedidos);
+      throw Exception("Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
+    } catch (e) {}
   }
 }

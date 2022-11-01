@@ -40,7 +40,7 @@ class ChartPedido extends StatelessWidget {
       padding:
           const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 0, top: 0),
       width: Responsive.getScreenSize(context).height * .42,
-      height: Responsive.getScreenSize(context).height * .55,
+      height: Responsive.getScreenSize(context).height * .45,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Container(

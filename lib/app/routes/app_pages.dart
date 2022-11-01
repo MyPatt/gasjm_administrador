@@ -26,12 +26,16 @@ import 'package:gasjm/app/modules/perfil/widgets/form_contrasena.dart';
 import 'package:gasjm/app/modules/perfil/widgets/form_direccion.dart';
 import 'package:gasjm/app/modules/registrar/registrar_binding.dart';
 import 'package:gasjm/app/modules/registrar/registrar_page.dart';
+import 'package:gasjm/app/modules/repartidor/repartidor_binding.dart';
+import 'package:gasjm/app/modules/repartidor/repartidor_page.dart';
 import 'package:gasjm/app/modules/request_permission/request_permission_binding.dart';
 import 'package:gasjm/app/modules/request_permission/request_permission_page.dart';
 import 'package:gasjm/app/modules/splash/splash_binding.dart';
 import 'package:gasjm/app/modules/splash/splash_page.dart';
 import 'package:gasjm/app/modules/ubicacion/ubicacion_binding.dart';
 import 'package:gasjm/app/modules/ubicacion/ubicacion_page.dart';
+import 'package:gasjm/app/modules/vehiculo/vehiculo_binding.dart';
+import 'package:gasjm/app/modules/vehiculo/vehiculo_page.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -72,8 +76,20 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.inicio,
-      page: () =>   HomePage(),
+      page: () =>   const HomePage(),
       binding: HomeBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),    GetPage(
+      name: AppRoutes.repartidor,
+      page: () =>    RepartidorPage(),
+      binding: RepartidorBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),  GetPage(
+      name: AppRoutes.vehiculo,
+      page: () =>    VehiculoPage(),
+      binding: VehiculoBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

@@ -12,6 +12,9 @@ class AppRoutes {
   static const contrasena = "/contrasena";
   static const direccion = "/direccion";
 
+  static const repartidor = "/repartidor";
+  static const vehiculo = "/vehiculo";
+
   static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";
   static const ir = "/ir";

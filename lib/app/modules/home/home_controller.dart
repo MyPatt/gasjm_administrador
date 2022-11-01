@@ -103,6 +103,14 @@ class HomeController extends GetxController {
         Get.toNamed(AppRoutes.cliente,
             arguments: categories[isSelectedIndex.value]);
         break;
+           case 2:
+        Get.toNamed(AppRoutes.repartidor,
+            arguments: categories[isSelectedIndex.value]);
+        break;
+           case 3:
+        Get.toNamed(AppRoutes.vehiculo,
+            arguments: categories[isSelectedIndex.value]);
+        break;
       default:
     }
   }

@@ -70,6 +70,10 @@ final categories = [
     id: 2,
     name: 'Repartidores',
     path: 'assets/icons/repartidor.svg',
+  ), CategoryModel(
+    id: 3,
+    name: 'Vehículos',
+    path: 'assets/icons/repartidor.svg',
   ),
 ];
 

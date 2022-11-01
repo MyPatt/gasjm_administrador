@@ -1,7 +1,6 @@
- 
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/data/models/category_model.dart'; 
+import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/global_widgets/content_title.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:gasjm/app/modules/home/widgets/categoria_fechas.dart';
@@ -31,65 +30,87 @@ class HomePage extends StatelessWidget {
           actions: const [MenuAppBar()],
           title: const Text('GasJ&M'),
         ),
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: CustomScrollView(
-                slivers: [
-                  // Header(),
-                  // Search(),*/
-                  const Category(),
-                  Obx(() => ContentTitle(
-                        //   title: "Nearby to you",
-                        title: _.indiceDeFechaSeleccionada.value.isEqual(3)
-                            ? categories[_.isSelectedIndex.value].name +
-                                categoriesDates[
-                                        _.indiceDeFechaSeleccionada.value]
-                                    .path +
-                                _.selectedDate.value
-                            : categories[_.isSelectedIndex.value].name +
-                                categoriesDates[
-                                        _.indiceDeFechaSeleccionada.value]
-                                    .path +
-                                categoriesDates[
-                                        _.indiceDeFechaSeleccionada.value]
-                                    .name
-                                    .toLowerCase(),
-                        more: "Ver todo",
-                        onTap: () => _.navegarDashboard(),
-                        /*  onTap: () => Get.toNamed(AppRoutes.detail,
-                            arguments: categories[_.isSelectedIndex.value]),*/
-                      )),
-
-                  //   Houses(),
-                  SliverToBoxAdapter(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(15.0))),
-                      //  padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.only(
-                          bottom: 15.0, left: 20.0, right: 20.0),
-                      height: Responsive.getScreenSize(context).height * .67,
-                      //
-                      child: ListView(
-                        children: [
-                          const CategoryCopy(),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Obx(() => ChartPedido(puntos: _.pedidoPuntos.value, indice: _.indiceDeFechaSeleccionada.value,)),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                        ],
-                      ),
+        body: CustomScrollView(
+          slivers: [
+            //Modulos de gestion por el administrador
+            const CategoriaModulos(),
+            //Primer subtitulo se adapta a la seleccion del modulo
+            Obx(() => Subtitulo(
+                  title: _.indiceDeFechaSeleccionada.value.isEqual(3)
+                      ? categories[_.isSelectedIndex.value].name +
+                          categoriesDates[
+                                  _.indiceDeFechaSeleccionada.value]
+                              .path +
+                          _.selectedDate.value
+                      : categories[_.isSelectedIndex.value].name +
+                          categoriesDates[
+                                  _.indiceDeFechaSeleccionada.value]
+                              .path +
+                          categoriesDates[
+                                  _.indiceDeFechaSeleccionada.value]
+                              .name
+                              .toLowerCase(),
+                  more: "Ver todo",
+                  onTap: () => _.navegarDashboard(),
+                )),
+                //Modulo Pedidos
+            SliverToBoxAdapter(
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(15.0))),
+                //  padding: const EdgeInsets.all(8.0),
+                margin: const EdgeInsets.only(
+                    bottom: 15.0, left: 20.0, right: 20.0),
+                height: Responsive.getScreenSize(context).height * .67,
+                //
+                child: ListView(
+                  children: [
+                    const CategoriaFechas(),
+                    const SizedBox(
+                      height: 25,
                     ),
-                  )
-                ],
+                    Obx(() => ChartPedido(
+                          puntos: _.pedidoPuntos.value,
+                          indice: _.indiceDeFechaSeleccionada.value,
+                        )),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
               ),
             ),
+            ////
+             SliverToBoxAdapter(
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(15.0))),
+                //  padding: const EdgeInsets.all(8.0),
+                margin: const EdgeInsets.only(
+                    bottom: 15.0, left: 20.0, right: 20.0),
+                height: Responsive.getScreenSize(context).height * .67,
+                //
+                child: ListView(
+                  children: [
+                    const CategoriaFechas(),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Obx(() => ChartPedido(
+                          puntos: _.pedidoPuntos.value,
+                          indice: _.indiceDeFechaSeleccionada.value,
+                        )),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

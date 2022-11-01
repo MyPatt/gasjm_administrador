@@ -4,8 +4,8 @@ import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CategoryCopy extends StatelessWidget {
-  const CategoryCopy({Key? key}) : super(key: key);
+class CategoriaFechas extends StatelessWidget {
+  const CategoriaFechas({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,6 @@ class CategoryCopy extends StatelessWidget {
         margin: const EdgeInsets.only(
           top: 15.00,
         ),
-        //padding: const EdgeInsets.only(top: 15.0),
         height: 35.0,
         child: ListView.builder(
           shrinkWrap: true,
@@ -24,15 +23,14 @@ class CategoryCopy extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-           
                 _.seleccionarIndiceDeFecha(index);
                 if (index.isEqual(3)) {
                   _.selectDate(context);
                 }
               },
-              child: ItemCategory(
-                category: categoriesDates[index],
-                index: index,
+              child: ItemCategoriaFechas(
+                categoria: categoriesDates[index],
+                indice: index,
               ),
             );
           },
@@ -42,22 +40,22 @@ class CategoryCopy extends StatelessWidget {
   }
 }
 
-class ItemCategory extends StatelessWidget {
-  const ItemCategory({
+class ItemCategoriaFechas extends StatelessWidget {
+  const ItemCategoriaFechas({
     Key? key,
-    required this.category,
-    required this.index,
+    required this.categoria,
+    required this.indice,
   }) : super(key: key);
 
-  final CategoryModel category;
-  final int index;
+  final CategoriaModelo categoria;
+  final int indice;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (_) => Obx(
         () {
           bool isSelected =
-              index == _.indiceDeFechaSeleccionada.value ? true : false;
+              indice == _.indiceDeFechaSeleccionada.value ? true : false;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             width: 65.0,
@@ -67,14 +65,11 @@ class ItemCategory extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               border: Border.all(
-                color: index == _.indiceDeFechaSeleccionada.value
+                color: indice == _.indiceDeFechaSeleccionada.value
                     ? AppTheme.light
                     : Colors.white,
               ),
               color: Colors.white,
-              /*color: index == _.isSelectedIndex.value
-                  ? AppTheme.blueBackground
-                  : Colors.white,*/
               borderRadius: BorderRadius.circular(13.0),
             ),
             child: Center(
@@ -84,7 +79,7 @@ class ItemCategory extends StatelessWidget {
                   right: 3.0,
                   left: 3.0,
                 ),
-                child: category.id.isEqual(3)
+                child: categoria.id.isEqual(3)
                     ? Icon(
                         Icons.calendar_month_sharp,
                         color: isSelected
@@ -92,20 +87,8 @@ class ItemCategory extends StatelessWidget {
                             ? AppTheme.blueDark
                             : AppTheme.light.withOpacity(.5),
                       )
-                    /*  ? IconButton(
-                        padding: const EdgeInsets.all(0.0),
-                        alignment: Alignment.center,
-                        icon: const Icon(Icons.calendar_month_sharp),
-                        color: isSelected
-                            // ? Colors.white
-                            ? AppTheme.blueDark
-                            : AppTheme.light.withOpacity(.5),
-                        onPressed: () {
-                          Future.wait([_.selectDate(context)]);
-                        },
-                      )*/
                     : Text(
-                        category.name,
+                        categoria.name,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.caption?.copyWith(
                             color: isSelected

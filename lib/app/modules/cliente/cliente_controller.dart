@@ -8,8 +8,8 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class ClienteController extends GetxController {
-  late CategoryModel _categoria;
-  CategoryModel get house => _categoria;
+  late CategoriaModelo _categoria;
+  CategoriaModelo get house => _categoria;
 
   final _personaRepository = Get.find<PersonaRepository>();
 
@@ -26,7 +26,7 @@ class ClienteController extends GetxController {
   /** METODOS PROPDIO */
   @override
   void onInit() {
-   // _categoria = Get.arguments as CategoryModel;
+    // _categoria = Get.arguments as CategoryModel;
     _cargarListaDeClientes();
 
     super.onInit();

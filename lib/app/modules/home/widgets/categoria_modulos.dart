@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class Category extends StatelessWidget {
-  const Category({Key? key}) : super(key: key);
+class CategoriaModulos extends StatelessWidget {
+  const CategoriaModulos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,9 @@ class Category extends StatelessWidget {
                 onTap: () {
                   _.seleccionarIndiceDeCategoria(index);
                 },
-                child: ItemCategory(
-                  category: categories[index],
-                  index: index,
+                child: ItemCategoriaModulos(
+                  categoria: categories[index],
+                  indice: index,
                 ),
               );
             },
@@ -38,20 +38,21 @@ class Category extends StatelessWidget {
   }
 }
 
-class ItemCategory extends StatelessWidget {
-  ItemCategory({
-    required this.category,
-    required this.index,
-  });
+class ItemCategoriaModulos extends StatelessWidget {
+  const ItemCategoriaModulos({
+    Key? key,
+    required this.categoria,
+    required this.indice,
+  }) : super(key: key);
 
-  final CategoryModel category;
-  final int index;
+  final CategoriaModelo categoria;
+  final int indice;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (_) => Obx(
         () {
-          bool isSelected = index == _.isSelectedIndex.value ? true : false;
+          bool isSelected = indice == _.isSelectedIndex.value ? true : false;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 400),
             width: Responsive.getScreenSize(context).width * .28,
@@ -60,13 +61,7 @@ class ItemCategory extends StatelessWidget {
               bottom: isSelected ? 0 : 20.0,
             ),
             decoration: BoxDecoration(
-              /* border: Border.all(
-                color: index == _.isSelectedIndex.value
-                    ? AppTheme.light
-       
-                    : Colors.white,
-              ),*/
-              color: index == _.isSelectedIndex.value
+              color: indice == _.isSelectedIndex.value
                   ? Colors.white
                   : Colors.white.withOpacity(0.5),
               borderRadius: BorderRadius.circular(15.0),
@@ -75,7 +70,7 @@ class ItemCategory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  category.path,
+                  categoria.path,
                   width: 30.0,
                   color: isSelected
                       // ? Colors.white
@@ -91,7 +86,7 @@ class ItemCategory extends StatelessWidget {
                       left: 5.0,
                     ),
                     child: Text(
-                      category.name,
+                      categoria.name,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.caption?.copyWith(
                           color:
@@ -100,29 +95,6 @@ class ItemCategory extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                /* isSelected
-                    ? Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: 10.0,
-                            right: 5.0,
-                            left: 5.0,
-                          ),
-                          child: Text(
-                            category.nombrePerfil,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption
-                                ?.copyWith(
-                                    color: AppTheme.blueBackground,
-                                    fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )
-                    : SizedBox()
-                    */
               ],
             ),
           );

@@ -1,17 +1,17 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/data/models/category_model.dart'; 
+import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart'; 
+import 'package:get/get_state_manager/get_state_manager.dart';
 
 class Footer extends StatelessWidget {
   Footer({
     required this.house,
   });
-  final CategoryModel house;
+  final CategoriaModelo house;
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -106,13 +106,13 @@ class Footer extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   maxLines: 1,
                   validator: null,
-                  labelText: "Date", 
+                  labelText: "Date",
                   filled: false,
                   enabledBorderColor: Colors.black26,
                   focusedBorderColor: AppTheme.cyan,
                   fontSize: 14.0,
                   fontColor: Colors.black45,
-                //  onChanged: _.onChangedDate,
+                  //  onChanged: _.onChangedDate,
                 ),
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .02),
@@ -136,8 +136,8 @@ class Footer extends StatelessWidget {
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .03),
                 PrimaryButton(
-                  texto: "Register", onPressed: () {  },
-                 // onPressed: _.register,
+                  texto: "Register", onPressed: () {},
+                  // onPressed: _.register,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * .03),
               ],

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
-class ContentTitle extends StatelessWidget {
-  const ContentTitle({Key? key, 
+class Subtitulo extends StatelessWidget {
+  const Subtitulo({
+    Key? key,
     required this.title,
     required this.more,
-     required this.onTap,
+    required this.onTap,
   }) : super(key: key);
   final String title;
   final String more;

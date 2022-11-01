@@ -47,30 +47,31 @@ final categoriesDates = [
   ),
 ];
 */
-class CategoryModel {
+class CategoriaModelo {
   final int id;
   final String name;
   final String path;
 
-  CategoryModel({required this.id, required this.name, required this.path});
+  CategoriaModelo({required this.id, required this.name, required this.path});
 }
 
 final categories = [
-  CategoryModel(
+  CategoriaModelo(
     id: 0,
     name: 'Pedidos',
     path: 'assets/icons/botella-con-gas.svg',
   ),
-  CategoryModel(
+  CategoriaModelo(
     id: 1,
     name: 'Clientes',
     path: 'assets/icons/cliente.svg',
   ),
-  CategoryModel(
+  CategoriaModelo(
     id: 2,
     name: 'Repartidores',
     path: 'assets/icons/repartidor.svg',
-  ), CategoryModel(
+  ),
+  CategoriaModelo(
     id: 3,
     name: 'Vehículos',
     path: 'assets/icons/repartidor.svg',
@@ -78,22 +79,22 @@ final categories = [
 ];
 
 final categoriesDates = [
-  CategoryModel(
+  CategoriaModelo(
     id: 0,
     name: 'Día',
     path: ' del ',
   ),
-  CategoryModel(
+  CategoriaModelo(
     id: 1,
     name: 'Semana',
     path: ' de la ',
   ),
-  CategoryModel(
+  CategoriaModelo(
     id: 2,
     name: 'Mes',
     path: ' del ',
   ),
-  CategoryModel(
+  CategoriaModelo(
     id: 3,
     name: 'Calendario',
     path: ' de ',

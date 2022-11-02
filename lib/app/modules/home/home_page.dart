@@ -32,32 +32,36 @@ class HomePage extends StatelessWidget {
             actions: const [MenuAppBar()],
             title: const Text('GasJ&M'),
           ),
-          body: CustomScrollView(
-            slivers: [
-              //Modulos de gestion por el administrador
-              const CategoriaModulos(),
-              //Primer subtitulo se adapta a la seleccion del modulo
-              Obx(() => Subtitulo(
-                    title: _.indiceDeFechaSeleccionada.value.isEqual(3)
-                        ? categoriasModulos[_.indiceModuloSeleccionado.value]
-                                .name +
-                            categoriasFechas[_.indiceDeFechaSeleccionada.value]
-                                .path +
-                            _.fechaSeleccionadaString.value
-                        : categoriasModulos[_.indiceModuloSeleccionado.value]
-                                .name +
-                            categoriasFechas[_.indiceDeFechaSeleccionada.value]
-                                .path +
-                            categoriasFechas[_.indiceDeFechaSeleccionada.value]
-                                .name
-                                .toLowerCase(),
-                    more: "Ver todo",
-                    onTap: () => _.navegarDashboard(),
-                  )),
-
-              //Modulo Pedidos
-              const ContenidoPedidos()
-            ],
+          body:  Obx(
+            () => AbsorbPointer(
+              absorbing: _.cargandoParaDia.value, child: CustomScrollView(
+                slivers: [
+                  //Modulos de gestion por el administrador
+                  const CategoriaModulos(),
+                  //Primer subtitulo se adapta a la seleccion del modulo
+                  Obx(() => Subtitulo(
+                        title: _.indiceDeFechaSeleccionada.value.isEqual(3)
+                            ? categoriasModulos[_.indiceModuloSeleccionado.value]
+                                    .name +
+                                categoriasFechas[_.indiceDeFechaSeleccionada.value]
+                                    .path +
+                                _.fechaSeleccionadaString.value
+                            : categoriasModulos[_.indiceModuloSeleccionado.value]
+                                    .name +
+                                categoriasFechas[_.indiceDeFechaSeleccionada.value]
+                                    .path +
+                                categoriasFechas[_.indiceDeFechaSeleccionada.value]
+                                    .name
+                                    .toLowerCase(),
+                        more: "Ver todo",
+                        onTap: () => _.navegarDashboard(),
+                      )),
+                      
+                  //Modulo Pedidos
+                  const ContenidoPedidos()
+                ],
+              ),
+            ),
           ),
           bottomNavigationBar: const BottomNavigationAdministrador()),
     );

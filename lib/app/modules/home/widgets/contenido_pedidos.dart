@@ -29,8 +29,7 @@ class ContenidoPedidos extends StatelessWidget {
                 height: 20,
               ),
               const CategoriaFechas(),
-              Obx(() =>
-                  TextDescription(text: " ${_.totalCantidad.value}")),
+              Obx(() => TextDescription(text: " ${_.totalCantidad.value}")),
               const SizedBox(
                 height: 10,
               ),
@@ -52,7 +51,6 @@ class ContenidoPedidos extends StatelessWidget {
           ),
         ),
       ),
-      ////
     );
   }
 }

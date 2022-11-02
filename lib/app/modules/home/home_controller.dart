@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/data/models/puntos_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
@@ -98,9 +99,30 @@ class HomeController extends GetxController {
 
   Future<void> seleccionarFechaDelCalendario(BuildContext context) async {
     DateTime? d = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+                primary: AppTheme.blueBackground,
+                onPrimary: Colors.white,
+                onSurface: AppTheme.blueDark,   ),
+                
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Color.fromRGBO(33, 116, 212, 1), 
+                // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
+      locale: const Locale(
+        'es',
+      ),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
-      helpText: "Seleccione una fecha".toUpperCase(),
+   
       cancelText: "Cancelar",
       confirmText: "Aceptar",
       initialDate: fechaInicialCalendario.value,

@@ -19,16 +19,18 @@ class CategoriaModulos extends StatelessWidget {
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: categories.length,
+            itemCount: categoriasModulos.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
                   _.seleccionarIndiceDeCategoria(index);
                 },
-                child: ItemCategoriaModulos(
-                  categoria: categories[index],
+                child: Obx(()=>
+                ItemCategoriaModulos(
+                  categoria: categoriasModulos[index],
                   indice: index,
-                ),
+                  cantidad: _.listaCantidadesModulos[index],
+                ),)
               );
             },
           ),
@@ -43,10 +45,12 @@ class ItemCategoriaModulos extends StatelessWidget {
     Key? key,
     required this.categoria,
     required this.indice,
+    required this.cantidad,
   }) : super(key: key);
 
   final CategoriaModelo categoria;
   final int indice;
+  final int cantidad;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
@@ -87,7 +91,7 @@ class ItemCategoriaModulos extends StatelessWidget {
                       left: 5.0,
                     ),
                     child: Text(
-                      "10",
+                      cantidad.toString(),
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.caption?.copyWith(
                           color: AppTheme.light,

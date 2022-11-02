@@ -19,7 +19,7 @@ class CategoriaFechas extends StatelessWidget {
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: categoriesDates.length,
+          itemCount: categoriasFechas.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
@@ -29,7 +29,7 @@ class CategoriaFechas extends StatelessWidget {
                 }
               },
               child: ItemCategoriaFechas(
-                categoria: categoriesDates[index],
+                categoria: categoriasFechas[index],
                 indice: index,
               ),
             );

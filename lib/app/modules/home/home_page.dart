@@ -39,20 +39,20 @@ class HomePage extends StatelessWidget {
               //Primer subtitulo se adapta a la seleccion del modulo
               Obx(() => Subtitulo(
                     title: _.indiceDeFechaSeleccionada.value.isEqual(3)
-                        ? categories[_.isSelectedIndex.value].name +
-                            categoriesDates[_.indiceDeFechaSeleccionada.value]
+                        ? categoriasModulos[_.isSelectedIndex.value].name +
+                            categoriasFechas[_.indiceDeFechaSeleccionada.value]
                                 .path +
                             _.selectedDate.value
-                        : categories[_.isSelectedIndex.value].name +
-                            categoriesDates[_.indiceDeFechaSeleccionada.value]
+                        : categoriasModulos[_.isSelectedIndex.value].name +
+                            categoriasFechas[_.indiceDeFechaSeleccionada.value]
                                 .path +
-                            categoriesDates[_.indiceDeFechaSeleccionada.value]
+                            categoriasFechas[_.indiceDeFechaSeleccionada.value]
                                 .name
                                 .toLowerCase(),
                     more: "Ver todo",
                     onTap: () => _.navegarDashboard(),
                   )),
-              
+
               //Modulo Pedidos
               const ContenidoPedidos()
             ],

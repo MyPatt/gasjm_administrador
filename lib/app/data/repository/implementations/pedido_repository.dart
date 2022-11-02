@@ -46,4 +46,9 @@ class PedidoRepositoryImpl extends PedidoRepository {
   @override
   Future<int> getCantidadPedidosPorPorDias({required Timestamp fechaDia}) =>
       _provider.getCantidadPedidosPorDia(fechaInicial: fechaDia);
+
+  @override
+  Future<int> getCantidadPedidosPorfield(
+          {required String field, required String dato}) =>
+      _provider.getCantidadPedidosPorfield(field: field, dato: dato);
 }

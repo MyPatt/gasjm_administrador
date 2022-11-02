@@ -167,4 +167,15 @@ class PersonaProvider {
         .update({"contrasena": contrasena});
    await FirebaseAuth.instance.currentUser?.updatePassword(contrasena);
   }
+
+    //Retornar la cantidad de cleintes por field
+  Future<int> getCantidadClientesPorfield(
+    {required String field, required String dato}) async {
+    final resultado = await _firestoreInstance
+        .collection("persona") .where("estado", isEqualTo: "activo")
+        .where(field, isEqualTo: dato)
+        .get();
+  
+    return resultado.docs.length;
+  }
 }

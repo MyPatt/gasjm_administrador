@@ -28,13 +28,20 @@ class HomeController extends GetxController {
   RxList<PedidoPuntos> get pedidoPuntos => _pedidoPuntos;
   //   final List<PricePoint> points;
   final _pedidoRepository = Get.find<PedidoRepository>();
+//
+  final RxList<int> _listaCantidadesModulos = <int>[0, 0, 0, 0].obs;
+  // final RxList<int> _listaCantidadesModulos = <int>[].obs;
 
+  RxList<int> get listaCantidadesModulos => _listaCantidadesModulos;
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
     super.onInit();
-    Future.wait(
-        [_cargarFotoPerfil(), _getCantidadesPorHorasDelDia(DateTime.now())]);
+    Future.wait([
+      _cargarFotoPerfil(),
+      _getCantidadesPorHorasDelDia(DateTime.now()),
+      _obtenerCantidadTotalXCategoria()
+    ]);
   }
 
   @override
@@ -98,25 +105,56 @@ class HomeController extends GetxController {
     switch (isSelectedIndex.value) {
       case 0:
         Get.toNamed(AppRoutes.detail,
-            arguments: categories[isSelectedIndex.value]);
+            arguments: categoriasModulos[isSelectedIndex.value]);
         break;
       case 1:
         Get.toNamed(AppRoutes.cliente,
-            arguments: categories[isSelectedIndex.value]);
+            arguments: categoriasModulos[isSelectedIndex.value]);
         break;
       case 2:
         Get.toNamed(AppRoutes.repartidor,
-            arguments: categories[isSelectedIndex.value]);
+            arguments: categoriasModulos[isSelectedIndex.value]);
         break;
       case 3:
         Get.toNamed(AppRoutes.vehiculo,
-            arguments: categories[isSelectedIndex.value]);
+            arguments: categoriasModulos[isSelectedIndex.value]);
         break;
       default:
     }
   }
 
+/* OBTENER DATOS PARA MODULOS*/
+
+//Obtener el total de c/u modulo
+  Future<void> _obtenerCantidadTotalXCategoria() async {
+    int total = 0;
+    //
+    total = await _pedidoRepository.getCantidadPedidosPorfield(
+        field: "idEstadoPedido", dato: "estado3");
+    _listaCantidadesModulos[0] = total;
+    //_listaCantidadesModulos.add(total);
+    //
+
+    total = await _personaRepository.getCantidadClientesPorfield(
+        field: "idPerfil", dato: "cliente");
+   // _listaCantidadesModulos.add(total);
+    _listaCantidadesModulos[1] = total;
+
+    //
+    total = await _personaRepository.getCantidadClientesPorfield(
+        field: "idPerfil", dato: "repartidor");
+    //_listaCantidadesModulos.add(total);
+    _listaCantidadesModulos[2] = total;
+
+    //TODO: IMPLEMNTAR VEHICULOS MODULO
+    //_listaCantidadesModulos.add(1);
+    _listaCantidadesModulos[3] = 1;
+
+    print("0000000000000000000000000");
+    print(_listaCantidadesModulos.value);
+  }
 /* CHART DE PEDIDOS */
+
 //Obtener cantidad de pedidos por horas del dia actual
   Future<void> _getCantidadesPorHorasDelDia(DateTime fecha) async {
     //Obtener el numero de la hora actual
@@ -239,16 +277,17 @@ class HomeController extends GetxController {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.ir);
     } catch (e) {
-      throw Exception("Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
+      throw Exception(
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     }
-    
   }
 
   _cargarPedidosPage() async {
     try {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.pedidos);
-      throw Exception("Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
+      throw Exception(
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     } catch (e) {}
   }
 }

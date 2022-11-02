@@ -116,4 +116,15 @@ class PedidoProvider {
 
     return resultado.docs.length;
   }
+
+  //Retornar la cantidad de pedidos por hora
+  Future<int> getCantidadPedidosPorfield(
+    {required String field, required String dato}) async {
+    final resultado = await _firestoreInstance
+        .collection("pedido")
+        .where(field, isEqualTo: dato)
+        .get();
+  
+    return resultado.docs.length;
+  }
 }

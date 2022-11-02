@@ -8,17 +8,24 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  RxInt isSelectedIndex = 0.obs;
+  RxInt indiceModuloSeleccionado = 0.obs;
   RxInt indiceDeFechaSeleccionada = 0.obs;
-
+//
+  RxString mensaje = "".obs;
   //
-  Rx<DateTime> fechaInicial = DateTime.now().obs;
-  RxString get selectedDate => (fechaInicial.value.day.toString() +
-          '/' +
-          fechaInicial.value.month.toString() +
-          '/' +
-          fechaInicial.value.year.toString())
-      .obs;
+  DateTime fechaInicio =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  Rx<DateTime> fechaInicialCalendario =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day)
+          .obs;
+  RxString get fechaSeleccionadaString =>
+      (fechaInicialCalendario.value.day.toString() +
+              '/' +
+              fechaInicialCalendario.value.month.toString() +
+              '/' +
+              fechaInicialCalendario.value.year.toString())
+          .obs;
+
 //
   final _personaRepository = Get.find<PersonaRepository>();
   RxString imagenUsuario = ''.obs;
@@ -33,7 +40,10 @@ class HomeController extends GetxController {
   // final RxList<int> _listaCantidadesModulos = <int>[].obs;
 
   RxList<int> get listaCantidadesModulos => _listaCantidadesModulos;
+  //Estado de carga de dia
+  final cargandoParaDia = RxBool(false);
   /* METODOS PROPIOS */
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -58,7 +68,7 @@ class HomeController extends GetxController {
 //Metodo para actualizar el indice de la categoria del dashboard [pedido,cliente,repartidor,vehiculo]
 
   seleccionarIndiceDeCategoria(int index) {
-    isSelectedIndex.value = index;
+    indiceModuloSeleccionado.value = index;
   }
 
 //Metodo para actualizar el indice de la fecha seleccionada para mostrar el grafico estadistico [dia,semana,mes,calendario]
@@ -77,47 +87,55 @@ class HomeController extends GetxController {
       case 2:
         _getCantidadesPorDiasDelMes();
         break;
-      case 3:
-        _getCantidadesPorHorasDelDia(fechaInicial.value);
-        break;
+
       default:
     }
   }
 
-  Future<void> selectDate(BuildContext context) async {
+  Future<void> seleccionarFechaDelCalendario(BuildContext context) async {
     DateTime? d = await showDatePicker(
       context: context,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       helpText: "Seleccione una fecha".toUpperCase(),
       cancelText: "Cancelar",
       confirmText: "Aceptar",
-      initialDate: fechaInicial.value,
+      initialDate: fechaInicialCalendario.value,
       firstDate: DateTime(DateTime.now().year - 1),
       lastDate: DateTime.now(),
     );
 
-    if (d != null) {
-      fechaInicial.value = d;
+    if (d == null && fechaInicialCalendario.value == fechaInicio) {
+      _getCantidadesPorHorasDelDia(fechaInicio);
+      return;
     }
+        if (d == null && fechaInicialCalendario.value != fechaInicio) {
+      _getCantidadesPorDia(fechaInicialCalendario.value);
+      return;
+    }
+    if (d != null) {
+      fechaInicialCalendario.value = d;
+ 
+      _getCantidadesPorDia(fechaInicialCalendario.value);
+    }  
   }
 
   void navegarDashboard() {
-    switch (isSelectedIndex.value) {
+    switch (indiceModuloSeleccionado.value) {
       case 0:
         Get.toNamed(AppRoutes.detail,
-            arguments: categoriasModulos[isSelectedIndex.value]);
+            arguments: categoriasModulos[indiceModuloSeleccionado.value]);
         break;
       case 1:
         Get.toNamed(AppRoutes.cliente,
-            arguments: categoriasModulos[isSelectedIndex.value]);
+            arguments: categoriasModulos[indiceModuloSeleccionado.value]);
         break;
       case 2:
         Get.toNamed(AppRoutes.repartidor,
-            arguments: categoriasModulos[isSelectedIndex.value]);
+            arguments: categoriasModulos[indiceModuloSeleccionado.value]);
         break;
       case 3:
         Get.toNamed(AppRoutes.vehiculo,
-            arguments: categoriasModulos[isSelectedIndex.value]);
+            arguments: categoriasModulos[indiceModuloSeleccionado.value]);
         break;
       default:
     }
@@ -137,7 +155,7 @@ class HomeController extends GetxController {
 
     total = await _personaRepository.getCantidadClientesPorfield(
         field: "idPerfil", dato: "cliente");
-   // _listaCantidadesModulos.add(total);
+    // _listaCantidadesModulos.add(total);
     _listaCantidadesModulos[1] = total;
 
     //
@@ -149,52 +167,81 @@ class HomeController extends GetxController {
     //TODO: IMPLEMNTAR VEHICULOS MODULO
     //_listaCantidadesModulos.add(1);
     _listaCantidadesModulos[3] = 1;
-
-    print("0000000000000000000000000");
-    print(_listaCantidadesModulos.value);
   }
+
 /* CHART DE PEDIDOS */
+  Future<void> _getCantidadesPorDia(DateTime fecha) async {
+    try {
+      cargandoParaDia.value = true;
+//Limpiar los puntos
+      _pedidoPuntos.clear();
+//Verificar si la fecha es disitina a la actual
+      if (fecha != DateTime.now()) {
+        for (var i = 0; i < 15; i++) {
+          var hora = Timestamp.fromDate(
+              DateTime(fecha.year, fecha.month, fecha.day, (6 + i)));
+
+          var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
+              fechaHora: hora);
+          _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+        }
+      }
+    } catch (e) {
+      throw Exception(
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
+    }
+    cargandoParaDia.value = false;
+  }
 
 //Obtener cantidad de pedidos por horas del dia actual
   Future<void> _getCantidadesPorHorasDelDia(DateTime fecha) async {
     //Obtener el numero de la hora actual
     final numeroHoraActual = fecha.hour;
-//
-    _pedidoPuntos.clear();
-    //(Horario de atenciom de 6 am a 20 pm)
-    //Si la hora actual es menor 6  mostrar la primera hora en 0
-    if (numeroHoraActual < 6) {
-      //  for (var i = 0; i < 2; i++) {
-      for (var i = 0; i < 15; i++) {
-        _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
-      }
-    } else if (numeroHoraActual > 20) {
-      //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
-      //<15(20-6=14) horas del dia de atencion, por cada hora consultar en firebase la cantidad de pedidos
-      for (var i = 0; i < 15; i++) {
-        var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
-            DateTime.now().month, DateTime.now().day, (6 + i)));
-        var cantidadXHora =
-            await _pedidoRepository.getCantidadPedidosPorHora(fechaHora: hora);
-        _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
-      }
-    } else {
-      //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
-      int p = numeroHoraActual - 5;
+    //
+    try {
+      cargandoParaDia.value = true;
+      //Limpiar los puntos
+      _pedidoPuntos.clear();
 
-      // for (var i = 0; i < p; i++) {
-      for (var i = 0; i < 15; i++) {
-        if (i >= p) {
+      //(Horario de atenciom de 6 am a 20 pm)
+      //Si la hora actual es menor 6  mostrar la primera hora en 0
+      if (numeroHoraActual < 6) {
+        //  for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < 15; i++) {
           _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
-        } else {
+        }
+      } else if (numeroHoraActual > 20) {
+        //Si la hora actual es mayor a 20 mostrar los pedidos de 6 a 20 horas
+        //<15(20-6=14) horas del dia de atencion, por cada hora consultar en firebase la cantidad de pedidos
+        for (var i = 0; i < 15; i++) {
           var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
               DateTime.now().month, DateTime.now().day, (6 + i)));
           var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
               fechaHora: hora);
           _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
         }
+      } else {
+        //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
+        int p = numeroHoraActual - 5;
+
+        // for (var i = 0; i < p; i++) {
+        for (var i = 0; i < 15; i++) {
+          if (i >= p) {
+            _pedidoPuntos.add(PedidoPuntos(x: i, y: 0));
+          } else {
+            var hora = Timestamp.fromDate(DateTime(DateTime.now().year,
+                DateTime.now().month, DateTime.now().day, (6 + i)));
+            var cantidadXHora = await _pedidoRepository
+                .getCantidadPedidosPorHora(fechaHora: hora);
+            _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+          }
+        }
       }
+    } catch (e) {
+      throw Exception(
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     }
+    cargandoParaDia.value = false;
   }
 
 //Metodo de obtener pedidos por cada dia del mes
@@ -206,27 +253,34 @@ class HomeController extends GetxController {
     //Obtener el total de dias del mes actual
     var cantidadDias = DateTime(fechaActual.year, fechaActual.month + 1, 0).day;
 //
-    _pedidoPuntos.clear();
+    try {
+      cargandoParaDia.value = true;
+      _pedidoPuntos.clear();
 
-    //Obtener pedidos de todos los dias del mes desde firestore
-    for (var i = 0; i < cantidadDias; i++) {
-      var cantidadXDia = 0;
-      //caso de superar la fecha actual el pedido es0
-      if (i >= diaMes) {
-        //consulta
-        cantidadXDia = 0;
-      } else {
-        //ir sumando los dias
-        var fecha = Timestamp.fromDate(
-            DateTime(fechaActual.year, fechaActual.month, (i + 1)));
-        //consulta desde firestore
-        cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
-            fechaDia: fecha);
+      //Obtener pedidos de todos los dias del mes desde firestore
+      for (var i = 0; i < cantidadDias; i++) {
+        var cantidadXDia = 0;
+        //caso de superar la fecha actual el pedido es0
+        if (i >= diaMes) {
+          //consulta
+          cantidadXDia = 0;
+        } else {
+          //ir sumando los dias
+          var fecha = Timestamp.fromDate(
+              DateTime(fechaActual.year, fechaActual.month, (i + 1)));
+          //consulta desde firestore
+          cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
+              fechaDia: fecha);
+        }
+
+        //agregar a la lista
+        _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
       }
-
-      //agregar a la lista
-      _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
+    } catch (e) {
+      throw Exception(
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     }
+    cargandoParaDia.value = false;
   }
 
 /////////////////////////
@@ -238,22 +292,29 @@ class HomeController extends GetxController {
     //Obtener la fecha del dia lunes de la semana actual
     var dia = (DateTime.now().day - diaSemana + 1);
 //
-    _pedidoPuntos.clear();
-    //Obtener caantidad de toda la semana(7dias) desde firestore
-    for (var i = 0; i < 7; i++) {
-      //ir sumando los dias
-      var fecha = Timestamp.fromDate(
-          DateTime(fechaActual.year, fechaActual.month, (dia + i)));
-      var cantidadXDia = 0;
-      if (i <= diaSemana) {
-        //consulta
-        cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
-            fechaDia: fecha);
-      }
+    try {
+      cargandoParaDia.value = true;
+      _pedidoPuntos.clear();
+      //Obtener caantidad de toda la semana(7dias) desde firestore
+      for (var i = 0; i < 7; i++) {
+        //ir sumando los dias
+        var fecha = Timestamp.fromDate(
+            DateTime(fechaActual.year, fechaActual.month, (dia + i)));
+        var cantidadXDia = 0;
+        if (i <= diaSemana) {
+          //consulta
+          cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
+              fechaDia: fecha);
+        }
 
-      //agregar a la lista
-      _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
+        //agregar a la lista
+        _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXDia));
+      }
+    } catch (e) {
+      throw Exception(
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     }
+    cargandoParaDia.value = false;
   }
 
   /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
@@ -286,8 +347,9 @@ class HomeController extends GetxController {
     try {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.pedidos);
+    } catch (e) {
       throw Exception(
           "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
-    } catch (e) {}
+    }
   }
 }

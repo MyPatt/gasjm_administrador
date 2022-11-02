@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:gasjm/app/modules/home/widgets/categoria_fechas.dart';
 import 'package:gasjm/app/modules/home/widgets/chart_pedidos.dart';
@@ -18,7 +19,7 @@ class ContenidoPedidos extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           //  padding: const EdgeInsets.all(8.0),
           margin: const EdgeInsets.only(bottom: 15.0, left: 20.0, right: 20.0),
-          height: Responsive.getScreenSize(context).height * .55,
+          height: Responsive.getScreenSize(context).height * .54,
           //
           child: ListView(
             children: [
@@ -26,10 +27,19 @@ class ContenidoPedidos extends StatelessWidget {
                 height: 25,
               ),
               const CategoriaFechas(),
-              Obx(() => ChartPedido(
+              //Obx(() =>  TextDescription(text: _.mensaje.value)),
+              Obx(() {
+                final estadoProceso = _.cargandoParaDia.value;
+                return Stack(alignment: Alignment.center, children: [
+                  ChartPedido(
                     puntos: _.pedidoPuntos.value,
                     indice: _.indiceDeFechaSeleccionada.value,
-                  )),
+                  ),
+                  if (estadoProceso)
+                    const CircularProgressIndicator(
+                        backgroundColor: Colors.white),
+                ]);
+              }),
             ],
           ),
         ),

@@ -39,11 +39,13 @@ class HomePage extends StatelessWidget {
               //Primer subtitulo se adapta a la seleccion del modulo
               Obx(() => Subtitulo(
                     title: _.indiceDeFechaSeleccionada.value.isEqual(3)
-                        ? categoriasModulos[_.isSelectedIndex.value].name +
+                        ? categoriasModulos[_.indiceModuloSeleccionado.value]
+                                .name +
                             categoriasFechas[_.indiceDeFechaSeleccionada.value]
                                 .path +
-                            _.selectedDate.value
-                        : categoriasModulos[_.isSelectedIndex.value].name +
+                            _.fechaSeleccionadaString.value
+                        : categoriasModulos[_.indiceModuloSeleccionado.value]
+                                .name +
                             categoriasFechas[_.indiceDeFechaSeleccionada.value]
                                 .path +
                             categoriasFechas[_.indiceDeFechaSeleccionada.value]

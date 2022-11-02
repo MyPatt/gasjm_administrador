@@ -25,7 +25,7 @@ class CategoriaFechas extends StatelessWidget {
               onTap: () {
                 _.seleccionarIndiceDeFecha(index);
                 if (index.isEqual(3)) {
-                  _.selectDate(context);
+                  _.seleccionarFechaDelCalendario(context);
                 }
               },
               child: ItemCategoriaFechas(

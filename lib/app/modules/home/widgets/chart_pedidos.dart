@@ -22,12 +22,14 @@ class ChartPedido extends StatelessWidget {
         colors: <Color>[AppTheme.blueBackground],
         showingIndicators: showIndexes,
         spots: allSpots,
-        //  isCurved: true,
-        barWidth: 4,
+        barWidth: 3,
         // dotData: FlDotData(show: true),
         belowBarData: BarAreaData(
-          colors: <Color>[AppTheme.light.withOpacity(0.0)],
-          show: false,
+          colors: <Color>[
+            AppTheme.light.withOpacity(0.0),
+            AppTheme.light.withOpacity(1.0)
+          ],
+          show: true,
         ),
       ),
     ];
@@ -48,7 +50,7 @@ class ChartPedido extends StatelessWidget {
           alignment: Alignment.center,
           //  color: AppTheme.blueDark,
           margin: const EdgeInsets.only(top: 32.0, left: 30, right: 30),
-          width: indice == 0
+          width:  (indice == 0 || indice==3)  
               ? Responsive.getScreenSize(context).width * 1.9
               : indice == 1
                   ? Responsive.getScreenSize(context).width * 1.0
@@ -72,9 +74,10 @@ class ChartPedido extends StatelessWidget {
                   return spotIndexes.map((index) {
                     return TouchedSpotIndicatorData(
                       FlLine(
-                          color: AppTheme.blueDark,
-                          strokeWidth: 1.5,
-                          dashArray: [8, 10]),
+                        color: AppTheme.blueDark,
+                        strokeWidth: 1.5,
+                        //  dashArray: [8, 10]
+                      ),
                       FlDotData(
                         show: true,
                         getDotPainter: (spot, percent, barData, index) =>
@@ -156,19 +159,15 @@ class ChartPedido extends StatelessWidget {
                 ),
               ),
               gridData: FlGridData(
-                  show: true,
-                  getDrawingHorizontalLine: (double a) {
-                    return FlLine(
-                        color: AppTheme.light,
-                        strokeWidth: 0.5,
-                        dashArray: [5, 5]);
-                  },
-                  getDrawingVerticalLine: (double a) {
-                    return FlLine(
-                        color: AppTheme.light,
-                        strokeWidth: 0.5,
-                        dashArray: [5, 5]);
-                  }),
+                show: true,
+                drawVerticalLine: false,
+                getDrawingHorizontalLine: (double a) {
+                  return FlLine(
+                      color: AppTheme.light,
+                      strokeWidth: 0.5,
+                      dashArray: [5, 5]);
+                },
+              ),
               borderData: FlBorderData(
                   show: true,
                   border: const Border(

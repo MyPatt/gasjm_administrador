@@ -22,16 +22,16 @@ class CategoriaModulos extends StatelessWidget {
             itemCount: categoriasModulos.length,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: () {
-                  _.seleccionarIndiceDeCategoria(index);
-                },
-                child: Obx(()=>
-                ItemCategoriaModulos(
-                  categoria: categoriasModulos[index],
-                  indice: index,
-                  cantidad: _.listaCantidadesModulos[index],
-                ),)
-              );
+                  onTap: () {
+                    _.seleccionarIndiceDeCategoria(index);
+                  },
+                  child: Obx(
+                    () => ItemCategoriaModulos(
+                      categoria: categoriasModulos[index],
+                      indice: index,
+                      cantidad: _.listaCantidadesModulos[index],
+                    ),
+                  ));
             },
           ),
         ),
@@ -56,7 +56,8 @@ class ItemCategoriaModulos extends StatelessWidget {
     return GetBuilder<HomeController>(
       builder: (_) => Obx(
         () {
-          bool isSelected = indice == _.isSelectedIndex.value ? true : false;
+          bool isSelected =
+              indice == _.indiceModuloSeleccionado.value ? true : false;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 400),
             width: Responsive.getScreenSize(context).width * .28,
@@ -65,7 +66,7 @@ class ItemCategoriaModulos extends StatelessWidget {
               bottom: isSelected ? 0 : 20.0,
             ),
             decoration: BoxDecoration(
-              color: indice == _.isSelectedIndex.value
+              color: indice == _.indiceModuloSeleccionado.value
                   ? Colors.white
                   : Colors.white.withOpacity(0.5),
               borderRadius: BorderRadius.circular(15.0),

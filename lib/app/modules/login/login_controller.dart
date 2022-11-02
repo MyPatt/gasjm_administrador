@@ -19,7 +19,7 @@ class LoginController extends GetxController {
   final correoTextoController = TextEditingController();
   final contrasenaTextoController = TextEditingController();
 
-  bool estadoProceso = false;
+ 
 
 //
   @override

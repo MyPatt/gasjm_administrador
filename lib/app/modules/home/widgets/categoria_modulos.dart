@@ -15,7 +15,7 @@ class CategoriaModulos extends StatelessWidget {
       builder: (_) => SliverToBoxAdapter(
         child: Container(
           padding: const EdgeInsets.only(top: 15.0),
-          height: 90,
+          height: 130,
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -78,6 +78,24 @@ class ItemCategoriaModulos extends StatelessWidget {
                       : AppTheme.light.withOpacity(.5),
                 ),
                 //
+
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 10.0,
+                      right: 5.0,
+                      left: 5.0,
+                    ),
+                    child: Text(
+                      "10",
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.caption?.copyWith(
+                          color: AppTheme.light,
+                          // isSelected ? AppTheme.blueDark : AppTheme.light,
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ),
+                ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(

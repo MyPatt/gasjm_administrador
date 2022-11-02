@@ -18,7 +18,7 @@ class ContenidoPedidos extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           //  padding: const EdgeInsets.all(8.0),
           margin: const EdgeInsets.only(bottom: 15.0, left: 20.0, right: 20.0),
-          height: Responsive.getScreenSize(context).height * .59,
+          height: Responsive.getScreenSize(context).height * .55,
           //
           child: ListView(
             children: [

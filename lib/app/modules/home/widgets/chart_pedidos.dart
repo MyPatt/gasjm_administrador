@@ -42,7 +42,7 @@ class ChartPedido extends StatelessWidget {
       padding:
           const EdgeInsets.only(left: 12.0, right: 12.0, bottom: 0, top: 0),
       width: Responsive.getScreenSize(context).height * .42,
-      height: Responsive.getScreenSize(context).height * .42,
+      height: Responsive.getScreenSize(context).height * .40,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Container(
@@ -50,7 +50,7 @@ class ChartPedido extends StatelessWidget {
           alignment: Alignment.center,
           //  color: AppTheme.blueDark,
           margin: const EdgeInsets.only(top: 32.0, left: 30, right: 30),
-          width:  (indice == 0 || indice==3)  
+          width: (indice == 0 || indice == 3)
               ? Responsive.getScreenSize(context).width * 1.9
               : indice == 1
                   ? Responsive.getScreenSize(context).width * 1.0

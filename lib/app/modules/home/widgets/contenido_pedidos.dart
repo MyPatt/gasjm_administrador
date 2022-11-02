@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:gasjm/app/modules/home/widgets/categoria_fechas.dart';
@@ -24,10 +26,14 @@ class ContenidoPedidos extends StatelessWidget {
           child: ListView(
             children: [
               const SizedBox(
-                height: 25,
+                height: 20,
               ),
               const CategoriaFechas(),
-              //Obx(() =>  TextDescription(text: _.mensaje.value)),
+              Obx(() =>
+                  TextDescription(text: " ${_.totalCantidad.value}")),
+              const SizedBox(
+                height: 10,
+              ),
               Obx(() {
                 final estadoProceso = _.cargandoParaDia.value;
                 return Stack(alignment: Alignment.center, children: [
@@ -37,7 +43,9 @@ class ContenidoPedidos extends StatelessWidget {
                   ),
                   if (estadoProceso)
                     const CircularProgressIndicator(
-                        backgroundColor: Colors.white),
+                      backgroundColor: Colors.white,
+                      color: AppTheme.blueBackground,
+                    ),
                 ]);
               }),
             ],

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
@@ -42,6 +44,8 @@ class HomeController extends GetxController {
   RxList<int> get listaCantidadesModulos => _listaCantidadesModulos;
   //Estado de carga de dia
   final cargandoParaDia = RxBool(false);
+  //Verficar si la lista no tien datos
+  final totalCantidad = RxInt(0);
   /* METODOS PROPIOS */
 
   @override
@@ -108,15 +112,15 @@ class HomeController extends GetxController {
       _getCantidadesPorHorasDelDia(fechaInicio);
       return;
     }
-        if (d == null && fechaInicialCalendario.value != fechaInicio) {
+    if (d == null && fechaInicialCalendario.value != fechaInicio) {
       _getCantidadesPorDia(fechaInicialCalendario.value);
       return;
     }
     if (d != null) {
       fechaInicialCalendario.value = d;
- 
+
       _getCantidadesPorDia(fechaInicialCalendario.value);
-    }  
+    }
   }
 
   void navegarDashboard() {
@@ -175,6 +179,7 @@ class HomeController extends GetxController {
       cargandoParaDia.value = true;
 //Limpiar los puntos
       _pedidoPuntos.clear();
+      totalCantidad.value = 0;
 //Verificar si la fecha es disitina a la actual
       if (fecha != DateTime.now()) {
         for (var i = 0; i < 15; i++) {
@@ -184,6 +189,8 @@ class HomeController extends GetxController {
           var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
               fechaHora: hora);
           _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+          //Sumar la cantidad de Pedidos
+          totalCantidad.value = (totalCantidad.value + cantidadXHora);
         }
       }
     } catch (e) {
@@ -202,7 +209,7 @@ class HomeController extends GetxController {
       cargandoParaDia.value = true;
       //Limpiar los puntos
       _pedidoPuntos.clear();
-
+      totalCantidad.value = 0;
       //(Horario de atenciom de 6 am a 20 pm)
       //Si la hora actual es menor 6  mostrar la primera hora en 0
       if (numeroHoraActual < 6) {
@@ -219,6 +226,8 @@ class HomeController extends GetxController {
           var cantidadXHora = await _pedidoRepository.getCantidadPedidosPorHora(
               fechaHora: hora);
           _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+          //
+          totalCantidad.value = (totalCantidad.value + cantidadXHora);
         }
       } else {
         //Si la hora esta entre 6 y 20 horas mostrar los datos hasta la hora actual
@@ -234,6 +243,8 @@ class HomeController extends GetxController {
             var cantidadXHora = await _pedidoRepository
                 .getCantidadPedidosPorHora(fechaHora: hora);
             _pedidoPuntos.add(PedidoPuntos(x: i, y: cantidadXHora));
+            //
+            totalCantidad.value = (totalCantidad.value + cantidadXHora);
           }
         }
       }
@@ -242,6 +253,7 @@ class HomeController extends GetxController {
           "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     }
     cargandoParaDia.value = false;
+    //
   }
 
 //Metodo de obtener pedidos por cada dia del mes
@@ -256,7 +268,7 @@ class HomeController extends GetxController {
     try {
       cargandoParaDia.value = true;
       _pedidoPuntos.clear();
-
+      totalCantidad.value = 0;
       //Obtener pedidos de todos los dias del mes desde firestore
       for (var i = 0; i < cantidadDias; i++) {
         var cantidadXDia = 0;
@@ -271,6 +283,8 @@ class HomeController extends GetxController {
           //consulta desde firestore
           cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
               fechaDia: fecha);
+          //
+          totalCantidad.value = (totalCantidad.value + cantidadXDia);
         }
 
         //agregar a la lista
@@ -295,6 +309,7 @@ class HomeController extends GetxController {
     try {
       cargandoParaDia.value = true;
       _pedidoPuntos.clear();
+      totalCantidad.value = 0;
       //Obtener caantidad de toda la semana(7dias) desde firestore
       for (var i = 0; i < 7; i++) {
         //ir sumando los dias
@@ -305,6 +320,8 @@ class HomeController extends GetxController {
           //consulta
           cantidadXDia = await _pedidoRepository.getCantidadPedidosPorPorDias(
               fechaDia: fecha);
+          //
+          totalCantidad.value = (totalCantidad.value + cantidadXDia);
         }
 
         //agregar a la lista

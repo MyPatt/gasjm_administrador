@@ -15,7 +15,7 @@ class BottomNavigationAdministrador extends StatelessWidget {
         unselectedItemColor: Colors.black38,
         selectedLabelStyle: const TextStyle(color: Colors.black38),
         onTap: (index) {
-          _.pantallaSeleccionadaOnTap(index);
+          _.pantallaSeleccionadaOnTap(index,context);
         },
         items: const [
           BottomNavigationBarItem(

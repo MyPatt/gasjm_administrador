@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -7,6 +5,7 @@ import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/data/models/puntos_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:gasjm/app/modules/home/widgets/modal_operaciones.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -103,13 +102,13 @@ class HomeController extends GetxController {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-                primary: AppTheme.blueBackground,
-                onPrimary: Colors.white,
-                onSurface: AppTheme.blueDark,   ),
-                
+              primary: AppTheme.blueBackground,
+              onPrimary: Colors.white,
+              onSurface: AppTheme.blueDark,
+            ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: Color.fromRGBO(33, 116, 212, 1), 
+                primary: Color.fromRGBO(33, 116, 212, 1),
                 // button text color
               ),
             ),
@@ -122,7 +121,6 @@ class HomeController extends GetxController {
         'es',
       ),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
-   
       cancelText: "Cancelar",
       confirmText: "Aceptar",
       initialDate: fechaInicialCalendario.value,
@@ -358,16 +356,17 @@ class HomeController extends GetxController {
 
   /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
 
-  pantallaSeleccionadaOnTap(int index) {
+  pantallaSeleccionadaOnTap(int index, BuildContext context) {
     if (index == 0) {
       return;
     }
     if (index == 1) {
-      _cargarIrPage();
-      return;
-    }
-    if (index == 2) {
-      _cargarPedidosPage();
+      showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) {
+            return const ModalOperaciones();
+          });
       return;
     }
   }

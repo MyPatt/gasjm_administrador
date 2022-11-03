@@ -139,8 +139,8 @@ class ItemCategoriaModulos extends StatelessWidget {
                         categoria.name,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.caption?.copyWith(
-                            color: AppTheme.blueDark,
-                            fontWeight: FontWeight.bold),
+                              color: AppTheme.blueDark,
+                            ),
                       ),
                     ),
                   ),

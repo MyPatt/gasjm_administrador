@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/mensajes.dart'; 
+import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
@@ -9,11 +9,11 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DetailController extends GetxController {
- 
-
   final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
-
+//
+  RxString imagenUsuario = ''.obs;
+  //
   final cargandoPedidosEnEspera = true.obs;
   final cargandoPedidosAceptados = true.obs;
   //Filtro para pedidos aceptados
@@ -57,7 +57,9 @@ class DetailController extends GetxController {
   RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
   @override
   void onInit() {
-    
+    Future.wait([
+      _cargarFotoPerfil(),
+    ]);
     cargarListaPedidosEnEspera();
     valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =
@@ -77,6 +79,12 @@ class DetailController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  /* METODOS  */
+  Future<void> _cargarFotoPerfil() async {
+    imagenUsuario.value =
+        await _personaRepository.getImagenUsuarioActual() ?? '';
   }
 
 //

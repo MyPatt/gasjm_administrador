@@ -4,18 +4,18 @@ import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
 
 class BottomNavigationAdministrador extends StatelessWidget {
-  const BottomNavigationAdministrador({Key? key}) : super(key: key);
-
+  const BottomNavigationAdministrador({Key? key, required this.indiceActual}) : super(key: key);
+  final int indiceActual ;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (_) => BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: indiceActual,
         selectedItemColor: AppTheme.blueBackground,
         unselectedItemColor: Colors.black38,
         selectedLabelStyle: const TextStyle(color: Colors.black38),
         onTap: (index) {
-          _.pantallaSeleccionadaOnTap(index,context);
+          _.pantallaSeleccionadaOnTap(index, context);
         },
         items: const [
           BottomNavigationBarItem(

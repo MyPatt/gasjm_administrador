@@ -1,32 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/historial/historial_cliente.dart'; 
+import 'package:gasjm/app/data/models/category_model.dart'; 
 
 //Barra de herramientas de opciones para la agenda y el historial
 class MenuAppBar extends StatelessWidget {
-  const MenuAppBar({key}) : super(key: key);
-
+  const MenuAppBar({key, required this.indiceMenu}) : super(key: key);
+  final int indiceMenu;
   @override
   Widget build(BuildContext context) {
-    return  Row(
-              children: [
-                //Opcion historial
-
-                IconButton(
-                    onPressed: () {
-                      // Creamos una ruta
-                      // recuerda que necesitamos del context proporcionado por el build
-                      final route = MaterialPageRoute(builder: (context) {
-                        return const TransactionPage();
-                      });
-                      // Usamos el método Navigator para ir a la página
-                      // Este método requiere del contexto y la ruta
-                      Navigator.push(context, route);
-                    },
-                    icon: const Icon(Icons.notifications_none_outlined)),
-                const SizedBox(
-                  width: 10,
-                ),
-              ],
-            );
+    return indiceMenu == categoriasModulos[0].id
+        ? _builOpcionesInicio(context)
+        : _builOpcionesPedidos(context);
   }
+}
+
+Widget _builOpcionesInicio(BuildContext context) {
+  return Row(
+    children: [
+      IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.notifications_none_outlined)),
+      const SizedBox(
+        width: 10,
+      ),
+    ],
+  );
+}
+
+Widget _builOpcionesPedidos(BuildContext context) {
+  return Row(
+    children: [
+      IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+      const SizedBox(
+        width: 10,
+      ),
+      IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list_outlined)),
+      const SizedBox(
+        width: 10,
+      ),
+    ],
+  );
 }

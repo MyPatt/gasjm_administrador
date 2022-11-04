@@ -1,15 +1,12 @@
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/data/models/category_model.dart';
 import 'package:gasjm/app/global_widgets/content_title.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
-import 'package:gasjm/app/modules/home/widgets/bottom_administrador.dart';
-import 'package:gasjm/app/modules/home/widgets/categoria_fechas.dart';
+import 'package:gasjm/app/global_widgets/bottom_administrador.dart'; 
 import 'package:gasjm/app/modules/home/widgets/categoria_modulos.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/home/widgets/chart_pedidos.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/modules/home/widgets/contenido_pedidos.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +26,7 @@ class HomePage extends StatelessWidget {
           //Barra de herramientas de opciones
           appBar: AppBar(
             backgroundColor: AppTheme.blueBackground,
-            actions: const [MenuAppBar()],
+            actions: const [MenuAppBar(indiceMenu: 0,)],
             title: const Text('GasJ&M'),
           ),
           body:  Obx(
@@ -63,7 +60,8 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: const BottomNavigationAdministrador()),
+          bottomNavigationBar: const BottomNavigationAdministrador(indiceActual: 0)
+          ),
     );
   }
 

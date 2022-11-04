@@ -30,13 +30,13 @@ class MyApp extends StatelessWidget {
        ],
             title: 'Gas J&M',
             
-            theme: ThemeData(
-                primarySwatch: Colors.blue,
+            theme: ThemeData( 
                 textSelectionTheme: const TextSelectionThemeData(
-                    cursorColor: AppTheme.blueBackground)),
+                    cursorColor: AppTheme.blueBackground,)), 
             home: const SplashPage(),
             initialBinding: SplashBinding(),
             getPages: AppPages.pages,
+            
           );
         });
   }

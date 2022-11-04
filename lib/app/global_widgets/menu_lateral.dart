@@ -104,6 +104,8 @@ class MenuLateral extends StatelessWidget {
       ),
     ));
   }
+
+
 }
 
 Widget _buildDrawerHeader(Widget foto) {
@@ -162,3 +164,4 @@ Widget _buildDrawerItem(
     onTap: onTap,
   );
 }
+ 

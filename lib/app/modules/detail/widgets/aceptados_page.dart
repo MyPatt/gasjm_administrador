@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/global_widgets/button_favorite.dart'; 
+import 'package:gasjm/app/global_widgets/button_favorite.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
@@ -10,14 +10,15 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class PedidosAceptadosPage extends StatelessWidget {
+     PedidosAceptadosPage({Key? key}) : super(key: key);
   final DetailController controladorDePedidos = Get.put(DetailController());
   double height = 0;
 
-  PedidosAceptadosPage({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    final _height = Responsive.getScreenSize(context).height * .02;
+    double _height = Responsive.getScreenSize(context).height * .02;
     height = _height;
     return Obx(() => RefreshIndicator(
         onRefresh: _pullRefrescar,
@@ -32,6 +33,7 @@ class PedidosAceptadosPage extends StatelessWidget {
                         color: Colors.orange,
                         fontWeight: FontWeight.bold),
                   ),*/
+              /*
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
@@ -87,6 +89,7 @@ class PedidosAceptadosPage extends StatelessWidget {
                     ]),
               ),
               SizedBox(height: height),
+              */
               Expanded(
                   child: ListView(
                 children:

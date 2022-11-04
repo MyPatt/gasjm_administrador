@@ -3,8 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/category_model.dart';
-import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/detail/widgets/appbar_actions.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart'; 
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
 //Bottom sheet modal que muestra los modulos, para  crud
@@ -14,25 +13,27 @@ class ModalOperaciones extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20.0,
-        vertical: 5,
-      ),
-      decoration: const BoxDecoration(
-        color: AppTheme.background,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.0),
-          topRight: Radius.circular(30.0),
+    return GetBuilder<HomeController>(
+      builder: (_) =>Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20.0,
+          vertical: 5,
         ),
+        decoration: const BoxDecoration(
+          color: AppTheme.background,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+        ),
+        child: _gridModulos(context,_),
       ),
-      child: _gridProduct(context),
     );
   }
 
-  Widget _gridProduct(BuildContext context) {
+  Widget _gridModulos(BuildContext context, HomeController homeController) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -62,7 +63,7 @@ class ModalOperaciones extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    //  _.seleccionarIndiceDeCategoria(index);
+                     homeController.seleccionarCategoriaParaOperacion(index);
                   },
                   child: ItemCategoriaModulos(
                     categoria: categoriasModulos[index],

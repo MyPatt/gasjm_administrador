@@ -23,7 +23,8 @@ class IrPage extends StatelessWidget {
             //Barra de herramientas de opciones para  agenda y  historial
             appBar: AppBar(
               backgroundColor: AppTheme.blueBackground,
-              actions: const [MenuAppBar()],
+                           actions: const [MenuAppBar(indiceMenu: 1,)],
+
               title: const Text('GasJ&M'),
             ),
             //Body

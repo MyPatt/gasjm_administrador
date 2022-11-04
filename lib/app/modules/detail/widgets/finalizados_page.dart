@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/global_widgets/button_favorite.dart'; 
+import 'package:gasjm/app/global_widgets/button_favorite.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
@@ -32,6 +32,7 @@ class PedidosAFinalizadosPage extends StatelessWidget {
                         color: Colors.orange,
                         fontWeight: FontWeight.bold),
                   ),*/
+              /*
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
@@ -84,7 +85,7 @@ class PedidosAFinalizadosPage extends StatelessWidget {
                       //TODO: opcional - aceptar o rechazar pedidos seleccionados
                     ]),
               ),
-              SizedBox(height: height),
+              SizedBox(height: height),*/
               Expanded(
                   child: ListView(
                 children:

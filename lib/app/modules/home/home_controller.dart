@@ -358,6 +358,7 @@ class HomeController extends GetxController {
 
   pantallaSeleccionadaOnTap(int index, BuildContext context) {
     if (index == 0) {
+      _cargarPagina(Get.offNamed(AppRoutes.inicio));
       return;
     }
     if (index == 1) {
@@ -370,24 +371,25 @@ class HomeController extends GetxController {
       return;
     }
   }
+  //Metodo para ir a una ruta
 
-  _cargarIrPage() async {
+  _cargarPagina(Future? funcionRuta) async {
     try {
       await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.ir);
+      funcionRuta;
     } catch (e) {
       throw Exception(
           "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     }
   }
 
-  _cargarPedidosPage() async {
-    try {
-      await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.pedidos);
-    } catch (e) {
-      throw Exception(
-          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
+//Metodo para cargar una pantalla a una ruta de  crud
+  void seleccionarCategoriaParaOperacion(int index) {
+    switch (index) {
+      case 0:
+        _cargarPagina(Get.offNamed(AppRoutes.detail));
+        break;
+      default:
     }
   }
 }

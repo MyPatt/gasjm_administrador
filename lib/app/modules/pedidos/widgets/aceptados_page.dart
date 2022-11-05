@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
@@ -156,13 +156,13 @@ class PedidosAceptadosPage extends StatelessWidget {
                     texto: "Cancelar",
                     color: AppTheme.light,
                     width: Responsive.getScreenSize(context).width * .4,
-                    onPressed: () {
+                    onTap: () {
                       _showDialogoParaRechazar(context, pedido.idPedido);
                     }),
                 ButtonSmall(
                     texto: "Finalizar",
                     width: Responsive.getScreenSize(context).width * .4,
-                    onPressed: () =>
+                    onTap: () =>
                         controladorDePedidos.actualizarEstadoPedidoAceptado(
                             pedido.idPedido,
                             "estado3",

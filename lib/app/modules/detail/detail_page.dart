@@ -1,3 +1,4 @@
+import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
@@ -29,7 +30,6 @@ class DetailPage extends StatelessWidget {
 
             //
             appBar: AppBar(
-              automaticallyImplyLeading: false,
               backgroundColor: AppTheme.blueBackground,
               actions: const [
                 MenuAppBar(
@@ -44,22 +44,17 @@ class DetailPage extends StatelessWidget {
                 children: [
                   Container(
                     color: Colors.white,
-                    child: const TabBar(
+                    child: TabBar(
                       isScrollable: true,
                       indicatorColor: AppTheme.blueBackground,
                       labelColor: AppTheme.blueBackground,
                       unselectedLabelColor: AppTheme.light,
                       // indicator: BoxDecoration(color: Colors.white),
-                      tabs: [
-                        Tab(text: 'En espera'),
-                        Tab(text: 'Aceptados'),
-                        Tab(
-                          text: 'Finalizados',
-                        ),
-                        Tab(
-                          text: 'Cancelados',
-                        ),
-                      ],
+                      tabs: categoriasPedidos
+                          .map((e) => Tab(
+                                text: e.name,
+                              ))
+                          .toList(),
                     ),
                   ),
                   Expanded(

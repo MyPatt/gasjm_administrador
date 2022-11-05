@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class PedidosController extends GetxController {
   /* VARIABLES*/
@@ -78,8 +80,10 @@ class PedidosController extends GetxController {
 
   /* METODOS PARA PEDIDOS EN ESPERA */
   Future<void> _cargarFotoPerfil() async {
-    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
+    imagenUsuario.value =
+        await _personaRepository.getImagenUsuarioActual() ?? '';
   }
+
   void cargarListaPedidosEnEspera() async {
     try {
       cargandoPedidosEnEspera.value = true;
@@ -343,5 +347,12 @@ class PedidosController extends GetxController {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.inicio);
     } catch (e) {}
+  }
+
+  //
+  String formatoFecha(Timestamp fecha) {
+    String formatoFecha = DateFormat.yMd("es").format(fecha.toDate());
+    String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
+    return "$formatoFecha $formatoHora";
   }
 }

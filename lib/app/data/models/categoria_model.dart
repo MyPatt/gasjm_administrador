@@ -51,3 +51,28 @@ final categoriasFechas = [
     path: ' de ',
   ),
 ];
+
+//Lista de los estados (categorias) del pedido
+
+final categoriasPedidos = [
+  CategoriaModelo(
+    id: 0,
+    name: 'En espera',
+    path: ' del ',
+  ),
+  CategoriaModelo(
+    id: 1,
+    name: 'Aceptados',
+    path: ' de la ',
+  ),
+  CategoriaModelo(
+    id: 2,
+    name: 'Finalizados',
+    path: ' del ',
+  ),
+  CategoriaModelo(
+    id: 3,
+    name: 'Cancelados',
+    path: ' de ',
+  ),
+];

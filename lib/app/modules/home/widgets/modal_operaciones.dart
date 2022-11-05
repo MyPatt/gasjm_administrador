@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/data/models/category_model.dart';
+import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart'; 
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';

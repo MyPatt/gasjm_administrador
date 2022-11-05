@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/data/models/category_model.dart'; 
+import 'package:gasjm/app/data/models/categoria_model.dart'; 
 
 //Barra de herramientas de opciones para la agenda y el historial
 class MenuAppBar extends StatelessWidget {
@@ -29,10 +29,7 @@ Widget _builOpcionesInicio(BuildContext context) {
 Widget _builOpcionesPedidos(BuildContext context) {
   return Row(
     children: [
-      IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
-      const SizedBox(
-        width: 10,
-      ),
+      IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)), 
       IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list_outlined)),
       const SizedBox(
         width: 10,

@@ -3,10 +3,8 @@ import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
-import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/modules/detail/widgets/contenido_pedido.dart';
-import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart';
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -71,10 +69,6 @@ class DetailPage extends StatelessWidget {
                     ContenidoPedido(
                       indiceCategoriaPedido: 3,
                     ),
-
-                    /* PedidosAceptadosPage(),
-                    PedidosAFinalizadosPage(),
-                    PedidosAFinalizadosPage()*/
                   ]))
                 ],
               ),

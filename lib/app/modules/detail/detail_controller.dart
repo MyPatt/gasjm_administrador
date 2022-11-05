@@ -88,20 +88,6 @@ class DetailController extends GetxController {
 //**** */
   final cargandoPedidos = true.obs;
 
-  //Metodo para cargar pedidos
-/*
-  RxList<PedidoModel> listaPedidosXCategoria(int indice) {
-    RxList<PedidoModel> aux = <PedidoModel>[].obs;
-
- 
-      aux.value = listaPedidos.value
-        .where((elemento) => elemento.idEstadoPedido == estado)
-        .toList();
-     
-
-    return aux;
-  }
-*/
   Future<void> cargarListaPedidos(int id) async {
     try {
       cargandoPedidos.value = true;
@@ -153,11 +139,9 @@ class DetailController extends GetxController {
     try {
       //La categorias de los pedidos consta solo 4, el 5 es rechazados estado5 su indice 4
       if (estado == 4) {
-   
         await _pedidosRepository.updateEstadoPedido(
             idPedido: idPedido, estadoPedido: "estado5");
       } else {
-    
         await _pedidosRepository.updateEstadoPedido(
             idPedido: idPedido, estadoPedido: categoriasPedidos[estado].path);
       }

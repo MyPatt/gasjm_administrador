@@ -1,13 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/global_widgets/text_description.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart';
+import 'package:gasjm/app/modules/detail/detail_controller.dart';
+import 'package:gasjm/app/modules/detail/widgets/enespera_page.dart';
 import 'package:get/get.dart';
 
 class ContenidoPedido extends StatelessWidget {
-  const ContenidoPedido({Key? key}) : super(key: key);
+  ContenidoPedido({Key? key}) : super(key: key);
+  final DetailController controladorDePedidos = Get.put(DetailController());
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>Container());
+    return Obx(
+      () => RefreshIndicator(
+        backgroundColor: Colors.white,
+        color: AppTheme.blueBackground,
+        displacement: 0,
+        triggerMode: RefreshIndicatorTriggerMode.onEdge,
+        onRefresh: _pullRefrescar,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: controladorDePedidos.listaPedidosEnEspera.value
+                          .map((e) {
+                        return Card(
+                          shape: Border.all(color: AppTheme.light, width: 0.5),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      print("object");
+                                    },
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            TextSubtitle(
+                                              text:
+                                                  e.nombreUsuario ?? 'Cliente',
+                                              // style: TextoTheme.subtitleStyle2,
+                                            ),
+                                            TextSubtitle(
+                                              text: e.cantidadPedido.toString(),
+                                              //  style: TextoTheme.subtitleStyle2
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            TextDescription(
+                                                text: e.direccionUsuario ??
+                                                    'Sin ubicación'),
+                                            const TextDescription(text: '5 min')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            TextDescription(
+                                                text: controladorDePedidos
+                                                    .formatoFecha(
+                                                        e.fechaHoraPedido)),
+                                            const TextDescription(text: '300 m')
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                                const Divider(),
+                                PedidosEnEsperaPage(idPedido: e.idPedido)
+                              ],
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pullRefrescar() async {
+    //controladorDePedidos.listaPedidosXCategoria("estado1").value;
+    await Future.delayed(Duration(seconds: 2));
+    controladorDePedidos.cargarListaPedidos(0);
   }
 }

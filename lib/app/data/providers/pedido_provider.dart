@@ -127,4 +127,14 @@ class PedidoProvider {
   
     return resultado.docs.length;
   }
+    //
+  Future<List<PedidoModel>> getPedidos() async {
+    final resultado = await _firestoreInstance
+        .collection('pedido').get();
+ print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      print(resultado.docs.length);
+    return (resultado.docs)
+        .map((item) => PedidoModel.fromJson(item.data()))
+        .toList();
+  }
 }

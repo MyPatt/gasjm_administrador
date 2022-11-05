@@ -5,8 +5,8 @@ import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
 import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart';
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/modules/detail/widgets/contenido_pedido.dart';
 import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart';
-import 'package:gasjm/app/modules/detail/widgets/enespera_page.dart';
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -23,7 +23,7 @@ class DetailPage extends StatelessWidget {
             backgroundColor: AppTheme.background,
             //Menú deslizable a la izquierda con opciones del  usuario
             drawer: MenuLateral(
-                modo: 'Modo administrador',
+                modo: 'Modo repartidor',
                 foto: Obx(
                   () => buildImage(_.imagenUsuario.value),
                 )),
@@ -59,10 +59,13 @@ class DetailPage extends StatelessWidget {
                   ),
                   Expanded(
                       child: TabBarView(children: [
-                    PedidosEnEsperaPage(),
-                    PedidosAceptadosPage(),
+                    ContenidoPedido(),
+                    ContenidoPedido(),
+                    ContenidoPedido(),
+                    ContenidoPedido(),
+                    /* PedidosAceptadosPage(),
                     PedidosAFinalizadosPage(),
-                    PedidosAFinalizadosPage()
+                    PedidosAFinalizadosPage()*/
                   ]))
                 ],
               ),

@@ -1,190 +1,57 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
+import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class DetailController extends GetxController {
   final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
 //
   RxString imagenUsuario = ''.obs;
-  //
-  final cargandoPedidosEnEspera = true.obs;
-  final cargandoPedidosAceptados = true.obs;
-  //Filtro para pedidos aceptados
-  final RxList<PedidoModel> _listaPedidosAceptados = <PedidoModel>[].obs;
-  RxList<PedidoModel> get listaPedidosAceptados => _listaPedidosAceptados;
 
-  final RxList<PedidoModel> _listaFiltradaPedidosAceptados =
-      <PedidoModel>[].obs;
-  RxList<PedidoModel> get listaFiltradaPedidosAceptados =>
-      _listaFiltradaPedidosAceptados;
-
-//Pedidos finalizados
+  //Pedidos en espera
 
   final RxList<PedidoModel> _listaPedidosEnEspera = <PedidoModel>[].obs;
   RxList<PedidoModel> get listaPedidosEnEspera => _listaPedidosEnEspera;
+  //Pedidos aceptados
 
-  final RxList<PedidoModel> _listaFiltradaPedidosEnEspera = <PedidoModel>[].obs;
-  RxList<PedidoModel> get listaFiltradaPedidosEnEspera =>
-      _listaFiltradaPedidosEnEspera;
-  //Lista para ordenar los pedidos por diferentes categorias
+  final RxList<PedidoModel> _listaPedidosAceptados = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosAceptados => _listaPedidosAceptados;
 
-  List<String> dropdownItemsDeOrdenamiento = [
-    "Ordenar por fecha",
-    "Ordenar por cantidad",
-    "Ordenar por tiempo",
-    "Ordenar por dirección",
-    "Ordenar por cliente"
-  ];
+  //Pedidos finalizados
 
-  RxString valorSeleccionadoItemDeOrdenamiento = 'Ordenar por'.obs;
-  RxString valorSeleccionadoItemDeOrdenamientoAceptados = 'Ordenar por'.obs;
-  //Lista para filtrar los pedidos por dias
+  final RxList<PedidoModel> _listaPedidosFinalizados = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosFinalizados => _listaPedidosFinalizados;
+//Pedidos cancelados
 
-  List<String> dropdownItemsDeFiltro = [
-    "Todos",
-    "Ahora",
-    "Mañana",
-  ];
+  final RxList<PedidoModel> _listaPedidosCancelados = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosCancelados => _listaPedidosCancelados;
 
-  RxString valorSeleccionadoItemDeFiltro = 'Todos'.obs;
-  RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
   @override
   void onInit() {
     Future.wait([
       _cargarFotoPerfil(),
     ]);
-    cargarListaPedidosEnEspera();
-    valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
-    valorSeleccionadoItemDeOrdenamientoAceptados.value =
-        dropdownItemsDeOrdenamiento[0];
-    valorSeleccionadoItemDeFiltro.value = dropdownItemsDeFiltro[0];
-    valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];
-    cargarListaPedidosAceptados();
+
+    cargarListaPedidos(0);
+    cargarListaPedidos(1);
+    cargarListaPedidos(2);
+    cargarListaPedidos(3);
 
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 
   /* METODOS  */
   Future<void> _cargarFotoPerfil() async {
     imagenUsuario.value =
         await _personaRepository.getImagenUsuarioActual() ?? '';
-  }
-
-//
-  void cargarListaFiltradaDePedidosAceptados() {
-    final filtroDia = valorSeleccionadoItemDeFiltroAceptados.value;
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
-
-    _cargarListaFiltradaDePedidos(_listaPedidosAceptados,
-        _listaFiltradaPedidosAceptados, filtroDia, ordenarCategoria);
-  }
-
-  void _cargarListaFiltradaDePedidos(
-      RxList<PedidoModel> listaPorFiltrar,
-      RxList<PedidoModel> litaFiltrada,
-      String filtroDia,
-      String ordenarCategoria) {
-    if (filtroDia == "Todos") {
-      litaFiltrada.value = listaPorFiltrar.value;
-      ordenarListaFiltradaDePedidos(litaFiltrada.value, ordenarCategoria);
-
-      return;
-    }
-    List<PedidoModel> resultado = [];
-
-    resultado = listaPorFiltrar
-        .where((pedido) => pedido.diaEntregaPedido == filtroDia)
-        .toList();
-
-    litaFiltrada.value = resultado;
-    ordenarListaFiltradaDePedidos(litaFiltrada.value, ordenarCategoria);
-  }
-
-  void ordenarListaFiltradaDePedidos(
-      List<PedidoModel> listaFiltrada, String ordenarCategoria) {
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[0]) {
-      listaFiltrada
-          .sort((a, b) => a.fechaHoraPedido.compareTo(b.fechaHoraPedido));
-
-      return;
-    }
-
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[1]) {
-      listaFiltrada
-          .sort((a, b) => a.cantidadPedido.compareTo(b.cantidadPedido));
-
-      return;
-    }
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[2]) {
-      listaFiltrada
-          .sort((a, b) => a.tiempoEntrega!.compareTo(b.tiempoEntrega ?? 0));
-
-      return;
-    }
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[3]) {
-      listaFiltrada.sort((a, b) =>
-          a.direccionUsuario!.compareTo(b.direccionUsuario.toString()));
-      return;
-    }
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[4]) {
-      listaFiltrada.sort(
-          (a, b) => a.nombreUsuario!.compareTo(b.nombreUsuario.toString()));
-      return;
-    }
-  }
-
-  ordenarListaFiltradaDePedidosAceptados() {
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
-    ordenarListaFiltradaDePedidos(
-        _listaFiltradaPedidosAceptados, ordenarCategoria);
-  }
-
-  void cargarListaPedidosAceptados() async {
-    try {
-      cargandoPedidosAceptados.value = true;
-      final lista = (await _pedidosRepository.getPedidoPorField(
-              field: 'idEstadoPedido', dato: 'estado2')) ??
-          [];
-
-      //
-      for (var i = 0; i < lista.length; i++) {
-        final nombre = await _getNombresCliente(lista[i].idCliente);
-        final direccion = await _getDireccionXLatLng(
-            LatLng(lista[i].direccion.latitud, lista[i].direccion.longitud));
-        lista[i].nombreUsuario = nombre;
-        lista[i].direccionUsuario = direccion;
-      }
-
-      _listaPedidosAceptados.value = lista;
-      // _listaFiltradaPedidosAceptados.value = _listaPedidosAceptados.value;
-      cargarListaFiltradaDePedidosAceptados();
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-    cargandoPedidosAceptados.value = false;
   }
 
   Future<String> _getNombresCliente(String cedula) async {
@@ -211,13 +78,35 @@ class DetailController extends GetxController {
     }
   }
 
-  /* METODOS PARA PEDIDOS FINALIZADOS */
+  //
+  String formatoFecha(Timestamp fecha) {
+    String formatoFecha = DateFormat.yMd("es").format(fecha.toDate());
+    String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
+    return "$formatoFecha $formatoHora";
+  }
 
-  void cargarListaPedidosEnEspera() async {
+//**** */
+  final cargandoPedidos = true.obs;
+
+  //Metodo para cargar pedidos
+/*
+  RxList<PedidoModel> listaPedidosXCategoria(int indice) {
+    RxList<PedidoModel> aux = <PedidoModel>[].obs;
+
+ 
+      aux.value = listaPedidos.value
+        .where((elemento) => elemento.idEstadoPedido == estado)
+        .toList();
+     
+
+    return aux;
+  }
+*/
+  Future<void> cargarListaPedidos(int id) async {
     try {
-      cargandoPedidosEnEspera.value = true;
-      final lista = (await _pedidosRepository.getPedidoPorField(
-              field: 'idEstadoPedido', dato: 'estado3')) ??
+      cargandoPedidos.value = true;
+      final lista = (await _pedidosRepository.getPedidosPorField(
+              field: 'idEstadoPedido', dato: categoriasPedidos[id].path)) ??
           [];
 
       //
@@ -229,36 +118,106 @@ class DetailController extends GetxController {
         lista[i].direccionUsuario = direccion;
       }
 
-      _listaPedidosEnEspera.value = lista;
-      //Cargar la lista filtrada al inicio todos
-//      _listaFiltradaPedidosEnEspera.value = _listaPedidosEnEspera;
-      cargarListaFiltradaDePedidosEnEspera();
+//
 
-      //
-      print(_listaFiltradaPedidosEnEspera.value.length);
+      switch (id) {
+        case 0:
+          _listaPedidosEnEspera.value = lista;
+          break;
+        case 1:
+          _listaPedidosAceptados.value = lista;
+          break;
+        case 2:
+          _listaPedidosFinalizados.value = lista;
+          break;
+        case 3:
+          _listaPedidosCancelados.value = lista;
+          break;
+        default:
+      }
     } on FirebaseException {
       Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
           icono: const Icon(
             Icons.error_outline_outlined,
             color: Colors.white,
           ));
     }
-    cargandoPedidosEnEspera.value = false;
+    cargandoPedidos.value = false;
   }
 
-  void cargarListaFiltradaDePedidosEnEspera() {
-    final filtroDia = valorSeleccionadoItemDeFiltro.value;
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamiento.value;
-    _cargarListaFiltradaDePedidos(_listaPedidosEnEspera,
-        _listaFiltradaPedidosEnEspera, filtroDia, ordenarCategoria);
-  }
+  //Metodo para actualizar el estado de un pedido
+  Future<void> actualizarEstadoPedido(String idPedido, int estado) async {
+    try {
+      //La categorias de los pedidos consta solo 4, el 5 es rechazados estado5 su indice 4
+      if (estado == 4) {
+        print("*****************$idPedido******$estado");
+        await _pedidosRepository.updateEstadoPedido(
+            idPedido: idPedido, estadoPedido: "estado5");
+      } else {
+        print("////////");
+        await _pedidosRepository.updateEstadoPedido(
+            idPedido: idPedido, estadoPedido: categoriasPedidos[estado].path);
+      }
+      //Variable para mostra el mensaje
+      String titulo = "Mensaje";
+      String mensaje =
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.";
+      IconData icono = Icons.error_outline_outlined;
+      //Evaluar que estado se actualizo
 
-  ordenarListaFiltradaDePedidosEnEspera() {
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamiento.value;
+      switch (estado) {
+        case 0:
+          mensaje = "Su pedido se realizo con éxito";
+          icono = Icons.waving_hand_outlined;
+          cargarListaPedidos(0);
 
-    ordenarListaFiltradaDePedidos(
-        _listaFiltradaPedidosEnEspera, ordenarCategoria);
+          break;
+        case 1:
+          mensaje = "Pedido aceptado con éxito.";
+
+          icono = Icons.check_outlined;
+          cargarListaPedidos(1);
+          cargarListaPedidos(0);
+
+          break;
+        case 2:
+          mensaje = "Pedido finalizado con éxito.";
+          icono = Icons.check_outlined;
+          cargarListaPedidos(2);
+          cargarListaPedidos(1);
+          break;
+        case 3:
+          mensaje = "Pedido cancelado.";
+          icono = Icons.message_outlined;
+          cargarListaPedidos(3);
+          cargarListaPedidos(1);
+          break;
+        case 4:
+          mensaje = "Pedido rechazado.";
+          icono = Icons.message_outlined;
+          //cargarListaPedidos(4);
+          cargarListaPedidos(0);
+          break;
+      }
+      Mensajes.showGetSnackbar(
+          titulo: titulo,
+          mensaje: mensaje,
+          icono: Icon(
+            icono,
+            color: Colors.white,
+          ));
+    } on FirebaseException {
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
   }
 }

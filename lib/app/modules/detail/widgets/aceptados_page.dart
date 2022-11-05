@@ -90,16 +90,14 @@ class PedidosAceptadosPage extends StatelessWidget {
               ),
               SizedBox(height: height),
               */
-              Expanded(
+           /*   Expanded(
                   child: ListView(
                 children:
-                    controladorDePedidos.listaFiltradaPedidosAceptados.map((e) {
-                  var index = controladorDePedidos.listaFiltradaPedidosAceptados
-                      .indexOf(e);
-                  index++;
+                    controladorDePedidos.listaPedidos.map((e) {
+             
                   return _cardPedido(e, context);
                 }).toList(),
-              ))
+              ))*/
             ]),
           ),
         ])));
@@ -190,7 +188,7 @@ class PedidosAceptadosPage extends StatelessWidget {
   }
 
   Future<void> _pullRefrescar() async {
-    controladorDePedidos.cargarListaPedidosAceptados();
+ //   controladorDePedidos.cargarListaPedidosAceptados();
   }
 
   Future<void> _showDialogoParaVerDetalles(

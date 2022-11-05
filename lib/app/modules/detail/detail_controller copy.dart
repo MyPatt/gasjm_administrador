@@ -159,7 +159,7 @@ class DetailController extends GetxController {
   void cargarListaPedidosAceptados() async {
     try {
       cargandoPedidosAceptados.value = true;
-      final lista = (await _pedidosRepository.getPedidoPorField(
+      final lista = (await _pedidosRepository.getPedidosPorField(
               field: 'idEstadoPedido', dato: 'estado2')) ??
           [];
 
@@ -216,7 +216,7 @@ class DetailController extends GetxController {
   void cargarListaPedidosEnEspera() async {
     try {
       cargandoPedidosEnEspera.value = true;
-      final lista = (await _pedidosRepository.getPedidoPorField(
+      final lista = (await _pedidosRepository.getPedidosPorField(
               field: 'idEstadoPedido', dato: 'estado3')) ??
           [];
 

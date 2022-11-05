@@ -86,7 +86,8 @@ class PedidosAFinalizadosPage extends StatelessWidget {
                     ]),
               ),
               SizedBox(height: height),*/
-              Expanded(
+              /////////////
+           /*   Expanded(
                   child: ListView(
                 children:
                     controladorDePedidos.listaFiltradaPedidosEnEspera.map((e) {
@@ -95,7 +96,7 @@ class PedidosAFinalizadosPage extends StatelessWidget {
                   index++;
                   return _cardPedido(e, context);
                 }).toList(),
-              ))
+              ))*/
             ]),
           ),
         ])));
@@ -186,7 +187,7 @@ class PedidosAFinalizadosPage extends StatelessWidget {
   }
 
   Future<void> _pullRefrescar() async {
-    controladorDePedidos.cargarListaPedidosEnEspera();
+   // controladorDePedidos.cargarListaPedidosEnEspera();
   }
 
   Future<void> _showDialogoParaVerDetalles(

@@ -10,7 +10,6 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 
 class PedidosController extends GetxController {
   /* VARIABLES*/
@@ -87,7 +86,7 @@ class PedidosController extends GetxController {
   void cargarListaPedidosEnEspera() async {
     try {
       cargandoPedidosEnEspera.value = true;
-      final lista = (await _pedidosRepository.getPedidoPorField(
+      final lista = (await _pedidosRepository.getPedidosPorField(
               field: 'idEstadoPedido', dato: 'estado1')) ??
           [];
 
@@ -252,7 +251,7 @@ class PedidosController extends GetxController {
   void cargarListaPedidosAceptados() async {
     try {
       cargandoPedidosAceptados.value = true;
-      final lista = (await _pedidosRepository.getPedidoPorField(
+      final lista = (await _pedidosRepository.getPedidosPorField(
               field: 'idEstadoPedido', dato: 'estado2')) ??
           [];
 
@@ -347,12 +346,5 @@ class PedidosController extends GetxController {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.inicio);
     } catch (e) {}
-  }
-
-  //
-  String formatoFecha(Timestamp fecha) {
-    String formatoFecha = DateFormat.yMd("es").format(fecha.toDate());
-    String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
-    return "$formatoFecha $formatoHora";
   }
 }

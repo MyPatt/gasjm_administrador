@@ -13,10 +13,11 @@ abstract class PedidoRepository {
     required String field2,
     required String dato2,
   });
-  Future<List<PedidoModel>?> getPedidoPorField(
+  Future<List<PedidoModel>?> getPedidosPorField(
       {required String field, required String dato});
+  Future<List<PedidoModel>> getPedidos( );
   Future<int> getCantidadPedidosPorHora({required Timestamp fechaHora});
   Future<int> getCantidadPedidosPorPorDias({required Timestamp fechaDia});
-   Future<int> getCantidadPedidosPorfield(
+  Future<int> getCantidadPedidosPorfield(
       {required String field, required String dato});
 }

@@ -59,10 +59,19 @@ class DetailPage extends StatelessWidget {
                   ),
                   Expanded(
                       child: TabBarView(children: [
-                    ContenidoPedido(),
-                    ContenidoPedido(),
-                    ContenidoPedido(),
-                    ContenidoPedido(),
+                    ContenidoPedido(
+                      indiceCategoriaPedido: 0,
+                    ),
+                    ContenidoPedido(
+                      indiceCategoriaPedido: 1,
+                    ),
+                    ContenidoPedido(
+                      indiceCategoriaPedido: 0,
+                    ),
+                    ContenidoPedido(
+                      indiceCategoriaPedido: 0,
+                    ),
+
                     /* PedidosAceptadosPage(),
                     PedidosAFinalizadosPage(),
                     PedidosAFinalizadosPage()*/

@@ -153,11 +153,11 @@ class DetailController extends GetxController {
     try {
       //La categorias de los pedidos consta solo 4, el 5 es rechazados estado5 su indice 4
       if (estado == 4) {
-        print("*****************$idPedido******$estado");
+   
         await _pedidosRepository.updateEstadoPedido(
             idPedido: idPedido, estadoPedido: "estado5");
       } else {
-        print("////////");
+    
         await _pedidosRepository.updateEstadoPedido(
             idPedido: idPedido, estadoPedido: categoriasPedidos[estado].path);
       }

@@ -3,20 +3,22 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
+import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart';
 import 'package:gasjm/app/modules/detail/widgets/enespera_page.dart';
 import 'package:get/get.dart';
 
 class ContenidoPedido extends StatelessWidget {
-  ContenidoPedido({Key? key}) : super(key: key);
+  ContenidoPedido({Key? key, required this.indiceCategoriaPedido})
+      : super(key: key);
   final DetailController controladorDePedidos = Get.put(DetailController());
-
+  final int indiceCategoriaPedido;
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => RefreshIndicator(
         backgroundColor: Colors.white,
         color: AppTheme.blueBackground,
-        displacement: 0,
+        displacement: 1,
         triggerMode: RefreshIndicatorTriggerMode.onEdge,
         onRefresh: _pullRefrescar,
         child: Stack(
@@ -27,7 +29,10 @@ class ContenidoPedido extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView(
-                      children: controladorDePedidos.listaPedidosEnEspera.value
+                      children: (indiceCategoriaPedido == 0
+                              ? controladorDePedidos.listaPedidosEnEspera.value
+                              : controladorDePedidos
+                                  .listaPedidosAceptados.value)
                           .map((e) {
                         return Card(
                           shape: Border.all(color: AppTheme.light, width: 0.5),
@@ -80,7 +85,12 @@ class ContenidoPedido extends StatelessWidget {
                                       ],
                                     )),
                                 const Divider(),
-                                PedidosEnEsperaPage(idPedido: e.idPedido)
+                                //Tipo de categoria
+                                indiceCategoriaPedido == 0
+                                    ? PedidosEnEsperaPage(idPedido: e.idPedido)
+                                    : PedidosAceptadosPage(
+                                        idPedido: e.idPedido,
+                                      )
                               ],
                             ),
                           ),
@@ -99,7 +109,7 @@ class ContenidoPedido extends StatelessWidget {
 
   Future<void> _pullRefrescar() async {
     //controladorDePedidos.listaPedidosXCategoria("estado1").value;
-    await Future.delayed(Duration(seconds: 2));
-    controladorDePedidos.cargarListaPedidos(0);
+    controladorDePedidos.cargarListaPedidos(indiceCategoriaPedido);
+    await Future.delayed(const Duration(seconds: 2));
   }
 }

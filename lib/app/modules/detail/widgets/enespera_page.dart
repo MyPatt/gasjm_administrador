@@ -31,44 +31,6 @@ class PedidosEnEsperaPage extends StatelessWidget {
             onTap: () =>
                 controladorDePedidos.actualizarEstadoPedido(idPedido, 1),
           ),
-/*
-          Obx(() {
-            final estadoProceso = controladorDePedidos.cargandoPedidos.value;
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                ButtonSmall(
-                    texto: "Rechazar",
-                    color: AppTheme.light,
-                    width: Responsive.getScreenSize(context).width * .39,
-                    onTap: () {
-                      _showDialogoParaRechazar(context, idPedido);
-                      /* _buildShowDialog(
-                                                          context, controller.rechzarPedido(pedido.idPedido));*/
-                    }),
-                if (estadoProceso)
-                  const CircularProgressIndicator(
-                      backgroundColor: Colors.white),
-              ],
-            );
-          }),
-          Obx(() {
-            final estadoProceso = controladorDePedidos.cargandoPedidos.value;
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                ButtonSmall(
-                  texto: "Aceptar",
-                  width: Responsive.getScreenSize(context).width * .39,
-                  onTap: () => controladorDePedidos.actualizarEstadoPedido(
-                      idPedido, "estado2"),
-                ),
-                if (estadoProceso)
-                  const CircularProgressIndicator(
-                      backgroundColor: Colors.white),
-              ],
-            );
-          }),*/
         ],
       ),
     );
@@ -77,16 +39,18 @@ class PedidosEnEsperaPage extends StatelessWidget {
   _showDialogoParaRechazar(BuildContext context, String id) {
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
+      barrierDismissible: true,
       builder: (BuildContext context) {
-        return AlertRechazar(
-            onPressed: () => _onrechazarPedidoEnEspera(context, id));
+        return AlertDialogConfirmacion(
+          onPressed: () => _onrechazarPedidoEnEspera(context, id),
+          titulo: 'Rechazar pedido',
+          mensaje: '¿Está seguro de rechazar el pedido?',
+        );
       },
     );
   }
 
   _onrechazarPedidoEnEspera(BuildContext context, String id) {
-    print("Oobject");
     controladorDePedidos.actualizarEstadoPedido(id, 4);
     Navigator.of(context).pop();
   }

@@ -66,10 +66,10 @@ class DetailPage extends StatelessWidget {
                       indiceCategoriaPedido: 1,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 0,
+                      indiceCategoriaPedido: 2,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 0,
+                      indiceCategoriaPedido: 3,
                     ),
 
                     /* PedidosAceptadosPage(),

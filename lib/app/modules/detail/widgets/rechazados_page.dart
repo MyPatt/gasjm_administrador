@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/global_widgets/button_favorite.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart'; 
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class PedidosAFinalizadosPage extends StatelessWidget {
+class PedidosRechazadosPage extends StatelessWidget {
   final DetailController controladorDePedidos = Get.put(DetailController());
   double height = 0;
 
-  PedidosAFinalizadosPage({Key? key, required this.idPedido}) : super(key: key);
+  PedidosRechazadosPage({Key? key, required this.idPedido}) : super(key: key);
   final String idPedido;
   @override
   Widget build(BuildContext context) {

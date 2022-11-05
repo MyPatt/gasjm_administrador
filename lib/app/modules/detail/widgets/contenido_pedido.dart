@@ -5,6 +5,8 @@ import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/detail/detail_controller.dart';
 import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart';
 import 'package:gasjm/app/modules/detail/widgets/enespera_page.dart';
+import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart';
+import 'package:gasjm/app/modules/detail/widgets/rechazados_page.dart';
 import 'package:get/get.dart';
 
 class ContenidoPedido extends StatelessWidget {
@@ -31,8 +33,14 @@ class ContenidoPedido extends StatelessWidget {
                     child: ListView(
                       children: (indiceCategoriaPedido == 0
                               ? controladorDePedidos.listaPedidosEnEspera.value
-                              : controladorDePedidos
-                                  .listaPedidosAceptados.value)
+                              : indiceCategoriaPedido == 1
+                                  ? controladorDePedidos
+                                      .listaPedidosAceptados.value
+                                  : indiceCategoriaPedido == 2
+                                      ? controladorDePedidos
+                                          .listaPedidosFinalizados.value
+                                      : controladorDePedidos
+                                          .listaPedidosCancelados.value)
                           .map((e) {
                         return Card(
                           shape: Border.all(color: AppTheme.light, width: 0.5),
@@ -88,9 +96,15 @@ class ContenidoPedido extends StatelessWidget {
                                 //Tipo de categoria
                                 indiceCategoriaPedido == 0
                                     ? PedidosEnEsperaPage(idPedido: e.idPedido)
-                                    : PedidosAceptadosPage(
-                                        idPedido: e.idPedido,
-                                      )
+                                    : indiceCategoriaPedido == 1
+                                        ? PedidosAceptadosPage(
+                                            idPedido: e.idPedido,
+                                          )
+                                        : indiceCategoriaPedido == 2
+                                            ? PedidosAFinalizadosPage(
+                                                idPedido: e.idPedido)
+                                            : PedidosRechazadosPage(
+                                                idPedido: e.idPedido)
                               ],
                             ),
                           ),

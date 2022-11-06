@@ -5,13 +5,13 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/global_widgets/button_favorite.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/detail/detail_controller.dart';
+import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart'; 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class PedidosAceptadosPage extends StatelessWidget {
      PedidosAceptadosPage({Key? key}) : super(key: key);
-  final DetailController controladorDePedidos = Get.put(DetailController());
+  final OperacionPedidoController controladorDePedidos = Get.put(OperacionPedidoController());
   double height = 0;
 
 

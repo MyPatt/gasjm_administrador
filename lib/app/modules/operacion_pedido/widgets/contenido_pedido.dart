@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
-import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/detail/detail_controller.dart';
-import 'package:gasjm/app/modules/detail/widgets/aceptados_page.dart';
-import 'package:gasjm/app/modules/detail/widgets/enespera_page.dart';
-import 'package:gasjm/app/modules/detail/widgets/finalizados_page.dart';
-import 'package:gasjm/app/modules/detail/widgets/rechazados_page.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart'; 
+import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';
+import 'package:gasjm/app/modules/operacion_pedido/widgets/aceptados_page.dart';
+import 'package:gasjm/app/modules/operacion_pedido/widgets/enespera_page.dart';
+import 'package:gasjm/app/modules/operacion_pedido/widgets/finalizados_page.dart';
+import 'package:gasjm/app/modules/operacion_pedido/widgets/rechazados_page.dart';
 import 'package:get/get.dart';
 
 class ContenidoPedido extends StatelessWidget {
   ContenidoPedido({Key? key, required this.indiceCategoriaPedido})
       : super(key: key);
-  final DetailController controladorDePedidos = Get.put(DetailController());
+  final OperacionPedidoController controladorDePedidos = Get.put(OperacionPedidoController());
   final int indiceCategoriaPedido;
   @override
   Widget build(BuildContext context) {

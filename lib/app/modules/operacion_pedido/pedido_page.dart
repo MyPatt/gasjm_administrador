@@ -1,22 +1,22 @@
 import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
-import 'package:gasjm/app/global_widgets/menu_lateral.dart';
-import 'package:gasjm/app/modules/detail/detail_controller.dart';
+import 'package:gasjm/app/global_widgets/menu_lateral.dart'; 
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/detail/widgets/contenido_pedido.dart';
+import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';
+import 'package:gasjm/app/modules/operacion_pedido/widgets/contenido_pedido.dart'; 
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
-class DetailPage extends StatelessWidget {
-  const DetailPage({
+class OperacionPedidoPage extends StatelessWidget {
+  const OperacionPedidoPage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DetailController>(
+    return GetBuilder<OperacionPedidoController>(
         builder: (_) => Scaffold(
             backgroundColor: AppTheme.background,
             //Menú deslizable a la izquierda con opciones del  usuario

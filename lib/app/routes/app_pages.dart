@@ -4,11 +4,9 @@ import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_bin
 import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_page.dart';
 import 'package:gasjm/app/modules/cliente/cliente_binding.dart';
 import 'package:gasjm/app/modules/cliente/cliente_page.dart';
-import 'package:gasjm/app/modules/detail/detail_binding.dart';
-import 'package:gasjm/app/modules/detail/detail_page.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_binding.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_page.dart';
-import 'package:gasjm/app/modules/home/home_binding.dart'; 
+import 'package:gasjm/app/modules/home/home_binding.dart';
 import 'package:gasjm/app/modules/home/home_page.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_binding.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_page.dart';
@@ -18,6 +16,8 @@ import 'package:gasjm/app/modules/ir/ir_binding.dart';
 import 'package:gasjm/app/modules/ir/ir_page.dart';
 import 'package:gasjm/app/modules/login/login_binding.dart';
 import 'package:gasjm/app/modules/login/login_page.dart';
+import 'package:gasjm/app/modules/operacion_pedido/pedido_binding.dart';
+import 'package:gasjm/app/modules/operacion_pedido/pedido_page.dart';
 import 'package:gasjm/app/modules/pedidos/pedidos_binding.dart';
 import 'package:gasjm/app/modules/pedidos/pedidos_page.dart';
 import 'package:gasjm/app/modules/perfil/perfil_binding.dart';
@@ -76,27 +76,29 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.inicio,
-      page: () =>   const HomePage(),
+      page: () => const HomePage(),
       binding: HomeBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
-    ),    GetPage(
+    ),
+    GetPage(
       name: AppRoutes.repartidor,
-      page: () =>    RepartidorPage(),
+      page: () => RepartidorPage(),
       binding: RepartidorBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
-    ),  GetPage(
+    ),
+    GetPage(
       name: AppRoutes.vehiculo,
-      page: () =>    VehiculoPage(),
+      page: () => VehiculoPage(),
       binding: VehiculoBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-      name: AppRoutes.detail,
-      page: () => const DetailPage(),
-      binding: DetailBinding(),
+      name: AppRoutes.operacionPedido,
+      page: () => const OperacionPedidoPage(),
+      binding: OperacionPedidoBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

@@ -146,7 +146,7 @@ class HomeController extends GetxController {
   void navegarDashboard() {
     switch (indiceModuloSeleccionado.value) {
       case 0:
-        Get.toNamed(AppRoutes.detail,
+        Get.toNamed(AppRoutes.operacionPedido,
             arguments: categoriasModulos[indiceModuloSeleccionado.value]);
         break;
       case 1:
@@ -387,7 +387,7 @@ class HomeController extends GetxController {
   void seleccionarCategoriaParaOperacion(int index) {
     switch (index) {
       case 0:
-        _cargarPagina(Get.offNamed(AppRoutes.detail));
+        _cargarPagina(Get.offNamed(AppRoutes.operacionPedido));
         break;
       default:
     }

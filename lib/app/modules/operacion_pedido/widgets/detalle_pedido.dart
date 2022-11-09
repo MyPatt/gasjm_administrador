@@ -40,7 +40,7 @@ class DetallePedido extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
         ),
-        isActive: true,
+        isActive: controladorDePedidos.active_step1.value,
         content: Container(),
       ),
       Step(
@@ -52,7 +52,8 @@ class DetallePedido extends StatelessWidget {
               ?.copyWith(color: AppTheme.light),
         ),
         content: Container(),
-        isActive: false,
+          isActive: controladorDePedidos.active_step2.value,
+
       ),
       Step(
         title: Text('Pedido en camino',
@@ -222,51 +223,42 @@ class DetallePedido extends StatelessWidget {
                         tertiary: AppTheme.blueDark,
                         //onSurface: AppTheme.blueDark,
                       )),
-                      child: Stepper(
-                        controlsBuilder:
-                            (BuildContext ctx, ControlsDetails dtl) {
-                          return Row(
-                            children: [Container()],
-                          )
-                              /*  Row(
-                              children: <Widget>[
-                                TextButton(
-                                  onPressed: dtl.onStepContinue,
-                                  child: Text(''),
-                                ),
-                                TextButton(
-                                  onPressed: dtl.onStepCancel,
-                                  child: Text(''),
-                                ),
-                              ],
-                            )*/
-                              ;
-                        },
-                        currentStep: 0,
-                        steps: steps,
-                        type: StepperType.vertical,
-                        /*  onStepTapped: (step) {
-                            //  setState(() {
-                            current_step = step;
+                      child: Obx(()=>
+                      Stepper(
+                      
+                          controlsBuilder:
+                              (BuildContext ctx, ControlsDetails dtl) {
+                            return Row(
+                              children: [Container()],
+                            ) 
+                                ;
                           },
-                          onStepContinue: () {
-                            //  setState(() {
-                            if (current_step < steps.length - 1) {
-                              current_step = current_step + 1;
-                            } else {
-                              current_step = 0;
-                            }
-                            //   });
-                          },
-                          onStepCancel: () {
-                            //   setState(() {
-                            if (current_step > 0) {
-                              current_step = current_step - 1;
-                            } else {
-                              current_step = 0;
-                            }
-                            //  });
-                          },*/
+                          currentStep: controladorDePedidos.current_step.value,
+                          steps: steps,
+                          type: StepperType.vertical,
+                          /*  onStepTapped: (step) {
+                              //  setState(() {
+                              current_step = step;
+                            },
+                            onStepContinue: () {
+                              //  setState(() {
+                              if (current_step < steps.length - 1) {
+                                current_step = current_step + 1;
+                              } else {
+                                current_step = 0;
+                              }
+                              //   });
+                            },
+                            onStepCancel: () {
+                              //   setState(() {
+                              if (current_step > 0) {
+                                current_step = current_step - 1;
+                              } else {
+                                current_step = 0;
+                              }
+                              //  });
+                            },*/
+                        ),
                       ),
                     ),
                     SizedBox(height: 10.0),

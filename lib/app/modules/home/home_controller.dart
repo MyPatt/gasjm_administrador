@@ -108,11 +108,12 @@ class HomeController extends GetxController {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: Color.fromRGBO(33, 116, 212, 1),
+                primary: const Color.fromRGBO(33, 116, 212, 1),
                 // button text color
               ),
             ),
           ),
+          
           child: child!,
         );
       },

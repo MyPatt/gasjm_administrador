@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
-import 'package:gasjm/app/global_widgets/text_subtitle.dart'; 
+import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';
 import 'package:gasjm/app/modules/operacion_pedido/widgets/aceptados_page.dart';
+import 'package:gasjm/app/modules/operacion_pedido/widgets/detalle_pedido.dart';
 import 'package:gasjm/app/modules/operacion_pedido/widgets/enespera_page.dart';
 import 'package:gasjm/app/modules/operacion_pedido/widgets/finalizados_page.dart';
 import 'package:gasjm/app/modules/operacion_pedido/widgets/rechazados_page.dart';
@@ -12,7 +13,8 @@ import 'package:get/get.dart';
 class ContenidoPedido extends StatelessWidget {
   ContenidoPedido({Key? key, required this.indiceCategoriaPedido})
       : super(key: key);
-  final OperacionPedidoController controladorDePedidos = Get.put(OperacionPedidoController());
+  final OperacionPedidoController controladorDePedidos =
+      Get.put(OperacionPedidoController());
   final int indiceCategoriaPedido;
   @override
   Widget build(BuildContext context) {
@@ -43,14 +45,17 @@ class ContenidoPedido extends StatelessWidget {
                                           .listaPedidosCancelados.value)
                           .map((e) {
                         return Card(
-                          shape: Border.all(color: AppTheme.light, width: 0.5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          //  shape: Border.all(color: AppTheme.light, width: 0.5),
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
                               children: [
                                 GestureDetector(
                                     onTap: () {
-                                      print("object");
+                                      Get.to(DetallePedido(e: e));
                                     },
                                     child: Column(
                                       children: <Widget>[

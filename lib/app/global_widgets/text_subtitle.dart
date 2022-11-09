@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class TextSubtitle extends StatelessWidget {
   final String text;
@@ -22,7 +22,7 @@ class TextSubtitle extends StatelessWidget {
       style: Theme.of(context)
           .textTheme
           .caption
-          ?.copyWith(color: AppTheme.blueDark, fontWeight: FontWeight.w700),
+          ?.copyWith(color: color, fontWeight: FontWeight.w700),
     );
   }
 }

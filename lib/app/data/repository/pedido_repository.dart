@@ -4,7 +4,7 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 abstract class PedidoRepository {
   Future<void> insertPedido({required PedidoModel pedidoModel});
   Future<void> updateEstadoPedido(
-      {required String idPedido, required String estadoPedido});
+      {required String idPedido, required String estadoPedido,required String numeroEstadoPedido});
   Future<void> deletePedido({required String pedido});
   Future<List<PedidoModel>> getPedidosEnEsperaYAceptados();
   Future<List<PedidoModel>?> getPedidosPorDosQueries({

@@ -124,7 +124,7 @@ class PedidosController extends GetxController {
   void rechazarPedidoEnEspera(String idPedido) async {
     try {
       await _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido, estadoPedido: "estado3");
+          idPedido: idPedido, estadoPedido: "estado5",numeroEstadoPedido: 'estadoPedido1');
 
       cargarListaPedidosEnEspera();
     } on FirebaseException {
@@ -141,7 +141,7 @@ class PedidosController extends GetxController {
   aceptarPedidoEnEspera(String idPedido) async {
     try {
       _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido, estadoPedido: "estado2");
+          idPedido: idPedido, estadoPedido: "estado2",numeroEstadoPedido: 'estadoPedido1');
 
       cargarListaPedidosEnEspera();
       cargarListaPedidosAceptados();
@@ -283,7 +283,7 @@ class PedidosController extends GetxController {
       [void showGetSnackbar]) async {
     try {
       await _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido, estadoPedido: estado);
+          idPedido: idPedido, estadoPedido: estado,numeroEstadoPedido: 'estadoPedido3');
 
       cargarListaPedidosAceptados();
 

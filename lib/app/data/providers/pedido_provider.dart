@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';import 'package:firebase_auth/firebase_auth.dart';
 
 class PedidoProvider {
   //Instancia de firestore
   final _firestoreInstance = FirebaseFirestore.instance;
-
+ final usuario = FirebaseAuth.instance.currentUser;
   //
   Future<void> insertPedido({required PedidoModel pedidoModel}) async {
     final resultado =
@@ -18,11 +18,14 @@ class PedidoProvider {
   //
 
   Future<void> updateEstadoPedido(
-      {required String idPedido, required String estadoPedido}) async {
+      {required String idPedido, required String estadoPedido,required String numeroEstadoPedido }) async {
     await _firestoreInstance
         .collection('pedido')
         .doc(idPedido)
-        .update({"idEstadoPedido": estadoPedido});
+        .update({"idEstadoPedido": estadoPedido,
+        
+        numeroEstadoPedido:EstadoPedido(idEstado: estadoPedido  , fechaHoraEstado: Timestamp.now(), idPersona: usuario!.uid).toMap()
+ });
   }
 
   //
@@ -130,9 +133,7 @@ class PedidoProvider {
     //
   Future<List<PedidoModel>> getPedidos() async {
     final resultado = await _firestoreInstance
-        .collection('pedido').get();
- print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-      print(resultado.docs.length);
+        .collection('pedido').get(); 
     return (resultado.docs)
         .map((item) => PedidoModel.fromJson(item.data()))
         .toList();

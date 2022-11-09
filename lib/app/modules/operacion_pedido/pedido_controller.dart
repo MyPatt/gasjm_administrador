@@ -142,15 +142,29 @@ class OperacionPedidoController extends GetxController {
 
   //Metodo para actualizar el estado de un pedido
   Future<void> actualizarEstadoPedido(String idPedido, int estado) async {
+    ///en estadoPedido1 se guarda info   de si se acepta o rechaza el pedido en espera
+    ///en estadoPedido3 se guarda info   de si se cancela o finaliza el pedidoaceptado
+    //Por defecto estado5 rechazar
+    //La categorias de los pedidos consta solo 4 de categoriasPedidos, el 5 es rechazados estado5 su indice 4 no consta en CategoriaPedidos
+
+    var estadoAux = "estado5";
+    //Por defecto numerodeestado2  para los pedidos en camino
+
+    var numeroEstadoPedido = 'estadoPedido2';
     try {
-      //La categorias de los pedidos consta solo 4, el 5 es rechazados estado5 su indice 4
-      if (estado == 4) {
-        await _pedidosRepository.updateEstadoPedido(
-            idPedido: idPedido, estadoPedido: "estado5");
-      } else {
-        await _pedidosRepository.updateEstadoPedido(
-            idPedido: idPedido, estadoPedido: categoriasPedidos[estado].path);
+      if (estado != 4) {
+        estadoAux = categoriasPedidos[estado].path;
       }
+      if (estado == 1 || estado == 4) {
+        numeroEstadoPedido = 'estadoPedido1';
+      }
+      if (estado == 2 || estado == 3) {
+        numeroEstadoPedido = 'estadoPedido3';
+      }
+      await _pedidosRepository.updateEstadoPedido(
+          idPedido: idPedido,
+          estadoPedido: estadoAux,
+          numeroEstadoPedido: numeroEstadoPedido);
       //Variable para mostra el mensaje
       String titulo = "Mensaje";
       String mensaje =

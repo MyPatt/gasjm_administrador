@@ -35,9 +35,9 @@ class OperacionPedidoController extends GetxController {
   RxList<PedidoModel> get listaPedidosCancelados => _listaPedidosCancelados;
 
   ///pARA EL DETALLE del pedido
-  RxInt current_step = 0.obs;
-  RxBool active_step1 = true.obs;
-  RxBool active_step2 = false.obs;
+  RxInt currentStep = 0.obs;
+  RxBool activeStep1 = true.obs;
+  RxBool activeStep2 = false.obs;
 
   ///
   @override
@@ -186,9 +186,9 @@ class OperacionPedidoController extends GetxController {
           cargarListaPedidos(1);
           cargarListaPedidos(0);
 //
-          current_step.value = current_step.value + 1;
-          active_step1.value = false;
-          active_step2.value = true;
+          currentStep.value = currentStep.value + 1;
+          activeStep1.value = false;
+          activeStep2.value = true;
 
           break;
         case 2:

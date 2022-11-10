@@ -22,38 +22,55 @@ class DetallePedido extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     List<Step> steps = [
       Step(
-        title: Text(
-          'Pedido realizado',
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall
-              ?.copyWith(color: AppTheme.blueDark, fontWeight: FontWeight.bold),
+        title: Obx(
+          () => Text(
+            'Pedido realizado',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: controladorDePedidos.currentStep.value == 0
+                    ? AppTheme.blueDark
+                    : AppTheme.light,
+                fontWeight: controladorDePedidos.currentStep.value == 0
+                    ? FontWeight.bold
+                    : FontWeight.w500),
+          ),
         ),
         subtitle: Text(
           controladorDePedidos.formatoFecha(e.fechaHoraPedido),
           textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: AppTheme.light,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
         ),
-        isActive: controladorDePedidos.active_step1.value,
+        isActive: controladorDePedidos.activeStep1.value,
         content: Container(),
       ),
       Step(
-        title: Text(
-          'Pedido aceptado',
-          style: Theme.of(context)
-              .textTheme
-              .titleSmall
-              ?.copyWith(color: AppTheme.light),
+        title: Obx(
+          () => Text(
+            'Pedido aceptado',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: controladorDePedidos.currentStep.value == 1
+                    ? AppTheme.blueDark
+                    : AppTheme.light,
+                fontWeight: controladorDePedidos.currentStep.value == 1
+                    ? FontWeight.bold
+                    : FontWeight.w500),
+          ),
+        ),
+        subtitle: Text(
+          controladorDePedidos.formatoFecha(
+              e.estadoPedido1?.fechaHoraEstado ?? Timestamp.now()),
+          textAlign: TextAlign.start,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: AppTheme.light,
+                fontWeight: FontWeight.w500,
+              ),
         ),
         content: Container(),
-          isActive: controladorDePedidos.active_step2.value,
-
+        isActive: controladorDePedidos.activeStep2.value,
       ),
       Step(
         title: Text('Pedido en camino',
@@ -79,6 +96,15 @@ class DetallePedido extends StatelessWidget {
         backgroundColor: AppTheme.blueBackground,
         title: const Text(
           "Detalle del pedido",
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            controladorDePedidos.currentStep.value = 0;
+            controladorDePedidos.activeStep1.value = true;
+            controladorDePedidos.activeStep2.value = false;
+            Get.back();
+          },
         ),
       ),
       body: SafeArea(
@@ -138,7 +164,7 @@ class DetallePedido extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.room_outlined,
-                                  size: 15.0,
+                                  size: 16.0,
                                 ),
                                 SizedBox(width: 10.0),
                                 Text(
@@ -215,49 +241,54 @@ class DetallePedido extends StatelessWidget {
                     const Divider(
                       thickness: 1,
                     ),
-                    Theme(
-                      data: Theme.of(context).copyWith(
-                          colorScheme: const ColorScheme.light(
-                        primary: AppTheme.blueDark,
-                        secondary: AppTheme.light,
-                        tertiary: AppTheme.blueDark,
-                        //onSurface: AppTheme.blueDark,
-                      )),
-                      child: Obx(()=>
-                      Stepper(
-                      
+                    Obx(
+                      () => Theme(
+                        data: Theme.of(context).copyWith(
+                            colorScheme: Theme.of(context).colorScheme.copyWith(
+                                onSurface: AppTheme.light,
+                                primary: AppTheme.light)),
+                        /*  Theme.of(context).copyWith(
+                          
+                            colorScheme: const ColorScheme.light(
+                              primary: Colors.grey,
+
+                              //onSurface: AppTheme.blueDark,
+                            )),*/
+                        child: Stepper(
                           controlsBuilder:
                               (BuildContext ctx, ControlsDetails dtl) {
                             return Row(
                               children: [Container()],
-                            ) 
-                                ;
+                            );
                           },
-                          currentStep: controladorDePedidos.current_step.value,
+                          currentStep: controladorDePedidos.currentStep.value,
                           steps: steps,
                           type: StepperType.vertical,
+                          onStepContinue: () {
+                            print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                          },
                           /*  onStepTapped: (step) {
-                              //  setState(() {
-                              current_step = step;
-                            },
-                            onStepContinue: () {
-                              //  setState(() {
-                              if (current_step < steps.length - 1) {
-                                current_step = current_step + 1;
-                              } else {
-                                current_step = 0;
-                              }
-                              //   });
-                            },
-                            onStepCancel: () {
-                              //   setState(() {
-                              if (current_step > 0) {
-                                current_step = current_step - 1;
-                              } else {
-                                current_step = 0;
-                              }
-                              //  });
-                            },*/
+                                //  setState(() {
+                                current_step = step;
+                              },
+                              onStepContinue: () {
+                                //  setState(() {
+                                if (current_step < steps.length - 1) {
+                                  current_step = current_step + 1;
+                                } else {
+                                  current_step = 0;
+                                }
+                                //   });
+                              },
+                              onStepCancel: () {
+                                //   setState(() {
+                                if (current_step > 0) {
+                                  current_step = current_step - 1;
+                                } else {
+                                  current_step = 0;
+                                }
+                                //  });
+                              },*/
                         ),
                       ),
                     ),

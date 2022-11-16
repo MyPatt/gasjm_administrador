@@ -1,9 +1,10 @@
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
+import 'package:gasjm/app/modules/administrador/repartidor/repartidor_controller.dart';
 import 'package:gasjm/app/modules/cliente/widgets/search.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/repartidor/repartidor_controller.dart';
+ 
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';

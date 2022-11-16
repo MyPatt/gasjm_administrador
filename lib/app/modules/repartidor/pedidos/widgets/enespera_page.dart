@@ -4,7 +4,7 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/button_small.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/pedidos/pedidos_controller.dart';
+import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
 import 'package:get/get.dart';
 
 class PedidosEnEsperaPage extends StatelessWidget {

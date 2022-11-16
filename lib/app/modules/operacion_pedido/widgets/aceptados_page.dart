@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
-import 'package:gasjm/app/core/utils/responsive.dart'; 
-import 'package:gasjm/app/global_widgets/alert_rechazar.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/global_widgets/alert_rechazar.dart';
 import 'package:gasjm/app/global_widgets/button_small.dart';
-import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';  
-import 'package:get/get.dart'; 
+import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';
+import 'package:get/get.dart';
 
 class PedidosAceptadosPage extends StatelessWidget {
   PedidosAceptadosPage({Key? key, required this.idPedido}) : super(key: key);
-  final OperacionPedidoController controladorDePedidos = Get.put(OperacionPedidoController());
+  final OperacionPedidoController controladorDePedidos =
+      Get.put(OperacionPedidoController());
   final String idPedido;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class PedidosAceptadosPage extends StatelessWidget {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return AlertDialogConfirmacion(
+        return ModalAlert(
             titulo: 'Cancelar pedido',
             mensaje: '¿Está seguro de cancelar el pedido?',
             onPressed: () => _onCancelarPedidoAceptado(context, id));

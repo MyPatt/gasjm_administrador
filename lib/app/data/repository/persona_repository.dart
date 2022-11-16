@@ -6,8 +6,7 @@ abstract class PersonaRepository {
   Future<void> insertPersona({required PersonaModel persona});
   Future<void> updatePersona({required PersonaModel persona, File? image});
   Future<void> updateEstadoPersona(
-      {required String uid, required String estado});
-   Future<void>     updateContrasenaPersona    ( {required String uid, required String contrasena});
+      {required String uid, required String estado}); 
   Future<void> deletePersona({required String persona});
   Future<PersonaModel?> getDatosPersonaPorCedula({required String cedula});
   Future<String?> getNombresPersonaPorCedula({required String cedula});
@@ -19,6 +18,11 @@ abstract class PersonaRepository {
   Future<List<PersonaModel>> getPersonas();
   Future<PersonaModel?> getUsuario();
   Future<String?> getImagenUsuarioActual();
-   Future<int> getCantidadClientesPorfield(
+  Future<int> getCantidadClientesPorfield(
       {required String field, required String dato});
+//
+  Future<bool> updateContrasenaPersona(
+      {required String uid,
+      required String actualContrasena,
+      required String nuevaContrasena});
 }

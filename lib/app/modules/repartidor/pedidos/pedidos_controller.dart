@@ -338,7 +338,9 @@ class PedidosController extends GetxController {
     try {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.ir);
-    } catch (e) {}
+    } catch (e) {
+      
+    }
   }
 
   _cargarExplorarPage() async {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/inicio/inicio_controller.dart';
+import 'package:gasjm/app/modules/repartidor/inicio/inicio_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

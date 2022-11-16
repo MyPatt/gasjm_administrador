@@ -10,9 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //Menú deslizable a la izquierda con opciones del  usuario
 class MenuLateral extends StatelessWidget {
-  const MenuLateral({key, required this.modo, required this.foto}) : super(key: key);
+  const MenuLateral({key, required this.modo, required this.imagenPerfil})
+      : super(key: key);
   final String modo;
-  final Widget foto;
+  final RxString imagenPerfil;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class MenuLateral extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          _buildDrawerHeader(foto),
+          _buildDrawerHeader(imagenPerfil),
           const SizedBox(
             height: 15,
           ),
@@ -50,9 +51,7 @@ class MenuLateral extends StatelessWidget {
           _buildDrawerItem(
               icon: Icons.person_outline,
               text: 'Mi cuenta',
-              onTap: () =>
-               Get.offNamed(AppRoutes.perfil)),
-                  
+              onTap: () => Get.offNamed(AppRoutes.perfil)),
           _buildDrawerItem(
               icon: Icons.message_outlined,
               text: 'Mensajes',
@@ -104,11 +103,9 @@ class MenuLateral extends StatelessWidget {
       ),
     ));
   }
-
-
 }
 
-Widget _buildDrawerHeader(Widget foto) {
+Widget _buildDrawerHeader(RxString imagenPerfil) {
   return DrawerHeader(
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
@@ -121,23 +118,32 @@ Widget _buildDrawerHeader(Widget foto) {
           height: 150,
           decoration: const BoxDecoration(
             color: AppTheme.blueBackground,
-            border: Border(bottom: BorderSide.none, top: BorderSide.none),
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(15),
+            ),
           ),
         ),
-         Align(
+        Align(
           alignment: Alignment.bottomCenter,
-          child: SizedBox(
-            child: CircleAvatar(
-              radius: 40.0,
-              backgroundColor: Colors.white,
-              child: (foto)
-             /* CircleAvatar(
-                
-                radius: 38.0,
-                backgroundImage: NetworkImage(
-                    'https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY'),
-              ),*/
-            ),
+          child: Obx(
+            () => CircleAvatar(
+                radius: 40.0,
+                backgroundColor: Colors.white,
+                child: (imagenPerfil.isEmpty)
+                    ? const CircleAvatar(
+                        backgroundColor: AppTheme.light,
+                        radius: 38.0,
+                        child: CircleAvatar(
+                            backgroundColor: AppTheme.light,
+                            radius: 35.0,
+                            backgroundImage: AssetImage(
+                              'assets/icons/placehoderperfil.png',
+                            )),
+                      )
+                    : CircleAvatar(
+                        backgroundColor: AppTheme.light,
+                        radius: 38.0,
+                        backgroundImage: NetworkImage(imagenPerfil.value))),
           ),
         ),
       ]));
@@ -164,4 +170,3 @@ Widget _buildDrawerItem(
     onTap: onTap,
   );
 }
- 

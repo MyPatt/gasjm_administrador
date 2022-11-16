@@ -1,10 +1,10 @@
 import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
-import 'package:gasjm/app/global_widgets/menu_lateral.dart'; 
+import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';
-import 'package:gasjm/app/modules/operacion_pedido/widgets/contenido_pedido.dart'; 
+import 'package:gasjm/app/modules/operacion_pedido/widgets/contenido_pedido.dart';
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -21,10 +21,7 @@ class OperacionPedidoPage extends StatelessWidget {
             backgroundColor: AppTheme.background,
             //Menú deslizable a la izquierda con opciones del  usuario
             drawer: MenuLateral(
-                modo: 'Modo repartidor',
-                foto: Obx(
-                  () => buildImage(_.imagenUsuario.value),
-                )),
+                modo: 'Modo repartidor', imagenPerfil: _.imagenUsuario),
 
             //
             appBar: AppBar(
@@ -76,22 +73,4 @@ class OperacionPedidoPage extends StatelessWidget {
             bottomNavigationBar:
                 const BottomNavigationAdministrador(indiceActual: 1)));
   }
-}
-
-Widget buildImage(String? imagenPerfil) {
-  return imagenPerfil == null
-      ? const CircleAvatar(
-          backgroundColor: AppTheme.light,
-          radius: 38.0,
-          child: CircleAvatar(
-              backgroundColor: AppTheme.light,
-              radius: 35.0,
-              backgroundImage: AssetImage(
-                'assets/icons/placehoderperfil.png',
-              )),
-        )
-      : CircleAvatar(
-          backgroundColor: AppTheme.light,
-          radius: 38.0,
-          backgroundImage: NetworkImage(imagenPerfil));
 }

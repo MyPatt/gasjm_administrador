@@ -1,6 +1,7 @@
+
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
@@ -10,6 +11,7 @@ import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -40,7 +42,7 @@ class PerfilController extends GetxController {
   final RxBool _contrasenaNuevaOculta2 = true.obs;
   RxBool get contrasenaNuevaOculta2 => _contrasenaNuevaOculta2;
   //
-  PersonaModel? _usuario = null;
+  PersonaModel? _usuario;
   PersonaModel? get usuario => _usuario;
 
   final _personaRepository = Get.find<PersonaRepository>();
@@ -65,7 +67,7 @@ class PerfilController extends GetxController {
 
   /* Variables para google maps */
   TextEditingController direccionAuxTextoController = TextEditingController();
-  Direccion direccionPersona = Direccion(latitud: 0, longitud: 0);
+  Direccion direccionPersonaa = Direccion(latitud: 0, longitud: 0);
 
   final Rx<LatLng> _posicionInicialCliente =
       const LatLng(-12.122711, -77.027475).obs;
@@ -87,10 +89,6 @@ class PerfilController extends GetxController {
   Rx<bool> existeImagenPerfil = false.obs;
 
   /* METODOS PROPIOS */
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   @override
   void onReady() {
@@ -101,14 +99,8 @@ class PerfilController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    cedulaTextoController.clear();
-    nombreTextoController.clear();
-    apellidoTextoController.clear();
-    direccionTextoController.clear();
-    fechaNacimientoTextoController.clear();
-    celularTextoController.clear();
-    correoElectronicoTextoController.clear();
-    contrasenaActualTextoController.clear();
+    //Limpiar campos
+    _limpiarCamposDeTodosLosFormsDelUsuario();
   }
 
   /* METODOS PARA CLIENTES */
@@ -133,10 +125,20 @@ class PerfilController extends GetxController {
           usuario?.direccionPersona?.latitud ?? 0,
           usuario?.direccionPersona?.longitud ?? 0));
       direccionTextoController.text = direccion;
+      //
 
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      //
       _posicionInicialCliente.value = LatLng(
-          usuario?.direccionPersona?.latitud ?? 0,
-          usuario?.direccionPersona?.longitud ?? 0);
+          usuario?.direccionPersona?.latitud ?? position.latitude,
+          usuario?.direccionPersona?.longitud ?? position.longitude);
+
+      //
+      direccionPersonaa = Direccion(
+          latitud: usuario?.direccionPersona?.latitud ?? 0,
+          longitud: usuario?.direccionPersona?.longitud ?? 0);
+
       //contrasenaActualTextoController.text = usuario?.contrasenaPersona ?? '';
 
     } on FirebaseException {
@@ -151,13 +153,31 @@ class PerfilController extends GetxController {
   }
 
 //
-  Future<void> selectDate(BuildContext context) async {
+  Future<void> seleccionarFechaDeNacimiento(BuildContext context) async {
     DateTime? fechaNacimiento = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppTheme.blueBackground,
+              onPrimary: Colors.white,
+              onSurface: AppTheme.blueDark,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: const Color.fromRGBO(33, 116, 212, 1),
+                // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
+      locale: const Locale(
+        'es',
+      ),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
-      helpText: "Seleccione una fecha".toUpperCase(),
-      cancelText: "Cancelar",
-      confirmText: "Aceptar",
       firstDate: DateTime(DateTime.now().year - 65),
       lastDate: DateTime(DateTime.now().year - 18),
       initialDate: DateTime(DateTime.now().year - 20),
@@ -199,7 +219,6 @@ class PerfilController extends GetxController {
 
   //
   Future<String> _getDireccionXLatLng(LatLng posicion) async {
-    print(posicion);
     List<Placemark> placemark =
         await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
     Placemark lugar = placemark[0];
@@ -230,7 +249,7 @@ class PerfilController extends GetxController {
     final String? celularPersona = celularTextoController.text;
     final String? fechaNaciPersona = fechaNacimientoTextoController.text;
     //final String? estadoPersona = cliente.estadoPersona;
-    final String idPerfil = usuario?.idPerfil ?? 'administrador';
+    final String idPerfil = usuario?.idPerfil ?? 'cliente';
     final String contrasenaPersona = contrasenaActualTextoController.text;
 
 //
@@ -246,9 +265,10 @@ class PerfilController extends GetxController {
           nombrePersona: nombrePersona,
           apellidoPersona: apellidoPersona,
           idPerfil: idPerfil,
+          fotoPersona: usuario?.fotoPersona,
           contrasenaPersona: contrasenaPersona,
           correoPersona: correoPersona,
-          direccionPersona: direccionPersona,
+          direccionPersona: direccionPersonaa,
           celularPersona: celularPersona,
           fechaNaciPersona: fechaNaciPersona,
           estadoPersona: usuario?.estadoPersona);
@@ -343,7 +363,7 @@ class PerfilController extends GetxController {
   seleccionarNuevaDireccion() {
     direccionTextoController.text = direccionAuxTextoController.text;
     _posicionInicialCliente.value = _posicionAuxCliente.value;
-    direccionPersona = Direccion(
+    direccionPersonaa = Direccion(
         latitud: posicionInicialCliente.value.latitude,
         longitud: posicionInicialCliente.value.longitude);
 
@@ -353,17 +373,13 @@ class PerfilController extends GetxController {
 
   cargarDireccionActual() {
     _posicionAuxCliente.value = posicionInicialCliente.value;
-    print(_posicionInicialCliente.value);
-    print(_posicionAuxCliente.value);
+
     Get.toNamed(AppRoutes.direccion);
   }
 
   Future<void> cargarImagen() async {
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
-    print("********");
-    print(pickedImage?.name);
-    print(pickedImage?.path);
     if (pickedImage != null) {
       setImage(File(pickedImage.path));
     }
@@ -375,36 +391,39 @@ class PerfilController extends GetxController {
     //  emit(state.copyWith(pickedImage: imageFile));
   }
 
-  Future<void> restablecerContrasena() async {
+  Future<void> restablecerContrasena(BuildContext context) async {
     final contrasenaActual = contrasenaActualTextoController.text;
     final contrasenaNueva1 = contrasenaNueva1TextoController.text;
     final contrasenaNueva2 = contrasenaNueva2TextoController.text;
     try {
       cargandoDeContrasena.value = true;
       errorDeContrasena.value = null;
-      if (contrasenaActual == usuario?.contrasenaPersona) {
-        if (contrasenaNueva1 == contrasenaNueva2) {
-          //update
-          await _personaRepository.updateContrasenaPersona(
-              uid: _usuario?.uidPersona ?? '', contrasena: contrasenaNueva1);
-          //Mensaje de ingreso
-          print("object");
-          Mensajes.showGetSnackbar(
-              titulo: 'Mensaje',
-              mensaje: '¡Se guardo con éxito!',
-              icono: const Icon(
-                Icons.save_outlined,
-                color: Colors.white,
-              ));
-        } else {
-          errorDeContrasena.value = "Las contraseñas no coinciden";
-        }
+
+      if (contrasenaNueva1 == contrasenaNueva2) {
+        await _personaRepository.updateContrasenaPersona(
+            uid: _usuario!.uidPersona.toString(),
+            actualContrasena: contrasenaActual,
+            nuevaContrasena: contrasenaNueva2);
+
+        //Mensaje de confirmacion
+
+        Mensajes.showGetSnackbar(
+            titulo: 'Mensaje',
+            mensaje: '¡Se guardo con éxito!',
+            icono: const Icon(
+              Icons.save_outlined,
+              color: Colors.white,
+            ));
+
+        //Retornar al pagina de perfil
+        Navigator.of(context).pop();
       } else {
-        errorDeContrasena.value = "Contraseña actual incorrecta";
+        errorDeContrasena.value = "Las contraseñas no coinciden";
       }
+      // } catch (e) {
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        errorDeContrasena.value = 'La contraseña es demasiado débil';
+      if (e.code == 'wrong-password') {
+        errorDeContrasena.value = 'Contraseña actual incorrecta';
       }
     } catch (e) {
       Mensajes.showGetSnackbar(
@@ -417,7 +436,38 @@ class PerfilController extends GetxController {
             color: Colors.white,
           ));
     }
-     await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     cargandoDeContrasena.value = false;
+  }
+
+  cargarFormContrasena() {
+    //Limpiar campos
+    _limpiarCamposDelFormContrasena();
+
+    //Ir a la ruta
+    Get.toNamed(AppRoutes.contrasena);
+  }
+
+  void _limpiarCamposDeTodosLosFormsDelUsuario() {
+    cedulaTextoController.dispose();
+    nombreTextoController.dispose();
+    apellidoTextoController.dispose();
+    direccionTextoController.dispose();
+    fechaNacimientoTextoController.dispose();
+    celularTextoController.dispose();
+    correoElectronicoTextoController.dispose();
+    contrasenaActualTextoController.dispose();
+    contrasenaNueva1TextoController.dispose();
+    contrasenaNueva2TextoController.dispose();
+  }
+
+  void _limpiarCamposDelFormContrasena() {
+    contrasenaActualTextoController.clear();
+    contrasenaNueva1TextoController.clear();
+    contrasenaNueva2TextoController.clear();
+    errorDeContrasena.value = '';
+    _contrasenaActualOculta.value = true;
+    _contrasenaNuevaOculta1.value = true;
+    _contrasenaNuevaOculta2.value = true;
   }
 }

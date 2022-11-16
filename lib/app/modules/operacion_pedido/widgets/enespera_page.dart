@@ -41,7 +41,7 @@ class PedidosEnEsperaPage extends StatelessWidget {
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return AlertDialogConfirmacion(
+        return ModalAlert(
           onPressed: () => _onrechazarPedidoEnEspera(context, id),
           titulo: 'Rechazar pedido',
           mensaje: '¿Está seguro de rechazar el pedido?',

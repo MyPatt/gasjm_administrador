@@ -54,8 +54,13 @@ class PersonaProvider {
           .collection("persona")
           .doc(usuarioActual.uid)
           .update({"foto": url});
+      usuarioActual.updatePhotoURL(url);
     }
+    //Actualizar nombre
+    usuarioActual.updateDisplayName(
+        '${persona.nombrePersona} ${persona.apellidoPersona}');
   }
+//
 
   //
   Future<void> deletePersona({required String persona}) async {
@@ -139,14 +144,14 @@ class PersonaProvider {
   }
 
   Future<String?> getImagenUsuarioActual() async {
-    final snapshot =await  _firestoreInstance
+    final snapshot = await _firestoreInstance
         .collection('persona')
         .doc(usuarioActual.uid)
         .get();
-            
-    String? resultado=(snapshot.get("foto"));
-   
-    if (resultado!=null) {  
+
+    String? resultado = (snapshot.get("foto"));
+
+    if (resultado != null) {
       return resultado;
     }
     return null;
@@ -159,23 +164,34 @@ class PersonaProvider {
         .update({"estado": estado});
   }
 
-  updateContrasenaPersona(
-      {required String uid, required String contrasena}) async {
-    await _firestoreInstance
-        .collection('persona')
-        .doc(uid)
-        .update({"contrasena": contrasena});
-   await FirebaseAuth.instance.currentUser?.updatePassword(contrasena);
+  //Actualiza la contrasena del usuario
+  Future<bool> updateContrasenaPersona(
+      {required String uid,
+      required String actualContrasena,
+      required String nuevaContrasena}) async {
+    bool actualizado = false;
+    //
+
+    final credencial = EmailAuthProvider.credential(
+        email: usuarioActual.email.toString(), password: actualContrasena);
+    await usuarioActual.reauthenticateWithCredential(credencial).then((value) {
+      usuarioActual.updatePassword(nuevaContrasena).then((value) {
+        actualizado = true;
+      });
+    });
+
+    return actualizado;
   }
 
-    //Retornar la cantidad de cleintes por field
+  //Retornar la cantidad de cleintes por field
   Future<int> getCantidadClientesPorfield(
-    {required String field, required String dato}) async {
+      {required String field, required String dato}) async {
     final resultado = await _firestoreInstance
-        .collection("persona") .where("estado", isEqualTo: "activo")
+        .collection("persona")
+        .where("estado", isEqualTo: "activo")
         .where(field, isEqualTo: dato)
         .get();
-  
+
     return resultado.docs.length;
   }
 }

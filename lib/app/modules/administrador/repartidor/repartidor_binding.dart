@@ -1,5 +1,5 @@
   
-import 'package:gasjm/app/modules/repartidor/repartidor_controller.dart';
+import 'package:gasjm/app/modules/administrador/repartidor/repartidor_controller.dart';
 import 'package:get/get.dart';
 
 class RepartidorBinding extends Bindings {

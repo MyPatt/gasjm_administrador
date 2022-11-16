@@ -35,7 +35,7 @@ class AutenticacionController extends GetxController {
       Get.offAllNamed(AppRoutes.ubicacion);
     } else {
       autenticacionEstado.value = EstadosDeAutenticacion.sesionIniciada; 
-      Get.offAllNamed(AppRoutes.inicio);
+      Get.offAllNamed(AppRoutes.inicioRepartidor);
     }
     autenticacionUsuario.value = usuario;
   }

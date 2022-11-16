@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/core/utils/responsive.dart'; 
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 
 abstract class ProgressDialog {
@@ -10,22 +11,22 @@ abstract class ProgressDialog {
       builder: (_) => WillPopScope(
           child: Container(
               width: double.infinity,
-              height: double.infinity,
-              color: Colors.white,
+              height: Responsive.hp(context),
+              color: AppTheme.blueBackground,
               alignment: Alignment.center,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const CircularProgressIndicator(
-                      color: AppTheme.blueBackground,
+                      color: AppTheme.blueDark,
                       backgroundColor: Colors.white,
                     ),
-          SizedBox(height: MediaQuery.of(context).size.height * .05),
-
-                    TextSubtitle(
-                      text: texto,
-                      color: AppTheme.blueDark,
-                    )
+                    SizedBox(
+                        height: Responsive.getScreenSize(context).height * .02),
+                    Text(texto,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
                   ])),
           onWillPop: () async => false),
     );

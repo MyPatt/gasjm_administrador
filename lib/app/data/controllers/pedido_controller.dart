@@ -10,11 +10,13 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
-class OperacionPedidoController extends GetxController {
-  final _pedidosRepository = Get.find<PedidoRepository>();
+class PedidoController extends GetxController {
+  final _pedidosRepository = Get.find<PedidoRepository>(); 
   final _personaRepository = Get.find<PersonaRepository>();
+
 //
-  RxString imagenUsuario = ''.obs;
+ final cargandoPedidos = true.obs;
+//
 
   //Pedidos en espera
 
@@ -33,67 +35,6 @@ class OperacionPedidoController extends GetxController {
 
   final RxList<PedidoModel> _listaPedidosCancelados = <PedidoModel>[].obs;
   RxList<PedidoModel> get listaPedidosCancelados => _listaPedidosCancelados;
-
-  ///pARA EL DETALLE del pedido
-  RxInt currentStep = 0.obs;
-  RxBool activeStep1 = true.obs;
-  RxBool activeStep2 = false.obs;
-
-  ///
-  @override
-  void onInit() {
-    Future.wait([
-      _cargarFotoPerfil(),
-    ]);
-
-    cargarListaPedidos(0);
-    cargarListaPedidos(1);
-    cargarListaPedidos(2);
-    cargarListaPedidos(3);
-
-    super.onInit();
-  }
-
-  /* METODOS  */
-  Future<void> _cargarFotoPerfil() async {
-    imagenUsuario.value =
-        await _personaRepository.getImagenUsuarioActual() ?? '';
-  }
-
-  Future<String> _getNombresCliente(String cedula) async {
-    final nombre =
-        await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
-    return nombre ?? 'Usuario';
-  }
-
-  Future<String> _getDireccionXLatLng(LatLng posicion) async {
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
-    Placemark lugar = placemark[0];
-
-//
-    return _getDireccion(lugar);
-  }
-
-  String _getDireccion(Placemark lugar) {
-    //
-    if (lugar.subLocality?.isEmpty == true) {
-      return lugar.street.toString();
-    } else {
-      return '${lugar.street}, ${lugar.subLocality}';
-    }
-  }
-
-  //
-  String formatoFecha(Timestamp fecha) {
-    String formatoFecha = DateFormat.yMd("es").format(fecha.toDate());
-    String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
-    return "$formatoHora $formatoFecha";
-  }
-
-//**** */
-  final cargandoPedidos = true.obs;
-
   Future<void> cargarListaPedidos(int id) async {
     try {
       cargandoPedidos.value = true;
@@ -139,6 +80,7 @@ class OperacionPedidoController extends GetxController {
     }
     cargandoPedidos.value = false;
   }
+
 
   //Metodo para actualizar el estado de un pedido
   Future<void> actualizarEstadoPedido(String idPedido, int estado) async {
@@ -186,9 +128,6 @@ class OperacionPedidoController extends GetxController {
           cargarListaPedidos(1);
           cargarListaPedidos(0);
 //
-          currentStep.value = currentStep.value + 1;
-          activeStep1.value = false;
-          activeStep2.value = true;
 
           break;
         case 2:
@@ -228,4 +167,29 @@ class OperacionPedidoController extends GetxController {
           ));
     }
   }
+  //
+  Future<String> _getNombresCliente(String cedula) async {
+    final nombre =
+        await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
+    return nombre ?? 'Usuario';
+  }
+
+  Future<String> _getDireccionXLatLng(LatLng posicion) async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
+    Placemark lugar = placemark[0];
+
+//
+    return _getDireccion(lugar);
+  }
+
+  String _getDireccion(Placemark lugar) {
+    //
+    if (lugar.subLocality?.isEmpty == true) {
+      return lugar.street.toString();
+    } else {
+      return '${lugar.street}, ${lugar.subLocality}';
+    }
+  }
+
 }

@@ -5,6 +5,7 @@ import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/widgets/aceptados_page.dart';
+import 'package:gasjm/app/modules/repartidor/pedidos/widgets/contenido_pedido.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/widgets/enespera_page.dart';
 import 'package:get/get.dart';
 
@@ -14,14 +15,13 @@ class PedidosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PedidosController>(
-      builder: (_) => DefaultTabController(
-          length: 2,
-          child: Scaffold(
+        builder: (_) => Scaffold(
+            backgroundColor: AppTheme.background,
             //Menú deslizable a la izquierda con opciones del  usuario
             drawer: MenuLateral(
-                modo: 'Modo administrador', imagenPerfil: _.imagenUsuario),
+                modo: 'Modo repartidor', imagenPerfil: _.imagenUsuario),
 
-            //Barra de herramientas de opciones para  agenda y  historial
+            //
             appBar: AppBar(
               elevation: 0,
               shape: const RoundedRectangleBorder(
@@ -35,27 +35,40 @@ class PedidosPage extends StatelessWidget {
                   indiceMenu: 1,
                 )
               ],
-              title: const Text('Pedidos'),
-              bottom: const TabBar(
-                indicatorColor: Colors.white,
-                tabs: [
-                  Tab(text: 'En espera'),
-                  Tab(
-                    text: 'Aceptados',
+              title: const Text("Pedidos"),
+            ),
+            body: DefaultTabController(
+              length: 2,
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    child: const TabBar(
+                      indicatorColor: AppTheme.blueBackground,
+                      labelColor: AppTheme.blueBackground,
+                      unselectedLabelColor: AppTheme.light,
+                      // indicator: BoxDecoration(color: Colors.white),
+                      tabs: [
+                        Tab(text: 'En espera'),
+                        Tab(
+                          text: 'Aceptados',
+                        ),
+                      ],
+                    ),
                   ),
+                  Expanded(
+                      child: TabBarView(children: [
+                    ContenidoPedido(
+                      indiceCategoriaPedido: 0,
+                    ),
+                    ContenidoPedido(
+                      indiceCategoriaPedido: 1,
+                    ),
+                  ]))
                 ],
               ),
             ),
-            //Body
-            body: TabBarView(
-              children: [
-                PedidosEnEsperaPage(),
-                PedidosAceptadosPage(),
-              ],
-            ),
-            //Navegacion del repartidor
-            bottomNavigationBar: const BottomNavigationRepartidor(indiceActual: 2),
-          )),
-    );
+            bottomNavigationBar:
+                const BottomNavigationRepartidor(indiceActual: 2)));
   }
 }

@@ -59,6 +59,8 @@ class PersonaProvider {
     //Actualizar nombre
     usuarioActual.updateDisplayName(
         '${persona.nombrePersona} ${persona.apellidoPersona}');
+
+  // usuarioActual.updateEmail(persona.correoPersona.toString()); 
   }
 //
 

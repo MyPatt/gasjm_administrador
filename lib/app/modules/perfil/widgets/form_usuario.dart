@@ -86,6 +86,8 @@ class FormUsuario extends StatelessWidget {
                         labelText: "Correo electrónico",
                         controller: _.correoElectronicoTextoController,
                         validator: Validacion.validarCorreoElectronico,
+                        readOnly: true,
+                        enabled:false
                       ),
                       SizedBox(
                           height:

@@ -1,10 +1,8 @@
 
 import 'package:gasjm/app/data/controllers/pedido_controller.dart'; 
 import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:gasjm/app/data/repository/persona_repository.dart'; 
+import 'package:get/get.dart'; 
  
 
 class OperacionPedidoController extends GetxController { 
@@ -59,27 +57,4 @@ class OperacionPedidoController extends GetxController {
         await _personaRepository.getImagenUsuarioActual() ?? '';
   }
 
-  Future<String> _getNombresCliente(String cedula) async {
-    final nombre =
-        await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
-    return nombre ?? 'Usuario';
-  }
-
-  Future<String> _getDireccionXLatLng(LatLng posicion) async {
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
-    Placemark lugar = placemark[0];
-
-//
-    return _getDireccion(lugar);
-  }
-
-  String _getDireccion(Placemark lugar) {
-    //
-    if (lugar.subLocality?.isEmpty == true) {
-      return lugar.street.toString();
-    } else {
-      return '${lugar.street}, ${lugar.subLocality}';
-    }
-  }
 }

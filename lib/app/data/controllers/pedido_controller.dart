@@ -11,12 +11,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 class PedidoController extends GetxController {
-  final _pedidosRepository = Get.find<PedidoRepository>(); 
+  final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
 
 //
- final cargandoPedidos = true.obs;
-//
+  final cargandoPedidos = true.obs;
 
   //Pedidos en espera
 
@@ -80,7 +79,6 @@ class PedidoController extends GetxController {
     }
     cargandoPedidos.value = false;
   }
-
 
   //Metodo para actualizar el estado de un pedido
   Future<void> actualizarEstadoPedido(String idPedido, int estado) async {
@@ -167,6 +165,7 @@ class PedidoController extends GetxController {
           ));
     }
   }
+
   //
   Future<String> _getNombresCliente(String cedula) async {
     final nombre =
@@ -191,10 +190,14 @@ class PedidoController extends GetxController {
       return '${lugar.street}, ${lugar.subLocality}';
     }
   }
+
 //
- String formatoFecha(Timestamp fecha) {
+  String formatoFecha(Timestamp fecha) {
     String formatoFecha = DateFormat.yMd("es").format(fecha.toDate());
     String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
     return "$formatoHora $formatoFecha";
   }
+
+
+  
 }

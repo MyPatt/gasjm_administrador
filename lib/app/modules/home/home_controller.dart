@@ -4,8 +4,7 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/data/models/puntos_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/modules/home/widgets/modal_operaciones.dart';
+import 'package:gasjm/app/data/repository/persona_repository.dart'; 
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 

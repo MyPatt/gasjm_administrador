@@ -3,11 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/controllers/pedido_controller.dart';
-import 'package:gasjm/app/global_widgets/pedido/aceptados_page.dart';
-import 'package:gasjm/app/global_widgets/pedido/detalle_pedido.dart';
-import 'package:gasjm/app/global_widgets/pedido/enespera_page.dart';
-import 'package:gasjm/app/global_widgets/pedido/finalizados_page.dart';
-import 'package:gasjm/app/global_widgets/pedido/rechazados_page.dart';
+import 'package:gasjm/app/global_widgets/pedido/detalle_pedido.dart'; 
+import 'package:gasjm/app/global_widgets/pedido/opciones_pedido.dart'; 
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:get/get.dart';
@@ -15,8 +12,7 @@ import 'package:get/get.dart';
 class ContenidoPedido extends StatelessWidget {
   ContenidoPedido({Key? key, required this.indiceCategoriaPedido})
       : super(key: key);
-  final PedidoController controladorDePedidos =
-      Get.put(PedidoController());
+  final PedidoController controladorDePedidos = Get.put(PedidoController());
   final int indiceCategoriaPedido;
   @override
   Widget build(BuildContext context) {
@@ -56,9 +52,10 @@ class ContenidoPedido extends StatelessWidget {
                             child: Column(
                               children: [
                                 GestureDetector(
-                                    onTap: () {
-                                      Get.to(DetallePedido(e: e));
-                                    },
+                                    onTap: () => Get.to(DetallePedido(
+                                        e: e,
+                                        indiceCategoriaPedido:
+                                            indiceCategoriaPedido)),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
@@ -101,17 +98,10 @@ class ContenidoPedido extends StatelessWidget {
                                     )),
                                 const Divider(),
                                 //Tipo de categoria
-                                indiceCategoriaPedido == 0
-                                    ? PedidosEnEsperaPage(idPedido: e.idPedido)
-                                    : indiceCategoriaPedido == 1
-                                        ? PedidosAceptadosPage(
-                                            idPedido: e.idPedido,
-                                          )
-                                        : indiceCategoriaPedido == 2
-                                            ? PedidosAFinalizadosPage(
-                                                idPedido: e.idPedido)
-                                            : PedidosRechazadosPage(
-                                                idPedido: e.idPedido)
+                                OpcionesPedido(
+                                    e: e,
+                                    indiceCategoriaPedido:
+                                        indiceCategoriaPedido)
                               ],
                             ),
                           ),

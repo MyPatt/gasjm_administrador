@@ -355,23 +355,7 @@ class HomeController extends GetxController {
     cargandoParaDia.value = false;
   }
 
-  /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
 
-  pantallaSeleccionadaOnTap(int index, BuildContext context) {
-    if (index == 0) {
-      _cargarPagina(Get.offNamed(AppRoutes.inicio));
-      return;
-    }
-    if (index == 1) {
-      showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          context: context,
-          builder: (context) {
-            return const ModalOperaciones();
-          });
-      return;
-    }
-  }
   //Metodo para ir a una ruta
 
   _cargarPagina(Future? funcionRuta) async {

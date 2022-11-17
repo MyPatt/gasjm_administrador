@@ -75,7 +75,7 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-      name: AppRoutes.inicio,
+      name: AppRoutes.inicioAdministrador,
       page: () => const HomePage(),
       binding: HomeBinding(),
       transition: Transition.fade,

@@ -124,7 +124,9 @@ class PedidosController extends GetxController {
   void rechazarPedidoEnEspera(String idPedido) async {
     try {
       await _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido, estadoPedido: "estado5",numeroEstadoPedido: 'estadoPedido1');
+          idPedido: idPedido,
+          estadoPedido: "estado5",
+          numeroEstadoPedido: 'estadoPedido1');
 
       cargarListaPedidosEnEspera();
     } on FirebaseException {
@@ -141,7 +143,9 @@ class PedidosController extends GetxController {
   aceptarPedidoEnEspera(String idPedido) async {
     try {
       _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido, estadoPedido: "estado2",numeroEstadoPedido: 'estadoPedido1');
+          idPedido: idPedido,
+          estadoPedido: "estado2",
+          numeroEstadoPedido: 'estadoPedido1');
 
       cargarListaPedidosEnEspera();
       cargarListaPedidosAceptados();
@@ -283,7 +287,9 @@ class PedidosController extends GetxController {
       [void showGetSnackbar]) async {
     try {
       await _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido, estadoPedido: estado,numeroEstadoPedido: 'estadoPedido3');
+          idPedido: idPedido,
+          estadoPedido: estado,
+          numeroEstadoPedido: 'estadoPedido3');
 
       cargarListaPedidosAceptados();
 
@@ -338,15 +344,13 @@ class PedidosController extends GetxController {
     try {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.ir);
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   }
 
   _cargarExplorarPage() async {
     try {
       await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.inicio);
+      Get.offNamed(AppRoutes.inicioAdministrador);
     } catch (e) {}
   }
 }

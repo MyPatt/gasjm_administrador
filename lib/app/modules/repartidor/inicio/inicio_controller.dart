@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
+import 'package:gasjm/app/data/repository/persona_repository.dart'; 
 import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
@@ -85,36 +84,6 @@ class InicioController extends GetxController {
 
     final cedulaUsuarioActual = prefs.getString("cedula_usuario");
     _marcadorRepartidorId = MarkerId(cedulaUsuarioActual.toString());
-  }
-
-  /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
-
-  pantallaSeleccionadaOnTap(int index) {
-    if (index == 0) {
-      return;
-    }
-    if (index == 1) {
-      _cargarIrPage();
-      return;
-    }
-    if (index == 2) {
-      _cargarPedidosPage();
-      return;
-    }
-  }
-
-  _cargarIrPage() async {
-    try {
-      await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.ir);
-    } catch (e) {}
-  }
-
-  _cargarPedidosPage() async {
-    try {
-      await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.pedidos);
-    } catch (e) {}
   }
 
   /*METODOS  PARA MAPA EXPLORAR*/

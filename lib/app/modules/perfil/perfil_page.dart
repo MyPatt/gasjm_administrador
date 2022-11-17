@@ -21,14 +21,14 @@ class PerfilPage extends StatelessWidget {
               bottom: Radius.circular(10),
             ),
           ),
-           backgroundColor: AppTheme.blueBackground,
+          backgroundColor: AppTheme.blueBackground,
           leading: BackButton(
             //color: AppTheme.blueDark,
             onPressed: () {
-              Get.offNamed(AppRoutes.inicio);
+              Get.offNamed(AppRoutes.inicioAdministrador);
             },
           ),
-         
+
           // actions: const [MenuAppBar(
 
           title: const Text('Mi cuenta'),

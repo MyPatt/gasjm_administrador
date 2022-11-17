@@ -71,8 +71,10 @@ class IrController extends GetxController {
 
 /*METODO PARA CARGAR DATOS DE INICIO */
   Future<void> _cargarFotoPerfil() async {
-    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
+    imagenUsuario.value =
+        await _personaRepository.getImagenUsuarioActual() ?? '';
   }
+
   void _cargarDatosIniciales() {
     _getUsuarioActual();
     _getLocalizacionActual();
@@ -106,7 +108,7 @@ class IrController extends GetxController {
   _cargarExplorarPage() async {
     try {
       await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.inicio);
+      Get.offNamed(AppRoutes.inicioAdministrador);
     } catch (e) {}
   }
 

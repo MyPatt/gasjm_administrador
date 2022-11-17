@@ -38,11 +38,11 @@ class MenuLateral extends StatelessWidget {
                   color: AppTheme.blueDark, fontWeight: FontWeight.w500),
             ),
           ),
-          const Align(
+          Align(
             alignment: Alignment.center,
             child: Text(
-              'Administrador',
-              style: TextStyle(color: Colors.black38),
+              modo == 'Modo administrador' ? 'Repartidor' : 'Administrador',
+              style: const TextStyle(color: Colors.black38),
             ),
           ),
           const SizedBox(
@@ -91,10 +91,10 @@ class MenuLateral extends StatelessWidget {
               await Future.delayed(const Duration(seconds: 2));
 
               if (modo == 'Modo administrador') {
-                Get.offNamed(AppRoutes.inicio);
+                Get.offAllNamed(AppRoutes.inicioAdministrador);
                 return;
               } else {
-                Get.offNamed(AppRoutes.inicioRepartidor);
+                Get.offAllNamed(AppRoutes.inicioRepartidor);
               }
             },
           ),

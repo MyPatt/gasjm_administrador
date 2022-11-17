@@ -4,15 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/global_widgets/text_description.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart'; 
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';
-import 'package:gasjm/app/modules/operacion_pedido/widgets/enespera_page.dart';
-import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:gasjm/app/modules/historial/pedido_controller.dart';
+import 'package:get/get.dart'; 
 
 class DetallePedido extends StatelessWidget {
   DetallePedido({Key? key, required this.e}) : super(key: key);
@@ -303,7 +298,7 @@ class DetallePedido extends StatelessWidget {
                       thickness: 1.0,
                     ),
                     SizedBox(height: 10.0),
-                    PedidosEnEsperaPage(idPedido: e.idPedido)
+                  ///  PedidosEnEsperaPage(idPedido: e.idPedido)
                   ]),
                 ),
                 /*  const Spacer(),

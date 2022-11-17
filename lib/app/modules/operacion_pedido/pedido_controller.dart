@@ -1,17 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/mensajes.dart';
-import 'package:gasjm/app/data/models/categoria_model.dart';
+
+import 'package:gasjm/app/data/controllers/pedido_controller.dart'; 
 import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
+ 
 
-class OperacionPedidoController extends GetxController {
-  final _pedidosRepository = Get.find<PedidoRepository>();
+class OperacionPedidoController extends GetxController { 
   final _personaRepository = Get.find<PersonaRepository>();
 //
   RxString imagenUsuario = ''.obs;
@@ -40,16 +36,19 @@ class OperacionPedidoController extends GetxController {
   RxBool activeStep2 = false.obs;
 
   ///
+  final PedidoController controladorDePedidos = Get.put(PedidoController());
+
+  ///
   @override
   void onInit() {
     Future.wait([
       _cargarFotoPerfil(),
     ]);
 
-    cargarListaPedidos(0);
-    cargarListaPedidos(1);
-    cargarListaPedidos(2);
-    cargarListaPedidos(3);
+    controladorDePedidos.cargarListaPedidos(0);
+    controladorDePedidos.cargarListaPedidos(1);
+    controladorDePedidos.cargarListaPedidos(2);
+    controladorDePedidos.cargarListaPedidos(3);
 
     super.onInit();
   }
@@ -81,151 +80,6 @@ class OperacionPedidoController extends GetxController {
       return lugar.street.toString();
     } else {
       return '${lugar.street}, ${lugar.subLocality}';
-    }
-  }
-
-  //
-  String formatoFecha(Timestamp fecha) {
-    String formatoFecha = DateFormat.yMd("es").format(fecha.toDate());
-    String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
-    return "$formatoHora $formatoFecha";
-  }
-
-//**** */
-  final cargandoPedidos = true.obs;
-
-  Future<void> cargarListaPedidos(int id) async {
-    try {
-      cargandoPedidos.value = true;
-      final lista = (await _pedidosRepository.getPedidosPorField(
-              field: 'idEstadoPedido', dato: categoriasPedidos[id].path)) ??
-          [];
-
-      //
-      for (var i = 0; i < lista.length; i++) {
-        final nombre = await _getNombresCliente(lista[i].idCliente);
-        final direccion = await _getDireccionXLatLng(
-            LatLng(lista[i].direccion.latitud, lista[i].direccion.longitud));
-        lista[i].nombreUsuario = nombre;
-        lista[i].direccionUsuario = direccion;
-      }
-
-//
-
-      switch (id) {
-        case 0:
-          _listaPedidosEnEspera.value = lista;
-          break;
-        case 1:
-          _listaPedidosAceptados.value = lista;
-          break;
-        case 2:
-          _listaPedidosFinalizados.value = lista;
-          break;
-        case 3:
-          _listaPedidosCancelados.value = lista;
-          break;
-        default:
-      }
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: 'Alerta',
-          mensaje:
-              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-    cargandoPedidos.value = false;
-  }
-
-  //Metodo para actualizar el estado de un pedido
-  Future<void> actualizarEstadoPedido(String idPedido, int estado) async {
-    ///en estadoPedido1 se guarda info   de si se acepta o rechaza el pedido en espera
-    ///en estadoPedido3 se guarda info   de si se cancela o finaliza el pedidoaceptado
-    //Por defecto estado5 rechazar
-    //La categorias de los pedidos consta solo 4 de categoriasPedidos, el 5 es rechazados estado5 su indice 4 no consta en CategoriaPedidos
-
-    var estadoAux = "estado5";
-    //Por defecto numerodeestado2  para los pedidos en camino
-
-    var numeroEstadoPedido = 'estadoPedido2';
-    try {
-      if (estado != 4) {
-        estadoAux = categoriasPedidos[estado].path;
-      }
-      if (estado == 1 || estado == 4) {
-        numeroEstadoPedido = 'estadoPedido1';
-      }
-      if (estado == 2 || estado == 3) {
-        numeroEstadoPedido = 'estadoPedido3';
-      }
-      await _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido,
-          estadoPedido: estadoAux,
-          numeroEstadoPedido: numeroEstadoPedido);
-      //Variable para mostra el mensaje
-      String titulo = "Mensaje";
-      String mensaje =
-          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.";
-      IconData icono = Icons.error_outline_outlined;
-      //Evaluar que estado se actualizo
-
-      switch (estado) {
-        case 0:
-          mensaje = "Su pedido se realizo con éxito";
-          icono = Icons.waving_hand_outlined;
-          cargarListaPedidos(0);
-
-          break;
-        case 1:
-          mensaje = "Pedido aceptado con éxito.";
-
-          icono = Icons.check_outlined;
-          cargarListaPedidos(1);
-          cargarListaPedidos(0);
-//
-          currentStep.value = currentStep.value + 1;
-          activeStep1.value = false;
-          activeStep2.value = true;
-
-          break;
-        case 2:
-          mensaje = "Pedido finalizado con éxito.";
-          icono = Icons.check_outlined;
-          cargarListaPedidos(2);
-          cargarListaPedidos(1);
-          break;
-        case 3:
-          mensaje = "Pedido cancelado.";
-          icono = Icons.message_outlined;
-          cargarListaPedidos(3);
-          cargarListaPedidos(1);
-          break;
-        case 4:
-          mensaje = "Pedido rechazado.";
-          icono = Icons.message_outlined;
-          //cargarListaPedidos(4);
-          cargarListaPedidos(0);
-          break;
-      }
-      Mensajes.showGetSnackbar(
-          titulo: titulo,
-          mensaje: mensaje,
-          icono: Icon(
-            icono,
-            color: Colors.white,
-          ));
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: 'Alerta',
-          mensaje:
-              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
     }
   }
 }

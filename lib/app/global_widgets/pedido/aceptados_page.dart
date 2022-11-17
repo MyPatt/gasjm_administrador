@@ -44,6 +44,7 @@ class PedidosAceptadosPage extends StatelessWidget {
         return ModalAlert(
             titulo: 'Cancelar pedido',
             mensaje: '¿Está seguro de cancelar el pedido?',
+            icono: Icons.error_outline,
             onPressed: () => _onCancelarPedidoAceptado(context, id));
       },
     );

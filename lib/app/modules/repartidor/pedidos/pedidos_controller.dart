@@ -1,19 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-
-import 'package:gasjm/app/core/utils/mensajes.dart';
+import 'package:gasjm/app/data/controllers/pedido_controller.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:gasjm/app/data/repository/persona_repository.dart'; 
+import 'package:get/get.dart'; 
 
 class PedidosController extends GetxController {
   /* VARIABLES*/
-  final _pedidosRepository = Get.find<PedidoRepository>();
+
   final _personaRepository = Get.find<PersonaRepository>();
 
   final cargandoPedidosEnEspera = true.obs;
@@ -58,23 +51,29 @@ class PedidosController extends GetxController {
   RxString valorSeleccionadoItemDeFiltro = 'Todos'.obs;
   RxString valorSeleccionadoItemDeFiltroAceptados = 'Todos'.obs;
 
-//
+//Varaible para imagen del usuario observable
   RxString imagenUsuario = ''.obs;
   //
+    ///
+  final PedidoController controladorDePedidos = Get.put(PedidoController());
+
+  ///
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
     super.onInit();
 
     Future.wait([_cargarFotoPerfil()]);
-    cargarListaPedidosEnEspera();
+   /* cargarListaPedidosEnEspera();
     valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =
         dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeFiltro.value = dropdownItemsDeFiltro[0];
-    valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];
-    cargarListaPedidosAceptados();
-    super.onInit();
+    valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];*/
+    //cargarListaPedidosAceptados();
+
+    controladorDePedidos. cargarListaPedidos(0);
+   controladorDePedidos.  cargarListaPedidos(1);
   }
 
   /* METODOS PARA PEDIDOS EN ESPERA */
@@ -82,7 +81,7 @@ class PedidosController extends GetxController {
     imagenUsuario.value =
         await _personaRepository.getImagenUsuarioActual() ?? '';
   }
-
+/*
   void cargarListaPedidosEnEspera() async {
     try {
       cargandoPedidosEnEspera.value = true;
@@ -114,243 +113,10 @@ class PedidosController extends GetxController {
     }
     cargandoPedidosEnEspera.value = false;
   }
-
-  Future<String> _getNombresCliente(String cedula) async {
+*/
+  /*Future<String> _getNombresCliente(String cedula) async {
     final nombre =
         await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
     return nombre ?? 'Usuario';
-  }
-
-  void rechazarPedidoEnEspera(String idPedido) async {
-    try {
-      await _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido,
-          estadoPedido: "estado5",
-          numeroEstadoPedido: 'estadoPedido1');
-
-      cargarListaPedidosEnEspera();
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-  }
-
-  aceptarPedidoEnEspera(String idPedido) async {
-    try {
-      _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido,
-          estadoPedido: "estado2",
-          numeroEstadoPedido: 'estadoPedido1');
-
-      cargarListaPedidosEnEspera();
-      cargarListaPedidosAceptados();
-
-      Mensajes.showGetSnackbar(
-          titulo: "Mensaje",
-          mensaje: "Pedido aceptado con éxito,",
-          icono: const Icon(
-            Icons.check_circle_outline_outlined,
-            color: Colors.white,
-          ),
-          duracion: const Duration(seconds: 1));
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ),
-          duracion: const Duration(seconds: 2));
-    }
-  }
-
-  void cargarListaFiltradaDePedidosEnEspera() {
-    final filtroDia = valorSeleccionadoItemDeFiltro.value;
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamiento.value;
-    _cargarListaFiltradaDePedidos(_listaPedidosEnEspera,
-        _listaFiltradaPedidosEnEspera, filtroDia, ordenarCategoria);
-  }
-
-  void cargarListaFiltradaDePedidosAceptados() {
-    final filtroDia = valorSeleccionadoItemDeFiltroAceptados.value;
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
-    _cargarListaFiltradaDePedidos(_listaPedidosAceptados,
-        _listaFiltradaPedidosAceptados, filtroDia, ordenarCategoria);
-  }
-
-  void _cargarListaFiltradaDePedidos(
-      RxList<PedidoModel> listaPorFiltrar,
-      RxList<PedidoModel> litaFiltrada,
-      String filtroDia,
-      String ordenarCategoria) {
-    if (filtroDia == "Todos") {
-      litaFiltrada.value = listaPorFiltrar.value;
-      ordenarListaFiltradaDePedidos(litaFiltrada.value, ordenarCategoria);
-
-      return;
-    }
-    List<PedidoModel> resultado = [];
-
-    resultado = listaPorFiltrar
-        .where((pedido) => pedido.diaEntregaPedido == filtroDia)
-        .toList();
-
-    litaFiltrada.value = resultado;
-    ordenarListaFiltradaDePedidos(litaFiltrada.value, ordenarCategoria);
-  }
-
-  ordenarListaFiltradaDePedidosEnEspera() {
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamiento.value;
-
-    ordenarListaFiltradaDePedidos(
-        _listaFiltradaPedidosEnEspera, ordenarCategoria);
-  }
-
-  ordenarListaFiltradaDePedidosAceptados() {
-    final ordenarCategoria = valorSeleccionadoItemDeOrdenamientoAceptados.value;
-    ordenarListaFiltradaDePedidos(
-        _listaFiltradaPedidosAceptados, ordenarCategoria);
-  }
-
-  void ordenarListaFiltradaDePedidos(
-      List<PedidoModel> listaFiltrada, String ordenarCategoria) {
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[0]) {
-      listaFiltrada
-          .sort((a, b) => a.fechaHoraPedido.compareTo(b.fechaHoraPedido));
-
-      return;
-    }
-
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[1]) {
-      listaFiltrada
-          .sort((a, b) => a.cantidadPedido.compareTo(b.cantidadPedido));
-
-      return;
-    }
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[2]) {
-      listaFiltrada
-          .sort((a, b) => a.tiempoEntrega!.compareTo(b.tiempoEntrega ?? 0));
-
-      return;
-    }
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[3]) {
-      listaFiltrada.sort((a, b) =>
-          a.direccionUsuario!.compareTo(b.direccionUsuario.toString()));
-      return;
-    }
-    if (ordenarCategoria == dropdownItemsDeOrdenamiento[4]) {
-      listaFiltrada.sort(
-          (a, b) => a.nombreUsuario!.compareTo(b.nombreUsuario.toString()));
-      return;
-    }
-  }
-  /* METODOS PARA PEDIDOS ACEPTADOS */
-
-  void cargarListaPedidosAceptados() async {
-    try {
-      cargandoPedidosAceptados.value = true;
-      final lista = (await _pedidosRepository.getPedidosPorField(
-              field: 'idEstadoPedido', dato: 'estado2')) ??
-          [];
-
-      //
-      for (var i = 0; i < lista.length; i++) {
-        final nombre = await _getNombresCliente(lista[i].idCliente);
-        final direccion = await _getDireccionXLatLng(
-            LatLng(lista[i].direccion.latitud, lista[i].direccion.longitud));
-        lista[i].nombreUsuario = nombre;
-        lista[i].direccionUsuario = direccion;
-      }
-
-      _listaPedidosAceptados.value = lista;
-      // _listaFiltradaPedidosAceptados.value = _listaPedidosAceptados.value;
-      cargarListaFiltradaDePedidosAceptados();
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-    cargandoPedidosAceptados.value = false;
-  }
-
-  void actualizarEstadoPedidoAceptado(String idPedido, String estado,
-      [void showGetSnackbar]) async {
-    try {
-      await _pedidosRepository.updateEstadoPedido(
-          idPedido: idPedido,
-          estadoPedido: estado,
-          numeroEstadoPedido: 'estadoPedido3');
-
-      cargarListaPedidosAceptados();
-
-      showGetSnackbar;
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-  }
-
-  String _getDireccion(Placemark lugar) {
-    //
-    if (lugar.subLocality?.isEmpty == true) {
-      return lugar.street.toString();
-    } else {
-      return '${lugar.street}, ${lugar.subLocality}';
-    }
-  }
-
-  Future<String> _getDireccionXLatLng(LatLng posicion) async {
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
-    Placemark lugar = placemark[0];
-
-//
-    return _getDireccion(lugar);
-  }
-
-  /* MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
-
-//Metodo que escucha el onTap de las pantallas
-  pantallaSeleccionadaOnTap(int index, BuildContext context) {
-    if (index == 2) {
-      return;
-    }
-    if (index == 0) {
-      _cargarExplorarPage();
-      return;
-    }
-    if (index == 1) {
-      _cargarIrPage();
-      return;
-    }
-  }
-
-  _cargarIrPage() async {
-    try {
-      await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.ir);
-    } catch (e) {}
-  }
-
-  _cargarExplorarPage() async {
-    try {
-      await Future.delayed(const Duration(seconds: 1));
-      Get.offNamed(AppRoutes.inicioAdministrador);
-    } catch (e) {}
-  }
+  }*/
 }

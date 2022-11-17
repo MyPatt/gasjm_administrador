@@ -49,8 +49,7 @@ class _TransactionPageState extends State<TransactionPage> {
             bottom: Radius.circular(10),
           ),
         ),
-        backgroundColor: AppTheme.blueBackground,
-        elevation: 0.0,
+        backgroundColor: AppTheme.blueBackground, 
         title: const Text(
           "Historial",
         ),

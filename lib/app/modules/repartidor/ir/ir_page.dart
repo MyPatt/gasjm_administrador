@@ -5,7 +5,7 @@ import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/modules/repartidor/ir/ir_controller.dart';
-import 'package:gasjm/app/modules/repartidor/ir/widgets/navegacion_content.dart';
+import 'package:gasjm/app/modules/repartidor/ir/widgets/ir_mapa.dart';
 import 'package:get/get.dart';
 
 //Pantalla de inicio del cliente
@@ -40,16 +40,10 @@ class IrPage extends StatelessWidget {
             //Body
             body: Stack(children: const [
               //Widget Mapa
-              Positioned.fill(
-                  // ignore: sized_box_for_whitespace
-                  child: IrRepartidorPage()
-                  /* Obx(() => _.listaPantallasBottomNavigation[
-                    _.indexPantallaSeleccionada.value]['screen']),*/
-
-                  //
-                  )
+              Positioned.fill(child: IrMapa())
             ]),
             //Navegacion del repartidor
-            bottomNavigationBar: const BottomNavigationRepartidor(indiceActual: 1)));
+            bottomNavigationBar:
+                const BottomNavigationRepartidor(indiceActual: 1)));
   }
 }

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ExplorarMapa extends StatelessWidget {
-  const   ExplorarMapa({Key? key}) : super(key: key);
+  const ExplorarMapa({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,11 @@ class ExplorarMapa extends StatelessWidget {
               () => _.posicionInicialRepartidor.value ==
                       const LatLng(-0.2053476, -79.4894387)
                   ? const Center(child: CircularProgress())
-                  :
-                   GoogleMap(
+                  : GoogleMap(
                       markers: _.marcadoresParaExplorar,
                       onMapCreated: _.onMapaCreated,
                       initialCameraPosition: CameraPosition(
-                          target: _.posicionInicialRepartidor.value, zoom: 15),
+                          target: _.posicionInicialRepartidor.value, zoom: 14),
                       myLocationButtonEnabled: true,
                       compassEnabled: true,
                       zoomControlsEnabled: false,

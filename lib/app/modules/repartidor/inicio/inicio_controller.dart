@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart'; 
+import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
@@ -65,8 +65,10 @@ class InicioController extends GetxController {
 
 /*METODO PARA CARGAR DATOS DE INICIO */
   Future<void> _cargarFotoPerfil() async {
-    imagenUsuario.value= await _personaRepository.getImagenUsuarioActual()??''; 
+    imagenUsuario.value =
+        await _personaRepository.getImagenUsuarioActual() ?? '';
   }
+
   void _cargarDatosIniciales() {
     //
     _gpsEnabled = true;
@@ -100,6 +102,7 @@ class InicioController extends GetxController {
 
 //Cargar los pedidos en espera y aceptados
   Future<void> _cargarMarcadoresPedidos() async {
+    print("eeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     //Icono para el marcador pedido en espera
     BitmapDescriptor _marcadorPedido = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(),
@@ -160,7 +163,7 @@ class InicioController extends GetxController {
     servicioHbilitado = await Geolocator.isLocationServiceEnabled();
     if (!servicioHbilitado) {
       //si la ubicacion esta deshabilitado tieneactivarse
-    //ya se muestra la ventana de bloc ubicacion  await Geolocator.openLocationSettings();
+      //ya se muestra la ventana de bloc ubicacion  await Geolocator.openLocationSettings();
       return Future.error('Servicio de ubicación deshabilitada.');
     }
     permiso = await Geolocator.checkPermission();

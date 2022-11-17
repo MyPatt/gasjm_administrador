@@ -26,7 +26,7 @@ class ClientePage extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: AppTheme.blueBackground,
                 // actions: const [MenuAppBar()],
-                title: Text("Clientes"),
+                title: const Text("Clientes"),
               ),
               body: Stack(children: [
                 Column(

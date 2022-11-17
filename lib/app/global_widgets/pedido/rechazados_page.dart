@@ -134,15 +134,5 @@ class PedidosRechazadosPage extends StatelessWidget {
     );
   }
 
-  List<DropdownMenuItem<String>> _buildDropdownMenu(List<String> items) {
-    List<DropdownMenuItem<String>> menuItems = [];
-    for (var elemento in items) {
-      menuItems.add(DropdownMenuItem(
-          child: TextDescription(
-            text: elemento,
-          ),
-          value: elemento));
-    }
-    return menuItems;
-  }
+
 }

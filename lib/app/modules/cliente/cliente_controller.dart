@@ -23,7 +23,7 @@ class ClienteController extends GetxController {
   final RxList<PersonaModel> _listaFiltradaClientes = <PersonaModel>[].obs;
   RxList<PersonaModel> get listaFiltradaClientes => _listaFiltradaClientes;
 
-  /** METODOS PROPDIO */
+  /* METODOS PROPDIO */
   @override
   void onInit() {
     // _categoria = Get.arguments as CategoryModel;
@@ -57,7 +57,7 @@ class ClienteController extends GetxController {
       //Cargar la lista filtrada al inicio todos
 //      _listaFiltradaPedidosEnEspera.value = _listaPedidosEnEspera;
       _cargarListaFiltradaDeClientes();
-      print(_listaClientes.length);
+      
       //
     } on FirebaseException {
       Mensajes.showGetSnackbar(

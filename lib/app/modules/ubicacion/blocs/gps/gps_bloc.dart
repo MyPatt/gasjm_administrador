@@ -68,7 +68,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       case PermissionStatus.denied:
         add(GpsAndPermissionEvent(
             isGpsEnabled: state.isGpsEnabled, isGpsPermissionGranted: true));
-        openAppSettings();
+      openAppSettings();
         break;
       case PermissionStatus.granted:
         //ProgressDialog.show(context, '');

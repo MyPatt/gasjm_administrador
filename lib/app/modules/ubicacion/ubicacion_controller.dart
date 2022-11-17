@@ -20,19 +20,15 @@ class UbicacionController extends GetxController {
  
 
   cargarIdentificacion() async {
-    try {
+ 
       await Future.delayed(const Duration(seconds: 1));
       Get.toNamed(AppRoutes.identificacion);
-    } catch (e) {
-      print(e);
-    }
+     
   }  cargarUbicacion() async {
-    try {
+     
       await Future.delayed(const Duration(seconds: 1));
       Get.toNamed(AppRoutes.ubicacion);
-    } catch (e) {
-      print(e);
-    }
+  
   }
 /*
   void _updateStatus(PermissionStatus status) {

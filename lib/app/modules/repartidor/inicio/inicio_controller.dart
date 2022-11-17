@@ -160,7 +160,7 @@ class InicioController extends GetxController {
     servicioHbilitado = await Geolocator.isLocationServiceEnabled();
     if (!servicioHbilitado) {
       //si la ubicacion esta deshabilitado tieneactivarse
-      await Geolocator.openLocationSettings();
+    //ya se muestra la ventana de bloc ubicacion  await Geolocator.openLocationSettings();
       return Future.error('Servicio de ubicación deshabilitada.');
     }
     permiso = await Geolocator.checkPermission();

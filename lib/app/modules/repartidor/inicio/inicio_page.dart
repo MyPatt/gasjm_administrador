@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
+import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
-import 'package:gasjm/app/modules/repartidor/inicio/inicio_controller.dart'; 
+import 'package:gasjm/app/modules/repartidor/inicio/inicio_controller.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
+import 'package:gasjm/app/modules/repartidor/inicio/widgets/explorar_mapa.dart';
 import 'package:gasjm/app/modules/repartidor/inicio/widgets/navegacion_content.dart';
 import 'package:get/get.dart';
 
@@ -38,15 +40,15 @@ class InicioPage extends StatelessWidget {
               title: const Text('GasJ&M'),
             ),
             //Body
-            body: Stack(children: const [
+            body: Stack(children:const<Widget> [
               //Widget Mapa
               Positioned.fill(
+                  child:  ExplorarMapa()
                
-                  child: ExplorarRepartidorPage()
-             
-                  )
+                      )
             ]),
             //Navegacion del repartidor
-            bottomNavigationBar: const BottomNavigationRepartidor(indiceActual: 0)));
+            bottomNavigationBar:
+                const BottomNavigationRepartidor(indiceActual: 0)));
   }
 }

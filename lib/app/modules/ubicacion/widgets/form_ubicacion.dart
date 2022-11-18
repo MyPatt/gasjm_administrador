@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
@@ -43,29 +44,29 @@ class FormUbicacion extends StatelessWidget {
                 SizedBox(
                     height: Responsive.getScreenSize(context).height * .05),
                 Obx(() {
-                  final isSaving = _.cargando.value;
+                  final guardado = _.cargando.value;
                   return Stack(
                     alignment: Alignment.center,
                     children: [
-                      PrimaryButton(
-                        texto: "Permitir",
-                        onPressed: () async {
-                          try {
-                            _.cargando.value = true;
+                      Visibility(
+                        visible: !_.cargando.value,
+                        child: PrimaryButton(
+                          texto: "Permitir",
+                          onPressed: () async {
+                            try {
+                              _.cargando.value = true;
 
-                            final gpsBloc = BlocProvider.of<GpsBloc>(context);
-                            gpsBloc.askGpsAccess(context);
-                            await Future.delayed(const Duration(seconds: 1));
-                          } catch (e) {
-                            // print(e);
-                          }
-                          _.cargando.value = false;
-                        },
-                      ),
-                      if (isSaving)
-                        const CircularProgressIndicator(
-                          backgroundColor: Colors.white,
+                              final gpsBloc = BlocProvider.of<GpsBloc>(context);
+                              gpsBloc.askGpsAccess(context);
+                              await Future.delayed(const Duration(seconds: 1));
+                            } catch (e) {
+                              // print(e);
+                            }
+                            _.cargando.value = false;
+                          },
                         ),
+                      ),
+                      if (guardado) const CircularProgress()
                     ],
                   );
                 }),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
+import 'package:gasjm/app/global_widgets/alert_rechazar.dart';
 import 'package:gasjm/app/global_widgets/dialogs/progress_dialog.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 
@@ -74,13 +75,27 @@ class MenuLateral extends StatelessWidget {
           _buildDrawerItem(
             icon: Icons.exit_to_app_outlined,
             text: 'Cerrar sesión',
-            onTap: () async {
-              ProgressDialog.show(context, "Cerrando sesión");
+         onTap: () async {
+              return showDialog<void>(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return ModalAlert(
+                    onPressed: () async {
+                      ProgressDialog.show(context, "Cerrando sesión");
 
-              Get.find<AutenticacionController>().cerrarSesion();
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              await prefs.remove("cedula_usuario");
-              await prefs.clear();
+                      Get.find<AutenticacionController>().cerrarSesion();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.remove("cedula_usuario");
+                      await prefs.clear();
+                    },
+                    titulo: 'Cerrar sesión',
+                    mensaje: '¿Está seguro de cerrar sesión en la aplicación?',
+                    icono: Icons.exit_to_app_outlined,
+                  );
+                },
+              );
             },
           ),
           SizedBox(height: MediaQuery.of(context).size.height * .19),

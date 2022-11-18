@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 
@@ -71,16 +72,17 @@ class FormIdentificacion extends StatelessWidget {
                     return Stack(
                       alignment: Alignment.center,
                       children: [
-                        PrimaryButton(
-                            texto: "Siguiente",
-                            onPressed: () {
-                              if (_.formKey.currentState?.validate() == true) {
-                                _.cargarRegistroOLogin();
-                              }
-                            }),
+                         Visibility(
+                          visible: !_.cargando.value, child:PrimaryButton(
+                              texto: "Siguiente",
+                              onPressed: () {
+                                if (_.formKey.currentState?.validate() == true) {
+                                  _.cargarRegistroOLogin();
+                                }
+                              }),
+                        ),
                         if (estadoProceso)
-                          const CircularProgressIndicator(
-                              backgroundColor: Colors.white),
+                          const CircularProgress(),
                       ],
                     );
                   }),

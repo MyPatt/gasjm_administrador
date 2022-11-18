@@ -32,8 +32,7 @@ class ModalAlert extends StatelessWidget {
         child: ListBody(
           children: <Widget>[
             CircleAvatar(
-             // backgroundColor: AppTheme.light,
-                backgroundColor: Colors.white,
+          backgroundColor: AppTheme.light,
 
               child: CircleAvatar(
                 backgroundColor: Colors.white,

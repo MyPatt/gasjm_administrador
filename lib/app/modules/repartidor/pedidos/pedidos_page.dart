@@ -4,7 +4,8 @@ import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart'; 
+import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
+import 'package:gasjm/app/modules/repartidor/pedidos/widgets/contenido_historial.dart'; 
 import 'package:get/get.dart';
 
 class PedidosPage extends StatelessWidget {
@@ -36,7 +37,7 @@ class PedidosPage extends StatelessWidget {
               title: const Text("Pedidos"),
             ),
             body: DefaultTabController(
-              length: 2,
+              length: 3,
               child: Column(
                 children: [
                   Container(
@@ -51,6 +52,7 @@ class PedidosPage extends StatelessWidget {
                         Tab(
                           text: 'Aceptados',
                         ),
+                        Tab(text: "Historial")
                       ],
                     ),
                   ),
@@ -62,6 +64,7 @@ class PedidosPage extends StatelessWidget {
                     ContenidoPedido(
                       indiceCategoriaPedido: 1,
                     ),
+                    const ContenidoHistorial()
                   ]))
                 ],
               ),

@@ -30,7 +30,8 @@ Widget _builOpcionesPedidos(BuildContext context) {
   return Row(
     children: [
       IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)), 
-      IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list_outlined)),
+      IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list_alt)),
+      /// camionIconButton(onPressed: () {}, icon: const Icon(Icons.local_shipping),
       const SizedBox(
         width: 10,
       ),

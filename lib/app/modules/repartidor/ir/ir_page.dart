@@ -30,11 +30,11 @@ class IrPage extends StatelessWidget {
                 ),
               ),
               backgroundColor: AppTheme.blueBackground,
-              actions: const [
+              /* actions: const [
                 MenuAppBar(
-                  indiceMenu: 1,
+                  indiceMenu: 0,
                 )
-              ],
+              ],*/
               title: const Text('GasJ&M'),
             ),
             //Body

@@ -38,12 +38,11 @@ class DetallePedido extends StatelessWidget {
         bottom: false,
         child: SingleChildScrollView(
           child: Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: SizedBox(
               height: Responsive.hp(context) * 0.9,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 25),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 25),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),

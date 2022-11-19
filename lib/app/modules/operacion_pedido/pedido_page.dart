@@ -60,17 +60,20 @@ class OperacionPedidoPage extends StatelessWidget {
                   ),
                   Expanded(
                       child: TabBarView(children: [
+                        //modo
+                         // 0 administrador 
+    //1 repartidor
                     ContenidoPedido(
-                      indiceCategoriaPedido: 0,
+                      indiceCategoriaPedido: 0, modo: 0,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 1,
+                      indiceCategoriaPedido: 1,modo: 0,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 2,
+                      indiceCategoriaPedido: 2,modo: 0,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 3,
+                      indiceCategoriaPedido: 3,modo: 0,
                     ),
                   ]))
                 ],

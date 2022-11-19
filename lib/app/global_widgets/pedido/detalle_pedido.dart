@@ -11,10 +11,11 @@ import 'package:get/get.dart';
 
 class DetallePedido extends StatelessWidget {
   const DetallePedido(
-      {Key? key, required this.e, required this.indiceCategoriaPedido})
+      {Key? key, required this.e, required this.indiceCategoriaPedido, required this.modo})
       : super(key: key);
   final PedidoModel e;
   final int indiceCategoriaPedido;
+  final int modo;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +118,10 @@ class DetallePedido extends StatelessWidget {
 
                         //Tipo de categoria
                         OpcionesPedido(
-                            e: e, indiceCategoriaPedido: indiceCategoriaPedido)
+                          e: e,
+                          indiceCategoriaPedido: indiceCategoriaPedido,
+                          modo: modo,
+                        )
                       ]),
                 ),
               ),

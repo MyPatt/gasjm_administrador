@@ -1,7 +1,7 @@
 import 'package:gasjm/app/data/controllers/pedido_controller.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart'; 
-import 'package:gasjm/app/data/repository/persona_repository.dart'; 
-import 'package:get/get.dart'; 
+import 'package:gasjm/app/data/models/pedido_model.dart';
+import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:get/get.dart';
 
 class PedidosController extends GetxController {
   /* VARIABLES*/
@@ -53,7 +53,7 @@ class PedidosController extends GetxController {
 //Varaible para imagen del usuario observable
   RxString imagenUsuario = ''.obs;
   //
-    ///
+  ///
   final PedidoController controladorDePedidos = Get.put(PedidoController());
 
   ///
@@ -63,7 +63,7 @@ class PedidosController extends GetxController {
     super.onInit();
 
     Future.wait([_cargarFotoPerfil()]);
-   /* cargarListaPedidosEnEspera();
+    /* cargarListaPedidosEnEspera();
     valorSeleccionadoItemDeOrdenamiento.value = dropdownItemsDeOrdenamiento[0];
     valorSeleccionadoItemDeOrdenamientoAceptados.value =
         dropdownItemsDeOrdenamiento[0];
@@ -71,8 +71,8 @@ class PedidosController extends GetxController {
     valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];*/
     //cargarListaPedidosAceptados();
 
-    controladorDePedidos. cargarListaPedidos(0);
-   controladorDePedidos.  cargarListaPedidos(1);
+    controladorDePedidos.cargarListaPedidosParaRepartidor(0);
+    controladorDePedidos.cargarListaPedidosParaRepartidor(1);
   }
 
   /* METODOS PARA PEDIDOS EN ESPERA */

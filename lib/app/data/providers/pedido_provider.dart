@@ -22,7 +22,7 @@ class PedidoProvider {
     await _firestoreInstance
         .collection('pedido')
         .doc(idPedido)
-        .update({"idEstadoPedido": estadoPedido,
+        .update({"idEstadoPedido": estadoPedido,"idRepartidor":usuario!.uid,
         
         numeroEstadoPedido:EstadoPedido(idEstado: estadoPedido  , fechaHoraEstado: Timestamp.now(), idPersona: usuario!.uid).toMap()
  });

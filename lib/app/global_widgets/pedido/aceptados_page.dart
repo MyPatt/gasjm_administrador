@@ -3,14 +3,14 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/controllers/pedido_controller.dart';
 import 'package:gasjm/app/global_widgets/alert_rechazar.dart';
-import 'package:gasjm/app/global_widgets/button_small.dart'; 
+import 'package:gasjm/app/global_widgets/button_small.dart';
 import 'package:get/get.dart';
 
 class PedidosAceptadosPage extends StatelessWidget {
-  PedidosAceptadosPage({Key? key, required this.idPedido}) : super(key: key);
-  final PedidoController controladorDePedidos =
-      Get.put(PedidoController());
+  PedidosAceptadosPage({Key? key, required this.idPedido, required this.modo}) : super(key: key);
+  final PedidoController controladorDePedidos = Get.put(PedidoController());
   final String idPedido;
+  final int modo;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -29,7 +29,7 @@ class PedidosAceptadosPage extends StatelessWidget {
             texto: "Finalizar",
             width: Responsive.getScreenSize(context).width * .4,
             onTap: () =>
-                controladorDePedidos.actualizarEstadoPedido(idPedido, 2),
+                controladorDePedidos.actualizarEstadoPedido(idPedido, 2,modo),
           )
         ],
       ),
@@ -51,7 +51,7 @@ class PedidosAceptadosPage extends StatelessWidget {
   }
 
   _onCancelarPedidoAceptado(BuildContext context, String id) {
-    controladorDePedidos.actualizarEstadoPedido(id, 3);
+    controladorDePedidos.actualizarEstadoPedido(id, 3,modo);
     Navigator.of(context).pop();
   }
 }

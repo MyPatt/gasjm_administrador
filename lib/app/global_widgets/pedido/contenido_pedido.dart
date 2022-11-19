@@ -3,17 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/controllers/pedido_controller.dart';
-import 'package:gasjm/app/global_widgets/pedido/detalle_pedido.dart'; 
-import 'package:gasjm/app/global_widgets/pedido/opciones_pedido.dart'; 
+import 'package:gasjm/app/global_widgets/pedido/detalle_pedido.dart';
+import 'package:gasjm/app/global_widgets/pedido/opciones_pedido.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:get/get.dart';
 
 class ContenidoPedido extends StatelessWidget {
-  ContenidoPedido({Key? key, required this.indiceCategoriaPedido})
+  ContenidoPedido(
+      {Key? key, required this.indiceCategoriaPedido, required this.modo})
       : super(key: key);
   final PedidoController controladorDePedidos = Get.put(PedidoController());
   final int indiceCategoriaPedido;
+  final int modo;
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -53,9 +55,11 @@ class ContenidoPedido extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                     onTap: () => Get.to(DetallePedido(
-                                        e: e,
-                                        indiceCategoriaPedido:
-                                            indiceCategoriaPedido)),
+                                          e: e,
+                                          indiceCategoriaPedido:
+                                              indiceCategoriaPedido,
+                                          modo: modo,
+                                        )),
                                     child: Column(
                                       children: <Widget>[
                                         Row(
@@ -99,9 +103,10 @@ class ContenidoPedido extends StatelessWidget {
                                 const Divider(),
                                 //Tipo de categoria
                                 OpcionesPedido(
-                                    e: e,
-                                    indiceCategoriaPedido:
-                                        indiceCategoriaPedido)
+                                  e: e,
+                                  indiceCategoriaPedido: indiceCategoriaPedido,
+                                  modo: modo,
+                                )
                               ],
                             ),
                           ),
@@ -120,7 +125,17 @@ class ContenidoPedido extends StatelessWidget {
 
   Future<void> _pullRefrescar() async {
     //controladorDePedidos.listaPedidosXCategoria("estado1").value;
-    controladorDePedidos.cargarListaPedidos(indiceCategoriaPedido);
+    // 0 administrador
+    //1 repartidor
+    if (modo == 0) {
+      controladorDePedidos
+          .cargarListaPedidosParaAdministrador(indiceCategoriaPedido);
+    }
+    if (modo == 1) {
+      controladorDePedidos
+          .cargarListaPedidosParaRepartidor(indiceCategoriaPedido);
+    }
+
     await Future.delayed(const Duration(seconds: 2));
   }
 }

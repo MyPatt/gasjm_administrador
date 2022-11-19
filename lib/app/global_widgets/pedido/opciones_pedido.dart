@@ -7,18 +7,18 @@ import 'package:gasjm/app/global_widgets/pedido/rechazados_page.dart';
 
 class OpcionesPedido extends StatelessWidget {
   const OpcionesPedido(
-      {Key? key, required this.e, required this.indiceCategoriaPedido})
+      {Key? key, required this.e, required this.indiceCategoriaPedido, required this.modo})
       : super(key: key);
   final PedidoModel e;
   final int indiceCategoriaPedido;
-
+  final int modo;
   @override
   Widget build(BuildContext context) {
     return indiceCategoriaPedido == 0
-        ? PedidosEnEsperaPage(idPedido: e.idPedido)
+        ? PedidosEnEsperaPage(idPedido: e.idPedido, modo: modo,)
         : indiceCategoriaPedido == 1
             ? PedidosAceptadosPage(
-                idPedido: e.idPedido,
+                idPedido: e.idPedido, modo: modo,
               )
             : indiceCategoriaPedido == 2
                 ? PedidosAFinalizadosPage(idPedido: e.idPedido)

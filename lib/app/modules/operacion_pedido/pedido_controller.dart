@@ -1,11 +1,9 @@
-
-import 'package:gasjm/app/data/controllers/pedido_controller.dart'; 
+import 'package:gasjm/app/data/controllers/pedido_controller.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart'; 
-import 'package:get/get.dart'; 
- 
+import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:get/get.dart';
 
-class OperacionPedidoController extends GetxController { 
+class OperacionPedidoController extends GetxController {
   final _personaRepository = Get.find<PersonaRepository>();
 //
   RxString imagenUsuario = ''.obs;
@@ -43,10 +41,10 @@ class OperacionPedidoController extends GetxController {
       _cargarFotoPerfil(),
     ]);
 
-    controladorDePedidos.cargarListaPedidos(0);
-    controladorDePedidos.cargarListaPedidos(1);
-    controladorDePedidos.cargarListaPedidos(2);
-    controladorDePedidos.cargarListaPedidos(3);
+    controladorDePedidos.cargarListaPedidosParaAdministrador(0);
+    controladorDePedidos.cargarListaPedidosParaAdministrador(1);
+    controladorDePedidos.cargarListaPedidosParaAdministrador(2);
+    controladorDePedidos.cargarListaPedidosParaAdministrador(3);
 
     super.onInit();
   }
@@ -56,5 +54,4 @@ class OperacionPedidoController extends GetxController {
     imagenUsuario.value =
         await _personaRepository.getImagenUsuarioActual() ?? '';
   }
-
 }

@@ -34,7 +34,71 @@ class PedidoController extends GetxController {
 
   final RxList<PedidoModel> _listaPedidosCancelados = <PedidoModel>[].obs;
   RxList<PedidoModel> get listaPedidosCancelados => _listaPedidosCancelados;
-  Future<void> cargarListaPedidos(int id) async {
+
+  //Metodo para cargarLista de los pedidos para el administrador
+  Future<void> cargarListaPedidosParaRepartidor(int id) async {
+    try {
+      cargandoPedidos.value = true;
+      //
+      switch (id) {
+        //en Espera todos los pedidos
+        case 0:
+          final lista = (await _pedidosRepository.getPedidosPorField(
+                  field: 'idEstadoPedido', dato: categoriasPedidos[id].path)) ??
+              [];
+
+          //
+          for (var i = 0; i < lista.length; i++) {
+            final nombre = await _getNombresCliente(lista[i].idCliente);
+            final direccion = await _getDireccionXLatLng(LatLng(
+                lista[i].direccion.latitud, lista[i].direccion.longitud));
+            lista[i].nombreUsuario = nombre;
+            lista[i].direccionUsuario = direccion;
+          }
+
+//
+          _listaPedidosEnEspera.value = lista;
+          break;
+        //aceptados  todos los pedidos del repartidor (usuario actual)
+        //finalizados del dia  todos los pedidos del repartidor (usuario actual)
+       default:
+          var usuario = await _personaRepository.getUsuario();
+          final lista = await _pedidosRepository.getPedidosPorDosQueries(
+                  field1: "idEstadoPedido",
+                  dato1: categoriasPedidos[id].path,
+                  field2: "idRepartidor",
+                  dato2: usuario!.uidPersona!) ??
+              [];
+
+          //
+          for (var i = 0; i < lista.length; i++) {
+            final nombre = await _getNombresCliente(lista[i].idCliente);
+            final direccion = await _getDireccionXLatLng(LatLng(
+                lista[i].direccion.latitud, lista[i].direccion.longitud));
+            lista[i].nombreUsuario = nombre;
+            lista[i].direccionUsuario = direccion;
+          }
+
+//
+          _listaPedidosFinalizados.value = lista;
+          break;
+        //
+      }
+    } on FirebaseException {
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
+    cargandoPedidos.value = false;
+  }
+
+  //Metodo para cargarLista de los pedidos para el administrador
+  Future<void> cargarListaPedidosParaAdministrador(int id) async {
     try {
       cargandoPedidos.value = true;
       final lista = (await _pedidosRepository.getPedidosPorField(
@@ -81,7 +145,8 @@ class PedidoController extends GetxController {
   }
 
   //Metodo para actualizar el estado de un pedido
-  Future<void> actualizarEstadoPedido(String idPedido, int estado) async {
+  Future<void> actualizarEstadoPedido(
+      String idPedido, int estado, int modo) async {
     ///en estadoPedido1 se guarda info   de si se acepta o rechaza el pedido en espera
     ///en estadoPedido3 se guarda info   de si se cancela o finaliza el pedidoaceptado
     //Por defecto estado5 rechazar
@@ -116,35 +181,56 @@ class PedidoController extends GetxController {
         case 0:
           mensaje = "Su pedido se realizo con éxito";
           icono = Icons.waving_hand_outlined;
-          cargarListaPedidos(0);
+          modo == 0
+              ? cargarListaPedidosParaAdministrador(0)
+              : cargarListaPedidosParaRepartidor(0);
 
           break;
         case 1:
           mensaje = "Pedido aceptado con éxito.";
 
           icono = Icons.check_outlined;
-          cargarListaPedidos(1);
-          cargarListaPedidos(0);
-//
+          if (modo == 0) {
+            cargarListaPedidosParaAdministrador(1);
+            cargarListaPedidosParaAdministrador(0);
+          } else {
+            cargarListaPedidosParaRepartidor(1);
+            cargarListaPedidosParaRepartidor(0);
+          }
 
           break;
         case 2:
           mensaje = "Pedido finalizado con éxito.";
           icono = Icons.check_outlined;
-          cargarListaPedidos(2);
-          cargarListaPedidos(1);
+          //
+          if (modo == 0) {
+            cargarListaPedidosParaAdministrador(2);
+            cargarListaPedidosParaAdministrador(1);
+          } else {
+            cargarListaPedidosParaRepartidor(2);
+            cargarListaPedidosParaRepartidor(1);
+          }
           break;
         case 3:
           mensaje = "Pedido cancelado.";
           icono = Icons.message_outlined;
-          cargarListaPedidos(3);
-          cargarListaPedidos(1);
+          if (modo == 0) {
+            cargarListaPedidosParaAdministrador(3);
+            cargarListaPedidosParaAdministrador(1);
+          } else {
+            cargarListaPedidosParaRepartidor(3);
+            cargarListaPedidosParaRepartidor(1);
+          }
           break;
         case 4:
           mensaje = "Pedido rechazado.";
           icono = Icons.message_outlined;
           //cargarListaPedidos(4);
-          cargarListaPedidos(0);
+          if (modo == 0) {
+            cargarListaPedidosParaAdministrador(0);
+          } else {
+            cargarListaPedidosParaRepartidor(0);
+          }
           break;
       }
       Mensajes.showGetSnackbar(
@@ -197,7 +283,4 @@ class PedidoController extends GetxController {
     String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
     return "$formatoHora $formatoFecha";
   }
-
-
-  
 }

@@ -1,11 +1,9 @@
-import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_binding.dart';
-import 'package:gasjm/app/modules/agenda/cliente/agenda_cliente_page.dart';
-import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_binding.dart';
-import 'package:gasjm/app/modules/agenda/cliente/local_widgets/editar/editar_page.dart';
 import 'package:gasjm/app/modules/cliente/cliente_binding.dart';
 import 'package:gasjm/app/modules/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_binding.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_page.dart';
+import 'package:gasjm/app/modules/gasjm/gasjm_binding.dart';
+import 'package:gasjm/app/modules/gasjm/gasjm_page.dart';
 import 'package:gasjm/app/modules/home/home_binding.dart';
 import 'package:gasjm/app/modules/home/home_page.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_binding.dart';
@@ -154,17 +152,11 @@ class AppPages {
         page: () => const PedidosPage(),
         binding: PedidosBinding(),
         transition: Transition.noTransition),
+ 
     GetPage(
-      name: AppRoutes.agenda,
-      page: () => const AgendaClientePage(),
-      binding: AgendaClienteBinding(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
-    GetPage(
-      name: AppRoutes.editaragenda,
-      page: () => const EditarAgendaPage(),
-      binding: EditarPedidoAgendadoBinding(),
+      name: AppRoutes.gasjm,
+      page: () => const GasJMPage(),
+      binding: GasJMBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

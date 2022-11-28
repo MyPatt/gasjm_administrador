@@ -54,12 +54,9 @@ class MenuLateral extends StatelessWidget {
               text: 'Mi cuenta',
               onTap: () => Get.offNamed(AppRoutes.perfil)),
           _buildDrawerItem(
-              icon: Icons.message_outlined,
-              text: 'Mensajes',
-              onTap: () => {
-                    Navigator.pushReplacementNamed(
-                        context, AppRoutes.identificacion)
-                  }),
+              icon: Icons.manage_accounts_outlined,
+              text: 'Gas J&M',
+              onTap: () => Get.offNamed(AppRoutes.gasjm)),
           _buildDrawerItem(
               icon: Icons.settings_outlined,
               text: 'Configuración',
@@ -75,7 +72,7 @@ class MenuLateral extends StatelessWidget {
           _buildDrawerItem(
             icon: Icons.exit_to_app_outlined,
             text: 'Cerrar sesión',
-         onTap: () async {
+            onTap: () async {
               return showDialog<void>(
                 context: context,
                 barrierDismissible: true,

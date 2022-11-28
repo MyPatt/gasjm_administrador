@@ -4,8 +4,7 @@ import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
-import 'package:gasjm/app/modules/historial/contenido_historial.dart'; 
+import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart'; 
 import 'package:get/get.dart';
 
 class PedidosPage extends StatelessWidget {
@@ -46,7 +45,7 @@ class PedidosPage extends StatelessWidget {
                       indicatorColor: AppTheme.blueBackground,
                       labelColor: AppTheme.blueBackground,
                       unselectedLabelColor: AppTheme.light,
-                      // indicator: BoxDecoration(color: Colors.white),
+                      // El repartidor vera todos los pedidos en espera, en camabio  aceptados y finalizados solo por el
                       tabs: [
                         Tab(text: 'En espera'),
                         Tab(
@@ -58,20 +57,24 @@ class PedidosPage extends StatelessWidget {
                   ),
                   Expanded(
                       child: TabBarView(children: [
-                         //se envia el modo para cargar la lista de los pedidos el administrador carga de todos 
-                         //y el repartidor solo los correspondientes y al actualizar se cargan de nuevo la lista
-                         //refactorizado el codigo actualizar para usar por el administrador y repartidor  
-                          // 0 administrador 
-                          //1 repartidor
+                    //se envia el modo para cargar la lista de los pedidos el administrador carga de todos
+                    //y el repartidor solo los correspondientes y al actualizar se cargan de nuevo la lista
+                    //refactorizado el codigo actualizar para usar por el administrador y repartidor
+                    // 0 administrador
+                    //1 repartidor
                     ContenidoPedido(
-                      indiceCategoriaPedido: 0,modo: 1,
+                      indiceCategoriaPedido: 0,
+                      modo: 1,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 1,modo: 1,
-                    ),  ContenidoPedido(
-                      indiceCategoriaPedido: 2,modo: 1,
+                      indiceCategoriaPedido: 1,
+                      modo: 1,
                     ),
-                   // const ContenidoHistorial()
+                    ContenidoPedido(
+                      indiceCategoriaPedido: 2,
+                      modo: 1,
+                    ),
+                    // const ContenidoHistorial()
                   ]))
                 ],
               ),

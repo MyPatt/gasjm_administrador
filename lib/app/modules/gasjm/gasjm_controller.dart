@@ -25,8 +25,6 @@ class GasJMController extends GetxController {
   void onInit() {
     super.onInit();
     //
-    print("""""" """""" "$modo" """""" """""");
-    //
     cargarDatos();
   }
 

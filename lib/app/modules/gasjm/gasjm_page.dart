@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
 import 'package:gasjm/app/modules/gasjm/widgets/contenido_horario.dart';
+import 'package:gasjm/app/modules/gasjm/widgets/contenido_ruta.dart';
 import 'package:get/get.dart';
 
 class GasJMPage extends StatelessWidget {
@@ -26,7 +27,7 @@ class GasJMPage extends StatelessWidget {
                 title: const Text("Gas J&M"),
               ),
               body: DefaultTabController(
-                length: 1,
+                length: 2,
                 child: Column(
                   children: [
                     Container(
@@ -37,7 +38,8 @@ class GasJMPage extends StatelessWidget {
                         unselectedLabelColor: AppTheme.light,
                         // El repartidor vera todos los pedidos en espera, en camabio  aceptados y finalizados solo por el
                         tabs: [
-                          Tab(text: 'Horario'),
+                          Tab(text: 'Horarios'),
+                          Tab(text: 'Rutas'),
                         ],
                       ),
                     ),
@@ -52,8 +54,8 @@ class GasJMPage extends StatelessWidget {
                       indiceCategoriaPedido: 0,
                       modo: 1,
                     ),*/
-                      ContenidoHorario(modo: _.modo)
-                      // const ContenidoHistorial()
+                      ContenidoHorario(modo: _.modo),
+                      ContenidoRuta(modo: _.modo)
                     ]))
                   ],
                 ),

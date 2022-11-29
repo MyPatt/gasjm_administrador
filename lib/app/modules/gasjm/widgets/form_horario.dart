@@ -46,7 +46,15 @@ class FormHorario extends StatelessWidget {
                         .toString(),
                   ),
                 ]),
-            //    const Spacer(),
+                //    const Spacer(),
+                const Spacer(),
+                Column(
+                  children: <Widget>[
+                    TextDescription(
+                        text:
+                            '${horario.aperturaHorario} - ${horario.cierreHorario}'),
+                  ],
+                ),
               ],
             ),
           ),

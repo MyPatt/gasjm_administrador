@@ -23,4 +23,15 @@ class HorarioProvider {
 
     return HorarioModel.fromJson(snapshot.docs.first.data());
   }
+  //Actualizar el horario
+
+  Future<void> updateHorario(
+      {required String uidHorario,
+      required String horaApertura,
+      required String horaCierre}) async {
+    await _firestoreInstance
+        .collection('horario')
+        .doc(uidHorario)
+        .update({"aperturaHorario": horaApertura, "cierreHorario": horaCierre});
+  }
 }

@@ -20,6 +20,7 @@ class ContenidoHorario extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
             color: Colors.white,
           ),
+          alignment: Alignment.center,
           //height: Responsive.hp(context),
           margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
@@ -39,7 +40,7 @@ class ContenidoHorario extends StatelessWidget {
                 ),
                 radius: 56.0,
               ),
-              SizedBox(height: Responsive.getScreenSize(context).height * .05),
+              //    SizedBox(height: Responsive.getScreenSize(context).height * .05),
               Obx(() => Expanded(
                   child: ListView.builder(
                       // scrollDirection: Axis.horizontal,

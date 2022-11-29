@@ -12,4 +12,14 @@ class HorarioRepositoryImpl extends HorarioRepository {
 
   @override
   Future<List<HorarioModel>> getListaHorarios() => _provider.getListaHorarios();
+
+  @override
+  Future<void> updateHorario(
+          {required String uidHorario,
+          required String horaApertura,
+          required String horaCierre}) =>
+      _provider.updateHorario(
+          uidHorario: uidHorario,
+          horaApertura: horaApertura,
+          horaCierre: horaCierre);
 }

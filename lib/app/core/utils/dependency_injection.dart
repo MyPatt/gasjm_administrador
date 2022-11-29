@@ -13,32 +13,33 @@ import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/perfil_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/data/repository/producto_repository.dart';
+import 'package:gasjm/app/data/providers/horario_provider.dart';
+import 'package:gasjm/app/data/repository/horario_repository.dart';
+import 'package:gasjm/app/data/repository/implementations/horario_repository.dart';
 
 import 'package:get/get.dart';
 
 class DependencyInjection {
   static void load() async {
-  
-
-
-
     //Providers
     Get.put<PedidoProvider>(PedidoProvider());
     Get.put<ProductoProvider>(ProductoProvider());
     Get.put<EstadoPedidoProvider>(EstadoPedidoProvider());
     Get.put<PerfilProvider>(PerfilProvider());
     Get.put<PersonaProvider>(PersonaProvider());
+    Get.put<HorarioProvider>(HorarioProvider());
 
     //Local
 
     //Respositories
-
 
     Get.put<PedidoRepository>(PedidoRepositoryImpl());
     Get.put<ProductoRepository>(ProductoRepositoryImpl());
     Get.put<EstadoPedidoRepository>(EstadoPedidoRepositoryImpl());
     Get.put<PerfilRepository>(PerfilRepositoryImpl());
     Get.put<PersonaRepository>(PersonaRepositoryImpl());
+
+    Get.put<HorarioRepository>(HorarioRepositoryImpl());
 
     //Local
   }

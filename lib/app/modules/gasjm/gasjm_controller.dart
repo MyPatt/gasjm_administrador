@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:gasjm/app/data/models/horario_model.dart';
-import 'package:gasjm/app/data/repository/horario_repository.dart'; 
+import 'package:gasjm/app/data/repository/horario_repository.dart';
 import 'package:get/get.dart';
 
 class GasJMController extends GetxController {
@@ -8,8 +9,15 @@ class GasJMController extends GetxController {
 
   /* Variables para obtener datos del horario*/
   final RxList<HorarioModel> _lista = <HorarioModel>[].obs;
+
+  final horaAperturaTextController = TextEditingController();
+  final horaCierreTextController = TextEditingController();
   RxList<HorarioModel> get listaHorarios => _lista;
+  // //Mientras se inserta el pedido mostrar circuleprobres se carga si o no
+  final actualizandoHorario = RxBool(false);
+
   //
+
   @override
   void onInit() {
     super.onInit();
@@ -25,4 +33,6 @@ class GasJMController extends GetxController {
       //
     }
   }
+
+  actualizarHorario(HorarioModel horario) {}
 }

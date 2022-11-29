@@ -19,10 +19,13 @@ class GasJMController extends GetxController {
   final actualizandoHorario = RxBool(false);
 
   //
-
+  int modo = Get.arguments;
+  //
   @override
   void onInit() {
     super.onInit();
+    //
+    print("""""" """""" "$modo" """""" """""");
     //
     cargarDatos();
   }
@@ -48,7 +51,7 @@ class GasJMController extends GetxController {
       Mensajes.showGetSnackbar(
           titulo: "Mensaje",
           mensaje: "Horario actualizado con éxito.",
-          icono:const Icon(
+          icono: const Icon(
             Icons.check_circle_outlined,
             color: Colors.white,
           ));
@@ -62,7 +65,6 @@ class GasJMController extends GetxController {
             color: Colors.white,
           ));
     }
-      actualizandoHorario.value = false;
-
+    actualizandoHorario.value = false;
   }
 }

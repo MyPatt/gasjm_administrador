@@ -47,12 +47,12 @@ class GasJMPage extends StatelessWidget {
                       //y el repartidor solo los correspondientes y al actualizar se cargan de nuevo la lista
                       //refactorizado el codigo actualizar para usar por el administrador y repartidor
                       // 0 administrador
-                      //1 repartidor
+                      // 1 repartidor
                       /*  ContenidoPedido(
                       indiceCategoriaPedido: 0,
                       modo: 1,
                     ),*/
-                      ContenidoHorario(modo: 0)
+                      ContenidoHorario(modo: _.modo)
                       // const ContenidoHistorial()
                     ]))
                   ],

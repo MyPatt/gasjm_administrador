@@ -56,7 +56,14 @@ class MenuLateral extends StatelessWidget {
           _buildDrawerItem(
               icon: Icons.manage_accounts_outlined,
               text: 'Gas J&M',
-              onTap: () => Get.toNamed(AppRoutes.gasjm)),
+              onTap: () {
+                if (modo == 'Modo administrador') {
+                  Get.toNamed(AppRoutes.gasjm, arguments: 1);
+                  return;
+                } else {
+                  Get.toNamed(AppRoutes.gasjm, arguments: 0);
+                }
+              }),
           _buildDrawerItem(
               icon: Icons.settings_outlined,
               text: 'Configuración',

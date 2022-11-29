@@ -1,8 +1,6 @@
-// ignore_for_file: invalid_use_of_protected_member
 
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
 import 'package:gasjm/app/modules/gasjm/widgets/form_horario.dart';
 import 'package:get/get.dart';
@@ -46,7 +44,7 @@ class ContenidoHorario extends StatelessWidget {
                       // scrollDirection: Axis.horizontal,
                       itemCount: _.listaHorarios.length,
                       itemBuilder: (context, index) {
-                        return FormHorario(horario: _.listaHorarios[index]);
+                        return FormHorario(horario: _.listaHorarios[index], modo:modo);
                       })))
             ],
           ),

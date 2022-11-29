@@ -7,8 +7,10 @@ import 'package:gasjm/app/modules/gasjm/widgets/modal_editar_horario.dart';
 import 'package:get/get.dart';
 
 class FormHorario extends StatelessWidget {
-  const FormHorario({Key? key, required this.horario}) : super(key: key);
+  const FormHorario({Key? key, required this.horario, required this.modo})
+      : super(key: key);
   final HorarioModel horario;
+  final int modo;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GasJMController>(
@@ -19,24 +21,28 @@ class FormHorario extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0),
           //
           child: ListTile(
-            trailing: InkWell(
-                child: const Icon(
-                  Icons.mode_edit_outlined,
-                  size: 15,
-                ),
-                onTap: () {
-                  _.horaAperturaTextController.text = horario.aperturaHorario;
-                  _.horaCierreTextController.text = horario.cierreHorario;
-                  //
-                  showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      context: context,
-                      builder: (context) {
-                        return ModalEditarHorario(
-                          horario: horario,
-                        );
-                      });
-                }),
+            trailing: Visibility(
+                //admin(0) puede editar, repartidor(1) solo ver
+                visible: modo == 0 ? true : false,
+                child: InkWell(
+                    child: const Icon(
+                      Icons.mode_edit_outlined,
+                      size: 15,
+                    ),
+                    onTap: () {
+                      _.horaAperturaTextController.text =
+                          horario.aperturaHorario;
+                      _.horaCierreTextController.text = horario.cierreHorario;
+                      //
+                      showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return ModalEditarHorario(
+                              horario: horario,
+                            );
+                          });
+                    })),
             title: Row(
               children: [
                 Column(children: <Widget>[

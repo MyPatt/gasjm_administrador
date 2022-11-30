@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/global_widgets/alert_rechazar.dart';
+import 'package:gasjm/app/global_widgets/modal_alert.dart';
 import 'package:gasjm/app/global_widgets/button_small.dart';
 import 'package:gasjm/app/data/controllers/pedido_controller.dart';
 

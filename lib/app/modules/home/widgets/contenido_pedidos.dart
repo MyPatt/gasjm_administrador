@@ -36,6 +36,7 @@ class ContenidoPedidos extends StatelessWidget {
                 final estadoProceso = _.cargandoParaDia.value;
                 return Stack(alignment: Alignment.center, children: [
                   ChartPedido(
+                    // ignore: invalid_use_of_protected_member
                     puntos: _.pedidoPuntos.value,
                     indice: _.indiceDeFechaSeleccionada.value,
                   ),

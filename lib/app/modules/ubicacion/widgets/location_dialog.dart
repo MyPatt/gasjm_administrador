@@ -11,18 +11,18 @@ class AppState extends StatefulWidget {
 
 class AppPermission extends State<AppState> {
   Future<void> requestCameraPermission() async {
-    final serviceStatus = await Permission.camera.isGranted;
+//    final serviceStatus = await Permission.camera.isGranted;
 
    // bool isCameraOn = serviceStatus == ServiceStatus.enabled;
 
     final status = await Permission.camera.request();
 
     if (status == PermissionStatus.granted) {
-      print('Permission Granted');
+    //  print('Permission Granted');
     } else if (status == PermissionStatus.denied) {
-      print('Permission denied');
+     // print('Permission denied');
     } else if (status == PermissionStatus.permanentlyDenied) {
-      print('Permission Permanently Denied');
+    //  print('Permission Permanently Denied');
       await openAppSettings();
     }
   }
@@ -32,8 +32,8 @@ class AppPermission extends State<AppState> {
 
     //bool isLocation = serviceStatusLocation == ServiceStatus.enabled;
 
-    final status = await Permission.locationWhenInUse.request();
-    print("ddddddddddddd" + status.isDenied.toString());
+    //final status = await Permission.locationWhenInUse.request();
+    
     /*
     if (status == PermissionStatus.granted) {
       print('Permission Granted');

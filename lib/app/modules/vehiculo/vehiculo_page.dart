@@ -67,12 +67,12 @@ Widget _cardRepartidor(
           Icons.car_rental_outlined,
           //  size: 30,
         ),
-        title: TextSubtitle(
+        title: const TextSubtitle(
           //   text: '${persona.nombrePersona} ${persona.apellidoPersona}',
           text: "ASZ0950",
           textAlign: TextAlign.justify,
         ),
-        subtitle: TextDescription(
+        subtitle: const TextDescription(
             //text: persona.cedulaPersona,
             text: "Hino 2018",
             textAlign: TextAlign.justify),

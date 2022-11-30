@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -10,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color.fromRGBO(4, 9, 35, 1),
@@ -24,14 +26,14 @@ class ProfileScreen extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 73),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children:const <Widget>  [
                       Icon(
                         AntDesign.arrowleft,
                         color: Colors.white,
@@ -42,10 +44,10 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'My\nProfile',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -54,10 +56,10 @@ class ProfileScreen extends StatelessWidget {
                       fontFamily: 'Nisebuschgardens',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 22,
                   ),
-                  Container(
+                  SizedBox(
                     height: height * 0.43,
                     child: LayoutBuilder(
                       builder: (context, constraints) {

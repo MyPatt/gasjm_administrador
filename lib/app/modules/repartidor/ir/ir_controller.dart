@@ -109,14 +109,18 @@ class IrController extends GetxController {
     try {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.inicioAdministrador);
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   _cargarPedidosPage() async {
     try {
       await Future.delayed(const Duration(seconds: 1));
       Get.offNamed(AppRoutes.pedidos);
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   /*METODOS  PARA MAPA EXPLORAR*/

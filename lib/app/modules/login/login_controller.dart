@@ -19,22 +19,17 @@ class LoginController extends GetxController {
   final correoTextoController = TextEditingController();
   final contrasenaTextoController = TextEditingController();
 
- 
-
 //
   @override
   void onInit() {
-
-   Future.wait([ _obtenerCorreo()]);
-
+    Future.wait([_obtenerCorreo()]);
 
     super.onInit();
   }
 
   @override
   void onReady() {
-    
- 
+    _obtenerCorreo();
     super.onReady();
   }
 
@@ -96,12 +91,12 @@ class LoginController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final s = prefs.getString("correo_usuario");
- 
+
     correoTextoController.text = s.toString();
   }
 
   //Remover correo de forma local
-    Future<void>  _removerCorreo() async {
+  Future<void> _removerCorreo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("correo_usuario");
   }

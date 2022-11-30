@@ -60,8 +60,8 @@ class FormRuta extends StatelessWidget {
                           .toString(),
                       // style: TextoTheme.subtitleStyle2,
                     ),
-                    Spacer(),
-                    TextSubtitle(
+                    const Spacer(),
+                    const TextSubtitle(
                       text: "Freddy Bonilla",
                       //  style: TextoTheme.subtitleStyle2
                     )
@@ -71,17 +71,17 @@ class FormRuta extends StatelessWidget {
                     height: Responsive.getScreenSize(context).height * .05),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children:const <Widget>[
                     TextSubtitle(
                       text: "Mañana", color: Colors.black38,
                       // style: TextoTheme.subtitleStyle2,
                     ),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: const <Widget>[
                     TextDescription(
                       text: "Santa Rosa",
                       // style: TextoTheme.subtitleStyle2,
@@ -92,17 +92,17 @@ class FormRuta extends StatelessWidget {
                     height: Responsive.getScreenSize(context).height * .05),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: const <Widget>[
                     TextSubtitle(
                       text: "Tarde",
                       color: Colors.black38,
                     ),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: const <Widget>[
                     TextDescription(
                       text: "Santa Rosa",
                       // style: TextoTheme.subtitleStyle2,

@@ -86,7 +86,8 @@ class EditarClienteController extends GetxController {
       celularTextoController.text = cliente.celularPersona ?? '';
       correoElectronicoTextoController.text = cliente.correoPersona ?? '';
       contrasenaTextoController.text = cliente.contrasenaPersona;
-    } on FirebaseException catch (e) {
+    //} on FirebaseException catch (e) {
+      }   catch (e) {
       Mensajes.showGetSnackbar(
           titulo: "Error",
           mensaje: "Se produjo un error inesperado.",
@@ -231,7 +232,7 @@ class EditarClienteController extends GetxController {
 
   Future<void> eliminarCliente(String id) async {
     try {
-      print(id);
+    
       await _personaRepository.updateEstadoPersona(
           uid: id, estado: "eliminado");
       Mensajes.showGetSnackbar(
@@ -242,7 +243,7 @@ class EditarClienteController extends GetxController {
             color: Colors.white,
           ));
       Get.toNamed(AppRoutes.cliente);
-    } on FirebaseException catch (e) {
+    }catch (e) {
       Mensajes.showGetSnackbar(
           titulo: "Alerta",
           mensaje: "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.",

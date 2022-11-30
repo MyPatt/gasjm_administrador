@@ -16,8 +16,8 @@ class Search extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Expanded(
+        children:const <Widget> [
+           Expanded(
             child: InputText(
               labelText: 'Buscar',
               iconPrefix: Icons.search_outlined,

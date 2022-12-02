@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PedidoProvider {
   //Instancia de firestore
   final _firestoreInstance = FirebaseFirestore.instance;
- final usuario = FirebaseAuth.instance.currentUser;
+  final usuario = FirebaseAuth.instance.currentUser;
   //
   Future<void> insertPedido({required PedidoModel pedidoModel}) async {
     final resultado =
@@ -18,14 +19,18 @@ class PedidoProvider {
   //
 
   Future<void> updateEstadoPedido(
-      {required String idPedido, required String estadoPedido,required String numeroEstadoPedido }) async {
-    await _firestoreInstance
-        .collection('pedido')
-        .doc(idPedido)
-        .update({"idEstadoPedido": estadoPedido,"idRepartidor":usuario!.uid,
-        
-        numeroEstadoPedido:EstadoPedido(idEstado: estadoPedido  , fechaHoraEstado: Timestamp.now(), idPersona: usuario!.uid).toMap()
- });
+      {required String idPedido,
+      required String estadoPedido,
+      required String numeroEstadoPedido}) async {
+    await _firestoreInstance.collection('pedido').doc(idPedido).update({
+      "idEstadoPedido": estadoPedido,
+      "idRepartidor": usuario!.uid,
+      numeroEstadoPedido: EstadoPedido(
+              idEstado: estadoPedido,
+              fechaHoraEstado: Timestamp.now(),
+              idPersona: usuario!.uid)
+          .toMap()
+    });
   }
 
   //
@@ -38,7 +43,9 @@ class PedidoProvider {
     final resultado = await _firestoreInstance
         .collection('pedido')
         .where("idEstadoPedido", whereIn: ["estado1", "estado2"]).get();
-
+//
+print("llllll ${resultado.docs.length}");
+//
     return (resultado.docs)
         .map((item) => PedidoModel.fromJson(item.data()))
         .toList();
@@ -72,7 +79,7 @@ class PedidoProvider {
     return null;
   }
 
-  Future<List<PedidoModel>?> getPedidoPorField(
+  Future<List<PedidoModel>?> getPedidosPorField(
       {required String field, required String dato}) async {
     final resultado = await _firestoreInstance
         .collection("pedido")
@@ -122,18 +129,18 @@ class PedidoProvider {
 
   //Retornar la cantidad de pedidos por hora
   Future<int> getCantidadPedidosPorfield(
-    {required String field, required String dato}) async {
+      {required String field, required String dato}) async {
     final resultado = await _firestoreInstance
         .collection("pedido")
         .where(field, isEqualTo: dato)
         .get();
-  
+
     return resultado.docs.length;
   }
-    //
+
+  //
   Future<List<PedidoModel>> getPedidos() async {
-    final resultado = await _firestoreInstance
-        .collection('pedido').get(); 
+    final resultado = await _firestoreInstance.collection('pedido').get();
     return (resultado.docs)
         .map((item) => PedidoModel.fromJson(item.data()))
         .toList();

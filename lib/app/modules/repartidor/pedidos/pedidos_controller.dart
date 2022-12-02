@@ -70,9 +70,16 @@ class PedidosController extends GetxController {
     valorSeleccionadoItemDeFiltro.value = dropdownItemsDeFiltro[0];
     valorSeleccionadoItemDeFiltroAceptados.value = dropdownItemsDeFiltro[0];*/
     //cargarListaPedidosAceptados();
-
+    //0 en espera
+    //1 aceptados
+    //2 finalizados
     controladorDePedidos.cargarListaPedidosParaRepartidor(0);
     controladorDePedidos.cargarListaPedidosParaRepartidor(1);
+    controladorDePedidos.cargarListaPedidosParaRepartidor(2);
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!");
+    print(controladorDePedidos.listaPedidosEnEspera.length);
+    print(controladorDePedidos.listaPedidosAceptados.length);
+    print(controladorDePedidos.listaPedidosFinalizados.length);
   }
 
   /* METODOS PARA PEDIDOS EN ESPERA */

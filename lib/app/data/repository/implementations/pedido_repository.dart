@@ -31,14 +31,18 @@ class PedidoRepositoryImpl extends PedidoRepository {
 
   @override
   Future<void> updateEstadoPedido(
-          {required String idPedido, required String estadoPedido,required String numeroEstadoPedido}) =>
+          {required String idPedido,
+          required String estadoPedido,
+          required String numeroEstadoPedido}) =>
       _provider.updateEstadoPedido(
-          idPedido: idPedido, estadoPedido: estadoPedido, numeroEstadoPedido: numeroEstadoPedido);
+          idPedido: idPedido,
+          estadoPedido: estadoPedido,
+          numeroEstadoPedido: numeroEstadoPedido);
 
   @override
   Future<List<PedidoModel>?> getPedidosPorField(
           {required String field, required String dato}) =>
-      _provider.getPedidoPorField(field: field, dato: dato);
+      _provider.getPedidosPorField(field: field, dato: dato);
   @override
   Future<int> getCantidadPedidosPorHora({required Timestamp fechaHora}) =>
       _provider.getCantidadPedidosPorHora(horaFechaInicial: fechaHora);
@@ -51,9 +55,7 @@ class PedidoRepositoryImpl extends PedidoRepository {
   Future<int> getCantidadPedidosPorfield(
           {required String field, required String dato}) =>
       _provider.getCantidadPedidosPorfield(field: field, dato: dato);
-      
-        @override
-        Future<List<PedidoModel>> getPedidos( )  =>
-      _provider.getPedidos();
-      
+
+  @override
+  Future<List<PedidoModel>> getPedidos() => _provider.getPedidos();
 }

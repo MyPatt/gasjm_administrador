@@ -36,15 +36,17 @@ class PedidoController extends GetxController {
   RxList<PedidoModel> get listaPedidosCancelados => _listaPedidosCancelados;
 
   //Metodo para cargarLista de los pedidos para el administrador
-  Future<void> cargarListaPedidosParaRepartidor(int id) async {
+  Future<void> cargarListaPedidosParaRepartidor(
+      int indiceCategoriaPedido) async {
     try {
       cargandoPedidos.value = true;
       //
-      switch (id) {
+      switch (indiceCategoriaPedido) {
         //en Espera todos los pedidos
         case 0:
           final lista = (await _pedidosRepository.getPedidosPorField(
-                  field: 'idEstadoPedido', dato: categoriasPedidos[id].path)) ??
+                  field: 'idEstadoPedido',
+                  dato: categoriasPedidos[indiceCategoriaPedido].path)) ??
               [];
 
           //
@@ -61,11 +63,11 @@ class PedidoController extends GetxController {
           break;
         //aceptados  todos los pedidos del repartidor (usuario actual)
         //finalizados del dia  todos los pedidos del repartidor (usuario actual)
-       default:
+        default:
           var usuario = await _personaRepository.getUsuario();
           final lista = await _pedidosRepository.getPedidosPorDosQueries(
                   field1: "idEstadoPedido",
-                  dato1: categoriasPedidos[id].path,
+                  dato1: categoriasPedidos[indiceCategoriaPedido].path,
                   field2: "idRepartidor",
                   dato2: usuario!.uidPersona!) ??
               [];
@@ -79,8 +81,14 @@ class PedidoController extends GetxController {
             lista[i].direccionUsuario = direccion;
           }
 
-//
-          _listaPedidosFinalizados.value = lista;
+          //
+          if (indiceCategoriaPedido == 1) {
+            _listaPedidosAceptados.value = lista;
+          } else {
+            _listaPedidosFinalizados.value = lista;
+          }
+          //
+
           break;
         //
       }
@@ -189,7 +197,7 @@ class PedidoController extends GetxController {
         case 1:
           mensaje = "Pedido aceptado con éxito.";
 
-          icono = Icons.check_outlined;
+          icono = Icons.check_circle_outline_outlined;
           if (modo == 0) {
             cargarListaPedidosParaAdministrador(1);
             cargarListaPedidosParaAdministrador(0);

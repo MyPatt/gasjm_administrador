@@ -51,29 +51,51 @@ class OperacionPedidoPage extends StatelessWidget {
                       labelColor: AppTheme.blueBackground,
                       unselectedLabelColor: AppTheme.light,
                       // indicator: BoxDecoration(color: Colors.white),
+                      /*
                       tabs: categoriasPedidos
                           .map((e) => Tab(
                                 text: e.name,
                               ))
                           .toList(),
+                          */
+                      //
+                      tabs: <Widget>[
+                        Obx(() => Tab(
+                            text:
+                                'En espera (${_.controladorDePedidos.listaPedidosEnEspera.length})')),
+                        Obx(() => Tab(
+                              text:
+                                  'Aceptados (${_.controladorDePedidos.listaPedidosAceptados.length})',
+                            )),
+                        Obx(() => Tab(
+                            text:
+                                "Finalizados (${_.controladorDePedidos.listaPedidosFinalizados.length}) ")),
+                        Obx(() => Tab(
+                            text:
+                                "Cancelados (${_.controladorDePedidos.listaPedidosCancelados.length}) "))
+                      ],
                     ),
                   ),
                   Expanded(
                       child: TabBarView(children: [
-                        //modo
-                         // 0 administrador 
-    //1 repartidor
+                    //modo
+                    // 0 administrador
+                    //1 repartidor
                     ContenidoPedido(
-                      indiceCategoriaPedido: 0, modo: 0,
+                      indiceCategoriaPedido: 0,
+                      modo: 0,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 1,modo: 0,
+                      indiceCategoriaPedido: 1,
+                      modo: 0,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 2,modo: 0,
+                      indiceCategoriaPedido: 2,
+                      modo: 0,
                     ),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 3,modo: 0,
+                      indiceCategoriaPedido: 3,
+                      modo: 0,
                     ),
                   ]))
                 ],

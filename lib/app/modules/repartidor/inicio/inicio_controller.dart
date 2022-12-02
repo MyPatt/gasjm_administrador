@@ -52,9 +52,9 @@ class InicioController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    _cargarDatosInicialesParaMapa();
 
     Future.wait([_cargarFotoPerfil()]);
-    _cargarDatosIniciales();
   }
 
   @override
@@ -70,7 +70,7 @@ class InicioController extends GetxController {
         await _personaRepository.getImagenUsuarioActual() ?? '';
   }
 
-  void _cargarDatosIniciales() {
+  void _cargarDatosInicialesParaMapa() {
     //
     _gpsEnabled = true;
     Future.wait([
@@ -121,7 +121,7 @@ class InicioController extends GetxController {
     //Obtener la lista de los pedidos en espera y aceptados
     final listaPedidos = await _pedidoRepository.getPedidosEnEsperaYAceptados();
     //listaPedidos.forEach((elemento) async {
-    
+
     for (var elemento in listaPedidos) {
       final nombreCliente = await _personaRepository.getNombresPersonaPorCedula(
           cedula: elemento.idCliente);
@@ -150,6 +150,9 @@ class InicioController extends GetxController {
                   'Para ${elemento.diaEntregaPedido.toLowerCase()},  ${elemento.cantidadPedido} cilindro/s de gas.',
               onTap: () {}));
       _marcadoresParaExplorar[markerId] = marker;
+
+      print("^^^^^^^^^^^^^^^^^^^^");
+      print(_marcadoresParaExplorar.length);
     }
   }
 
@@ -268,10 +271,10 @@ class InicioController extends GetxController {
   }
 
   void _setInitialPosition(Position position) {
-  
     //if (_gpsEnabled && posicionMarcadorRepartidor.value == null) {
-    if (_gpsEnabled && posicionMarcadorRepartidor.value ==const LatLng(-0.2053476, -79.4894387) ) {
-
+    if (_gpsEnabled &&
+        posicionMarcadorRepartidor.value ==
+            const LatLng(-0.2053476, -79.4894387)) {
       posicionMarcadorRepartidor.value =
           LatLng(position.latitude, position.longitude);
     }

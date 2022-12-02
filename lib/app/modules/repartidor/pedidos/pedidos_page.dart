@@ -4,7 +4,7 @@ import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart'; 
+import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
 import 'package:get/get.dart';
 
 class PedidosPage extends StatelessWidget {
@@ -41,17 +41,23 @@ class PedidosPage extends StatelessWidget {
                 children: [
                   Container(
                     color: Colors.white,
-                    child: const TabBar(
+                    child: TabBar(
                       indicatorColor: AppTheme.blueBackground,
                       labelColor: AppTheme.blueBackground,
                       unselectedLabelColor: AppTheme.light,
+                      isScrollable: true,
                       // El repartidor vera todos los pedidos en espera, en camabio  aceptados y finalizados solo por el
-                      tabs: [
-                        Tab(text: 'En espera'),
-                        Tab(
-                          text: 'Aceptados',
-                        ),
-                        Tab(text: "Finalizados")
+                      tabs:<Widget> [
+                        Obx(() => Tab(
+                            text:
+                                'En espera (${_.controladorDePedidos.listaPedidosEnEspera.length})')),
+                        Obx(() => Tab(
+                              text:
+                                  'Aceptados (${_.controladorDePedidos.listaPedidosAceptados.length})',
+                            )),
+                        Obx(() => Tab(
+                            text:
+                                "Finalizados (${_.controladorDePedidos.listaPedidosFinalizados.length}) "))
                       ],
                     ),
                   ),
@@ -62,14 +68,17 @@ class PedidosPage extends StatelessWidget {
                     //refactorizado el codigo actualizar para usar por el administrador y repartidor
                     // 0 administrador
                     //1 repartidor
+                    //Ver pedidos en espera como repartidor
                     ContenidoPedido(
                       indiceCategoriaPedido: 0,
                       modo: 1,
                     ),
+                    //Ver pedidos aceptados como repartidor
                     ContenidoPedido(
                       indiceCategoriaPedido: 1,
                       modo: 1,
                     ),
+                    //Ver pedidos finalizados como repartidor
                     ContenidoPedido(
                       indiceCategoriaPedido: 2,
                       modo: 1,

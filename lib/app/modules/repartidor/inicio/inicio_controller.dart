@@ -124,8 +124,8 @@ class InicioController extends GetxController {
     //listaPedidos.forEach((elemento) async {
 
     for (var elemento in listaPedidos) {
-      final nombreCliente = await _personaRepository.getNombresPersonaPorCedula(
-          cedula: elemento.idCliente);
+      final nombreCliente = await _personaRepository.getNombresPersonaPorUid(
+          uid: elemento.idCliente);
 
       final id = _marcadoresParaExplorar.length.toString();
 

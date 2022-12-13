@@ -11,11 +11,9 @@ class PersonaRepositoryImpl extends PersonaRepository {
   DateTime get fechaHoraActual => _provider.fechaHoraActual.toDate();
 
   @override
-  String get idUsuarioActual => _provider.idUsuarioActual
-  ;
+  String get idUsuarioActual => _provider.idUsuarioActual;
   @override
-  String get nombreUsuarioActual=>_provider.nombreUsuarioActual;
-  
+  String get nombreUsuarioActual => _provider.nombreUsuarioActual;
 
   @override
   Future<void> deletePersona({required String persona}) =>
@@ -50,8 +48,8 @@ class PersonaRepositoryImpl extends PersonaRepository {
       _provider.updatePersona(persona: persona, image: image);
 
   @override
-  Future<String?> getNombresPersonaPorCedula({required String cedula}) =>
-      _provider.getNombresPersonaPorCedula(cedula: cedula);
+  Future<String?> getNombresPersonaPorUid({required String uid}) =>
+      _provider.getNombresPersonaPorUid(uid: uid);
 
   @override
   Future<PersonaModel?> getUsuario() => _provider.getUsuarioActual();

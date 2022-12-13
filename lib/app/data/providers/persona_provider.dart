@@ -25,7 +25,7 @@ class PersonaProvider {
   //
   Timestamp get fechaHoraActual => Timestamp.now();
   String get idUsuarioActual => usuarioActual.uid;
-  String get nombreUsuarioActual => usuarioActual.displayName??'usuario';
+  String get nombreUsuarioActual => usuarioActual.displayName ?? 'usuario';
   //
   Future<void> insertPersona({
     required PersonaModel persona,
@@ -125,15 +125,13 @@ class PersonaProvider {
     return null;
   }
 
-  Future<String?> getNombresPersonaPorCedula({required String cedula}) async {
-    final resultado = await _firestoreInstance
-        .collection("persona")
-        .where("cedula", isEqualTo: cedula)
-        .get();
+  Future<String?> getNombresPersonaPorUid({required String uid}) async {
+    final resultado =
+        await _firestoreInstance.collection("persona").doc(uid).get();
 
-    if (resultado.docs.isNotEmpty) {
+    if (resultado.exists) {
       final nombres =
-          '${resultado.docs.first.get("nombre")} ${resultado.docs.first.get("apellido")} ';
+          '${resultado.get("nombre")} ${resultado.get("apellido")} ';
       return nombres;
     }
     return null;

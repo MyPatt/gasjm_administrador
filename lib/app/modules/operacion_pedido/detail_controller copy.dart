@@ -187,9 +187,9 @@ class DOperacionPedidoController extends GetxController {
     cargandoPedidosAceptados.value = false;
   }
 
-  Future<String> _getNombresCliente(String cedula) async {
+  Future<String> _getNombresCliente(String uid) async {
     final nombre =
-        await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
+        await _personaRepository.getNombresPersonaPorUid(uid: uid);
     return nombre ?? 'Usuario';
   }
 

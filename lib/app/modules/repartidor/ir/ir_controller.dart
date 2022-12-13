@@ -153,8 +153,8 @@ class IrController extends GetxController {
             dato2: "Ahora");
 
     listaPedidosAceptados?.forEach((elemento) async {
-      final nombreCliente = await _personaRepository.getNombresPersonaPorCedula(
-          cedula: elemento.idCliente);
+      final nombreCliente = await _personaRepository.getNombresPersonaPorUid(
+          uid: elemento.idCliente);
 
       final id = _marcadoresParaExplorar.length.toString();
 

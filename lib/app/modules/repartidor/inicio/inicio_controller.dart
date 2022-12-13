@@ -51,6 +51,7 @@ class InicioController extends GetxController {
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
+    print("uuuuuuuuuuuuuuuuuuuuuu");
     super.onInit();
     _cargarDatosInicialesParaMapa();
 

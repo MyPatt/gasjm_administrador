@@ -3,10 +3,20 @@ import 'dart:io';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/providers/persona_provider.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:get/get.dart'; 
+import 'package:get/get.dart';
 
 class PersonaRepositoryImpl extends PersonaRepository {
   final _provider = Get.find<PersonaProvider>();
+  @override
+  DateTime get fechaHoraActual => _provider.fechaHoraActual.toDate();
+
+  @override
+  String get idUsuarioActual => _provider.idUsuarioActual
+  ;
+  @override
+  String get nombreUsuarioActual=>_provider.nombreUsuarioActual;
+  
+
   @override
   Future<void> deletePersona({required String persona}) =>
       _provider.deletePersona(persona: persona);
@@ -36,8 +46,8 @@ class PersonaRepositoryImpl extends PersonaRepository {
       _provider.insertPersona(persona: persona);
 
   @override
-  Future<void> updatePersona({required PersonaModel persona,File? image}) =>
-      _provider.updatePersona(persona: persona,image: image);
+  Future<void> updatePersona({required PersonaModel persona, File? image}) =>
+      _provider.updatePersona(persona: persona, image: image);
 
   @override
   Future<String?> getNombresPersonaPorCedula({required String cedula}) =>
@@ -46,15 +56,16 @@ class PersonaRepositoryImpl extends PersonaRepository {
   @override
   Future<PersonaModel?> getUsuario() => _provider.getUsuarioActual();
 
-@override
-  Future<String?> getImagenUsuarioActual()=>_provider.getImagenUsuarioActual();
+  @override
+  Future<String?> getImagenUsuarioActual() =>
+      _provider.getImagenUsuarioActual();
 
   @override
   Future<void> updateEstadoPersona(
           {required String uid, required String estado}) =>
       _provider.updateEstadoPersona(uid: uid, estado: estado);
 
-   @override
+  @override
   Future<bool> updateContrasenaPersona(
           {required String uid,
           required String actualContrasena,
@@ -64,8 +75,8 @@ class PersonaRepositoryImpl extends PersonaRepository {
           actualContrasena: actualContrasena,
           nuevaContrasena: nuevaContrasena);
 
-        @override
-        Future<int> getCantidadClientesPorfield({required String field, required String dato}) =>
+  @override
+  Future<int> getCantidadClientesPorfield(
+          {required String field, required String dato}) =>
       _provider.getCantidadClientesPorfield(field: field, dato: dato);
- 
 }

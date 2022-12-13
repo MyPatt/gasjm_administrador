@@ -15,13 +15,13 @@ class OpcionesPedido extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return indiceCategoriaPedido == 0
-        ? PedidosEnEsperaPage(idPedido: e.idPedido, modo: modo,)
+        ? PedidosEnEsperaPage(idPedido: e.idPedido, modo: modo,idCliente: e.idCliente,)
         : indiceCategoriaPedido == 1
             ? PedidosAceptadosPage(
-                idPedido: e.idPedido, modo: modo,
+                idPedido: e.idPedido, modo: modo, idCliente: e.idCliente,
               )
             : indiceCategoriaPedido == 2
-                ? PedidosAFinalizadosPage(idPedido: e.idPedido)
-                : PedidosRechazadosPage(idPedido: e.idPedido);
+                ? PedidosAFinalizadosPage(idPedido: e.idPedido,)
+                : PedidosRechazadosPage(idPedido: e.idPedido,);
   }
 }

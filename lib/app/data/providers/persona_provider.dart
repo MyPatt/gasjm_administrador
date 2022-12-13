@@ -21,6 +21,12 @@ class PersonaProvider {
     return usuario;
   }
 
+//
+  //
+  Timestamp get fechaHoraActual => Timestamp.now();
+  String get idUsuarioActual => usuarioActual.uid;
+  String get nombreUsuarioActual => usuarioActual.displayName??'usuario';
+  //
   Future<void> insertPersona({
     required PersonaModel persona,
   }) async {
@@ -60,7 +66,7 @@ class PersonaProvider {
     usuarioActual.updateDisplayName(
         '${persona.nombrePersona} ${persona.apellidoPersona}');
 
-  // usuarioActual.updateEmail(persona.correoPersona.toString()); 
+    // usuarioActual.updateEmail(persona.correoPersona.toString());
   }
 //
 

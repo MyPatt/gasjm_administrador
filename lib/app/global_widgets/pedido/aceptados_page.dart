@@ -7,9 +7,11 @@ import 'package:gasjm/app/global_widgets/button_small.dart';
 import 'package:get/get.dart';
 
 class PedidosAceptadosPage extends StatelessWidget {
-  PedidosAceptadosPage({Key? key, required this.idPedido, required this.modo}) : super(key: key);
+      PedidosAceptadosPage({Key? key, required this.idPedido, required this.modo, required this.idCliente})
+      : super(key: key);
   final PedidoController controladorDePedidos = Get.put(PedidoController());
   final String idPedido;
+  final String idCliente;
   final int modo;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class PedidosAceptadosPage extends StatelessWidget {
             texto: "Finalizar",
             width: Responsive.getScreenSize(context).width * .4,
             onTap: () =>
-                controladorDePedidos.actualizarEstadoPedido(idPedido, 2,modo),
+                controladorDePedidos.actualizarEstadoPedido(idPedido, 2, modo,idCliente),
           )
         ],
       ),
@@ -51,7 +53,7 @@ class PedidosAceptadosPage extends StatelessWidget {
   }
 
   _onCancelarPedidoAceptado(BuildContext context, String id) {
-    controladorDePedidos.actualizarEstadoPedido(id, 3,modo);
+    controladorDePedidos.actualizarEstadoPedido(id, 3, modo,idCliente);
     Navigator.of(context).pop();
   }
 }

@@ -43,8 +43,7 @@ class PedidoProvider {
     final resultado = await _firestoreInstance
         .collection('pedido')
         .where("idEstadoPedido", whereIn: ["estado1", "estado2"]).get();
-//
-print("llllll ${resultado.docs.length}");
+ 
 //
     return (resultado.docs)
         .map((item) => PedidoModel.fromJson(item.data()))

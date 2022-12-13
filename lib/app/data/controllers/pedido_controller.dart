@@ -5,14 +5,17 @@ import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:gasjm/app/data/repository/notificacion_repository.dart';
+import 'package:gasjm/app/data/models/notificacion_model.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 class PedidoController extends GetxController {
   final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
+  final _notificacionRepository = Get.find<NotificacionRepository>();
 
 //
   final cargandoPedidos = true.obs;
@@ -154,7 +157,7 @@ class PedidoController extends GetxController {
 
   //Metodo para actualizar el estado de un pedido
   Future<void> actualizarEstadoPedido(
-      String idPedido, int estado, int modo) async {
+      String idPedido, int estado, int modo, String idCliente) async {
     ///en estadoPedido1 se guarda info   de si se acepta o rechaza el pedido en espera
     ///en estadoPedido3 se guarda info   de si se cancela o finaliza el pedidoaceptado
     //Por defecto estado5 rechazar
@@ -248,6 +251,15 @@ class PedidoController extends GetxController {
             icono,
             color: Colors.white,
           ));
+      //Enviar notificacion al cliente
+      Notificacion _notificacionModel = Notificacion(
+          fechaNotificacion: _personaRepository.fechaHoraActual,
+          idEmisorNotificacion: _personaRepository.idUsuarioActual,
+          idRemitenteNotificacion: idCliente,
+          textoNotificacion: _personaRepository.nombreUsuarioActual,
+          tituloNotificacion: mensaje);
+      await _notificacionRepository.insertNotificacion(
+          notificacionModel: _notificacionModel);
     } on FirebaseException {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',

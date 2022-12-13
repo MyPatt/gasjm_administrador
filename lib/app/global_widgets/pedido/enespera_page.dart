@@ -8,10 +8,11 @@ import 'package:gasjm/app/data/controllers/pedido_controller.dart';
 import 'package:get/get.dart';
 
 class PedidosEnEsperaPage extends StatelessWidget {
-  PedidosEnEsperaPage({Key? key, required this.idPedido, required this.modo}) : super(key: key);
+  PedidosEnEsperaPage({Key? key, required this.idPedido, required this.modo, required this.idCliente}) : super(key: key);
   final controladorDePedidos = Get.put(PedidoController());
   final String idPedido;
   final int modo;
+  final String idCliente;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,7 +31,7 @@ class PedidosEnEsperaPage extends StatelessWidget {
             texto: "Aceptar",
             width: Responsive.getScreenSize(context).width * .39,
             onTap: () =>
-                controladorDePedidos.actualizarEstadoPedido(idPedido, 1,modo),
+                controladorDePedidos.actualizarEstadoPedido(idPedido, 1,modo,idCliente),
           ),
         ],
       ),
@@ -53,7 +54,7 @@ class PedidosEnEsperaPage extends StatelessWidget {
   }
 
   _onrechazarPedidoEnEspera(BuildContext context, String id) {
-    controladorDePedidos.actualizarEstadoPedido(id, 4,modo);
+    controladorDePedidos.actualizarEstadoPedido(id, 4,modo,idCliente);
     Navigator.of(context).pop();
   }
 }

@@ -190,7 +190,7 @@ class PedidoController extends GetxController {
 
       switch (estado) {
         case 0:
-          mensaje = "Su pedido se realizo con éxito";
+          mensaje = "Su pedido se realizo";
           icono = Icons.waving_hand_outlined;
           modo == 0
               ? cargarListaPedidosParaAdministrador(0)
@@ -198,7 +198,7 @@ class PedidoController extends GetxController {
 
           break;
         case 1:
-          mensaje = "Pedido aceptado con éxito.";
+          mensaje = "Pedido aceptado";
 
           icono = Icons.check_circle_outline_outlined;
           if (modo == 0) {
@@ -211,7 +211,7 @@ class PedidoController extends GetxController {
 
           break;
         case 2:
-          mensaje = "Pedido finalizado con éxito.";
+          mensaje = "Pedido finalizado";
           icono = Icons.check_outlined;
           //
           if (modo == 0) {
@@ -223,7 +223,7 @@ class PedidoController extends GetxController {
           }
           break;
         case 3:
-          mensaje = "Pedido cancelado.";
+          mensaje = "Pedido cancelado";
           icono = Icons.message_outlined;
           if (modo == 0) {
             cargarListaPedidosParaAdministrador(3);
@@ -234,7 +234,7 @@ class PedidoController extends GetxController {
           }
           break;
         case 4:
-          mensaje = "Pedido rechazado.";
+          mensaje = "Pedido rechazado";
           icono = Icons.message_outlined;
           //cargarListaPedidos(4);
           if (modo == 0) {
@@ -246,7 +246,7 @@ class PedidoController extends GetxController {
       }
       Mensajes.showGetSnackbar(
           titulo: titulo,
-          mensaje: mensaje,
+          mensaje: '$mensaje .',
           icono: Icon(
             icono,
             color: Colors.white,
@@ -257,7 +257,8 @@ class PedidoController extends GetxController {
           idEmisorNotificacion: _personaRepository.idUsuarioActual,
           idRemitenteNotificacion: idCliente,
           textoNotificacion: _personaRepository.nombreUsuarioActual,
-          tituloNotificacion: mensaje);
+          tituloNotificacion: mensaje,
+          idPedidoNotificacion: idPedido);
       await _notificacionRepository.insertNotificacion(
           notificacionModel: _notificacionModel);
     } on FirebaseException {

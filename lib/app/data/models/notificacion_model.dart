@@ -1,11 +1,12 @@
 class Notificacion {
   Notificacion({
-     this.idNotificacion,
+    this.idNotificacion,
     required this.fechaNotificacion,
     required this.tituloNotificacion,
     required this.textoNotificacion,
     required this.idEmisorNotificacion,
     required this.idRemitenteNotificacion,
+    this.idPedidoNotificacion,
   });
 
   final String? idNotificacion;
@@ -14,6 +15,7 @@ class Notificacion {
   final String textoNotificacion;
   final String idEmisorNotificacion;
   final String idRemitenteNotificacion;
+  final String? idPedidoNotificacion;
 
   factory Notificacion.fromMap(Map<String, dynamic> json) => Notificacion(
         idNotificacion: json["idNotificacion"],
@@ -22,6 +24,7 @@ class Notificacion {
         textoNotificacion: json["textoNotificacion"],
         idEmisorNotificacion: json["idEmisorNotificacion"],
         idRemitenteNotificacion: json["idRemitenteNotificacion"],
+        idPedidoNotificacion: json["idPedidoNotificacion"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -31,5 +34,6 @@ class Notificacion {
         "textoNotificacion": textoNotificacion,
         "idEmisorNotificacion": idEmisorNotificacion,
         "idRemitenteNotificacion": idRemitenteNotificacion,
+        "idPedidoNotificacion":idPedidoNotificacion
       };
 }

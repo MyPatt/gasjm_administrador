@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart'; 
 import 'package:gasjm/app/modules/gasjm/widgets/form_ruta.dart';
+import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ContenidoRuta extends StatelessWidget {
@@ -23,20 +25,17 @@ class ContenidoRuta extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              /*  const CircleAvatar(
-                backgroundColor: AppTheme.light,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    Icons.backup_table_rounded,
-                    color: AppTheme.blueDark,
-                    size: 50,
-                  ),
-                  radius: 55.0,
-                ),
-                radius: 56.0,
-              ),*/
-              //    SizedBox(height: Responsive.getScreenSize(context).height * .05),
+               SizedBox(height: Responsive.getScreenSize(context).height * .05),
+
+                SizedBox(
+                      height:100, width:100,
+                      child:SvgPicture.asset(
+                 "assets/icons/ruta.svg", 
+                        semanticsLabel: 'Ruta'
+                      ),
+                    ),
+           
+               SizedBox(height: Responsive.getScreenSize(context).height * .05),
               Obx(() => Expanded(
                   child: ListView.builder(
                       // scrollDirection: Axis.horizontal,

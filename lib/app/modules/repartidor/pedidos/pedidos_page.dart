@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
-import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
+import 'package:gasjm/app/modules/repartidor/pedidos/widgets/modal_ordenamiento.dart';
 import 'package:get/get.dart';
 
 class PedidosPage extends StatelessWidget {
@@ -28,10 +28,21 @@ class PedidosPage extends StatelessWidget {
                 ),
               ),
               backgroundColor: AppTheme.blueBackground,
-              actions: const [
-                MenuAppBar(
-                  indiceMenu: 1,
-                )
+              actions: [
+                IconButton(
+                    icon: const Icon(Icons.search_outlined), onPressed: () {}),
+                IconButton(
+                    icon: const Icon(
+                      Icons.sort_outlined,
+                    ),
+                    onPressed: () => showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) => ModalOrdenamiento(
+                              listaCategoriasDeOrdenamiento:
+                                  _.listaCategoriasDeOrdenamiento,
+                              selectedRadioTile: _.indiceCategoriaSeleccionada),
+                        ))
               ],
               title: const Text("Pedidos"),
             ),
@@ -47,17 +58,18 @@ class PedidosPage extends StatelessWidget {
                       unselectedLabelColor: AppTheme.light,
                       isScrollable: true,
                       // El repartidor vera todos los pedidos en espera, en camabio  aceptados y finalizados solo por el
-                      tabs:<Widget> [
+                      tabs: <Widget>[
                         Obx(() => Tab(
-                            text:
-                                'En espera (${_.controladorDePedidos.listaPedidosEnEspera.length})')),
+                              text:
+                                  'En espera (${_.controladorDePedidos.listaPedidosEnEspera.length})',
+                            )),
                         Obx(() => Tab(
                               text:
                                   'Aceptados (${_.controladorDePedidos.listaPedidosAceptados.length})',
                             )),
                         Obx(() => Tab(
                             text:
-                                "Finalizados (${_.controladorDePedidos.listaPedidosFinalizados.length}) "))
+                                "Finalizados (${_.controladorDePedidos.listaPedidosFinalizados.length})"))
                       ],
                     ),
                   ),

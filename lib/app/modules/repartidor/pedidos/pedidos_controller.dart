@@ -1,4 +1,5 @@
 import 'package:gasjm/app/data/controllers/pedido_controller.dart';
+import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:get/get.dart';
@@ -73,6 +74,7 @@ class PedidosController extends GetxController {
     //0 en espera
     //1 aceptados
     //2 finalizados
+
     controladorDePedidos.cargarListaPedidosParaRepartidor(0);
     controladorDePedidos.cargarListaPedidosParaRepartidor(1);
     controladorDePedidos.cargarListaPedidosParaRepartidor(2);
@@ -125,4 +127,14 @@ class PedidosController extends GetxController {
         await _personaRepository.getNombresPersonaPorCedula(cedula: cedula);
     return nombre ?? 'Usuario';
   }*/
+
+  //Filtrar lista
+
+  RxString indiceCategoriaSeleccionada = 'Fecha'.obs;
+  final listaCategoriasDeOrdenamiento = [
+    "Fecha",
+    "Cantidad", 
+    "Dirección",
+    "Cliente"
+  ];
 }

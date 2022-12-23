@@ -39,9 +39,12 @@ class PedidosPage extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           context: context,
                           builder: (context) => ModalOrdenamiento(
-                              listaCategoriasDeOrdenamiento:
-                                  _.listaCategoriasDeOrdenamiento,
-                              selectedRadioTile: _.indiceCategoriaSeleccionada),
+                            listaCategoriasDeOrdenamiento:
+                                _.listaCategoriasDeOrdenamiento,
+                            selectedRadioTile: _.indiceCategoriaSeleccionada,
+                            onChanged: (valor) =>
+                                _.seleccionarOpcionDeOrdenamiento(valor),
+                          ),
                         ))
               ],
               title: const Text("Pedidos"),
@@ -54,9 +57,9 @@ class PedidosPage extends StatelessWidget {
                     color: Colors.white,
                     child: TabBar(
                       labelStyle: Theme.of(context)
-          .textTheme
-          .subtitle2
-          ?.copyWith(fontWeight: FontWeight.w700),
+                          .textTheme
+                          .subtitle2
+                          ?.copyWith(fontWeight: FontWeight.w700),
                       indicatorColor: AppTheme.blueBackground,
                       labelColor: AppTheme.blueBackground,
                       unselectedLabelColor: AppTheme.light,

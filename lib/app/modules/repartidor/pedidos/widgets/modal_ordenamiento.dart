@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
+import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class ModalOrdenamiento extends StatelessWidget {
       Icons.person_outline_outlined
     ];
     return Container(
-        height: Responsive.hp(context) * .51,
+        height: Responsive.hp(context) * .5,
         width: double.infinity,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(
@@ -53,9 +54,7 @@ class ModalOrdenamiento extends StatelessWidget {
                   ),
                 ),
               ),
-              Text("Ordenar por",
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      color: AppTheme.blueDark, fontWeight: FontWeight.w700)),
+              TextSubtitle(text: "Ordenar por"),
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(top: 15.0),
@@ -84,17 +83,18 @@ class ModalOrdenamiento extends StatelessWidget {
                           value: listaCategoriasDeOrdenamiento[index],
                           groupValue: selectedRadioTile.value,
                           activeColor: AppTheme.blueBackground,
-                          title: Text(
-                            listaCategoriasDeOrdenamiento[index],
-                            style: const TextStyle(color: Colors.black38),
+                          title: TextDescription(
+                            text: listaCategoriasDeOrdenamiento[index],
+                            textAlign: TextAlign.start,
                           ),
-                          onChanged: (val) {
-                            print("Radio Tile pressed $val");
-                            selectedRadioTile.value = val.toString();
-                            print(selectedRadioTile.value);
+                          onChanged: (val) { 
+                            selectedRadioTile.value = val.toString(); 
                             Navigator.of(context).pop();
                           },
-                          secondary: Icon(iconos[index]),
+                          secondary: Icon(
+                            iconos[index],
+                            size: 20.0,
+                          ),
                         ),
                       ),
                     );

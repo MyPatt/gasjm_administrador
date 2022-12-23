@@ -53,6 +53,10 @@ class PedidosPage extends StatelessWidget {
                   Container(
                     color: Colors.white,
                     child: TabBar(
+                      labelStyle: Theme.of(context)
+          .textTheme
+          .subtitle2
+          ?.copyWith(fontWeight: FontWeight.w700),
                       indicatorColor: AppTheme.blueBackground,
                       labelColor: AppTheme.blueBackground,
                       unselectedLabelColor: AppTheme.light,

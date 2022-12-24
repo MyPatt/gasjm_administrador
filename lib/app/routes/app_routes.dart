@@ -17,6 +17,7 @@ class AppRoutes {
 
   static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";
+  static const buscar = "/buscar";
   static const ir = "/ir";
 
  

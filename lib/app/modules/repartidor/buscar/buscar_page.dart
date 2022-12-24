@@ -3,25 +3,24 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
+import 'package:gasjm/app/modules/repartidor/buscar/buscar_controller.dart';
+import 'package:gasjm/app/modules/repartidor/buscar/widgets/buscar.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/widgets/modal_ordenamiento.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
-class PedidosPage extends StatelessWidget {
-  const PedidosPage({Key? key}) : super(key: key);
+class BuscarPage extends StatelessWidget {
+  const BuscarPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PedidosController>(
+    return GetBuilder<BuscarController>(
         builder: (_) => Scaffold(
             backgroundColor: AppTheme.background,
-            //Menú deslizable a la izquierda con opciones del  usuario
-            drawer: MenuLateral(
-                modo: 'Modo administrador', imagenPerfil: _.imagenUsuario),
 
             //
             appBar: AppBar(
+              automaticallyImplyLeading: true,
               elevation: 0,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
@@ -29,26 +28,9 @@ class PedidosPage extends StatelessWidget {
                 ),
               ),
               backgroundColor: AppTheme.blueBackground,
-              actions: [
-                IconButton(
-                    icon: const Icon(Icons.search_outlined), onPressed: () =>Get.toNamed(AppRoutes.buscar)),
-                IconButton(
-                    icon: const Icon(
-                      Icons.sort_outlined,
-                    ),
-                    onPressed: () => showModalBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) => ModalOrdenamiento(
-                            listaCategoriasDeOrdenamiento:
-                                _.listaCategoriasDeOrdenamiento,
-                            selectedRadioTile: _.indiceCategoriaSeleccionada,
-                            onChanged: (valor) =>
-                                _.seleccionarOpcionDeOrdenamiento(valor),
-                          ),
-                        ))
-              ],
-              title: const Text("Pedidos"),
+              title: Buscar(
+                controller: _.controladorBuscarTexto, onChanged: (String valor)=>_.buscarPedidos(valor),
+              ),
             ),
             body: DefaultTabController(
               length: 3,

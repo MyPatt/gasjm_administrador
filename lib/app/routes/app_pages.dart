@@ -8,6 +8,8 @@ import 'package:gasjm/app/modules/home/home_binding.dart';
 import 'package:gasjm/app/modules/home/home_page.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_binding.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_page.dart';
+import 'package:gasjm/app/modules/repartidor/buscar/buscar_binding.dart';
+import 'package:gasjm/app/modules/repartidor/buscar/buscar_page.dart';
 import 'package:gasjm/app/modules/repartidor/inicio/inicio_binding.dart';
 import 'package:gasjm/app/modules/repartidor/inicio/inicio_page.dart';
 import 'package:gasjm/app/modules/repartidor/ir/ir_binding.dart';
@@ -151,6 +153,11 @@ class AppPages {
         name: AppRoutes.pedidos,
         page: () => const PedidosPage(),
         binding: PedidosBinding(),
+        transition: Transition.noTransition),
+          GetPage(
+        name: AppRoutes.buscar,
+        page: () => const BuscarPage(),
+        binding: BuscarBinding(),
         transition: Transition.noTransition),
  
     GetPage(

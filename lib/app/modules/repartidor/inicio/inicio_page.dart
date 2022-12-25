@@ -31,35 +31,7 @@ class InicioPage extends StatelessWidget {
                 ),
               ),
               backgroundColor: AppTheme.blueBackground,
-              actions: <Widget>[
-                IconButton(
-                    onPressed: ()async   {
-      String registrationToken =
-                          "cOftmMesSHK-Tj_1kCkOs-:APA91bGmKjMQjXtDFEwtzVxZF8jjrGa4F0mjkUylQr9DuFWhYDEEsO4aCG39icSDgTENEYijJ0_c1181LOMX_QQsoHnLPEr9ghY_dcOAr8nQJET_2UgbtPVpzRLkIH0NEKt_67y3wmy2";
-
-                      Map<String, String> mensaje = {
-                        "titulo": "Titulo",
-                        "cuerpo": "Cuerpo"
-                      };
-                      print("iiiiiiiiiiiiiiiiii");
-
-                      await FirebaseMessaging.instance
-                          .sendMessage(to: registrationToken, data: mensaje,messageId: "mensaje1");
-                      print("pppppppppppppppppppppppppp"); 
-                    },
-                    icon: const Icon(Icons.notifications_on_outlined)),
-                IconButton(
-                    onPressed: () {
-                      globals.existeNotificacion.value = false;
-                    },
-                    icon: Obx(
-                      () => Icon(globals.existeNotificacion.value
-                          ? Icons.notifications_active_outlined
-                          : Icons.notifications_none_outlined),
-                    )),
-              ],
-              // title: const Text('GasJ&M'),
-              title: Text(globals.globalString ?? "GasJ&M"),
+              title: const Text("GasJ&M"),
             ),
             //Body
             body: Stack(children: const <Widget>[

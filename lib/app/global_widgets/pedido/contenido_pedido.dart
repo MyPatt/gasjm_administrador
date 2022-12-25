@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/controllers/pedido_controller.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/global_widgets/pedido/detalle_pedido.dart';
 import 'package:gasjm/app/global_widgets/pedido/opciones_pedido.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
@@ -11,9 +12,10 @@ import 'package:get/get.dart';
 
 class ContenidoPedido extends StatelessWidget {
   ContenidoPedido(
-      {Key? key, required this.indiceCategoriaPedido, required this.modo})
+      {Key? key,required this.listaPedidos, required this.indiceCategoriaPedido, required this.modo, })
       : super(key: key);
   final PedidoController controladorDePedidos = Get.put(PedidoController());
+  final RxList<PedidoModel> listaPedidos;
   final int indiceCategoriaPedido;
   final int modo;
   @override
@@ -33,17 +35,8 @@ class ContenidoPedido extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView(
-                      children: (indiceCategoriaPedido == 0
-                              ? controladorDePedidos.listaPedidosEnEspera.value
-                              : indiceCategoriaPedido == 1
-                                  ? controladorDePedidos
-                                      .listaPedidosAceptados.value
-                                  : indiceCategoriaPedido == 2
-                                      ? controladorDePedidos
-                                          .listaPedidosFinalizados.value
-                                      : controladorDePedidos
-                                          .listaPedidosCancelados.value)
-                          .map((e) {
+                      children: listaPedidos.value
+                          .map((pedido) {
                         return Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
@@ -55,7 +48,7 @@ class ContenidoPedido extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                     onTap: () => Get.to(DetallePedido(
-                                          e: e,
+                                          e: pedido,
                                           indiceCategoriaPedido:
                                               indiceCategoriaPedido,
                                           modo: modo,
@@ -68,11 +61,11 @@ class ContenidoPedido extends StatelessWidget {
                                           children: <Widget>[
                                             TextSubtitle(
                                               text:
-                                                  e.nombreUsuario ?? 'Cliente',
+                                                  pedido.nombreUsuario ?? 'Cliente',
                                               // style: TextoTheme.subtitleStyle2,
                                             ),
                                             TextSubtitle(
-                                              text: e.cantidadPedido.toString(),
+                                              text: pedido.cantidadPedido.toString(),
                                               //  style: TextoTheme.subtitleStyle2
                                             )
                                           ],
@@ -82,7 +75,7 @@ class ContenidoPedido extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             TextDescription(
-                                                text: e.direccionUsuario ??
+                                                text: pedido.direccionUsuario ??
                                                     'Sin ubicación'),
                                             const TextDescription(text: '5 min')
                                           ],
@@ -94,7 +87,7 @@ class ContenidoPedido extends StatelessWidget {
                                             TextDescription(
                                                 text: controladorDePedidos
                                                     .formatoFecha(
-                                                        e.fechaHoraPedido)),
+                                                        pedido.fechaHoraPedido)),
                                             const TextDescription(text: '300 m')
                                           ],
                                         ),
@@ -103,7 +96,7 @@ class ContenidoPedido extends StatelessWidget {
                                 const Divider(),
                                 //Tipo de categoria
                                 OpcionesPedido(
-                                  e: e,
+                                  e: pedido,
                                   indiceCategoriaPedido: indiceCategoriaPedido,
                                   modo: modo,
                                 )
@@ -138,4 +131,5 @@ class ContenidoPedido extends StatelessWidget {
 
     await Future.delayed(const Duration(seconds: 2));
   }
+   
 }

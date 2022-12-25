@@ -1,5 +1,4 @@
-import 'package:gasjm/app/data/controllers/pedido_controller.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
+import 'package:gasjm/app/data/controllers/pedido_controller.dart'; 
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:get/get.dart';
 

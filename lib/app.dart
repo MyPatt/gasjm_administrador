@@ -24,19 +24,16 @@ class MyApp extends StatelessWidget {
             /* localizationsDelegates: [
          GlobalMaterialLocalizations.delegate
        ],*/
-       supportedLocales:const [
-          Locale('en'),
-           Locale('es')
-       ],
+            supportedLocales: const [Locale('es')],
             title: 'Gas J&M',
-            
-            theme: ThemeData( 
+            theme: ThemeData(
                 textSelectionTheme: const TextSelectionThemeData(
-                    cursorColor: AppTheme.blueBackground,)), 
+                  cursorColor: AppTheme.blueBackground,
+                ),
+                primaryColor: AppTheme.blueBackground),
             home: const SplashPage(),
             initialBinding: SplashBinding(),
             getPages: AppPages.pages,
-            
           );
         });
   }

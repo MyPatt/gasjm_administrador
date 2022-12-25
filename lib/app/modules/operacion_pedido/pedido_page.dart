@@ -1,4 +1,4 @@
-import 'package:gasjm/app/data/models/categoria_model.dart';
+ 
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
@@ -83,19 +83,19 @@ class OperacionPedidoPage extends StatelessWidget {
                     //1 repartidor
                     ContenidoPedido(
                       indiceCategoriaPedido: 0,
-                      modo: 0,
+                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosEnEspera
                     ),
                     ContenidoPedido(
                       indiceCategoriaPedido: 1,
-                      modo: 0,
+                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosAceptados
                     ),
                     ContenidoPedido(
                       indiceCategoriaPedido: 2,
-                      modo: 0,
+                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosFinalizados
                     ),
                     ContenidoPedido(
                       indiceCategoriaPedido: 3,
-                      modo: 0,
+                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosCancelados
                     ),
                   ]))
                 ],

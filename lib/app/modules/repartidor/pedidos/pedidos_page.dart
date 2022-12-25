@@ -31,7 +31,8 @@ class PedidosPage extends StatelessWidget {
               backgroundColor: AppTheme.blueBackground,
               actions: [
                 IconButton(
-                    icon: const Icon(Icons.search_outlined), onPressed: () =>Get.toNamed(AppRoutes.buscar)),
+                    icon: const Icon(Icons.search_outlined),
+                    onPressed: () => Get.toNamed(AppRoutes.buscar)),
                 IconButton(
                     icon: const Icon(
                       Icons.sort_outlined,
@@ -89,19 +90,36 @@ class PedidosPage extends StatelessWidget {
                     // 0 administrador
                     //1 repartidor
                     //Ver pedidos en espera como repartidor
+                    /*
+                    (indiceCategoriaPedido == 0
+                              ? controladorDePedidos.listaPedidosEnEspera.value
+                              : indiceCategoriaPedido == 1
+                                  ? controladorDePedidos
+                                      .listaPedidosAceptados.value
+                                  : indiceCategoriaPedido == 2
+                                      ? controladorDePedidos
+                                          .listaPedidosFinalizados.value
+                                      : controladorDePedidos
+                                          .listaPedidosCancelados.value)
+                    */
                     ContenidoPedido(
                       indiceCategoriaPedido: 0,
                       modo: 1,
+                      listaPedidos: _.controladorDePedidos.listaPedidosEnEspera,
                     ),
                     //Ver pedidos aceptados como repartidor
                     ContenidoPedido(
                       indiceCategoriaPedido: 1,
                       modo: 1,
+                      listaPedidos:
+                          _.controladorDePedidos.listaPedidosAceptados,
                     ),
                     //Ver pedidos finalizados como repartidor
                     ContenidoPedido(
                       indiceCategoriaPedido: 2,
                       modo: 1,
+                      listaPedidos:
+                          _.controladorDePedidos.listaPedidosFinalizados,
                     ),
                     // const ContenidoHistorial()
                   ]))

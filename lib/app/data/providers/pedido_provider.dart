@@ -43,7 +43,7 @@ class PedidoProvider {
     final resultado = await _firestoreInstance
         .collection('pedido')
         .where("idEstadoPedido", whereIn: ["estado1", "estado2"]).get();
- 
+
 //
     return (resultado.docs)
         .map((item) => PedidoModel.fromJson(item.data()))
@@ -69,6 +69,7 @@ class PedidoProvider {
         .collection("pedido")
         .where(field1, isEqualTo: dato1)
         .where(field2, isEqualTo: dato2)
+        .orderBy("fechaHoraPedido")
         .get();
     if ((resultado.docs.isNotEmpty)) {
       return (resultado.docs)
@@ -83,6 +84,7 @@ class PedidoProvider {
     final resultado = await _firestoreInstance
         .collection("pedido")
         .where(field, isEqualTo: dato)
+        .orderBy("fechaHoraPedido")
         .get();
     if ((resultado.docs.isNotEmpty)) {
       return (resultado.docs)

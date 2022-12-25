@@ -6,56 +6,98 @@ import 'package:get/get.dart';
 class BuscarController extends GetxController {
   /* VARIABLES*/
 
-  //
-  final TextEditingController controladorBuscarTexto = TextEditingController();
-
-  //
+  //Controlador de Pedidos (general)
   final PedidoController controladorDePedidos = Get.put(PedidoController());
 
-  //
-  List<PedidoModel> lista1=[];
-  List<PedidoModel> lista2=[];
-  List<PedidoModel> lista3=[];
+  //Controlador de texto para el input de busqueda
+  final TextEditingController controladorBuscarTexto = TextEditingController();
+
+  //Existe texto en el input de buqueda?
+  final RxBool existeTexoParaBuscar = false.obs;
+
+  //Lista para Pedidos en espera
+
+  final RxList<PedidoModel> _listaPedidosEnEspera = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosEnEspera => _listaPedidosEnEspera;
+
+  //Lista para Pedidos aceptados
+
+  final RxList<PedidoModel> _listaPedidosAceptados = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosAceptados => _listaPedidosAceptados;
+
+  //Lista para Pedidos finalizados
+
+  final RxList<PedidoModel> _listaPedidosFinalizados = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosFinalizados => _listaPedidosFinalizados;
+
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
     super.onInit();
-
-    lista1 = controladorDePedidos.listaPedidosEnEspera;
-    lista2 = controladorDePedidos.listaPedidosAceptados;
-    lista3 = controladorDePedidos.listaPedidosFinalizados;
-
-    /*
-
-    controladorDePedidos.cargarListaPedidosParaRepartidor(0);
-    controladorDePedidos.cargarListaPedidosParaRepartidor(1);
-    controladorDePedidos.cargarListaPedidosParaRepartidor(2);
-    */
   }
 
+  /* METODOS */
+
+  //Metodo para filtrar de la lista principal de pedidos
   buscarPedidos(String valor) {
-    var aux1 =  lista1
+    //Si esta vacio el input
+    if (valor.isEmpty) {
+      
+    //El icono de borrar deshabilitar
+    existeTexoParaBuscar.value = false;
+
+      return;
+    }
+
+    //Filtro de listas, todo en minuscular para optimizar la busqueda
+
+    _listaPedidosEnEspera.value = controladorDePedidos.listaPedidosEnEspera
         .where((pedido) =>
-            pedido.nombreUsuario!.contains(controladorBuscarTexto.text) ||
-            pedido.direccionUsuario!.contains(controladorBuscarTexto.text))
+            pedido.nombreUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()) ||
+            pedido.direccionUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()))
         .toList();
 
-    var aux2 = lista2
+    _listaPedidosAceptados.value = controladorDePedidos.listaPedidosAceptados
         .where((pedido) =>
-            pedido.nombreUsuario!.contains(controladorBuscarTexto.text) ||
-            pedido.direccionUsuario!.contains(controladorBuscarTexto.text))
+            pedido.nombreUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()) ||
+            pedido.direccionUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()))
         .toList();
 
-    var aux3 = lista3
+    _listaPedidosFinalizados.value = controladorDePedidos
+        .listaPedidosFinalizados
         .where((pedido) =>
-            pedido.nombreUsuario!.contains(controladorBuscarTexto.text) ||
-            pedido.direccionUsuario!.contains(controladorBuscarTexto.text))
+            pedido.nombreUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()) ||
+            pedido.direccionUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()))
         .toList();
 
-    controladorDePedidos.listaPedidosEnEspera.value = aux1;
-    controladorDePedidos.listaPedidosAceptados.value = aux1;
-    controladorDePedidos.listaPedidosFinalizados.value = aux1;
-    print(valor);
-    print(aux2.length);
+        
+    //El icono de borrar habilitar
+    existeTexoParaBuscar.value = true;
+  }
+
+  //Metodo que borra la busqueda y limpia las listas
+  void limpiarBusqueda() {
+    //Borrar el texto del input
+    controladorBuscarTexto.text = '';
+
+    //El icono de borrar deshabilitar
+    existeTexoParaBuscar.value = false;
+
+    //Limpiar listas
+    _listaPedidosEnEspera.value = [];
+    _listaPedidosAceptados.value = [];
+    _listaPedidosFinalizados.value = [];
   }
 }

@@ -54,8 +54,8 @@ class PedidoController extends GetxController {
 
           //
           for (var i = 0; i < lista.length; i++) {
-            final nombre = await _getNombresCliente(lista[i].idCliente);
-            final direccion = await _getDireccionXLatLng(LatLng(
+            final nombre = await getNombresCliente(lista[i].idCliente);
+            final direccion = await getDireccionXLatLng(LatLng(
                 lista[i].direccion.latitud, lista[i].direccion.longitud));
             lista[i].nombreUsuario = nombre;
             lista[i].direccionUsuario = direccion;
@@ -77,8 +77,8 @@ class PedidoController extends GetxController {
 
           //
           for (var i = 0; i < lista.length; i++) {
-            final nombre = await _getNombresCliente(lista[i].idCliente);
-            final direccion = await _getDireccionXLatLng(LatLng(
+            final nombre = await getNombresCliente(lista[i].idCliente);
+            final direccion = await getDireccionXLatLng(LatLng(
                 lista[i].direccion.latitud, lista[i].direccion.longitud));
             lista[i].nombreUsuario = nombre;
             lista[i].direccionUsuario = direccion;
@@ -118,8 +118,8 @@ class PedidoController extends GetxController {
 
       //
       for (var i = 0; i < lista.length; i++) {
-        final nombre = await _getNombresCliente(lista[i].idCliente);
-        final direccion = await _getDireccionXLatLng(
+        final nombre = await getNombresCliente(lista[i].idCliente);
+        final direccion = await getDireccionXLatLng(
             LatLng(lista[i].direccion.latitud, lista[i].direccion.longitud));
         lista[i].nombreUsuario = nombre;
         lista[i].direccionUsuario = direccion;
@@ -274,13 +274,13 @@ class PedidoController extends GetxController {
   }
 
   //
-  Future<String> _getNombresCliente(String uid) async {
+  Future<String> getNombresCliente(String uid) async {
     final nombre =
         await _personaRepository.getNombresPersonaPorUid(uid: uid);
     return nombre ?? 'Usuario';
   }
 
-  Future<String> _getDireccionXLatLng(LatLng posicion) async {
+  Future<String> getDireccionXLatLng(LatLng posicion) async {
     List<Placemark> placemark =
         await placemarkFromCoordinates(posicion.latitude, posicion.longitude);
     Placemark lugar = placemark[0];

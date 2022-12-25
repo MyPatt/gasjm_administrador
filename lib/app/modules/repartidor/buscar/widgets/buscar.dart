@@ -1,10 +1,19 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Buscar extends StatelessWidget {
-  const Buscar({Key? key, required this.controller, required this.onChanged}) : super(key: key);
+  const Buscar(
+      {Key? key,
+      required this.controller,
+      required this.onChanged,
+      required this.onTap,
+      required this.existeTexoParaBuscar})
+      : super(key: key);
   final TextEditingController controller;
   final Function(String valor) onChanged;
+  final Function()? onTap;
+  final RxBool existeTexoParaBuscar;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -27,7 +36,14 @@ class Buscar extends StatelessWidget {
           hintStyle: const TextStyle(color: Colors.white),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 0.0, horizontal: 15.0),
-          suffixIcon: const Icon(Icons.close_outlined, color: Colors.white),
+          suffixIcon: Obx(
+            () => Visibility(
+              visible: existeTexoParaBuscar.value,
+              child: GestureDetector(
+                  onTap: onTap,
+                  child: const Icon(Icons.close_outlined, color: Colors.white)),
+            ),
+          ),
         ));
   }
 }

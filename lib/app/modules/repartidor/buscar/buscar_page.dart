@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/global_widgets/bottom_repartidor.dart'; 
+import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
 import 'package:gasjm/app/modules/repartidor/buscar/buscar_controller.dart';
-import 'package:gasjm/app/modules/repartidor/buscar/widgets/buscar.dart'; 
+import 'package:gasjm/app/modules/repartidor/buscar/widgets/buscar.dart';
 import 'package:get/get.dart';
 
 class BuscarPage extends StatelessWidget {
@@ -28,6 +28,8 @@ class BuscarPage extends StatelessWidget {
               title: Buscar(
                 controller: _.controladorBuscarTexto,
                 onChanged: (String valor) => _.buscarPedidos(valor),
+                onTap: _.limpiarBusqueda,
+                existeTexoParaBuscar: _.existeTexoParaBuscar,
               ),
             ),
             body: DefaultTabController(
@@ -49,15 +51,15 @@ class BuscarPage extends StatelessWidget {
                       tabs: <Widget>[
                         Obx(() => Tab(
                               text:
-                                  'En espera (${_.controladorDePedidos.listaPedidosEnEspera.length})',
+                                  'En espera (${_.listaPedidosEnEspera.length})',
                             )),
                         Obx(() => Tab(
                               text:
-                                  'Aceptados (${_.controladorDePedidos.listaPedidosAceptados.length})',
+                                  'Aceptados (${_.listaPedidosAceptados.length})',
                             )),
                         Obx(() => Tab(
                             text:
-                                "Finalizados (${_.controladorDePedidos.listaPedidosFinalizados.length})"))
+                                "Finalizados (${_.listaPedidosFinalizados.length})"))
                       ],
                     ),
                   ),
@@ -72,17 +74,18 @@ class BuscarPage extends StatelessWidget {
                     ContenidoPedido(
                       indiceCategoriaPedido: 0,
                       modo: 1,
+                      listaPedidos: _.listaPedidosEnEspera,
                     ),
                     //Ver pedidos aceptados como repartidor
                     ContenidoPedido(
-                      indiceCategoriaPedido: 1,
-                      modo: 1,
-                    ),
+                        indiceCategoriaPedido: 1,
+                        modo: 1,
+                        listaPedidos: _.listaPedidosAceptados),
                     //Ver pedidos finalizados como repartidor
                     ContenidoPedido(
-                      indiceCategoriaPedido: 2,
-                      modo: 1,
-                    ),
+                        indiceCategoriaPedido: 2,
+                        modo: 1,
+                        listaPedidos: _.listaPedidosFinalizados),
                     // const ContenidoHistorial()
                   ]))
                 ],

@@ -15,7 +15,7 @@ class ModalOrdenamiento extends StatelessWidget {
       : super(key: key);
   final List<String> listaCategoriasDeOrdenamiento;
   final RxString selectedRadioTile;
-  final   Function(String valor) onChanged;
+  final Function(String valor) onChanged;
   @override
   Widget build(BuildContext context) {
     var iconos = [
@@ -81,7 +81,7 @@ class ModalOrdenamiento extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 1,
-                      margin: const EdgeInsets.all(.50),
+                      margin: const EdgeInsets.all(1.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),

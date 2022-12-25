@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/global_widgets/bottom_repartidor.dart';
-import 'package:gasjm/app/global_widgets/menu_lateral.dart';
+import 'package:gasjm/app/global_widgets/bottom_repartidor.dart'; 
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
 import 'package:gasjm/app/modules/repartidor/buscar/buscar_controller.dart';
-import 'package:gasjm/app/modules/repartidor/buscar/widgets/buscar.dart';
-import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_controller.dart';
-import 'package:gasjm/app/modules/repartidor/pedidos/widgets/modal_ordenamiento.dart';
+import 'package:gasjm/app/modules/repartidor/buscar/widgets/buscar.dart'; 
 import 'package:get/get.dart';
 
 class BuscarPage extends StatelessWidget {
@@ -29,7 +26,8 @@ class BuscarPage extends StatelessWidget {
               ),
               backgroundColor: AppTheme.blueBackground,
               title: Buscar(
-                controller: _.controladorBuscarTexto, onChanged: (String valor)=>_.buscarPedidos(valor),
+                controller: _.controladorBuscarTexto,
+                onChanged: (String valor) => _.buscarPedidos(valor),
               ),
             ),
             body: DefaultTabController(

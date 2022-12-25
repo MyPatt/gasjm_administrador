@@ -13,6 +13,7 @@ class Buscar extends StatelessWidget {
         cursorColor: Colors.white,
         onChanged: onChanged,
         textInputAction: TextInputAction.search,
+        keyboardType: TextInputType.streetAddress,
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: 'Buscar',

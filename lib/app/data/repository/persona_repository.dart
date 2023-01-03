@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 
 abstract class PersonaRepository {
@@ -29,4 +30,8 @@ abstract class PersonaRepository {
       {required String uid,
       required String actualContrasena,
       required String nuevaContrasena});
+
+  //
+  Future<void> updateUbicacionActualDelUsuario(
+      {required Direccion ubicacionActual, required double rotacionActual});
 }

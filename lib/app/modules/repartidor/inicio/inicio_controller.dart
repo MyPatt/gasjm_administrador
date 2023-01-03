@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:geolocator/geolocator.dart';
@@ -78,7 +79,7 @@ class InicioController extends GetxController {
       _getUsuarioActual(),
       _getLocalizacionActual(),
       _cargarDatosParaMarcadorRepartidor(),
-      _initLocationUpdate()
+      _escucharCambiosDeUbicacion()
     ]);
   }
 
@@ -211,12 +212,23 @@ class InicioController extends GetxController {
     _marcadoresParaExplorar[_marcadorRepartidorId] = marker;
   }
 
-  void _enviarPosicionDelRepartidorActual(Position posicion) async {
-    double rotation = 0;
+//
+  double obtenerRotacionActualDelVehiculoRepartidor(Position posicionFinal) {
+    double rotacion = 0;
     if (_lastPosition != null) {
-      rotation = Geolocator.bearingBetween(_lastPosition!.latitude,
-          _lastPosition!.longitude, posicion.latitude, posicion.longitude);
+      rotacion = Geolocator.bearingBetween(
+          _lastPosition!.latitude,
+          _lastPosition!.longitude,
+          posicionFinal.latitude,
+          posicionFinal.longitude);
     }
+    return rotacion;
+  }
+
+//
+  void _enviarPosicionDelRepartidorActual(Position posicion) async {
+    double rotation = obtenerRotacionActualDelVehiculoRepartidor(posicion);
+
     //
     final marcador = _marcadoresParaExplorar[_marcadorRepartidorId];
 
@@ -250,14 +262,17 @@ class InicioController extends GetxController {
     //Icono del marcador
   }
 
-  Future<void> _initLocationUpdate() async {
+  Future<void> _escucharCambiosDeUbicacion() async {
     bool inicializado = false;
     // await _posicionStreamSubscripcion.cancel();
 
     _posicionStreamSubscripcion = Geolocator.getPositionStream(
-            desiredAccuracy: LocationAccuracy.high, distanceFilter: 5)
+            desiredAccuracy: LocationAccuracy.high, distanceFilter: 6)
         .listen((posicion) async {
       _enviarPosicionDelRepartidorActual(posicion);
+
+      //actualizar datos en firestore
+      _actualizarUbicacionActualDelUsuarioRepartidor(posicion);
 
       if (!inicializado) {
         _setInitialPosition(posicion);
@@ -279,5 +294,17 @@ class InicioController extends GetxController {
       posicionMarcadorRepartidor.value =
           LatLng(position.latitude, position.longitude);
     }
+  }
+
+  //Actualizar ubicacion actual del dispositivo
+  _actualizarUbicacionActualDelUsuarioRepartidor(Position posicion) {
+    double rotacionActual =
+        obtenerRotacionActualDelVehiculoRepartidor(posicion);
+
+    Direccion ubicacionActual =
+        Direccion(latitud: posicion.latitude, longitud: posicion.longitude);
+
+    _personaRepository.updateUbicacionActualDelUsuario(
+        ubicacionActual: ubicacionActual, rotacionActual: rotacionActual);
   }
 }

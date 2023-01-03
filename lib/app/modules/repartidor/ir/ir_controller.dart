@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/data/controllers/usuario_controller.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
@@ -21,8 +22,6 @@ class IrController extends GetxController {
 
   //Para obtener datos del usuario conectado
 
-  Rx<PersonaModel?> usuario = Rx(null);
-  final _controladorUsuario = Get.find<UsuarioController>();
   //Google Maps
   late StreamSubscription<Position> _posicionStreamSubscripcion;
   GoogleMapController? _mapController;
@@ -76,17 +75,36 @@ class IrController extends GetxController {
   }
 
   void _cargarDatosIniciales() {
-    _getUsuarioActual();
     _getLocalizacionActual();
     _gpsEnabled = true;
 
-    _initLocationUpdate();
+    _escucharCambiosDeUbicacion();
   }
 
-  /* METODOS PARA OBTENER DATOS DEL USUARIO */
-  _getUsuarioActual() {
-    usuario.value = _controladorUsuario.usuario.value;
-    //   usuario.value = await _personaRepository.getUsuario();
+  /* METODOS*/
+
+  //Actualizar ubicacion actual del dispositivo
+  _actualizarUbicacionActualDelUsuarioRepartidor(Position posicion) {
+    double rotacionActual =
+        obtenerRotacionActualDelVehiculoRepartidor(posicion);
+
+    Direccion ubicacionActual =
+        Direccion(latitud: posicion.latitude, longitud: posicion.longitude);
+    _personaRepository.updateUbicacionActualDelUsuario(
+        ubicacionActual: ubicacionActual, rotacionActual: rotacionActual);
+  }
+
+  //
+  double obtenerRotacionActualDelVehiculoRepartidor(Position posicionFinal) {
+    double rotacion = 0;
+    if (_lastPosition != null) {
+      rotacion = Geolocator.bearingBetween(
+          _lastPosition!.latitude,
+          _lastPosition!.longitude,
+          posicionFinal.latitude,
+          posicionFinal.longitude);
+    }
+    return rotacion;
   }
 
   /*METODO PARA  MANEJO DE PANTALLA POR NAVEGACION BOTTOM*/
@@ -231,13 +249,20 @@ class IrController extends GetxController {
     _marcadoresParaExplorar[_marcadorRepartidorId] = marker;
   }
 
-  Future<void> _initLocationUpdate() async {
+  Future<void> _escucharCambiosDeUbicacion() async {
     bool inicializado = false;
     // await _posicionStreamSubscripcion.cancel();
 
-    _posicionStreamSubscripcion =
-        Geolocator.getPositionStream().listen((posicion) async {
+    //Escuchando las actualizaciones de ubicación del usuario actual (repartidor) cada 6 metros
+    _posicionStreamSubscripcion = Geolocator.getPositionStream(
+            desiredAccuracy: LocationAccuracy.high, distanceFilter: 6)
+        .listen((posicion) async {
+      print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+
       _enviarPosicionDelRepartidorActual(posicion);
+
+      //actualizar datos en firestore
+      _actualizarUbicacionActualDelUsuarioRepartidor(posicion);
 
       if (!inicializado) {
         _setInitialPosition(posicion);
@@ -254,11 +279,8 @@ class IrController extends GetxController {
   }
 
   void _enviarPosicionDelRepartidorActual(Position posicion) async {
-    double rotation = 0;
-    if (_lastPosition != null) {
-      rotation = Geolocator.bearingBetween(_lastPosition!.latitude,
-          _lastPosition!.longitude, posicion.latitude, posicion.longitude);
-    }
+    double rotation = obtenerRotacionActualDelVehiculoRepartidor(posicion);
+    
     //
     final marcador = _marcadoresParaExplorar[_marcadorRepartidorId];
 

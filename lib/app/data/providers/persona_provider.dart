@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
@@ -199,5 +200,24 @@ class PersonaProvider {
         .get();
 
     return resultado.docs.length;
+  }
+
+  //Actualizar ubicacion del usuario actual conectado - repartidor
+  Future<void> updateUbicacionActualDelUsuario(
+      {required Direccion ubicacionActual, required double rotacionActual}) async {
+
+        await _firestoreInstance
+        .collection('ubicacionRepartidor')
+        .doc(idUsuarioActual).set({"ubicacionActual": ubicacionActual.toMap(),"rotacionActual":rotacionActual});
+        //TODO: Revisar si funciona bien si se actualiza cuando no se a creado el doc
+        //Realizar con update y al momento de crear el usuario crear el documento ubicacionRepartidor con el id
+        
+        /*
+        (data)
+    await _firestoreInstance
+        .collection('ubicacionRepartidor')
+        .doc(idUsuarioActual)
+        .update
+        */
   }
 }

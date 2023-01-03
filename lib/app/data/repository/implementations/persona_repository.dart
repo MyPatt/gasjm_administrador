@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/providers/persona_provider.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
@@ -77,4 +78,10 @@ class PersonaRepositoryImpl extends PersonaRepository {
   Future<int> getCantidadClientesPorfield(
           {required String field, required String dato}) =>
       _provider.getCantidadClientesPorfield(field: field, dato: dato);
+
+  @override
+  Future<void> updateUbicacionActualDelUsuario(
+          {required Direccion ubicacionActual, required double rotacionActual}) =>
+      _provider.updateUbicacionActualDelUsuario(
+          ubicacionActual: ubicacionActual, rotacionActual: rotacionActual);
 }

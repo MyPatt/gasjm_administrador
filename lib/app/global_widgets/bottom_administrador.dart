@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/home/widgets/modal_operaciones.dart';
+import 'package:gasjm/app/modules/administrador/inicio/widgets/modal_operaciones.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -29,15 +29,28 @@ class BottomNavigationAdministrador extends StatelessWidget {
                   return const ModalOperaciones();
                 });
             break;
+          case 2:
+            showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (context) {
+                  return const ModalOperaciones();
+                });
+            break;
         }
       },
       items: const [
         BottomNavigationBarItem(
-            icon: Icon(Icons.show_chart_outlined), label: 'Reportes'),
+            icon: Icon(Icons.show_chart_outlined),
+            label: 'Reportes',
+            tooltip: 'Reportes'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.add_circle_outline_outlined), tooltip: 'Agregar'),
         BottomNavigationBarItem(
             icon: Icon(Icons.menu_outlined),
             label: "Operaciones ",
-            backgroundColor: AppTheme.blueBackground),
+            backgroundColor: AppTheme.blueBackground,
+            tooltip: 'Operaciones'),
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
-import 'package:gasjm/app/modules/home/home_controller.dart';
+import 'package:gasjm/app/modules/administrador/inicio/inicio_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class CategoriaFechas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<InicioAdministradorController>(
       builder: (_) => Container(
         alignment: Alignment.centerLeft,
         margin: const EdgeInsets.only(
@@ -51,7 +51,7 @@ class ItemCategoriaFechas extends StatelessWidget {
   final int indice;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<InicioAdministradorController>(
       builder: (_) => Obx(
         () {
           bool isSelected =

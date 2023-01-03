@@ -4,8 +4,8 @@ import 'package:gasjm/app/modules/editar_cliente/editar_cliente_binding.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_page.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_binding.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_page.dart';
-import 'package:gasjm/app/modules/home/home_binding.dart';
-import 'package:gasjm/app/modules/home/home_page.dart';
+import 'package:gasjm/app/modules/administrador/inicio/inicio_binding.dart';
+import 'package:gasjm/app/modules/administrador/inicio/inicio_page.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_binding.dart';
 import 'package:gasjm/app/modules/identificacion/identificacion_page.dart';
 import 'package:gasjm/app/modules/repartidor/buscar/buscar_binding.dart';
@@ -76,8 +76,8 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.inicioAdministrador,
-      page: () => const HomePage(),
-      binding: HomeBinding(),
+      page: () => const InicioAdministradorPage(),
+      binding: InicioAdministradorBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
@@ -154,12 +154,11 @@ class AppPages {
         page: () => const PedidosPage(),
         binding: PedidosBinding(),
         transition: Transition.noTransition),
-          GetPage(
+    GetPage(
         name: AppRoutes.buscar,
         page: () => const BuscarPage(),
         binding: BuscarBinding(),
         transition: Transition.noTransition),
- 
     GetPage(
       name: AppRoutes.gasjm,
       page: () => const GasJMPage(),

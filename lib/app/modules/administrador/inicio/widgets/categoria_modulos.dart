@@ -1,7 +1,7 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
-import 'package:gasjm/app/modules/home/home_controller.dart';
+import 'package:gasjm/app/modules/administrador/inicio/inicio_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -11,7 +11,7 @@ class CategoriaModulos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<InicioAdministradorController>(
       builder: (_) => SliverToBoxAdapter(
         child: Container(
           padding: const EdgeInsets.only(top: 15.0),
@@ -53,7 +53,7 @@ class ItemCategoriaModulos extends StatelessWidget {
   final int cantidad;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<InicioAdministradorController>(
       builder: (_) => Obx(
         () {
           bool isSelected =

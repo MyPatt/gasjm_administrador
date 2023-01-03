@@ -4,11 +4,11 @@ import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/data/models/puntos_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart'; 
+import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class InicioAdministradorController extends GetxController {
   RxInt indiceModuloSeleccionado = 0.obs;
   RxInt indiceDeFechaSeleccionada = 0.obs;
 //
@@ -112,7 +112,6 @@ class HomeController extends GetxController {
               ),
             ),
           ),
-          
           child: child!,
         );
       },
@@ -353,7 +352,6 @@ class HomeController extends GetxController {
     }
     cargandoParaDia.value = false;
   }
-
 
   //Metodo para ir a una ruta
 

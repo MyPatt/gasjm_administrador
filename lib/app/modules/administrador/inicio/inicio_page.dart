@@ -1,21 +1,22 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/global_widgets/content_title.dart';
-import 'package:gasjm/app/modules/home/home_controller.dart';
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
-import 'package:gasjm/app/modules/home/widgets/categoria_modulos.dart';
-import 'package:gasjm/app/global_widgets/menu_appbar.dart';
+import 'package:gasjm/app/modules/administrador/inicio/inicio_controller.dart';
+
+import 'package:gasjm/app/modules/administrador/inicio/widgets/contenido_pedidos.dart';
+
+import 'package:gasjm/app/modules/administrador/inicio/widgets/categoria_modulos.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/home/widgets/contenido_pedidos.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class InicioAdministradorPage extends StatelessWidget {
+  const InicioAdministradorPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<InicioAdministradorController>(
       builder: (_) => Scaffold(
           backgroundColor: AppTheme.background,
           //Menú deslizable a la izquierda con opciones del  usuario
@@ -32,11 +33,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             backgroundColor: AppTheme.blueBackground,
-            actions: const [
-              MenuAppBar(
-                indiceMenu: 0,
-              )
-            ],
             title: const Text('GasJ&M'),
           ),
           body: Obx(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/utils/responsive.dart'; 
+import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
-import 'package:gasjm/app/modules/home/home_controller.dart';
-import 'package:gasjm/app/modules/home/widgets/categoria_fechas.dart';
-import 'package:gasjm/app/modules/home/widgets/chart_pedidos.dart';
+import 'package:gasjm/app/modules/administrador/inicio/inicio_controller.dart';
+import 'package:gasjm/app/modules/administrador/inicio/widgets/categoria_fechas.dart';
+import 'package:gasjm/app/modules/administrador/inicio/widgets/chart_pedidos.dart';
 import 'package:get/get.dart';
 
 class ContenidoPedidos extends StatelessWidget {
@@ -12,7 +12,7 @@ class ContenidoPedidos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<InicioAdministradorController>(
       builder: (_) => SliverToBoxAdapter(
         child: Container(
           decoration: const BoxDecoration(

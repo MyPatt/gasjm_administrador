@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
-import 'package:gasjm/app/global_widgets/text_subtitle.dart'; 
-import 'package:gasjm/app/modules/home/home_controller.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart';
+import 'package:gasjm/app/modules/administrador/inicio/inicio_controller.dart';
 import 'package:get/get.dart';
 //Bottom sheet modal que muestra los modulos, para  crud
 
@@ -13,8 +13,8 @@ class ModalOperaciones extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      builder: (_) =>Container(
+    return GetBuilder<InicioAdministradorController>(
+      builder: (_) => Container(
         width: double.infinity,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(
@@ -28,12 +28,13 @@ class ModalOperaciones extends StatelessWidget {
             topRight: Radius.circular(30.0),
           ),
         ),
-        child: _gridModulos(context,_),
+        child: _gridModulos(context, _),
       ),
     );
   }
 
-  Widget _gridModulos(BuildContext context, HomeController homeController) {
+  Widget _gridModulos(
+      BuildContext context, InicioAdministradorController homeController) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -63,7 +64,7 @@ class ModalOperaciones extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                     homeController.seleccionarCategoriaParaOperacion(index);
+                    homeController.seleccionarCategoriaParaOperacion(index);
                   },
                   child: ItemCategoriaModulos(
                     categoria: categoriasModulos[index],
@@ -103,7 +104,7 @@ class ItemCategoriaModulos extends StatelessWidget {
   final int indice;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<InicioAdministradorController>(
         builder: (_) => AnimatedContainer(
             duration: const Duration(milliseconds: 400),
             width: Responsive.getScreenSize(context).width * .2,

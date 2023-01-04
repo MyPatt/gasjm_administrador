@@ -374,4 +374,14 @@ class InicioAdministradorController extends GetxController {
       default:
     }
   }
+
+  //Metodo para cargar una pantalla a una ruta de  agregar
+  void seleccionarCategoriaParaAgregar(int index) {
+    switch (index) {
+      case 0:
+        _cargarPagina(Get.offNamed(AppRoutes.operacionPedido));
+        break;
+      default:
+    }
+  }
 }

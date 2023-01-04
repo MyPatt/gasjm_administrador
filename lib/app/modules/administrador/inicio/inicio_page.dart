@@ -6,7 +6,7 @@ import 'package:gasjm/app/modules/administrador/inicio/inicio_controller.dart';
 
 import 'package:gasjm/app/modules/administrador/inicio/widgets/contenido_pedidos.dart';
 
-import 'package:gasjm/app/modules/administrador/inicio/widgets/categoria_modulos.dart';
+import 'package:gasjm/app/modules/administrador/inicio/widgets/categoria_modulos.dart'; 
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +32,7 @@ class InicioAdministradorPage extends StatelessWidget {
                 bottom: Radius.circular(10),
               ),
             ),
-            backgroundColor: AppTheme.blueBackground,
+            backgroundColor: AppTheme.blueBackground, 
             title: const Text('GasJ&M'),
           ),
           body: Obx(

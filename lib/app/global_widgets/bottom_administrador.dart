@@ -26,7 +26,9 @@ class BottomNavigationAdministrador extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 context: context,
                 builder: (context) {
-                  return const ModalOperaciones();
+                  return ModalOperaciones(
+                    indiceBottomItem: index,
+                  );
                 });
             break;
           case 2:
@@ -34,7 +36,9 @@ class BottomNavigationAdministrador extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 context: context,
                 builder: (context) {
-                  return const ModalOperaciones();
+                  return ModalOperaciones(
+                    indiceBottomItem: index,
+                  );
                 });
             break;
         }
@@ -45,7 +49,7 @@ class BottomNavigationAdministrador extends StatelessWidget {
             label: 'Reportes',
             tooltip: 'Reportes'),
         BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline_outlined), tooltip: 'Agregar'),
+            icon: Icon(Icons.add_circle,size:24), label: '', tooltip: 'Agregar'),
         BottomNavigationBarItem(
             icon: Icon(Icons.menu_outlined),
             label: "Operaciones ",

@@ -1,7 +1,7 @@
 import 'package:gasjm/app/modules/administrador/buscar/buscar_binding.dart';
 import 'package:gasjm/app/modules/administrador/buscar/buscar_page.dart';
-import 'package:gasjm/app/modules/cliente/cliente_binding.dart';
-import 'package:gasjm/app/modules/cliente/cliente_page.dart';
+import 'package:gasjm/app/modules/administrador/cliente/cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_binding.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_page.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_binding.dart';
@@ -36,8 +36,8 @@ import 'package:gasjm/app/modules/splash/splash_binding.dart';
 import 'package:gasjm/app/modules/splash/splash_page.dart';
 import 'package:gasjm/app/modules/ubicacion/ubicacion_binding.dart';
 import 'package:gasjm/app/modules/ubicacion/ubicacion_page.dart';
-import 'package:gasjm/app/modules/vehiculo/vehiculo_binding.dart';
-import 'package:gasjm/app/modules/vehiculo/vehiculo_page.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/vehiculo_binding.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/vehiculo_page.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -104,7 +104,7 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-     GetPage(
+    GetPage(
         name: AppRoutes.buscarAdministrador,
         page: () => const BuscarAdministradorPage(),
         binding: BuscarAdministradorBinding(),

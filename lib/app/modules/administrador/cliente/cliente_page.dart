@@ -1,24 +1,25 @@
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/cliente/widgets/search.dart';
+import 'package:gasjm/app/modules/administrador/cliente/cliente_controller.dart';
+
+import 'package:gasjm/app/modules/administrador/cliente/widgets/search.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/vehiculo/vehiculo_controller.dart';
+import 'package:gasjm/app/modules/administrador/operacion_pedido/pedido_controller.dart';
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
-class VehiculoPage extends StatelessWidget {
-  final VehiculoController controladorDeRepartidor =
-      Get.put(VehiculoController());
+class ClientePage extends StatelessWidget {
+  final ClienteController controladorDePedidos = Get.put(ClienteController());
 
-  VehiculoPage({
+  ClientePage({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<VehiculoController>(
+    return GetBuilder<OperacionPedidoController>(
         builder: (_) => Scaffold(
               backgroundColor: AppTheme.background,
 
@@ -26,7 +27,7 @@ class VehiculoPage extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: AppTheme.blueBackground,
                 // actions: const [MenuAppBar()],
-                title: const Text("Vehículos"),
+                title: const Text("Clientes"),
               ),
               body: Stack(children: [
                 Column(
@@ -35,10 +36,9 @@ class VehiculoPage extends StatelessWidget {
                     Expanded(
                         child: Obx(
                       () => ListView(
-                        children: controladorDeRepartidor
-                            .listaFiltradaRepartidores
-                            .map((e) {
-                          return _cardRepartidor(e, controladorDeRepartidor);
+                        children:
+                            controladorDePedidos.listaFiltradaClientes.map((e) {
+                          return _cardPedido(e, controladorDePedidos);
                         }).toList(),
                       ),
                     ))
@@ -49,8 +49,8 @@ class VehiculoPage extends StatelessWidget {
   }
 }
 
-Widget _cardRepartidor(
-    PersonaModel persona, VehiculoController controladorDePedidos) {
+Widget _cardPedido(
+    PersonaModel persona, ClienteController controladorDePedidos) {
   return Padding(
     padding:
         const EdgeInsets.only(right: 8.0, left: 8.0, top: 4.0, bottom: 4.0),
@@ -64,21 +64,18 @@ Widget _cardRepartidor(
         style: ListTileStyle.list,
         iconColor: AppTheme.light,
         leading: const Icon(
-          Icons.car_rental_outlined,
+          Icons.person_outlined,
           //  size: 30,
         ),
-        title: const TextSubtitle(
-          //   text: '${persona.nombrePersona} ${persona.apellidoPersona}',
-          text: "ASZ0950",
+        title: TextSubtitle(
+          text: '${persona.nombrePersona} ${persona.apellidoPersona}',
           textAlign: TextAlign.justify,
         ),
-        subtitle: const TextDescription(
-            //text: persona.cedulaPersona,
-            text: "Hino 2018",
-            textAlign: TextAlign.justify),
+        subtitle: TextDescription(
+            text: persona.cedulaPersona, textAlign: TextAlign.justify),
         trailing: IconButton(
             onPressed: () {
-              controladorDePedidos.cargarDetalleDelRepartidor(persona);
+              controladorDePedidos.cargarDetalleDelCliente(persona);
             },
             icon: const Icon(
               Icons.keyboard_arrow_right_outlined,

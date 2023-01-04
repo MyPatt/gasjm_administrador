@@ -371,7 +371,15 @@ class InicioAdministradorController extends GetxController {
       case 0:
         _cargarPagina(Get.offNamed(AppRoutes.operacionPedido));
         break;
-      default:
+      case 1:
+        _cargarPagina(Get.offNamed(AppRoutes.cliente));
+        break;
+      case 2:
+        _cargarPagina(Get.offNamed(AppRoutes.repartidor));
+        break;
+      case 3:
+        _cargarPagina(Get.offNamed(AppRoutes.vehiculo));
+        break;
     }
   }
 

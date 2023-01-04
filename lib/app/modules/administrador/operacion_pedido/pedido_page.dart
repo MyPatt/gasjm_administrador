@@ -4,7 +4,7 @@ import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/operacion_pedido/pedido_controller.dart';
+import 'package:gasjm/app/modules/administrador/operacion_pedido/pedido_controller.dart'; 
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';

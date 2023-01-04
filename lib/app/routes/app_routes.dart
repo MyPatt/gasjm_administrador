@@ -6,6 +6,9 @@ class AppRoutes {
   static const registrar = "/registrar";
   static const inicioAdministrador = "/inicioAdministrador";
   static const operacionPedido = "/operacionPedido";
+  static const buscarAdministrador = "/buscarAdministrador";
+
+
   static const cliente = "/cliente";
   static const detalleCliente = "/detallecliente";
   static const perfil = "/perfil";
@@ -17,10 +20,9 @@ class AppRoutes {
 
   static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";
-  static const buscar = "/buscar";
+  static const buscarRepartidor = "/buscarRepartidor";
   static const ir = "/ir";
 
- 
   static const gasjm = "/gasjm";
   static const signup = "/signup";
   static const permission = "/permission";

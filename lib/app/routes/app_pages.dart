@@ -1,3 +1,5 @@
+import 'package:gasjm/app/modules/administrador/buscar/buscar_binding.dart';
+import 'package:gasjm/app/modules/administrador/buscar/buscar_page.dart';
 import 'package:gasjm/app/modules/cliente/cliente_binding.dart';
 import 'package:gasjm/app/modules/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/editar_cliente/editar_cliente_binding.dart';
@@ -102,6 +104,11 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
+     GetPage(
+        name: AppRoutes.buscarAdministrador,
+        page: () => const BuscarAdministradorPage(),
+        binding: BuscarAdministradorBinding(),
+        transition: Transition.noTransition),
     GetPage(
       name: AppRoutes.cliente,
       page: () => ClientePage(),
@@ -155,8 +162,8 @@ class AppPages {
         binding: PedidosBinding(),
         transition: Transition.noTransition),
     GetPage(
-        name: AppRoutes.buscar,
-        page: () => const BuscarPage(),
+        name: AppRoutes.buscarRepartidor,
+        page: () => const BuscarRepartidorPage(),
         binding: BuscarBinding(),
         transition: Transition.noTransition),
     GetPage(

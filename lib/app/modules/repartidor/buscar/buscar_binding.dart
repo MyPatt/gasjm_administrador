@@ -4,6 +4,6 @@ import 'package:get/get.dart';
 class BuscarBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => BuscarController());
+    Get.lazyPut(() => BuscarRepartidorController());
   }
 }

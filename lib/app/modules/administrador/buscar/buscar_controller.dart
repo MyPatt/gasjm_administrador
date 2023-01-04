@@ -3,7 +3,7 @@ import 'package:gasjm/app/data/controllers/pedido_controller.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:get/get.dart';
 
-class BuscarRepartidorController extends GetxController {
+class BuscarAdministradorController extends GetxController {
   /* VARIABLES*/
 
   //Controlador de Pedidos (general)
@@ -30,6 +30,11 @@ class BuscarRepartidorController extends GetxController {
   final RxList<PedidoModel> _listaPedidosFinalizados = <PedidoModel>[].obs;
   RxList<PedidoModel> get listaPedidosFinalizados => _listaPedidosFinalizados;
 
+  //Lista para Pedidos cancelados
+
+  final RxList<PedidoModel> _listaPedidosCancelados = <PedidoModel>[].obs;
+  RxList<PedidoModel> get listaPedidosCancelados => _listaPedidosCancelados;
+
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
@@ -42,9 +47,16 @@ class BuscarRepartidorController extends GetxController {
   buscarPedidos(String valor) {
     //Si esta vacio el input
     if (valor.isEmpty) {
-      //El icono de borrar deshabilitar
-      existeTexoParaBuscar.value = false;
+      
+    //El icono de borrar deshabilitar
+    existeTexoParaBuscar.value = false;
 
+    //
+      //Limpiar listas
+    _listaPedidosEnEspera.value = [];
+    _listaPedidosAceptados.value = [];
+    _listaPedidosFinalizados.value = [];
+    _listaPedidosCancelados.value = [];
       return;
     }
 
@@ -81,6 +93,16 @@ class BuscarRepartidorController extends GetxController {
                 .contains(controladorBuscarTexto.text.toLowerCase()))
         .toList();
 
+           _listaPedidosCancelados.value = controladorDePedidos
+        .listaPedidosCancelados
+        .where((pedido) =>
+            pedido.nombreUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()) ||
+            pedido.direccionUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()))
+        .toList();
     //El icono de borrar habilitar
     existeTexoParaBuscar.value = true;
   }
@@ -97,5 +119,7 @@ class BuscarRepartidorController extends GetxController {
     _listaPedidosEnEspera.value = [];
     _listaPedidosAceptados.value = [];
     _listaPedidosFinalizados.value = [];
+    _listaPedidosCancelados.value = [];
+
   }
 }

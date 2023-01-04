@@ -32,7 +32,8 @@ class PedidosPage extends StatelessWidget {
               actions: [
                 IconButton(
                     icon: const Icon(Icons.search_outlined),
-                    onPressed: () => Get.toNamed(AppRoutes.buscar)),
+                    onPressed: () =>
+                        Get.toNamed(AppRoutes.buscarAdministrador)),
                 IconButton(
                     icon: const Icon(
                       Icons.sort_outlined,

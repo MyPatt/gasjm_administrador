@@ -6,12 +6,12 @@ import 'package:gasjm/app/modules/repartidor/buscar/buscar_controller.dart';
 import 'package:gasjm/app/modules/repartidor/buscar/widgets/buscar.dart';
 import 'package:get/get.dart';
 
-class BuscarPage extends StatelessWidget {
-  const BuscarPage({Key? key}) : super(key: key);
+class BuscarRepartidorPage extends StatelessWidget {
+  const BuscarRepartidorPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BuscarController>(
+    return GetBuilder<BuscarRepartidorController>(
         builder: (_) => Scaffold(
             backgroundColor: AppTheme.background,
 

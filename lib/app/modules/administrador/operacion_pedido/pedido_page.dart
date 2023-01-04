@@ -1,10 +1,11 @@
- 
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/administrador/operacion_pedido/pedido_controller.dart'; 
+import 'package:gasjm/app/modules/administrador/operacion_pedido/pedido_controller.dart';
+import 'package:gasjm/app/modules/repartidor/pedidos/widgets/modal_ordenamiento.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -32,10 +33,26 @@ class OperacionPedidoPage extends StatelessWidget {
                 ),
               ),
               backgroundColor: AppTheme.blueBackground,
-              actions: const [
-                MenuAppBar(
-                  indiceMenu: 1,
-                )
+              actions: [
+                IconButton(
+                    icon: const Icon(Icons.search_outlined),
+                    onPressed: () =>
+                        Get.toNamed(AppRoutes.buscarAdministrador)),
+                IconButton(
+                    icon: const Icon(
+                      Icons.sort_outlined,
+                    ),
+                    onPressed: () => showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) => ModalOrdenamiento(
+                            listaCategoriasDeOrdenamiento:
+                                _.listaCategoriasDeOrdenamiento,
+                            selectedRadioTile: _.indiceCategoriaSeleccionada,
+                            onChanged: (valor) =>
+                                _.seleccionarOpcionDeOrdenamiento(valor),
+                          ),
+                        ))
               ],
               title: const Text("Pedidos"),
             ),
@@ -82,21 +99,25 @@ class OperacionPedidoPage extends StatelessWidget {
                     // 0 administrador
                     //1 repartidor
                     ContenidoPedido(
-                      indiceCategoriaPedido: 0,
-                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosEnEspera
-                    ),
+                        indiceCategoriaPedido: 0,
+                        modo: 0,
+                        listaPedidos:
+                            _.controladorDePedidos.listaPedidosEnEspera),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 1,
-                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosAceptados
-                    ),
+                        indiceCategoriaPedido: 1,
+                        modo: 0,
+                        listaPedidos:
+                            _.controladorDePedidos.listaPedidosAceptados),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 2,
-                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosFinalizados
-                    ),
+                        indiceCategoriaPedido: 2,
+                        modo: 0,
+                        listaPedidos:
+                            _.controladorDePedidos.listaPedidosFinalizados),
                     ContenidoPedido(
-                      indiceCategoriaPedido: 3,
-                      modo: 0, listaPedidos: _.controladorDePedidos.listaPedidosCancelados
-                    ),
+                        indiceCategoriaPedido: 3,
+                        modo: 0,
+                        listaPedidos:
+                            _.controladorDePedidos.listaPedidosCancelados),
                   ]))
                 ],
               ),

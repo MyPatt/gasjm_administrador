@@ -35,6 +35,16 @@ class OperacionPedidoController extends GetxController {
   final PedidoController controladorDePedidos = Get.put(PedidoController());
 
   ///
+  ///
+  RxString indiceCategoriaSeleccionada = 'Fecha'.obs;
+  
+    final listaCategoriasDeOrdenamiento = [
+    "Fecha",
+    "Cantidad",
+    "Dirección",
+    "Cliente"
+  ];
+
   @override
   void onInit() {
     Future.wait([
@@ -54,4 +64,58 @@ class OperacionPedidoController extends GetxController {
     imagenUsuario.value =
         await _personaRepository.getImagenUsuarioActual() ?? '';
   }
+
+
+  //Metodo para ordenar
+  seleccionarOpcionDeOrdenamiento(String? valor) {
+    print("###############$valor");
+    indiceCategoriaSeleccionada.value = valor!;
+
+    //
+    switch (valor) {
+      case 'Fecha':
+        
+        controladorDePedidos.listaPedidosEnEspera
+            .sort((a, b) => a.fechaHoraPedido.compareTo(b.fechaHoraPedido));
+        controladorDePedidos.listaPedidosAceptados
+            .sort((a, b) => a.fechaHoraPedido.compareTo(b.fechaHoraPedido));
+        controladorDePedidos.listaPedidosFinalizados
+            .sort((a, b) => a.fechaHoraPedido.compareTo(b.fechaHoraPedido));
+                    controladorDePedidos.listaPedidosCancelados
+            .sort((a, b) => a.fechaHoraPedido.compareTo(b.fechaHoraPedido));
+        break;
+           case 'Cantidad':
+        
+        controladorDePedidos.listaPedidosEnEspera
+            .sort((a, b) => a.cantidadPedido.compareTo(b.cantidadPedido));
+        controladorDePedidos.listaPedidosAceptados
+            .sort((a, b) => a.cantidadPedido.compareTo(b.cantidadPedido));
+        controladorDePedidos.listaPedidosFinalizados
+            .sort((a, b) => a.cantidadPedido.compareTo(b.cantidadPedido));
+                controladorDePedidos.listaPedidosCancelados
+            .sort((a, b) => a.cantidadPedido.compareTo(b.cantidadPedido));
+        break;
+          case 'Dirección':
+        
+        controladorDePedidos.listaPedidosEnEspera
+            .sort((a, b) => a.direccionUsuario!.compareTo(b.direccionUsuario.toString()));
+        controladorDePedidos.listaPedidosAceptados
+            .sort((a, b) =>a.direccionUsuario!.compareTo(b.direccionUsuario.toString()));
+        controladorDePedidos.listaPedidosFinalizados
+            .sort((a, b) =>a.direccionUsuario!.compareTo(b.direccionUsuario.toString()));
+                    controladorDePedidos.listaPedidosCancelados
+            .sort((a, b) =>a.direccionUsuario!.compareTo(b.direccionUsuario.toString()));
+        break;
+                  case 'Cliente':
+        
+        controladorDePedidos.listaPedidosEnEspera
+            .sort((a, b) => a.nombreUsuario!.compareTo(b.nombreUsuario.toString()));
+        controladorDePedidos.listaPedidosAceptados
+            .sort((a, b) => a.nombreUsuario!.compareTo(b.nombreUsuario.toString()));
+        controladorDePedidos.listaPedidosFinalizados
+            .sort((a, b) =>a.nombreUsuario!.compareTo(b.nombreUsuario.toString()));
+        break;
+    }
+  }
+
 }

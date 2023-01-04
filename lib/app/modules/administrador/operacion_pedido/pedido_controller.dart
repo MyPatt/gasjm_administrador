@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class OperacionPedidoController extends GetxController {
   final _personaRepository = Get.find<PersonaRepository>();
-//
+  //Variable  para imagen de perfil
   RxString imagenUsuario = ''.obs;
 
   //Pedidos en espera

@@ -8,6 +8,10 @@ import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class ClienteController extends GetxController {
+  //Variable  para imagen de perfil
+  RxString imagenUsuario = ''.obs;
+
+  //
   late CategoriaModelo _categoria;
   CategoriaModelo get house => _categoria;
 
@@ -28,8 +32,22 @@ class ClienteController extends GetxController {
   void onInit() {
     // _categoria = Get.arguments as CategoryModel;
     _cargarListaDeClientes();
-
+//
+    _cargarFotoPerfil();
     super.onInit();
+  }
+
+  //Obtener foto de perfil del usuario
+  Future<void> _cargarFotoPerfil() async {
+    imagenUsuario.value =
+        await _personaRepository.getImagenUsuarioActual() ?? '';
+  }
+
+  //Volver a cargar la lista de los clientes
+     Future<void> pullRefrescar() async {
+    
+   _cargarListaDeClientes();
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   /* METODOS PARA CLIENTES */
@@ -57,7 +75,7 @@ class ClienteController extends GetxController {
       //Cargar la lista filtrada al inicio todos
 //      _listaFiltradaPedidosEnEspera.value = _listaPedidosEnEspera;
       _cargarListaFiltradaDeClientes();
-      
+
       //
     } on FirebaseException {
       Mensajes.showGetSnackbar(

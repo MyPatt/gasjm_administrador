@@ -123,6 +123,6 @@ class OperacionPedidoPage extends StatelessWidget {
               ),
             ),
             bottomNavigationBar:
-                const BottomNavigationAdministrador(indiceActual: 1)));
+                const BottomNavigationAdministrador(indiceActual: 2)));
   }
 }

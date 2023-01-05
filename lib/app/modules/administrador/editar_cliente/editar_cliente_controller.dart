@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -29,52 +28,45 @@ class EditarClienteController extends GetxController {
 
   final _personaRepository = Get.find<PersonaRepository>();
 
-  final cargandoClientes = true.obs;
+  final cargandoCliente = true.obs;
 
 //Listas observables de los clientes
 
-  final RxList<PersonaModel> _listaClientes = <PersonaModel>[].obs;
-  RxList<PersonaModel> get listaClientes => _listaClientes;
-
-  final RxList<PersonaModel> _listaFiltradaClientes = <PersonaModel>[].obs;
-  RxList<PersonaModel> get listaFiltradaClientes => _listaFiltradaClientes;
-
   //Existe algun error si o no
   final errorParaCorreo = Rx<String?>(null);
-  //Se cago si o no
-  final cargandoParaCorreo = RxBool(false);
-
+//varialbe para el modo editable;
+    bool clienteEditable = false;
   /* METODOS PROPIOS */
   @override
   void onInit() {
-    _cliente = Get.arguments as PersonaModel;
-
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
+    var argumentos = Get.arguments;
+    _cliente = argumentos[0] as PersonaModel;
+    clienteEditable = argumentos[1] as bool;
+    //
     Future.wait([_cargarDatosDelFormCliente()]);
-    super.onReady();
+    super.onInit();
   }
 
   @override
   void onClose() {
     super.onClose();
-    cedulaTextoController.clear();
-    nombreTextoController.clear();
-    apellidoTextoController.clear();
-    direccionTextoController.clear();
-    fechaNacimientoTextoController.clear();
-    celularTextoController.clear();
+    cedulaTextoController.dispose();
+    nombreTextoController.dispose();
+    apellidoTextoController.dispose();
+    direccionTextoController.dispose();
+    fechaNacimientoTextoController.dispose();
+    celularTextoController.dispose();
     correoElectronicoTextoController.clear();
-    contrasenaTextoController.clear();
+    contrasenaTextoController.dispose();
   }
 
   /* METODOS PARA CLIENTES */
 
   Future<void> _cargarDatosDelFormCliente() async {
     try {
+      cargandoCliente.value = true;
+
+      //
       cedulaTextoController.text = cliente.cedulaPersona;
       nombreTextoController.text = cliente.nombrePersona;
       apellidoTextoController.text = cliente.apellidoPersona;
@@ -86,8 +78,8 @@ class EditarClienteController extends GetxController {
       celularTextoController.text = cliente.celularPersona ?? '';
       correoElectronicoTextoController.text = cliente.correoPersona ?? '';
       contrasenaTextoController.text = cliente.contrasenaPersona;
-    //} on FirebaseException catch (e) {
-      }   catch (e) {
+      //} on FirebaseException catch (e) {
+    } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: "Error",
           mensaje: "Se produjo un error inesperado.",
@@ -96,7 +88,7 @@ class EditarClienteController extends GetxController {
             color: Colors.white,
           ));
     }
-    cargandoClientes.value = false;
+    cargandoCliente.value = false;
   }
 
 //
@@ -120,13 +112,6 @@ class EditarClienteController extends GetxController {
           fechaNacimiento.year.toString();
       //
 
-    }
-  }
-
-//
-  void onChangedIdentificacion(valor) {
-    if (valor.length > 9) {
-      cedulaTextoController.text = valor;
     }
   }
 
@@ -173,7 +158,7 @@ class EditarClienteController extends GetxController {
 
 //
     try {
-      cargandoParaCorreo.value = true;
+      cargandoCliente.value = true;
       errorParaCorreo.value = null;
       //
 
@@ -214,43 +199,14 @@ class EditarClienteController extends GetxController {
         errorParaCorreo.value =
             'La cuenta ya existe para ese correo electrónico';
       } else {
-        errorParaCorreo.value = "Se produjo un error inesperado.";
+        errorParaCorreo.value =
+            "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.";
       }
     } catch (e) {
-    /*  Mensajes.showGetSnackbar(
-          titulo: 'Alerta',
-          mensaje:
-              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
-          duracion: const Duration(seconds: 4),
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));*/
+      errorParaCorreo.value =
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.";
     }
-    cargandoParaCorreo.value = false;
+    cargandoCliente.value = false;
   }
 
-  Future<void> eliminarCliente(String id) async {
-    try {
-    
-      await _personaRepository.updateEstadoPersona(
-          uid: id, estado: "eliminado");
-      Mensajes.showGetSnackbar(
-          titulo: "Mensaje",
-          mensaje: "Cliente eliminado con éxito..",
-          icono: const Icon(
-            Icons.delete_outline_outlined,
-            color: Colors.white,
-          ));
-      Get.toNamed(AppRoutes.cliente);
-    }catch (e) {
-      Mensajes.showGetSnackbar(
-          titulo: "Alerta",
-          mensaje: "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-  }
 }

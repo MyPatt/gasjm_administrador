@@ -2,10 +2,8 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 
 class PersonaModel {
   PersonaModel(
-
-      {
-        this.uidPersona,
-        required this.cedulaPersona,
+      {this.uidPersona,
+      required this.cedulaPersona,
       required this.nombrePersona,
       required this.apellidoPersona,
       this.correoPersona,
@@ -15,7 +13,8 @@ class PersonaModel {
       this.fechaNaciPersona,
       this.estadoPersona,
       required this.idPerfil,
-      required this.contrasenaPersona});
+      required this.contrasenaPersona,
+      this.nombreUsuario});
 
   final String? uidPersona;
   final String cedulaPersona;
@@ -29,6 +28,8 @@ class PersonaModel {
   final String? estadoPersona;
   final String idPerfil;
   final String contrasenaPersona;
+  //
+  String? nombreUsuario;
 
   factory PersonaModel.fromMap(Map<String, dynamic> json) => PersonaModel(
         uidPersona: json["uid"],
@@ -46,7 +47,7 @@ class PersonaModel {
       );
 
   Map<String, dynamic> toMap() => {
-    "uid":uidPersona,
+        "uid": uidPersona,
         "cedula": cedulaPersona,
         "nombre": nombrePersona,
         "apellido": apellidoPersona,

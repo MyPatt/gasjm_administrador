@@ -49,8 +49,8 @@ class BottomNavigationAdministrador extends StatelessWidget {
             label: 'Reportes',
             tooltip: 'Reportes'),
         BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle, size: 24),
-            label: '',
+            icon: Icon(Icons.add_circle),
+            label: 'Crear',
             tooltip: 'Agregar'),
         BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_outlined),

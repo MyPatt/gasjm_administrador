@@ -17,8 +17,8 @@ class PersonaRepositoryImpl extends PersonaRepository {
   String get nombreUsuarioActual => _provider.nombreUsuarioActual;
 
   @override
-  Future<void> deletePersona({required String persona}) =>
-      _provider.deletePersona(persona: persona);
+  Future<void> deletePersona({required String uid}) =>
+      _provider.deletePersona(persona: uid);
 
   @override
   Future<PersonaModel?> getDatosPersonaPorCedula({required String cedula}) =>
@@ -81,7 +81,8 @@ class PersonaRepositoryImpl extends PersonaRepository {
 
   @override
   Future<void> updateUbicacionActualDelUsuario(
-          {required Direccion ubicacionActual, required double rotacionActual}) =>
+          {required Direccion ubicacionActual,
+          required double rotacionActual}) =>
       _provider.updateUbicacionActualDelUsuario(
           ubicacionActual: ubicacionActual, rotacionActual: rotacionActual);
 }

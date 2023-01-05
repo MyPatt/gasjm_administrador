@@ -3,17 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/modules/editar_cliente/editar_cliente_controller.dart';
+import 'package:gasjm/app/modules/administrador/editar_cliente/editar_cliente_controller.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:get/get.dart';
 
 class PerfilCliente extends StatelessWidget {
-  const PerfilCliente({Key? key}) : super(key: key);
-
+  const PerfilCliente(
+      {Key? key, required this.clienteEditable, required this.urlfotoPerfil})
+      : super(key: key);
+  final bool clienteEditable;
+  final String urlfotoPerfil;
   @override
   Widget build(BuildContext context) {
-  /*  double width = MediaQuery.of(context).size.width;
+    /*  double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;*/
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 25),
@@ -76,6 +79,7 @@ class PerfilCliente extends StatelessWidget {
                                       labelText: "Nombre",
                                       controller: _.nombreTextoController,
                                       validator: Validacion.validarNombre,
+                                      enabled: clienteEditable,
                                     ),
                                     SizedBox(
                                         height:
@@ -91,6 +95,7 @@ class PerfilCliente extends StatelessWidget {
                                       ],
                                       labelText: "Apellido",
                                       controller: _.apellidoTextoController,
+                                      enabled: clienteEditable,
                                       validator: Validacion.validarApellido,
                                     ),
                                     SizedBox(
@@ -106,13 +111,13 @@ class PerfilCliente extends StatelessWidget {
                                           _.correoElectronicoTextoController,
                                       validator:
                                           Validacion.validarCorreoElectronico,
+                                      enabled: false,
                                     ),
                                     SizedBox(
                                         height:
                                             Responsive.getScreenSize(context)
                                                     .height *
                                                 .02),
-
                                     InkWell(
                                       onTap: () {
                                         _.selectDate(context);
@@ -125,9 +130,9 @@ class PerfilCliente extends StatelessWidget {
                                         keyboardType: TextInputType.datetime,
                                         controller:
                                             _.fechaNacimientoTextoController,
+                                        readOnly: true,
                                       ),
                                     ),
-
                                     SizedBox(
                                         height:
                                             Responsive.getScreenSize(context)
@@ -140,6 +145,7 @@ class PerfilCliente extends StatelessWidget {
                                         FilteringTextInputFormatter.digitsOnly,
                                       ],
                                       labelText: "Celular",
+                                      enabled: clienteEditable,
                                       controller: _.celularTextoController,
                                       // validator: Validacion.validarApellido,
                                     ),
@@ -151,64 +157,39 @@ class PerfilCliente extends StatelessWidget {
                                     InputText(
                                       iconPrefix: Icons.room_outlined,
                                       labelText: "Dirección",
+                                      enabled: clienteEditable,
                                       controller: _.direccionTextoController,
                                       // validator: Validacion.validarApellido,
                                     ),
-
                                     SizedBox(
                                         height:
                                             Responsive.getScreenSize(context)
                                                     .height *
                                                 .02),
-                                    Obx(
-                                      () => InputText(
-                                        iconPrefix: Icons.lock_outlined,
-                                        keyboardType: TextInputType.text,
-                                        obscureText: _.contrasenaOculta.value,
-                                        textInputAction: TextInputAction.done,
-                                        controller: _.contrasenaTextoController,
-                                        validator: Validacion.validarContrasena,
-                                        maxLines: 1,
-                                        labelText: "Contraseña",
-                                        suffixIcon: GestureDetector(
-                                          onTap: _.mostrarContrasena,
-                                          child: Icon(
-                                            _.contrasenaOculta.value
-                                                ? Icons.visibility_outlined
-                                                : Icons.visibility_off_outlined,
-                                            color: AppTheme.light,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-
-                                    //
-                                    SizedBox(
-                                        height:
-                                            Responsive.getScreenSize(context)
-                                                    .height *
-                                                .05),
-
                                     Obx(() {
                                       final estadoProceso =
-                                          _.cargandoParaCorreo.value;
-                                      return Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          PrimaryButton(
-                                              texto: "Actualizar",
-                                              onPressed: () {
-                                                if (_.claveFormRegistrar
-                                                        .currentState
-                                                        ?.validate() ==
-                                                    true) {
-                                                  _.actualizarCliente();
-                                                }
-                                              }),
-                                          if (estadoProceso)
-                                            const CircularProgressIndicator(
-                                                backgroundColor: Colors.white),
-                                        ],
+                                          _.cargandoCliente.value;
+                                      return Visibility(
+                                        visible: clienteEditable,
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            PrimaryButton(
+                                                texto: "Actualizar",
+                                                onPressed: () {
+                                                  if (_.claveFormRegistrar
+                                                          .currentState
+                                                          ?.validate() ==
+                                                      true) {
+                                                    _.actualizarCliente();
+                                                  }
+                                                }),
+                                            if (estadoProceso)
+                                              const CircularProgressIndicator(
+                                                  backgroundColor:
+                                                      Colors.white),
+                                          ],
+                                        ),
                                       );
                                     }),
                                   ]),
@@ -226,7 +207,7 @@ class PerfilCliente extends StatelessWidget {
                         size: 30,
                       ),
                     ),*/
-                    const Positioned(
+                    Positioned(
                       top: 0,
                       left: 0,
                       right: 0,
@@ -237,36 +218,26 @@ class PerfilCliente extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 74.50,
                             backgroundColor: Colors.white,
-                            child: CircleAvatar(
-                              child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  radius: 17.0,
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    size: 20.0,
-                                    color: AppTheme.light,
+                            child: urlfotoPerfil.length > 5
+                                ? CircleAvatar(
+                                    backgroundColor: AppTheme.light,
+                                    radius: 25,
+                                    backgroundImage:
+                                        NetworkImage(urlfotoPerfil))
+                                : const CircleAvatar(
+                                    backgroundColor: AppTheme.light,
+                                    radius: 25,
+                                    child: CircleAvatar(
+                                        backgroundColor: AppTheme.light,
+                                        radius: 15,
+                                        backgroundImage: AssetImage(
+                                          'assets/icons/placehoderperfil.png',
+                                        )),
                                   ),
-                                ),
-                              ),
-                              radius: 70.0,
-                              backgroundImage: AssetImage(
-                                'assets/icons/profile.png',
-                              ),
-                            ),
                           ),
-
-                          /*
-                          Image.asset(
-                            'assets/icons/profile.png',
-                            width: innerWidth * 0.45,
-                            fit: BoxFit.fitWidth,
-                          ),
-                          */
                         ),
                       ),
-                    ),
+                    )
                   ],
                 );
               },

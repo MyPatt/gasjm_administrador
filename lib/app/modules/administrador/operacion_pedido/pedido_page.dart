@@ -1,5 +1,4 @@
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
-import 'package:gasjm/app/global_widgets/menu_appbar.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
@@ -36,8 +35,7 @@ class OperacionPedidoPage extends StatelessWidget {
               actions: [
                 IconButton(
                     icon: const Icon(Icons.search_outlined),
-                    onPressed: () =>
-                        Get.toNamed(AppRoutes.buscarAdministrador)),
+                    onPressed: () => Get.toNamed(AppRoutes.buscarPedidosAdmin)),
                 IconButton(
                     icon: const Icon(
                       Icons.sort_outlined,

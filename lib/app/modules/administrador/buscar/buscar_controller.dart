@@ -122,4 +122,6 @@ class BuscarAdministradorController extends GetxController {
     _listaPedidosCancelados.value = [];
 
   }
+
+  
 }

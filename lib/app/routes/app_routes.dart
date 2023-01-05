@@ -6,8 +6,8 @@ class AppRoutes {
   static const registrar = "/registrar";
   static const inicioAdministrador = "/inicioAdministrador";
   static const operacionPedido = "/operacionPedido";
-  static const buscarAdministrador = "/buscarAdministrador";
-
+  static const buscarPedidosAdmin = "/buscarPedidosAdmin";
+  static const buscarClienteAdmin = "/buscarCliente";
 
   static const cliente = "/cliente";
   static const detalleCliente = "/detallecliente";

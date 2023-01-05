@@ -12,7 +12,7 @@ abstract class PersonaRepository {
   Future<void> updatePersona({required PersonaModel persona, File? image});
   Future<void> updateEstadoPersona(
       {required String uid, required String estado});
-  Future<void> deletePersona({required String persona});
+  Future<void> deletePersona({required String uid});
   Future<PersonaModel?> getDatosPersonaPorCedula({required String cedula});
   Future<String?> getNombresPersonaPorUid({required String uid});
   Future<List<PersonaModel>> getPersonasPorField(

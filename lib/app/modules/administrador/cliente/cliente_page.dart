@@ -6,14 +6,13 @@ import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/modules/administrador/cliente/widgets/contenido_lista.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
 
 import 'package:get/get.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 
 class ClientePage extends StatelessWidget {
-  final ClienteController controladorDePedidos = Get.put(ClienteController());
-
-  ClientePage({
+  const ClientePage({
     Key? key,
   }) : super(key: key);
 
@@ -35,7 +34,11 @@ class ClientePage extends StatelessWidget {
                 ),
               ),
               backgroundColor: AppTheme.blueBackground,
-              // actions: const [MenuAppBar()],
+              actions: [
+                IconButton(
+                    icon: const Icon(Icons.search_outlined),
+                    onPressed: () => Get.toNamed(AppRoutes.buscarClienteAdmin)),
+              ],
               title: const Text("Clientes"),
             ),
             body: RefreshIndicator(
@@ -52,12 +55,14 @@ class ClientePage extends StatelessWidget {
                       Expanded(
                         child: Obx(
                           () => ListView(
-                            children: controladorDePedidos.listaFiltradaClientes
-                                .map((persona) {
+                            children: _.listaClientes.map((persona) {
                               return ContenidoLista(
-                                  persona: persona,
-                                  onPressed: () =>
-                                      _.cargarDetalleDelCliente(persona));
+                                persona: persona,
+                                onPressed: () =>
+                                    _.cargarDetalleDelCliente(persona),
+                                eliminarCliente: () =>
+                                    _.eliminarCliente(persona.uidPersona!),
+                              );
                             }).toList(),
                           ),
                         ),

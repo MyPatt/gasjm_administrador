@@ -103,6 +103,7 @@ class PersonaProvider {
         .collection("persona")
         .where("estado", isEqualTo: "activo")
         .where(field, isEqualTo: dato)
+        
         .get();
 
     return (resultado.docs)

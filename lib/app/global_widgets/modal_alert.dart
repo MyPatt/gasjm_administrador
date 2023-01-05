@@ -31,10 +31,8 @@ class ModalAlert extends StatelessWidget {
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
+          //  CircleAvatar(   backgroundColor: AppTheme.light,    child: 
             CircleAvatar(
-          backgroundColor: AppTheme.light,
-
-              child: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(
                   icono,
@@ -43,8 +41,7 @@ class ModalAlert extends StatelessWidget {
                 ),
                 radius: 55.0,
               ),
-              radius: 56.0,
-            ),
+        //      radius: 56.0,  ),
             SizedBox(height: Responsive.getScreenSize(context).height * .05),
             TextDescription(text: mensaje),
           ],

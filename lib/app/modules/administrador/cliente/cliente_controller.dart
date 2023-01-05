@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
-import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
@@ -10,10 +9,6 @@ import 'package:get/get.dart';
 class ClienteController extends GetxController {
   //Variable  para imagen de perfil
   RxString imagenUsuario = ''.obs;
-
-  //
-  late CategoriaModelo _categoria;
-  CategoriaModelo get house => _categoria;
 
   final _personaRepository = Get.find<PersonaRepository>();
 
@@ -24,9 +19,13 @@ class ClienteController extends GetxController {
   final RxList<PersonaModel> _listaClientes = <PersonaModel>[].obs;
   RxList<PersonaModel> get listaClientes => _listaClientes;
 
-  final RxList<PersonaModel> _listaFiltradaClientes = <PersonaModel>[].obs;
-  RxList<PersonaModel> get listaFiltradaClientes => _listaFiltradaClientes;
+  //
+  Rx<bool> existeImagenPerfil = false.obs;
 
+  //Existe texto en el input de buqueda?
+  final RxBool existeTexoParaBuscar = false.obs;
+  //Controlador de texto para el input de busqueda
+  final TextEditingController controladorBuscarTexto = TextEditingController();
   /* METODOS PROPDIO */
   @override
   void onInit() {
@@ -44,25 +43,12 @@ class ClienteController extends GetxController {
   }
 
   //Volver a cargar la lista de los clientes
-     Future<void> pullRefrescar() async {
-    
-   _cargarListaDeClientes();
+  Future<void> pullRefrescar() async {
+    _cargarListaDeClientes();
     await Future.delayed(const Duration(seconds: 2));
   }
 
   /* METODOS PARA CLIENTES */
-
-  void _cargarListaFiltradaDeClientes() {
-    String filtro = '';
-    List<PersonaModel> resultado = [];
-
-    resultado = _listaClientes
-        //.where((pedido) => pedido.cedulaPersona == filtro)
-
-        .toList();
-
-    _listaFiltradaClientes.value = resultado;
-  }
 
   void _cargarListaDeClientes() async {
     try {
@@ -70,11 +56,17 @@ class ClienteController extends GetxController {
 
       final lista = (await _personaRepository.getPersonasPorField(
           field: 'idPerfil', dato: 'cliente'));
+      //ordenar
+      for (var i = 0; i < lista.length; i++) {
+        final nombre = '${lista[i].nombrePersona} ${lista[i].apellidoPersona}';
+        lista[i].nombreUsuario = nombre;
+      }
 
+      lista.sort(
+          (a, b) => a.nombreUsuario!.compareTo(b.nombreUsuario.toString()));
+
+      //
       _listaClientes.value = lista;
-      //Cargar la lista filtrada al inicio todos
-//      _listaFiltradaPedidosEnEspera.value = _listaPedidosEnEspera;
-      _cargarListaFiltradaDeClientes();
 
       //
     } on FirebaseException {
@@ -90,6 +82,61 @@ class ClienteController extends GetxController {
   }
 
   void cargarDetalleDelCliente(PersonaModel cliente) {
-    Get.offNamed(AppRoutes.detalleCliente, arguments: cliente);
+    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, false]);
+  }
+
+  //
+
+  Future<void> eliminarCliente(String id) async {
+    try {
+      await _personaRepository.updateEstadoPersona(
+          uid: id, estado: "eliminado");
+
+      //
+      Mensajes.showGetSnackbar(
+          titulo: "Mensaje",
+          mensaje: "Cliente eliminado con éxito.",
+          icono: const Icon(
+            Icons.delete_outline_outlined,
+            color: Colors.white,
+          ));
+
+      //
+      Get.back();
+    } catch (e) {
+      Mensajes.showGetSnackbar(
+          titulo: "Alerta",
+          mensaje:
+              "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.",
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
+  }
+
+  //Metodo para filtrar de la lista principal de pedidos
+  buscarPedidos(String valor) {
+    //Si esta vacio el input
+    if (valor.isEmpty) {
+      //El icono de borrar deshabilitar
+      existeTexoParaBuscar.value = false;
+
+      //
+      //Limpiar listas
+
+      return;
+    }
+  }
+
+//Metodo que borra la busqueda y limpia las listas
+  void limpiarBusqueda() {
+    //Borrar el texto del input
+    controladorBuscarTexto.text = '';
+
+    //El icono de borrar deshabilitar
+    existeTexoParaBuscar.value = false;
+
+    //Limpiar listas
   }
 }

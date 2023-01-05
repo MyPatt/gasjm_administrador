@@ -2,8 +2,9 @@ import 'package:gasjm/app/modules/administrador/buscar/buscar_binding.dart';
 import 'package:gasjm/app/modules/administrador/buscar/buscar_page.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_binding.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_page.dart';
-import 'package:gasjm/app/modules/editar_cliente/editar_cliente_binding.dart';
-import 'package:gasjm/app/modules/editar_cliente/editar_cliente_page.dart';
+import 'package:gasjm/app/modules/administrador/cliente/widgets/buscar_page.dart';
+import 'package:gasjm/app/modules/administrador/editar_cliente/editar_cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/editar_cliente/editar_cliente_page.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_binding.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_page.dart';
 import 'package:gasjm/app/modules/administrador/inicio/inicio_binding.dart';
@@ -105,13 +106,18 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-        name: AppRoutes.buscarAdministrador,
+        name: AppRoutes.buscarPedidosAdmin,
         page: () => const BuscarAdministradorPage(),
         binding: BuscarAdministradorBinding(),
         transition: Transition.noTransition),
     GetPage(
+        name: AppRoutes.buscarClienteAdmin,
+        page: () => const BuscarClientePage(),
+        binding: ClienteBinding(),
+        transition: Transition.noTransition),
+    GetPage(
       name: AppRoutes.cliente,
-      page: () => ClientePage(),
+      page: () => const ClientePage(),
       binding: ClienteBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),

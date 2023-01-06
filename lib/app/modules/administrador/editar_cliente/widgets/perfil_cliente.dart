@@ -23,7 +23,7 @@ class PerfilCliente extends StatelessWidget {
       child: ListView(
         children: [
           SizedBox(
-            height: 810.00,
+            height: 780.00,
             child: LayoutBuilder(
               builder: (context, constraints) {
                 // double innerHeight = constraints.maxHeight;
@@ -37,7 +37,7 @@ class PerfilCliente extends StatelessWidget {
                       right: 0,
                       child: GetBuilder<EditarClienteController>(
                         builder: (_) => Container(
-                          height: 740,
+                          height: 680,
                           width: innerWidth,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
@@ -50,13 +50,10 @@ class PerfilCliente extends StatelessWidget {
                               key: _.claveFormRegistrar,
                               child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    SizedBox(
-                                      height: 80,
-                                    ),
                                     InputText(
                                       controller: _.cedulaTextoController,
                                       iconPrefix: Icons.credit_card,
@@ -120,7 +117,8 @@ class PerfilCliente extends StatelessWidget {
                                                 .02),
                                     InkWell(
                                       onTap: () {
-                                        _.selectDate(context);
+                                        if (clienteEditable == true)
+                                          _.seleccionaFechaNacimiento(context);
                                       },
                                       child: InputText(
                                         iconPrefix:
@@ -130,7 +128,6 @@ class PerfilCliente extends StatelessWidget {
                                         keyboardType: TextInputType.datetime,
                                         controller:
                                             _.fechaNacimientoTextoController,
-                                        readOnly: true,
                                       ),
                                     ),
                                     SizedBox(
@@ -157,7 +154,7 @@ class PerfilCliente extends StatelessWidget {
                                     InputText(
                                       iconPrefix: Icons.room_outlined,
                                       labelText: "Dirección",
-                                      enabled: clienteEditable,
+                                      enabled: false,
                                       controller: _.direccionTextoController,
                                       // validator: Validacion.validarApellido,
                                     ),
@@ -165,7 +162,7 @@ class PerfilCliente extends StatelessWidget {
                                         height:
                                             Responsive.getScreenSize(context)
                                                     .height *
-                                                .02),
+                                                .05),
                                     Obx(() {
                                       final estadoProceso =
                                           _.cargandoCliente.value;
@@ -213,23 +210,23 @@ class PerfilCliente extends StatelessWidget {
                       right: 0,
                       child: Center(
                         child: CircleAvatar(
-                          radius: 75.0,
                           backgroundColor: AppTheme.light,
+                          radius: 75.0,
                           child: CircleAvatar(
                             radius: 74.50,
                             backgroundColor: Colors.white,
                             child: urlfotoPerfil.length > 5
                                 ? CircleAvatar(
                                     backgroundColor: AppTheme.light,
-                                    radius: 25,
+                                    radius: 70.0,
                                     backgroundImage:
                                         NetworkImage(urlfotoPerfil))
                                 : const CircleAvatar(
                                     backgroundColor: AppTheme.light,
-                                    radius: 25,
+                                    radius: 70.0,
                                     child: CircleAvatar(
                                         backgroundColor: AppTheme.light,
-                                        radius: 15,
+                                        radius: 50.0,
                                         backgroundImage: AssetImage(
                                           'assets/icons/placehoderperfil.png',
                                         )),
@@ -243,9 +240,7 @@ class PerfilCliente extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(
-            height: 30,
-          ),
+
           //TODO: mOSTRAR los pedidos
           /*    Container(
             //height: height * 0.5,
@@ -359,9 +354,6 @@ class PerfilCliente extends StatelessWidget {
             ),
           ),
       */
-          SizedBox(
-            height: 30,
-          ),
         ],
       ),
     );

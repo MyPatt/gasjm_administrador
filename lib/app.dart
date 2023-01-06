@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
                   cursorColor: AppTheme.blueBackground,
                 ),
                 primaryColor: AppTheme.blueBackground),
+            initialRoute: '/',
             home: const SplashPage(),
             initialBinding: SplashBinding(),
             getPages: AppPages.pages,

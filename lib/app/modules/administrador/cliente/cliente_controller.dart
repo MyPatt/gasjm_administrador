@@ -14,10 +14,15 @@ class ClienteController extends GetxController {
 
   final cargandoClientes = true.obs;
 
-//Listas observables de los clientes
+  //Listas observables de todos los clientes activos
 
   final RxList<PersonaModel> _listaClientes = <PersonaModel>[].obs;
   RxList<PersonaModel> get listaClientes => _listaClientes;
+
+//Listas para filtrar lista de clientes
+
+  final RxList<PersonaModel> _listaFiltraDeClientes = <PersonaModel>[].obs;
+  RxList<PersonaModel> get listaFiltraDeClientes => _listaFiltraDeClientes;
 
   //
   Rx<bool> existeImagenPerfil = false.obs;
@@ -122,11 +127,22 @@ class ClienteController extends GetxController {
       //El icono de borrar deshabilitar
       existeTexoParaBuscar.value = false;
 
-      //
-      //Limpiar listas
+      //Limpiar lista
+      _listaFiltraDeClientes.clear();
 
       return;
     }
+
+    //Filtro de lista, todo en minuscular para optimizar la busqueda
+
+    _listaFiltraDeClientes.value = listaClientes
+        .where((pedido) => pedido.nombreUsuario!
+            .toLowerCase()
+            .contains(controladorBuscarTexto.text.toLowerCase()))
+        .toList();
+
+    //El icono de borrar habilitar
+    existeTexoParaBuscar.value = true;
   }
 
 //Metodo que borra la busqueda y limpia las listas
@@ -137,6 +153,7 @@ class ClienteController extends GetxController {
     //El icono de borrar deshabilitar
     existeTexoParaBuscar.value = false;
 
-    //Limpiar listas
+    //Limpiar lista
+    _listaFiltraDeClientes.clear();
   }
 }

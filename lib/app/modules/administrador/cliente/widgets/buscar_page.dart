@@ -33,37 +33,30 @@ class BuscarClientePage extends StatelessWidget {
                   existeTexoParaBuscar: _.existeTexoParaBuscar,
                 ),
               ),
-              body: RefreshIndicator(
-                backgroundColor: Colors.white,
-                color: AppTheme.blueBackground,
-                displacement: 1,
-                triggerMode: RefreshIndicatorTriggerMode.onEdge,
-                onRefresh: _.pullRefrescar,
-                child: Stack(children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Obx(
-                            () => ListView(
-                              children: _.listaClientes.map((persona) {
-                                return ContenidoLista(
-                                  persona: persona,
-                                  onPressed: () =>
-                                      _.cargarDetalleDelCliente(persona),
-                                  eliminarCliente: () =>
-                                      _.eliminarCliente(persona.uidPersona!),
-                                );
-                              }).toList(),
-                            ),
+              body: Stack(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Obx(
+                          () => ListView(
+                            children: _.listaFiltraDeClientes.map((persona) {
+                              return ContenidoLista(
+                                persona: persona,
+                                onPressed: () =>
+                                    _.cargarDetalleDelCliente(persona),
+                                eliminarCliente: () =>
+                                    _.eliminarCliente(persona.uidPersona!),
+                              );
+                            }).toList(),
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ]),
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ]),
             ));
   }
 }

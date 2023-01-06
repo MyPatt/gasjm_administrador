@@ -1,9 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
+import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -35,7 +40,7 @@ class EditarClienteController extends GetxController {
   //Existe algun error si o no
   final errorParaCorreo = Rx<String?>(null);
 //varialbe para el modo editable;
-    bool clienteEditable = false;
+  bool clienteEditable = false;
   /* METODOS PROPIOS */
   @override
   void onInit() {
@@ -44,6 +49,9 @@ class EditarClienteController extends GetxController {
     clienteEditable = argumentos[1] as bool;
     //
     Future.wait([_cargarDatosDelFormCliente()]);
+
+    //
+
     super.onInit();
   }
 
@@ -92,13 +100,31 @@ class EditarClienteController extends GetxController {
   }
 
 //
-  Future<void> selectDate(BuildContext context) async {
+  Future<void> seleccionaFechaNacimiento(BuildContext context) async {
     DateTime? fechaNacimiento = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppTheme.blueBackground,
+              onPrimary: Colors.white,
+              onSurface: AppTheme.blueDark,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: AppTheme.blueBackground,
+                // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
       context: context,
+      locale: const Locale(
+        'es',
+      ),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
-      helpText: "Seleccione una fecha".toUpperCase(),
-      cancelText: "Cancelar",
-      confirmText: "Aceptar",
       firstDate: DateTime(DateTime.now().year - 65),
       lastDate: DateTime(DateTime.now().year - 18),
       initialDate: DateTime(DateTime.now().year - 20),
@@ -148,11 +174,11 @@ class EditarClienteController extends GetxController {
     final String nombrePersona = nombreTextoController.text;
     final String apellidoPersona = apellidoTextoController.text;
     final String? correoPersona = correoElectronicoTextoController.text;
-    final String? fotoPersona = '';
-    //final Direccion? direccionPersona=direccionTextoController.text;
+    final String? fotoPersona =cliente.fotoPersona;
+    final Direccion? direccionPersona=cliente.direccionPersona;
     final String? celularPersona = celularTextoController.text;
     final String? fechaNaciPersona = fechaNacimientoTextoController.text;
-    //final String? estadoPersona = cliente.estadoPersona;
+    final String? estadoPersona = cliente.estadoPersona;
     final String idPerfil = cliente.idPerfil;
     final String contrasenaPersona = contrasenaTextoController.text;
 
@@ -172,10 +198,10 @@ class EditarClienteController extends GetxController {
           contrasenaPersona: contrasenaPersona,
           correoPersona: correoPersona,
           fotoPersona: fotoPersona,
-          direccionPersona: cliente.direccionPersona,
+          direccionPersona:direccionPersona,
           celularPersona: celularPersona,
           fechaNaciPersona: fechaNaciPersona,
-          estadoPersona: cliente.estadoPersona);
+          estadoPersona: estadoPersona);
 
 //En firebase
       await _personaRepository.updatePersona(persona: usuarioDatos);
@@ -208,5 +234,6 @@ class EditarClienteController extends GetxController {
     }
     cargandoCliente.value = false;
   }
+ 
 
 }

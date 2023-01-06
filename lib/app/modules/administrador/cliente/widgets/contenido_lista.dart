@@ -28,7 +28,7 @@ class ContenidoLista extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.only(
-              right: 8.0, left: 8.0, top: 4.0, bottom: 4.0),
+              right: 8.0, left: 8.0, top: 0.0, bottom: 0.0),
           child: Row(children: [
             ImagenUsuario(urlfotoPerfil: persona.fotoPersona ?? ''),
             Column(
@@ -52,7 +52,7 @@ class ContenidoLista extends StatelessWidget {
                   icon: const Icon(
                     Icons.mode_edit_outline_outlined,
                     color: Colors.black38,
-                    size: 15,
+                    size: 20,
                   ),
                 ),
                 IconButton(
@@ -61,7 +61,7 @@ class ContenidoLista extends StatelessWidget {
                   icon: const Icon(
                     Icons.delete_outline_outlined,
                     color: Colors.black38,
-                    size: 15,
+                    size: 20,
                   ),
                 )
               ],

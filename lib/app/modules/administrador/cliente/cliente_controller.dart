@@ -41,6 +41,8 @@ class ClienteController extends GetxController {
     super.onInit();
   }
 
+ 
+
   //Obtener foto de perfil del usuario
   Future<void> _cargarFotoPerfil() async {
     imagenUsuario.value =

@@ -82,10 +82,10 @@ class ModalOperaciones extends StatelessWidget {
                             //_.seleccionarCategoriaParaOperacion(index);
                             switch (index) {
                               case 0:
-                                (Get.offNamed(AppRoutes.operacionPedido));
+                                (Get.offAllNamed(AppRoutes.operacionPedido));
                                 break;
                               case 1:
-                                (Get.offNamed(AppRoutes.cliente));
+                                (Get.offAllNamed(AppRoutes.cliente));
                                 break;
                               case 2:
                                 (Get.offNamed(AppRoutes.repartidor));

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
@@ -174,20 +176,20 @@ class EditarClienteController extends GetxController {
     final String nombrePersona = nombreTextoController.text;
     final String apellidoPersona = apellidoTextoController.text;
     final String? correoPersona = correoElectronicoTextoController.text;
-    final String? fotoPersona =cliente.fotoPersona;
-    final Direccion? direccionPersona=cliente.direccionPersona;
+
+    final String? fotoPersona = cliente.fotoPersona;
+    final Direccion? direccionPersona = cliente.direccionPersona;
     final String? celularPersona = celularTextoController.text;
     final String? fechaNaciPersona = fechaNacimientoTextoController.text;
     final String? estadoPersona = cliente.estadoPersona;
     final String idPerfil = cliente.idPerfil;
     final String contrasenaPersona = contrasenaTextoController.text;
 
-//
     try {
       cargandoCliente.value = true;
       errorParaCorreo.value = null;
       //
-
+      File? pickedImage;
       //Guardar en model
       PersonaModel usuarioDatos = PersonaModel(
           uidPersona: cliente.uidPersona,
@@ -198,13 +200,14 @@ class EditarClienteController extends GetxController {
           contrasenaPersona: contrasenaPersona,
           correoPersona: correoPersona,
           fotoPersona: fotoPersona,
-          direccionPersona:direccionPersona,
+          direccionPersona: direccionPersona,
           celularPersona: celularPersona,
           fechaNaciPersona: fechaNaciPersona,
           estadoPersona: estadoPersona);
 
 //En firebase
-      await _personaRepository.updatePersona(persona: usuarioDatos);
+      await _personaRepository.updatePersona(
+          persona: usuarioDatos, image: pickedImage);
 
       //
 
@@ -217,7 +220,7 @@ class EditarClienteController extends GetxController {
             color: Colors.white,
           ));
 
-      //
+          
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         errorParaCorreo.value = 'La contraseña es demasiado débil';
@@ -234,6 +237,4 @@ class EditarClienteController extends GetxController {
     }
     cargandoCliente.value = false;
   }
- 
-
 }

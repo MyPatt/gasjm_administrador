@@ -57,12 +57,11 @@ class ClientePage extends StatelessWidget {
                           () => ListView(
                             children: _.listaClientes.map((persona) {
                               return ContenidoLista(
-                                persona: persona,
-                                onPressed: () =>
-                                    _.cargarDetalleDelCliente(persona),
-                                eliminarCliente: () =>
-                                    _.eliminarCliente(persona.uidPersona!),
-                              );
+                                  persona: persona,
+                                  onPressed: () =>
+                                      _.cargarDetalleDelCliente(persona),
+                                  eliminarCliente: ()   => _.eliminarCliente(persona.uidPersona!),
+                                  );
                             }).toList(),
                           ),
                         ),
@@ -77,41 +76,4 @@ class ClientePage extends StatelessWidget {
             bottomNavigationBar:
                 const BottomNavigationAdministrador(indiceActual: 2)));
   }
-}
-
-Widget _cardPedido(
-    PersonaModel persona, ClienteController controladorDePedidos) {
-  return Padding(
-    padding:
-        const EdgeInsets.only(right: 8.0, left: 8.0, top: 4.0, bottom: 4.0),
-    child: Ink(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        border: Border.all(color: AppTheme.light, width: 0.5),
-      ),
-      child: ListTile(
-        style: ListTileStyle.list,
-        iconColor: AppTheme.light,
-        leading: const Icon(
-          Icons.person_outlined,
-          //  size: 30,
-        ),
-        title: TextSubtitle(
-          text: '${persona.nombrePersona} ${persona.apellidoPersona}',
-          textAlign: TextAlign.justify,
-        ),
-        subtitle: TextDescription(
-            text: persona.cedulaPersona, textAlign: TextAlign.justify),
-        trailing: IconButton(
-            onPressed: () {
-              controladorDePedidos.cargarDetalleDelCliente(persona);
-            },
-            icon: const Icon(
-              Icons.keyboard_arrow_right_outlined,
-              // size: 30,
-            )),
-      ),
-    ),
-  );
 }

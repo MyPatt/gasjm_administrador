@@ -10,7 +10,7 @@ class AppRoutes {
   static const buscarClienteAdmin = "/buscarCliente";
 
   static const cliente = "/cliente";
-  static const detalleCliente = "/detallecliente";
+  static const detalleCliente = "/detalleCliente";
   static const perfil = "/perfil";
   static const contrasena = "/contrasena";
   static const direccion = "/direccion";

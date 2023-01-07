@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/administrador/inicio/widgets/modal_operaciones.dart';
+import 'package:gasjm/app/global_widgets/modal_operaciones.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +51,7 @@ class BottomNavigationAdministrador extends StatelessWidget {
         BottomNavigationBarItem(
             icon: Icon(Icons.add_circle),
             label: 'Crear',
-            tooltip: 'Agregar'),
+            tooltip: 'Crear'),
         BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_outlined),
             label: "Operaciones ",

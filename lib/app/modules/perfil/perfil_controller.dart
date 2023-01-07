@@ -273,7 +273,7 @@ class PerfilController extends GetxController {
           fechaNaciPersona: fechaNaciPersona,
           estadoPersona: usuario?.estadoPersona);
 
-//En firebase
+      //En firebase
       await _personaRepository.updatePersona(
           persona: usuarioDatos, image: pickedImage.value);
 

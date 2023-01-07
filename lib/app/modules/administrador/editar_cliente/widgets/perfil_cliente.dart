@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
+import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/modules/administrador/editar_cliente/editar_cliente_controller.dart';
@@ -117,8 +118,9 @@ class PerfilCliente extends StatelessWidget {
                                                 .02),
                                     InkWell(
                                       onTap: () {
-                                        if (clienteEditable == true)
+                                        if (clienteEditable == true) {
                                           _.seleccionaFechaNacimiento(context);
+                                        }
                                       },
                                       child: InputText(
                                         iconPrefix:
@@ -139,6 +141,7 @@ class PerfilCliente extends StatelessWidget {
                                       iconPrefix: Icons.phone_android_outlined,
                                       keyboardType: TextInputType.phone,
                                       inputFormatters: <TextInputFormatter>[
+                                        LengthLimitingTextInputFormatter(10),
                                         FilteringTextInputFormatter.digitsOnly,
                                       ],
                                       labelText: "Celular",
@@ -171,20 +174,21 @@ class PerfilCliente extends StatelessWidget {
                                         child: Stack(
                                           alignment: Alignment.center,
                                           children: [
-                                            PrimaryButton(
-                                                texto: "Actualizar",
-                                                onPressed: () {
-                                                  if (_.claveFormRegistrar
-                                                          .currentState
-                                                          ?.validate() ==
-                                                      true) {
-                                                    _.actualizarCliente();
-                                                  }
-                                                }),
+                                            Visibility(
+                                              visible: !_.cargandoCliente.value,
+                                              child: PrimaryButton(
+                                                  texto: "Actualizar",
+                                                  onPressed: () {
+                                                    if (_.claveFormRegistrar
+                                                            .currentState
+                                                            ?.validate() ==
+                                                        true) {
+                                                      _.actualizarCliente();
+                                                    }
+                                                  }),
+                                            ),
                                             if (estadoProceso)
-                                              const CircularProgressIndicator(
-                                                  backgroundColor:
-                                                      Colors.white),
+                                              const CircularProgress()
                                           ],
                                         ),
                                       );

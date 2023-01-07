@@ -105,9 +105,8 @@ class ClienteController extends GetxController {
             Icons.delete_outline_outlined,
             color: Colors.white,
           ));
-
-      //
-      Get.back();
+//
+      _cargarListaDeClientes();
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: "Alerta",

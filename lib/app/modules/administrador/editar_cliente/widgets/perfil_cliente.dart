@@ -55,6 +55,7 @@ class PerfilCliente extends StatelessWidget {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
+                                    //
                                     InputText(
                                       controller: _.cedulaTextoController,
                                       iconPrefix: Icons.credit_card,
@@ -198,16 +199,7 @@ class PerfilCliente extends StatelessWidget {
                           }),
                         ),
                       ),
-                    ),
-                    /*   Positioned(
-                      top: 110,
-                      right: 20,
-                      child: Icon(
-                        AntDesign.setting,
-                        color: Colors.grey[700],
-                        size: 30,
-                      ),
-                    ),*/
+                    ), 
                     Positioned(
                       top: 0,
                       left: 0,

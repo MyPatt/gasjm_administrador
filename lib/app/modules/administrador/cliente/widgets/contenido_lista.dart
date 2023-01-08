@@ -91,7 +91,6 @@ class ContenidoLista extends StatelessWidget {
 //
   _eliminarPersona(BuildContext context, String id) {
     eliminarCliente();
-    print("object");
     Navigator.of(context).pop();
   }
 }

@@ -234,4 +234,7 @@ class EditarClienteController extends GetxController {
     }
     cargandoCliente.value = false;
   }
+
+  //
+  
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/editar_cliente_controller.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/widgets/perfil_cliente.dart';
+import 'package:gasjm/app/modules/administrador/detalle_cliente/editar_cliente_controller.dart';
+import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/perfil_cliente.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ContenidoPerfil extends StatelessWidget {
-  const ContenidoPerfil();
+    const ContenidoPerfil({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

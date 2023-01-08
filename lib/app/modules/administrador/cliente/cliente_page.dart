@@ -1,8 +1,6 @@
-import 'package:gasjm/app/data/models/persona_model.dart';
+
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
-import 'package:gasjm/app/global_widgets/menu_lateral.dart';
-import 'package:gasjm/app/global_widgets/text_description.dart';
-import 'package:gasjm/app/global_widgets/text_subtitle.dart';
+import 'package:gasjm/app/global_widgets/menu_lateral.dart'; 
 import 'package:gasjm/app/modules/administrador/cliente/cliente_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/modules/administrador/cliente/widgets/contenido_lista.dart';

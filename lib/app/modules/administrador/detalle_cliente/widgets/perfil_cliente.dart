@@ -4,7 +4,7 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/editar_cliente_controller.dart';
+import 'package:gasjm/app/modules/administrador/detalle_cliente/editar_cliente_controller.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:get/get.dart';
@@ -199,7 +199,7 @@ class PerfilCliente extends StatelessWidget {
                           }),
                         ),
                       ),
-                    ), 
+                    ),
                     Positioned(
                       top: 0,
                       left: 0,
@@ -237,7 +237,7 @@ class PerfilCliente extends StatelessWidget {
             ),
           ),
 
-          //TODO: mOSTRAR los pedidos
+          //TODO: Borrar cliente diseno
           /*    Container(
             //height: height * 0.5,
             width: width,

@@ -36,7 +36,7 @@ class VehiculoController extends GetxController {
   /* METODOS PARA CLIENTES */
 
   void _cargarListaFiltradaDeRepartidores() {
-    String filtro = '';
+   
     List<PersonaModel> resultado = [];
 
     resultado = _listaRepartidores

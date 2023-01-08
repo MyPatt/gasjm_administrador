@@ -52,7 +52,7 @@ class InicioController extends GetxController {
   /* METODOS PROPIOS */
   @override
   Future<void> onInit() async {
-    print("uuuuuuuuuuuuuuuuuuuuuu");
+  
     super.onInit();
     _cargarDatosInicialesParaMapa();
 
@@ -153,8 +153,7 @@ class InicioController extends GetxController {
               onTap: () {}));
       _marcadoresParaExplorar[markerId] = marker;
 
-      print("^^^^^^^^^^^^^^^^^^^^");
-      print(_marcadoresParaExplorar.length);
+ 
     }
   }
 

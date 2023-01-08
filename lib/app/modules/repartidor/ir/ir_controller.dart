@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/utils/map_style.dart';
-import 'package:gasjm/app/data/controllers/usuario_controller.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
-import 'package:gasjm/app/data/models/persona_model.dart';
+import 'package:gasjm/app/core/utils/map_style.dart'; 
+import 'package:gasjm/app/data/models/pedido_model.dart'; 
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
@@ -256,9 +254,8 @@ class IrController extends GetxController {
     //Escuchando las actualizaciones de ubicación del usuario actual (repartidor) cada 6 metros
     _posicionStreamSubscripcion = Geolocator.getPositionStream(
             desiredAccuracy: LocationAccuracy.high, distanceFilter: 6)
-        .listen((posicion) async {
-      print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
+        .listen((posicion) async { 
+          
       _enviarPosicionDelRepartidorActual(posicion);
 
       //actualizar datos en firestore

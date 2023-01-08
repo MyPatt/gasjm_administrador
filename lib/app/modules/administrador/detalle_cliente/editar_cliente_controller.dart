@@ -3,15 +3,16 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart'; 
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/estadopedido_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/widgets/detalle/detalle_page.dart'; 
-import 'package:geocoding/geocoding.dart'; 
+import 'package:gasjm/app/modules/administrador/detalle_cliente/editar_cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/detalle/detalle_page.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
@@ -35,9 +36,8 @@ class EditarClienteController extends GetxController {
   late PersonaModel _cliente;
   PersonaModel get cliente => _cliente;
 
-
 //
-final _pedidosRepository = Get.find<PedidoRepository>();
+  final _pedidosRepository = Get.find<PedidoRepository>();
   final _personaRepository = Get.find<PersonaRepository>();
 
   final cargandoCliente = true.obs;
@@ -225,8 +225,6 @@ final _pedidosRepository = Get.find<PedidoRepository>();
             Icons.save_outlined,
             color: Colors.white,
           ));
-
-          
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         errorParaCorreo.value = 'La contraseña es demasiado débil';
@@ -289,8 +287,7 @@ final _pedidosRepository = Get.find<PedidoRepository>();
       //
 
     } catch (e) {
-        Exception("Error al cargar detalle del pedido"); 
-
+      Exception("Error al cargar detalle del pedido");
     }
     cargandoDetalle.value = false;
   }
@@ -299,38 +296,42 @@ final _pedidosRepository = Get.find<PedidoRepository>();
     Get.to(
         DetalleHistorial(
           pedido: pedido,
-          cargandoDetalle: cargandoDetalle, formatoHoraFecha:formatoHoraFecha, estadoPedido1: estadoPedido1,estadoPedido3: estadoPedido3,
+          cargandoDetalle: cargandoDetalle,
+          formatoHoraFecha: formatoHoraFecha,
+          estadoPedido1: estadoPedido1,
+          estadoPedido3: estadoPedido3,
         ),
+        binding: EditarClienteBinding(),
         routeName: 'detalle');
   }
 
-
-    String formatoHoraFecha(Timestamp fecha) {
+  String formatoHoraFecha(Timestamp fecha) {
     String formatoFecha = DateFormat.yMd("es").format(fecha.toDate());
     String formatoHora = DateFormat.Hm("es").format(fecha.toDate());
     return "$formatoHora $formatoFecha";
   }
+
   //Metodo para encontrar el  nombre del estado
   Future<String> _getNombreEstado(String idEstado) async {
     final nombre =
         await _pedidosRepository.getNombreEstadoPedidoPorId(idEstado: idEstado);
     return nombre ?? 'Pedido';
   }
+
   final cargandoPedidos = true.obs;
-  
+
   //Pedidos realizado
 
   final RxList<PedidoModel> _listaPedidosRealizados = <PedidoModel>[].obs;
 
   RxList<PedidoModel> get listaPedidosRealizados => _listaPedidosRealizados;
 
-   //Obtener fecha de los pedidos
+  //Obtener fecha de los pedidos
   final RxList<Timestamp> _listaFechas = <Timestamp>[].obs;
   RxList<Timestamp> get listaFechas => _listaFechas;
 
-
 //
- //Metodo para cargarLista de los pedidos para el administrador
+  //Metodo para cargarLista de los pedidos para el administrador
   Future<void> cargarListaPedidosRealizadosPorCliente() async {
     try {
       cargandoPedidos.value = true;
@@ -377,4 +378,3 @@ final _pedidosRepository = Get.find<PedidoRepository>();
     cargandoPedidos.value = false;
   }
 }
-

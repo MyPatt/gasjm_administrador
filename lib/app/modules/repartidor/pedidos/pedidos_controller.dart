@@ -62,7 +62,7 @@ class PedidosController extends GetxController {
 
 //Metodo para ordenar
   seleccionarOpcionDeOrdenamiento(String? valor) {
-    print("###############$valor");
+ 
     indiceCategoriaSeleccionada.value = valor!;
 
     //

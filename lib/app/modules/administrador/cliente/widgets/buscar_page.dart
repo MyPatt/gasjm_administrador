@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/administrador/buscar/buscar_controller.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/modules/administrador/buscar/widgets/buscar.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_controller.dart';
 import 'package:gasjm/app/modules/administrador/cliente/widgets/contenido_lista.dart';

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/editar_cliente_controller.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/widgets/contenido_historial.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/widgets/contenido_perfil.dart';
-import 'package:gasjm/app/modules/administrador/editar_cliente/widgets/contenido_ver.dart'; 
+import 'package:gasjm/app/modules/administrador/detalle_cliente/editar_cliente_controller.dart'; 
+import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/contenido_perfil.dart';
+import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/contenido_ver.dart';
 import 'package:get/get.dart';
 
 class EditarClientePage extends StatelessWidget {
@@ -26,11 +25,7 @@ class EditarClientePage extends StatelessWidget {
             // actions: const [MenuAppBar()],
             title: Text(_.clienteEditable ? 'Editar cliente' : 'Cliente'),
           ),
-          body:
-          _.clienteEditable?
-ContenidoPerfil()
-          :ContenidoVer()
-          ),
+          body: _.clienteEditable ? const ContenidoPerfil() : const ContenidoVer()),
     );
   }
 }

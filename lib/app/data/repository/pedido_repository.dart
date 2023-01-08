@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gasjm/app/data/models/estadopedido_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 
 abstract class PedidoRepository {
   Future<void> insertPedido({required PedidoModel pedidoModel});
   Future<void> updateEstadoPedido(
-      {required String idPedido, required String estadoPedido,required String numeroEstadoPedido});
+      {required String idPedido,
+      required String estadoPedido,
+      required String numeroEstadoPedido});
   Future<void> deletePedido({required String pedido});
   Future<List<PedidoModel>> getPedidosEnEsperaYAceptados();
   Future<List<PedidoModel>?> getPedidosPorDosQueries({
@@ -15,9 +18,16 @@ abstract class PedidoRepository {
   });
   Future<List<PedidoModel>?> getPedidosPorField(
       {required String field, required String dato});
-  Future<List<PedidoModel>> getPedidos( );
+  Future<List<PedidoModel>> getPedidos();
   Future<int> getCantidadPedidosPorHora({required Timestamp fechaHora});
   Future<int> getCantidadPedidosPorPorDias({required Timestamp fechaDia});
   Future<int> getCantidadPedidosPorfield(
+      {required String field, required String dato});
+  Future<EstadoDelPedido?> getEstadoPedidoPorField({
+    required String uid,
+    required String field,
+  });
+  Future<String?> getNombreEstadoPedidoPorId({required String idEstado});
+  Future<List<PedidoModel>?> getListaPedidosPorField(
       {required String field, required String dato});
 }

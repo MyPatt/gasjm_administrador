@@ -8,21 +8,19 @@ class ContenidoPerfil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  GetBuilder<EditarClienteController>(builder: (_)=>SafeArea(
-          bottom: false,
-          child: SingleChildScrollView(
-            child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).padding.top,
-                child: PerfilCliente( 
-                  urlfotoPerfil: _.cliente.fotoPersona ?? '', clienteEditable:  _.clienteEditable,
-                )),
-          ),
-        )
-    
-    
-    
-    );
+    return GetBuilder<EditarClienteController>(
+        builder: (_) => SafeArea(
+              bottom: false,
+              child: SingleChildScrollView(
+                child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    height: MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.top,
+                    child: PerfilCliente(
+                      urlfotoPerfil: _.cliente.fotoPersona ?? '',
+                      clienteEditable: _.clienteEditable,
+                    )),
+              ),
+            ));
   }
 }

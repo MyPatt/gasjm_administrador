@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gasjm/app/data/models/estadopedido_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/providers/pedido_provider.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
@@ -58,4 +59,20 @@ class PedidoRepositoryImpl extends PedidoRepository {
 
   @override
   Future<List<PedidoModel>> getPedidos() => _provider.getPedidos();
+
+  @override
+  Future<EstadoDelPedido?> getEstadoPedidoPorField({
+    required String uid,
+    required String field,
+  }) =>
+      _provider.getEstadoPedidoPorField(uid: uid, field: field);
+  @override
+  Future<String?> getNombreEstadoPedidoPorId({required String idEstado}) =>
+      _provider.getNombreEstadoPedidoPorId(idEstado: idEstado);
+  //
+    @override
+  Future<List<PedidoModel>?> getListaPedidosPorField(
+          {required String field, required String dato}) =>
+      _provider.getListaPedidosPorField(field: field, dato: dato);
+ 
 }

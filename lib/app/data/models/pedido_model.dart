@@ -21,16 +21,19 @@ class PedidoModel {
   final EstadoPedido? estadoPedido3;
 
  
-  String? nombreUsuario;
-  String? direccionUsuario;
-  int? tiempoEntrega;
+
 
   final int cantidadPedido;
   final String? notaPedido;
   final double totalPedido;
 
   //
+  String? nombreUsuario;
+  String? direccionUsuario;
+    String? estadoPedidoUsuario;
+  int? tiempoEntrega;
 
+  //
   PedidoModel(
       {required this.idPedido,
       required this.idProducto,

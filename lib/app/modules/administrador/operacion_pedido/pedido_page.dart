@@ -48,7 +48,7 @@ class OperacionPedidoPage extends StatelessWidget {
                                 _.listaCategoriasDeOrdenamiento,
                             selectedRadioTile: _.indiceCategoriaSeleccionada,
                             onChanged: (valor) =>
-                                _.seleccionarOpcionDeOrdenamiento(valor),
+                              _.seleccionarOpcionDeOrdenamiento(valor),
                           ),
                         ))
               ],
@@ -116,7 +116,8 @@ class OperacionPedidoPage extends StatelessWidget {
                         modo: 0,
                         listaPedidos:
                             _.controladorDePedidos.listaPedidosCancelados),
-                  ]))
+                  ])
+                  )
                 ],
               ),
             ),

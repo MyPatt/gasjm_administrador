@@ -10,7 +10,7 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/editar_cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/detalle_cliente/detalle_cliente_binding.dart';
 import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/detalle/detalle_page.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';

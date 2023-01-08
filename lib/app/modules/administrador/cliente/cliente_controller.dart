@@ -107,8 +107,19 @@ class ClienteController extends GetxController {
             Icons.delete_outline_outlined,
             color: Colors.white,
           ));
-//
+          
+//Volver a actualizar la lista de clientes activos desde firestore
       _cargarListaDeClientes();
+
+//Verificar si no se encuentra en la pagina de busqueda para actualizar la lista filtrada
+if(existeTexoParaBuscar.value){
+   _listaFiltraDeClientes.value = listaClientes
+        .where((pedido) => pedido.nombreUsuario!
+            .toLowerCase()
+            .contains(controladorBuscarTexto.text.toLowerCase()))
+        .toList();
+}
+
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: "Alerta",
@@ -136,11 +147,7 @@ class ClienteController extends GetxController {
 
     //Filtro de lista, todo en minuscular para optimizar la busqueda
 
-    _listaFiltraDeClientes.value = listaClientes
-        .where((pedido) => pedido.nombreUsuario!
-            .toLowerCase()
-            .contains(controladorBuscarTexto.text.toLowerCase()))
-        .toList();
+ _filtrarListaClientes();
 
     //El icono de borrar habilitar
     existeTexoParaBuscar.value = true;
@@ -156,5 +163,13 @@ class ClienteController extends GetxController {
 
     //Limpiar lista
     _listaFiltraDeClientes.clear();
+  }
+  
+  void _filtrarListaClientes() {
+       _listaFiltraDeClientes.value = listaClientes
+        .where((pedido) => pedido.nombreUsuario!
+            .toLowerCase()
+            .contains(controladorBuscarTexto.text.toLowerCase()))
+        .toList();
   }
 }

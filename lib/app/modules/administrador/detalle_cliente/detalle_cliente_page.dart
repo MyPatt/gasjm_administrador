@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/editar_cliente_controller.dart'; 
+import 'package:gasjm/app/modules/administrador/detalle_cliente/detalle_cliente_controller.dart'; 
 import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/contenido_perfil.dart';
 import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/contenido_ver.dart';
 import 'package:get/get.dart';

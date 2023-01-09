@@ -74,4 +74,10 @@ class RepartidorController extends GetxController {
   void cargarDetalleDelRepartidor(PersonaModel cliente) {
     Get.offNamed(AppRoutes.detalleCliente, arguments: cliente);
   }
+
+  //Actualizar lista de repartidores
+    Future<void> pullRefrescar() async {
+    _cargarListaDeRepartidores();
+    await Future.delayed(const Duration(seconds: 2));
+  }
 }

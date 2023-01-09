@@ -39,12 +39,12 @@ class ClientePage extends StatelessWidget {
               ],
               title: const Text("Clientes"),
             ),
-            body: RefreshIndicator(
-              backgroundColor: Colors.white,
-              color: AppTheme.blueBackground,
-              displacement: 1,
-              triggerMode: RefreshIndicatorTriggerMode.onEdge,
-              onRefresh: _.pullRefrescar,
+              body: RefreshIndicator(
+                backgroundColor: Colors.white,
+                color: AppTheme.blueBackground,
+                displacement: 1,
+                triggerMode: RefreshIndicatorTriggerMode.onEdge,
+                onRefresh: _.pullRefrescar,
               child: Stack(children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),

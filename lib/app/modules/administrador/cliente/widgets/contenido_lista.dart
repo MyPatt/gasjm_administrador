@@ -3,7 +3,7 @@ import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/global_widgets/modal_alert.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/administrador/cliente/widgets/imagen_usuario.dart';
+import 'package:gasjm/app/global_widgets/imagen_usuario.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 

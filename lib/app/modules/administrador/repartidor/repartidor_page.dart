@@ -1,6 +1,5 @@
-import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
-import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
-import 'package:gasjm/app/global_widgets/custom_appbar.dart';
+
+import 'package:gasjm/app/global_widgets/bottom_administrador.dart'; 
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/modules/administrador/repartidor/repartidor_controller.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,8 @@ class RepartidorPage extends StatelessWidget {
             ),
             backgroundColor: AppTheme.blueBackground,
             // actions: const [MenuAppBar()],
-            title: const Text("Repartidores")),
+            title: const Text("Repartidores")
+            ),
         body: const ListaRepartidores(),
         //
         bottomNavigationBar:

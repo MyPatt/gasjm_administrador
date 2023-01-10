@@ -1,6 +1,7 @@
-
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/custom_appbar.dart';
+import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:gasjm/app/modules/administrador/repartidor/repartidor_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/modules/administrador/repartidor/widgets/lista_repartidores.dart';
@@ -20,18 +21,21 @@ class RepartidorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppTheme.background,
-
-        //
-        appBar:   AppBar(
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(10),
+        drawer: GetBuilder<RepartidorController>(
+          builder: (_) => MenuLateral(
+              modo: 'Modo repartidor', imagenPerfil: _.imagenPerfil),
         ),
-      ),
-      backgroundColor: AppTheme.blueBackground,
-      // actions: const [MenuAppBar()],
-      title: const Text("Repartidores")) ,
+        //
+        appBar: AppBar(
+            elevation: 0,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(10),
+              ),
+            ),
+            backgroundColor: AppTheme.blueBackground,
+            // actions: const [MenuAppBar()],
+            title: const Text("Repartidores")),
         body: const ListaRepartidores(),
         //
         bottomNavigationBar:

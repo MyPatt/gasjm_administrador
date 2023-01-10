@@ -5,7 +5,7 @@ import 'package:gasjm/app/modules/administrador/repartidor/widgets/card_persona.
 import 'package:get/get.dart';
 
 class ListaRepartidores extends StatelessWidget {
-    const ListaRepartidores({Key? key}) : super(key: key);
+  const ListaRepartidores({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +17,25 @@ class ListaRepartidores extends StatelessWidget {
               triggerMode: RefreshIndicatorTriggerMode.onEdge,
               onRefresh: _.pullRefrescar,
               child: Stack(children: [
-                Column(
-                  children: [
-                    Expanded(
-                        child: Obx(
-                      () => ListView(
-                        children: _.listaFiltradaRepartidores.map((e) {
-                          return CardPersona(
-                            persona: e,
-                            editarDatosPersona: () {},
-                            eliminarPersona: () {},
-                          );
-                        }).toList(),
-                      ),
-                    ))
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Expanded(
+                          child: Obx(
+                        () => ListView(
+                          children: _.listaRepartidores.map((repartidor) {
+                            return CardPersona(
+                              persona: repartidor,
+                              verDatosPersona: () =>_.verDetalleDelRepartidor(repartidor),
+                              editarDatosPersona: () =>_.editarDetalleDelRepartidor(repartidor),
+                              eliminarPersona: () =>_.eliminarRepartidor(repartidor.uidPersona!),
+                            );
+                          }).toList(),
+                        ),
+                      ))
+                    ],
+                  ),
                 )
               ]),
             ));

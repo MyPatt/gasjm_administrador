@@ -337,7 +337,7 @@ class EditarClienteController extends GetxController {
       cargandoPedidos.value = true;
       //Obtener uid del usuario actual
       String _idCliente = cliente.uidPersona!;
-      String _nombreCliente = _personaRepository.nombreUsuarioActual;
+      String _nombreCliente = '${cliente.nombrePersona} ${cliente.apellidoPersona}';
 
       //Guardar en una var auxilar la lista
       var lista = await _pedidosRepository.getListaPedidosPorField(

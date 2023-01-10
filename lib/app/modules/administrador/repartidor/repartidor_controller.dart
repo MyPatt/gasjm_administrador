@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/data/models/categoria_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
@@ -13,17 +14,15 @@ class RepartidorController extends GetxController {
 
   final _personaRepository = Get.find<PersonaRepository>();
 
-  final cargandoClientes = true.obs;
+  final cargandoListaRepartidores = true.obs;
 
 //Listas observables de los clientes
 
   final RxList<PersonaModel> _listaRepartidores = <PersonaModel>[].obs;
   RxList<PersonaModel> get listaRepartidores => _listaRepartidores;
 
-  final RxList<PersonaModel> _listaFiltradaRepartidores = <PersonaModel>[].obs;
-  RxList<PersonaModel> get listaFiltradaRepartidores =>
-      _listaFiltradaRepartidores;
-
+  //
+  RxString imagenPerfil = Get.find<AutenticacionController>().imagenUsuario;
   /* METODOS PROPIOS */
   @override
   void onInit() {
@@ -33,51 +32,59 @@ class RepartidorController extends GetxController {
     super.onInit();
   }
 
-  /* METODOS PARA CLIENTES */
-
-  void _cargarListaFiltradaDeRepartidores() {
- 
-    List<PersonaModel> resultado = [];
-
-    resultado = _listaRepartidores
-        //.where((pedido) => pedido.cedulaPersona == filtro)
-
-        .toList();
-
-    _listaFiltradaRepartidores.value = resultado;
-  }
+  /* METODOS */
 
   void _cargarListaDeRepartidores() async {
     try {
-      cargandoClientes.value = true;
+      cargandoListaRepartidores.value = true;
 
       final lista = (await _personaRepository.getPersonasPorField(
           field: 'idPerfil', dato: 'repartidor'));
 
       _listaRepartidores.value = lista;
-      //Cargar la lista filtrada al inicio todos
-//      _listaFiltradaPedidosEnEspera.value = _listaPedidosEnEspera;
-      _cargarListaFiltradaDeRepartidores();
       //
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
+    } catch (e) {
+      //
     }
-    cargandoClientes.value = false;
+    cargandoListaRepartidores.value = false;
   }
 
-  void cargarDetalleDelRepartidor(PersonaModel cliente) {
-    Get.offNamed(AppRoutes.detalleCliente, arguments: cliente);
+  Future<void> verDetalleDelRepartidor(PersonaModel cliente) async {
+    await Future.delayed(const Duration(seconds: 1));
+    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, false]);
+  }
+
+  Future<void> editarDetalleDelRepartidor(PersonaModel cliente) async {
+    await Future.delayed(const Duration(seconds: 1));
+    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, true]);
   }
 
   //Actualizar lista de repartidores
-    Future<void> pullRefrescar() async {
+  Future<void> pullRefrescar() async {
     _cargarListaDeRepartidores();
     await Future.delayed(const Duration(seconds: 2));
+  }
+
+  //
+
+  Future<void> eliminarRepartidor(String id) async {
+    try {
+      await _personaRepository.updateEstadoPersona(
+          uid: id, estado: "eliminado");
+
+      //
+      Mensajes.showGetSnackbar(
+          titulo: "Mensaje",
+          mensaje: "Cliente eliminado con éxito.",
+          icono: const Icon(
+            Icons.delete_outline_outlined,
+            color: Colors.white,
+          ));
+
+//Volver a actualizar la lista de clientes activos desde firestore
+      _cargarListaDeRepartidores();
+    } catch (e) {
+      //
+    }
   }
 }

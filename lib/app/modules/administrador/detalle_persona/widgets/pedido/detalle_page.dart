@@ -6,8 +6,8 @@ import 'package:gasjm/app/data/models/estadopedido_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/detalle/detalle_informacion.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/detalle/detalle_seguimiento.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/pedido/detalle_informacion.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/pedido/detalle_seguimiento.dart';
 import 'package:get/get.dart';
 
 class DetalleHistorial extends StatelessWidget {

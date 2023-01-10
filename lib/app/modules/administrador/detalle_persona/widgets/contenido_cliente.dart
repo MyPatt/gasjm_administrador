@@ -1,10 +1,10 @@
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/contenido_historial.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/contenido_perfil.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_historial.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_perfil.dart';
 import 'package:flutter/material.dart';
 
-class ContenidoVer extends StatelessWidget {
-  const ContenidoVer({key}) : super(key: key);
+class ContenidoVerCliente extends StatelessWidget {
+  const ContenidoVerCliente({key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

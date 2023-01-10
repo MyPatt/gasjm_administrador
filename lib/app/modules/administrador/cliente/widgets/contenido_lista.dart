@@ -47,7 +47,7 @@ class ContenidoLista extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     Get.toNamed(AppRoutes.detalleCliente,
-                        arguments: [persona, true]);
+                        arguments: [persona, true,'cliente']);
                   },
                   icon: const Icon(
                     Icons.mode_edit_outline_outlined,

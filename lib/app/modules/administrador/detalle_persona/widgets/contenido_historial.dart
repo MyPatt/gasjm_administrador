@@ -4,7 +4,7 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/detalle_cliente_controller.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +13,7 @@ class ContenidoHistorial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditarClienteController>(
+    return GetBuilder<DetallePersonaController>(
         builder: (_) => Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             height: MediaQuery.of(context).size.height -
@@ -158,8 +158,8 @@ class ContenidoHistorial extends StatelessWidget {
   }
 
   Card buildItemInfo(PedidoModel pedido, BuildContext context) {
-    final EditarClienteController controlador =
-        Get.put(EditarClienteController());
+    final DetallePersonaController controlador =
+        Get.put(DetallePersonaController());
 
     return Card(
       shape: RoundedRectangleBorder(

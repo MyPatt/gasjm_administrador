@@ -10,14 +10,14 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/detalle_cliente_binding.dart';
-import 'package:gasjm/app/modules/administrador/detalle_cliente/widgets/detalle/detalle_page.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/pedido/detalle_page.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
-class EditarClienteController extends GetxController {
+class DetallePersonaController extends GetxController {
 //Clave del formulario de resgistro de usuario
   final claveFormRegistrar = GlobalKey<FormState>();
 
@@ -48,12 +48,17 @@ class EditarClienteController extends GetxController {
   final errorParaCorreo = Rx<String?>(null);
 //varialbe para el modo editable;
   bool clienteEditable = false;
+
+  //Variable para cargar la pagina para cliente, repartidores
+  String? idPerfil;
   /* METODOS PROPIOS */
   @override
   void onInit() {
+    //Obtener argumentos
     var argumentos = Get.arguments;
     _cliente = argumentos[0] as PersonaModel;
     clienteEditable = argumentos[1] as bool;
+    idPerfil = argumentos[2].toString();
     //
     Future.wait([_cargarDatosDelFormCliente()]);
 
@@ -337,7 +342,8 @@ class EditarClienteController extends GetxController {
       cargandoPedidos.value = true;
       //Obtener uid del usuario actual
       String _idCliente = cliente.uidPersona!;
-      String _nombreCliente = '${cliente.nombrePersona} ${cliente.apellidoPersona}';
+      String _nombreCliente =
+          '${cliente.nombrePersona} ${cliente.apellidoPersona}';
 
       //Guardar en una var auxilar la lista
       var lista = await _pedidosRepository.getListaPedidosPorField(

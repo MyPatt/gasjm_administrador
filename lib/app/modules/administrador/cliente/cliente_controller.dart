@@ -89,7 +89,7 @@ class ClienteController extends GetxController {
   }
 
   void cargarDetalleDelCliente(PersonaModel cliente) {
-    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, false]);
+    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, false,'cliente']);
   }
 
   //

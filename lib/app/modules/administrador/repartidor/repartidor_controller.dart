@@ -51,12 +51,12 @@ class RepartidorController extends GetxController {
 
   Future<void> verDetalleDelRepartidor(PersonaModel cliente) async {
     await Future.delayed(const Duration(seconds: 1));
-    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, false]);
+    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, false,'repartidor']);
   }
 
   Future<void> editarDetalleDelRepartidor(PersonaModel cliente) async {
     await Future.delayed(const Duration(seconds: 1));
-    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, true]);
+    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, true,'repartidor']);
   }
 
   //Actualizar lista de repartidores

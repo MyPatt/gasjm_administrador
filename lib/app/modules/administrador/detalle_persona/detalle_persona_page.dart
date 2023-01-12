@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_controller.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_detalle.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_perfil.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_cliente.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_detalle.dart'; 
 import 'package:get/get.dart';
 
 class DetallePersonaPage extends StatelessWidget {

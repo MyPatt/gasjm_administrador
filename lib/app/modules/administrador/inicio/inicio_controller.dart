@@ -157,7 +157,7 @@ class InicioAdministradorController extends GetxController {
             arguments: categoriasModulos[indiceModuloSeleccionado.value]);
         break;
       case 3:
-        Get.toNamed(AppRoutes.vehiculo,
+        Get.toNamed(AppRoutes.registrarVehiculo,
             arguments: categoriasModulos[indiceModuloSeleccionado.value]);
         break;
       default:
@@ -378,7 +378,7 @@ class InicioAdministradorController extends GetxController {
         _cargarPagina(Get.offNamed(AppRoutes.repartidor));
         break;
       case 3:
-        _cargarPagina(Get.offNamed(AppRoutes.vehiculo));
+        _cargarPagina(Get.offNamed(AppRoutes.registrarVehiculo));
         break;
     }
   }

@@ -1,25 +1,28 @@
 class Vehiculo {
   Vehiculo({
-    required this.idVehiculo,
+    this.idVehiculo,
     required this.idRepartidor,
     required this.placaVehiculo,
     required this.marcaVehiculo,
     required this.modeloVehiculo,
     required this.anioVehiculo,
-    required this.colorVehiculo,
-    required this.tipoVehiculo,
-    required this.observacionVehiculo,
+    this.colorVehiculo,
+    this.tipoVehiculo,
+    this.fotoVehiculo,
+    this.observacionVehiculo,
   });
 
-  final String idVehiculo;
+  final String? idVehiculo;
   final String idRepartidor;
   final String placaVehiculo;
   final String marcaVehiculo;
   final String modeloVehiculo;
   final int anioVehiculo;
-  final String colorVehiculo;
-  final String tipoVehiculo;
-  final String observacionVehiculo;
+  final String? colorVehiculo;
+  final String? tipoVehiculo;
+  final String? fotoVehiculo;
+  final String? observacionVehiculo;
+  String? nombresRepartidor;
 
   factory Vehiculo.fromMap(Map<String, dynamic> json) => Vehiculo(
         idVehiculo: json["idVehiculo"],
@@ -30,6 +33,7 @@ class Vehiculo {
         anioVehiculo: json["anioVehiculo"],
         colorVehiculo: json["colorVehiculo"],
         tipoVehiculo: json["tipoVehiculo"],
+        fotoVehiculo: json["fotoVehiculo"],
         observacionVehiculo: json["observacionVehiculo"],
       );
 
@@ -40,5 +44,6 @@ class Vehiculo {
         "marcaVehiculo": marcaVehiculo,
         "modeloVehiculo": modeloVehiculo,
         "anioVehiculo": anioVehiculo,
+        "observacionVehiculo": observacionVehiculo
       };
 }

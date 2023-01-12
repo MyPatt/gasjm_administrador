@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_controller.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/form_persona.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/imagen_persona.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/imagen_persona.dart'; 
 
 class ContenidoPerfil extends StatelessWidget {
   const ContenidoPerfil({Key? key}) : super(key: key);

@@ -1,16 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
-import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
-import 'package:gasjm/app/data/models/categoria_model.dart';
+import 'package:gasjm/app/data/controllers/autenticacion_controller.dart'; 
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
-class RepartidorController extends GetxController {
-  late CategoriaModelo _categoria;
-  CategoriaModelo get house => _categoria;
+class RepartidorController extends GetxController { 
 
   final _personaRepository = Get.find<PersonaRepository>();
 
@@ -21,7 +18,7 @@ class RepartidorController extends GetxController {
   final RxList<PersonaModel> _listaRepartidores = <PersonaModel>[].obs;
   RxList<PersonaModel> get listaRepartidores => _listaRepartidores;
 
-  //
+  //Obtener imagen usuaior actual
   RxString imagenPerfil = Get.find<AutenticacionController>().imagenUsuario;
   /* METODOS PROPIOS */
   @override

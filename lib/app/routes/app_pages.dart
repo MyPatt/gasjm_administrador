@@ -5,6 +5,12 @@ import 'package:gasjm/app/modules/administrador/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/administrador/cliente/widgets/buscar_page.dart';
 import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_cliente_binding.dart';
 import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_page.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_binding.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_page.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_binding.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_page.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/registrar/registrar_binding.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/registrar/registrar_page.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_binding.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_page.dart';
 import 'package:gasjm/app/modules/administrador/inicio/inicio_binding.dart';
@@ -37,8 +43,6 @@ import 'package:gasjm/app/modules/splash/splash_binding.dart';
 import 'package:gasjm/app/modules/splash/splash_page.dart';
 import 'package:gasjm/app/modules/ubicacion/ubicacion_binding.dart';
 import 'package:gasjm/app/modules/ubicacion/ubicacion_page.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/vehiculo_binding.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/vehiculo_page.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -77,6 +81,36 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
+    //
+    GetPage(
+      name: AppRoutes.perfil,
+      page: () => PerfilPage(),
+      binding: PerfilBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.contrasena,
+      page: () => const FormContrasena(),
+      // binding: PerfilBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.direccion,
+      page: () => const FormDireccion(),
+      // binding: PerfilBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.gasjm,
+      page: () => const GasJMPage(),
+      binding: GasJMBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    //***** ADMIN *****
     GetPage(
       name: AppRoutes.inicioAdministrador,
       page: () => const InicioAdministradorPage(),
@@ -91,13 +125,7 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-    GetPage(
-      name: AppRoutes.vehiculo,
-      page: () => VehiculoPage(),
-      binding: VehiculoBinding(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
+
     GetPage(
       name: AppRoutes.operacionPedido,
       page: () => const OperacionPedidoPage(),
@@ -129,27 +157,8 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-    GetPage(
-      name: AppRoutes.perfil,
-      page: () => PerfilPage(),
-      binding: PerfilBinding(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
-    GetPage(
-      name: AppRoutes.contrasena,
-      page: () => const FormContrasena(),
-      // binding: PerfilBinding(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
-    GetPage(
-      name: AppRoutes.direccion,
-      page: () => const FormDireccion(),
-      // binding: PerfilBinding(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
+
+    //
     GetPage(
       name: AppRoutes.inicioRepartidor,
       page: () => InicioPage(),
@@ -157,6 +166,35 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
+    GetPage(
+        name: AppRoutes.buscarRepartidor,
+        page: () => const BuscarRepartidorPage(),
+        binding: BuscarBinding(),
+        transition: Transition.noTransition),
+    //Rutas para paginas de operaciones del vehiculo
+    GetPage(
+      name: AppRoutes.registrarVehiculo,
+      page: () => const RegistrarVehiculoPage(),
+      binding: RegistrarVehiculoBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.operacionVehiculo,
+      page: () => const OperacionVehiculoPage(),
+      binding: OperacionVehiculoBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: AppRoutes.detalleVehiculo,
+      page: () => const DetalleVehiculoPage(),
+      binding: DetalleVehiculoBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    //***** REPARTIDOR *****
+
     GetPage(
         name: AppRoutes.ir,
         page: () => IrPage(),
@@ -167,18 +205,7 @@ class AppPages {
         page: () => const PedidosPage(),
         binding: PedidosBinding(),
         transition: Transition.noTransition),
-    GetPage(
-        name: AppRoutes.buscarRepartidor,
-        page: () => const BuscarRepartidorPage(),
-        binding: BuscarBinding(),
-        transition: Transition.noTransition),
-    GetPage(
-      name: AppRoutes.gasjm,
-      page: () => const GasJMPage(),
-      binding: GasJMBinding(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
-    ),
+
     GetPage(
       name: AppRoutes.permission,
       page: () => const RequestPermissionPage(),

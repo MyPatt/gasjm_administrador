@@ -103,7 +103,6 @@ class PersonaProvider {
         .collection("persona")
         .where("estado", isEqualTo: "activo")
         .where(field, isEqualTo: dato)
-        
         .get();
 
     return (resultado.docs)
@@ -191,6 +190,22 @@ class PersonaProvider {
     return actualizado;
   }
 
+  //Retornar personas por field
+  Future<List<PersonaModel>> getNombresPorField(
+      {required String field, required String dato}) async {
+    final resultado = await _firestoreInstance
+        .collection("persona")
+        .where("estado", isEqualTo: "activo")
+        .where(field, isEqualTo: dato)
+        .get();
+
+   return (resultado.docs)
+        .map((item) => PersonaModel.fromMap(item.data()))
+        .toList();
+
+ 
+  }
+
   //Retornar la cantidad de cleintes por field
   Future<int> getCantidadClientesPorfield(
       {required String field, required String dato}) async {
@@ -205,15 +220,19 @@ class PersonaProvider {
 
   //Actualizar ubicacion del usuario actual conectado - repartidor
   Future<void> updateUbicacionActualDelUsuario(
-      {required Direccion ubicacionActual, required double rotacionActual}) async {
-
-        await _firestoreInstance
+      {required Direccion ubicacionActual,
+      required double rotacionActual}) async {
+    await _firestoreInstance
         .collection('ubicacionRepartidor')
-        .doc(idUsuarioActual).set({"ubicacionActual": ubicacionActual.toMap(),"rotacionActual":rotacionActual});
-        //TODO: Revisar si funciona bien si se actualiza cuando no se a creado el doc
-        //Realizar con update y al momento de crear el usuario crear el documento ubicacionRepartidor con el id
-        
-        /*
+        .doc(idUsuarioActual)
+        .set({
+      "ubicacionActual": ubicacionActual.toMap(),
+      "rotacionActual": rotacionActual
+    });
+    //TODO: Revisar si funciona bien si se actualiza cuando no se a creado el doc
+    //Realizar con update y al momento de crear el usuario crear el documento ubicacionRepartidor con el id
+
+    /*
         (data)
     await _firestoreInstance
         .collection('ubicacionRepartidor')

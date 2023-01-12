@@ -1,4 +1,6 @@
 //Clase con metodo de validaciones de campos
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Validacion {
   //Metodo para validar cedula que no sea nulo y vacio
 
@@ -148,6 +150,23 @@ class Validacion {
     if (value.length < 10 || value.length > 10) {
       return 'El número celular debe tener 10 caracteres';
     }
+    return null;
+  }
+
+  //VEHICULO
+    static String? validarAnio(String? value) {
+    if (value == null) {
+      return null;
+    }
+//
+int actual=Timestamp.now().toDate().year;
+
+    if (value.isEmpty) {
+      return 'Ingrese un año';
+    } else if (int.parse(value) < 2000 || int.parse(value) > actual) {
+      return 'El año debe estar entre 2000 y $actual';
+    }
+
     return null;
   }
 }

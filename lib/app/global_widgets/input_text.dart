@@ -27,6 +27,7 @@ class InputText extends StatelessWidget {
   final int? minLines;
   final int? maxLines;
   final InputBorder border;
+  final TextCapitalization? textCapitalization;
   final void Function(String)? onChanged;
   final void Function()? onTap;
   final void Function(String?)? onSaved;
@@ -56,6 +57,7 @@ class InputText extends StatelessWidget {
     this.minLines = 1,
     this.maxLines,
     this.border = InputBorder.none,
+    this.textCapitalization,
     this.onChanged,
     this.onTap,
     this.onSaved,
@@ -68,6 +70,7 @@ class InputText extends StatelessWidget {
       autofocus: autofocus,
       initialValue: initialValue,
       style: TextStyle(color: fontColor, fontSize: fontSize),
+      textCapitalization: textCapitalization?? TextCapitalization.none,
       decoration: InputDecoration(
           border: border,
           icon: Icon(
@@ -104,7 +107,6 @@ class InputText extends StatelessWidget {
               color: Colors.red,
             ),
           ),
-          
           focusedErrorBorder: UnderlineInputBorder(
             borderRadius: BorderRadius.circular(6.0),
             borderSide: const BorderSide(

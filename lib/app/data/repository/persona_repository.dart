@@ -25,6 +25,8 @@ abstract class PersonaRepository {
   Future<String?> getImagenUsuarioActual();
   Future<int> getCantidadClientesPorfield(
       {required String field, required String dato});
+  Future<List<PersonaModel>> getNombresPorField(
+      {required String field, required String dato});
 //
   Future<bool> updateContrasenaPersona(
       {required String uid,

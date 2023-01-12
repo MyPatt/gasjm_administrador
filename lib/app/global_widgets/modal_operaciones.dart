@@ -56,12 +56,15 @@ class ModalOperaciones extends StatelessWidget {
                   itemCount: categoriasModulos.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: ()  {
-                   
-
+                      onTap: () {
                         //
+                        Future.delayed(const Duration(seconds: 1));
+
+                        //Crear
                         switch (indiceBottomItem) {
                           case 1:
+                            Navigator.of(context).pop();
+
                             switch (index) {
                               case 0:
                                 (Get.offAllNamed(AppRoutes.operacionPedido));
@@ -73,13 +76,14 @@ class ModalOperaciones extends StatelessWidget {
                                 (Get.offNamed(AppRoutes.repartidor));
                                 break;
                               case 3:
-                                (Get.offNamed(AppRoutes.vehiculo));
+                                Get.toNamed(AppRoutes.registrarVehiculo);
+
                                 break;
                             }
                             break;
+
+                          //Operaciones
                           case 2:
-                           
-                            //_.seleccionarCategoriaParaOperacion(index);
                             switch (index) {
                               case 0:
                                 (Get.offAllNamed(AppRoutes.operacionPedido));
@@ -91,7 +95,7 @@ class ModalOperaciones extends StatelessWidget {
                                 (Get.offAllNamed(AppRoutes.repartidor));
                                 break;
                               case 3:
-                                (Get.offAllNamed(AppRoutes.vehiculo));
+                                (Get.offAllNamed(AppRoutes.operacionVehiculo));
                                 break;
                             }
                             break;

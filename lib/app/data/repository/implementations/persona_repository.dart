@@ -80,6 +80,11 @@ class PersonaRepositoryImpl extends PersonaRepository {
       _provider.getCantidadClientesPorfield(field: field, dato: dato);
 
   @override
+  Future<List<PersonaModel>> getNombresPorField(
+          {required String field, required String dato}) =>
+      _provider.getNombresPorField(field: field, dato: dato);
+
+  @override
   Future<void> updateUbicacionActualDelUsuario(
           {required Direccion ubicacionActual,
           required double rotacionActual}) =>

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
@@ -8,6 +7,7 @@ import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/registrar/registrar_controller.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/registrar/widget/modal_repartdidores.dart';
 
 import 'package:get/get.dart';
 
@@ -35,154 +35,139 @@ class FormVehiculo extends StatelessWidget {
           // alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: LayoutBuilder(builder: (context, constraint) {
-            return Form(
-              key: _.claveFormRegistrarVehiculo,
-              child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    //
-                    InputText(
-                      inputFormatters: <TextInputFormatter>[
-                        LengthLimitingTextInputFormatter(7),
-                      ],
-                      controller: _.placaTextoController,
-                      iconPrefix: Icons.directions_car_outlined,
-                      validator: Validacion.validarNombre,
-                      labelText: "Placa",
-                      textCapitalization: TextCapitalization.characters,
-                    ),
-                    SizedBox(
-                        height: Responsive.getScreenSize(context).height * .02),
-                    InputText(
-                      labelText: "Marca",
-                      iconPrefix: Icons.branding_watermark_outlined,
-                      keyboardType: TextInputType.name,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
-                      ],
-                      controller: _.marcaTextoController,
-                      validator: Validacion.validarNombre,
-                    ),
-                    SizedBox(
-                        height: Responsive.getScreenSize(context).height * .02),
-                    InputText(
-                      labelText: "Modelo",
-                      iconPrefix: Icons.abc_outlined,
-                      controller: _.modeloTextoController,
-                      validator: Validacion.validarNombre,
-                    ),
-                    SizedBox(
-                        height: Responsive.getScreenSize(context).height * .02),
-                    InputText(
-                      labelText: "Año",
-                      iconPrefix: Icons.drag_indicator,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        LengthLimitingTextInputFormatter(4),
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      controller: _.anioTextoController,
-                      validator: Validacion.validarAnio,
-                    ),
-                    SizedBox(
-                        height: Responsive.getScreenSize(context).height * .02),
-                    Row(
-                      children: [
-                        const Icon(Icons.person_outline_outlined,
-                            size: 20.0, color: AppTheme.light),
-                        SizedBox(
-                          width: 20.0,
-                        ),
-                        Expanded(
-                          child: Obx(() => DropdownButton(
-                                hint: const Text(
-                                  'Repartidor',
-                                  style: TextStyle(
-                                      color: Colors.black45,
-                                      fontSize: 14.0,
-                                      height: 2),
-                                ),
-                                value: _.dropdownRepartidorInicial.value,
-                                items: _.items.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                /* items: _.listaRepartidores
-                                    .map((e) => DropdownMenuItem(
-                                        value: e.uidPersona,
-                                        child: Text(e.uidPersona ?? 'l'
-                                            //'${e.nombrePersona} ${e.apellidoPersona}'
-                                            )))
-                                    .toList(),
-                                onChanged: (String? nuevoValor) {
-                                  if (nuevoValor != null) {
-                                    _.dropdownRepartidorInicial.value =
-                                        nuevoValor;
-                                    print(nuevoValor);
-                                  }
-                                }),*/
-                                onChanged: (String? newValue) {
-                                  print(newValue);
-                                  // dropdownvalue = newValue!;
-                                },
-                              )),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(
-                        height: Responsive.getScreenSize(context).height * .02),
-                    InputText(
-                      labelText: "Observación",
-                      iconPrefix: Icons.note_outlined,
-                      controller: _.observacionTextoController,
-                    ),
-
-                    Obx(() => Visibility(
-                        visible:
-                            _.errorParaDatosVehiculo.value?.isNotEmpty == true,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                                height:
-                                    Responsive.getScreenSize(context).height *
-                                        .02),
-                            TextDescription(
-                              text: _.errorParaDatosVehiculo.value ?? '',
-                              color: Colors.red,
-                            ),
-                          ],
-                        ))),
-
-                    SizedBox(
-                        height: Responsive.getScreenSize(context).height * .05),
-                    Obx(() {
-                      final estadoProceso = _.cargandoVehiculo.value;
-                      return Stack(
-                        alignment: Alignment.center,
+            return Obx(() => AbsorbPointer(
+                  absorbing: _.cargandoVehiculo.value,
+                  child: Form(
+                    key: _.claveFormRegistrarVehiculo,
+                    child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Visibility(
-                            visible: !_.cargandoVehiculo.value,
-                            child: PrimaryButton(
-                                texto: 'Registrar',
-                                onPressed: () {
-                                  if (_.claveFormRegistrarVehiculo.currentState
-                                          ?.validate() ==
-                                      true) {
-                                    _.registrarVehiculo();
-                                  }
-                                }),
+                          //
+                          InputText(
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(7),
+                            ],
+                            controller: _.placaTextoController,
+                            iconPrefix: Icons.directions_car_outlined,
+                            validator: Validacion.validarNombre,
+                            labelText: "Placa",
+                            textCapitalization: TextCapitalization.characters,
                           ),
-                          if (estadoProceso) const CircularProgress()
-                        ],
-                      );
-                    }),
-                  ]),
-            );
+                          SizedBox(
+                              height: Responsive.getScreenSize(context).height *
+                                  .02),
+                          InputText(
+                            labelText: "Marca",
+                            iconPrefix: Icons.branding_watermark_outlined,
+                            keyboardType: TextInputType.name,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[a-zA-Z]')),
+                            ],
+                            controller: _.marcaTextoController,
+                            validator: Validacion.validarNombre,
+                          ),
+                          SizedBox(
+                              height: Responsive.getScreenSize(context).height *
+                                  .02),
+                          InputText(
+                            labelText: "Modelo",
+                            iconPrefix: Icons.abc_outlined,
+                            controller: _.modeloTextoController,
+                            validator: Validacion.validarNombre,
+                          ),
+                          SizedBox(
+                              height: Responsive.getScreenSize(context).height *
+                                  .02),
+                          InputText(
+                            labelText: "Año",
+                            iconPrefix: Icons.drag_indicator,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              LengthLimitingTextInputFormatter(4),
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            controller: _.anioTextoController,
+                            validator: Validacion.validarAnio,
+                          ),
+                          SizedBox(
+                              height: Responsive.getScreenSize(context).height *
+                                  .02),
+                          InkWell(
+                              onTap: () => showModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) => ModalRepartidores(
+                                      listaCategorias: _.listaRepartidores,
+                                      selectedRadioTile: _.indiceRepartidor,
+                                      onChanged: (valor) =>
+                                          _.seleccionarOpcionDeOrdenamiento(
+                                              valor),
+                                    ),
+                                  ),
+                              child: InputText(
+                                labelText: "Repartidor",
+                                controller: _.repartidorTextoController,
+                                iconPrefix: Icons.person_outlined,
+                                enabled: false,
+                              )),
+                          SizedBox(
+                              height: Responsive.getScreenSize(context).height *
+                                  .02),
+
+                          InputText(
+                            labelText: "Observación",
+                            iconPrefix: Icons.note_outlined,
+                            controller: _.observacionTextoController,
+                          ),
+
+                          Obx(() => Visibility(
+                              visible:
+                                  _.errorParaDatosVehiculo.value?.isNotEmpty ==
+                                      true,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                      height: Responsive.getScreenSize(context)
+                                              .height *
+                                          .02),
+                                  TextDescription(
+                                    text: _.errorParaDatosVehiculo.value ?? '',
+                                    color: Colors.red,
+                                  ),
+                                ],
+                              ))),
+
+                          SizedBox(
+                              height: Responsive.getScreenSize(context).height *
+                                  .05),
+                          Obx(() {
+                            final estadoProceso = _.cargandoVehiculo.value;
+                            return Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Visibility(
+                                  visible: !_.cargandoVehiculo.value,
+                                  child: PrimaryButton(
+                                      texto: 'Registrar',
+                                      onPressed: () {
+                                        if (_.claveFormRegistrarVehiculo
+                                                .currentState
+                                                ?.validate() ==
+                                            true) {
+                                          _.registrarVehiculo(context);
+                                        }
+                                      }),
+                                ),
+                                if (estadoProceso) const CircularProgress()
+                              ],
+                            );
+                          }),
+                        ]),
+                  ),
+                ));
           }),
         ),
       ),

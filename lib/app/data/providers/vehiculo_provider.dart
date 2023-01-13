@@ -26,7 +26,7 @@ class VehiculoProvider {
     if (imagen != null) {
      
       final imagePath =
-          'vehiculo/${vehiculo.idVehiculo}/fotovehiculo${path.extension(imagen.path)}';
+          'vehiculo/${resultado.id}/fotovehiculo${path.extension(imagen.path)}';
 
       final storageRef = _storageInstance.ref(imagePath);
       await storageRef.putFile(imagen);

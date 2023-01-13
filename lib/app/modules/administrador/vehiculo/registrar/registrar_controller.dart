@@ -27,10 +27,12 @@ class RegistrarVehiculoController extends GetxController {
   final marcaTextoController = TextEditingController();
   final modeloTextoController = TextEditingController();
   final anioTextoController = TextEditingController();
+  final repartidorTextoController = TextEditingController();
   final observacionTextoController = TextEditingController();
 
   //Variable para visualizar el estado de carga de datos
   final cargandoVehiculo = false.obs;
+  final cargandoRepartidores = false.obs;
 
   //Existe algun error si o no
   final errorParaDatosVehiculo = Rx<String?>(null);
@@ -38,16 +40,9 @@ class RegistrarVehiculoController extends GetxController {
   //Lista de repartidores
   List<PersonaModel> _listaRepartidores = <PersonaModel>[];
   List<PersonaModel> get listaRepartidores => _listaRepartidores;
-
+  RxString indiceRepartidor = 'Sin repartidor'.obs;
   //Valor inicial de la lista de repartidores dropdown
-  RxString dropdownRepartidorInicial = 'Sin repartidor'.obs;
-  var items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+
   //Variable para foto del vehiculo
   final picker = ImagePicker();
   Rx<File?> pickedImage = Rx(null);
@@ -61,11 +56,24 @@ class RegistrarVehiculoController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    //
+    placaTextoController.dispose();
+    marcaTextoController.dispose();
+    modeloTextoController.dispose();
+    anioTextoController.dispose();
+    repartidorTextoController.dispose();
+    observacionTextoController.dispose();
+  }
+
   /* METODOS PARA CLIENTES */
 
   //Obtener lista de repartisores activos
   void _cargarListaDeRepartidores() async {
     try {
+      cargandoRepartidores.value = true;
       final lista = (await _personaRepository.getNombresPorField(
           field: 'idPerfil', dato: 'repartidor'));
 
@@ -76,7 +84,7 @@ class RegistrarVehiculoController extends GetxController {
       }
       _listaRepartidores = lista;
 
-     // dropdownRepartidorInicial.value = _listaRepartidores.first.nombrePersona;
+      // dropdownRepartidorInicial.value = _listaRepartidores.first.nombrePersona;
       //
       print("RRRRRRRRRRRRRRRR");
       print(_listaRepartidores.length);
@@ -85,16 +93,13 @@ class RegistrarVehiculoController extends GetxController {
       //
       Exception('Error al cargar repartidores.');
     }
-  }
-
-  void cargarDetalleDelRepartidor(PersonaModel cliente) {
-    Get.offNamed(AppRoutes.detalleCliente, arguments: cliente);
+    cargandoRepartidores.value = false;
   }
 
 //Registrar nuevo vehiculo
-  registrarVehiculo() {
+  registrarVehiculo(BuildContext context) async {
     //Obtener datos
-    String idRepartidor = dropdownRepartidorInicial.value;
+    String idRepartidor = indiceRepartidor.value;
     String placaVehiculo = placaTextoController.text;
     String marcaVehiculo = marcaTextoController.text;
     String modeloVehiculo = modeloTextoController.text;
@@ -115,6 +120,8 @@ class RegistrarVehiculoController extends GetxController {
           modeloVehiculo: modeloVehiculo,
           anioVehiculo: anioVehiculo,
           observacionVehiculo: observacionVehiculo);
+      
+
       //En firebase
       _vehiculoRepository.insertVehiculo(
           vehiculo: vehiculo, imagen: pickedImage.value);
@@ -122,11 +129,16 @@ class RegistrarVehiculoController extends GetxController {
       //Mensaje de ingreso
       Mensajes.showGetSnackbar(
           titulo: 'Mensaje',
-          mensaje: 'Vehículo guardado',
+          mensaje: 'Vehículo registrado con éxito.',
           icono: const Icon(
             Icons.save_outlined,
             color: Colors.white,
           ));
+      //Testear
+      await Future.delayed(const Duration(seconds: 1));
+      //
+
+      Navigator.pop(context);
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',
@@ -154,6 +166,17 @@ class RegistrarVehiculoController extends GetxController {
     pickedImage.value = imageFile;
 
     //  emit(state.copyWith(pickedImage: imageFile));
+  }
+
+//
+//Metodo para seleccionar repartidor
+  seleccionarOpcionDeOrdenamiento(String? valor) {
+    indiceRepartidor.value = valor!;
+    print(valor);
+    var aux = listaRepartidores
+        .where((element) => element.uidPersona == valor)
+        .toList();
+    repartidorTextoController.text = aux[0].nombreUsuario!;
   }
 
 //Actualizar datos de nuevo vehiculo

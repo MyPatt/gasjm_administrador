@@ -47,13 +47,15 @@ class FormVehiculo extends StatelessWidget {
                           //
                           InputText(
                             inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[A-Za-z0-9]')),
                               LengthLimitingTextInputFormatter(7),
                             ],
                             controller: _.placaTextoController,
                             iconPrefix: Icons.directions_car_outlined,
-                            validator: Validacion.validarNombre,
                             labelText: "Placa",
                             textCapitalization: TextCapitalization.characters,
+                            validator: Validacion.validarPlaca,
                           ),
                           SizedBox(
                               height: Responsive.getScreenSize(context).height *
@@ -61,13 +63,12 @@ class FormVehiculo extends StatelessWidget {
                           InputText(
                             labelText: "Marca",
                             iconPrefix: Icons.branding_watermark_outlined,
-                            keyboardType: TextInputType.name,
+                            controller: _.marcaTextoController,
                             inputFormatters: <TextInputFormatter>[
                               FilteringTextInputFormatter.allow(
-                                  RegExp(r'[a-zA-Z]')),
+                                  RegExp(r'[A-Za-z]')), 
                             ],
-                            controller: _.marcaTextoController,
-                            validator: Validacion.validarNombre,
+                            validator: Validacion.validarValor,
                           ),
                           SizedBox(
                               height: Responsive.getScreenSize(context).height *
@@ -76,7 +77,7 @@ class FormVehiculo extends StatelessWidget {
                             labelText: "Modelo",
                             iconPrefix: Icons.abc_outlined,
                             controller: _.modeloTextoController,
-                            validator: Validacion.validarNombre,
+                            validator: Validacion.validarValor,
                           ),
                           SizedBox(
                               height: Responsive.getScreenSize(context).height *
@@ -90,7 +91,7 @@ class FormVehiculo extends StatelessWidget {
                               FilteringTextInputFormatter.digitsOnly,
                             ],
                             controller: _.anioTextoController,
-                            validator: Validacion.validarAnio,
+                            validator: Validacion.validarValor,
                           ),
                           SizedBox(
                               height: Responsive.getScreenSize(context).height *
@@ -111,6 +112,7 @@ class FormVehiculo extends StatelessWidget {
                                 labelText: "Repartidor",
                                 controller: _.repartidorTextoController,
                                 iconPrefix: Icons.person_outlined,
+                                validator: Validacion.validarValor,
                                 enabled: false,
                               )),
                           SizedBox(

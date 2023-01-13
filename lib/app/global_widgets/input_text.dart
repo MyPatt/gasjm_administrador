@@ -70,7 +70,7 @@ class InputText extends StatelessWidget {
       autofocus: autofocus,
       initialValue: initialValue,
       style: TextStyle(color: fontColor, fontSize: fontSize),
-      textCapitalization: textCapitalization?? TextCapitalization.none,
+      textCapitalization: textCapitalization ?? TextCapitalization.sentences,
       decoration: InputDecoration(
           border: border,
           icon: Icon(

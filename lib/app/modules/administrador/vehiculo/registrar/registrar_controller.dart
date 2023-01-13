@@ -76,7 +76,10 @@ class RegistrarVehiculoController extends GetxController {
       cargandoRepartidores.value = true;
       final lista = (await _personaRepository.getNombresPorField(
           field: 'idPerfil', dato: 'repartidor'));
-
+      final admin = (await _personaRepository.getNombresPorField(
+          field: 'idPerfil', dato: 'administrador'));
+      //
+      lista.addAll(admin);
       //
       for (var i = 0; i < lista.length; i++) {
         lista[i].nombreUsuario =
@@ -120,12 +123,13 @@ class RegistrarVehiculoController extends GetxController {
           modeloVehiculo: modeloVehiculo,
           anioVehiculo: anioVehiculo,
           observacionVehiculo: observacionVehiculo);
-      
 
       //En firebase
       _vehiculoRepository.insertVehiculo(
           vehiculo: vehiculo, imagen: pickedImage.value);
 
+      //Testear
+      await Future.delayed(const Duration(seconds: 1));
       //Mensaje de ingreso
       Mensajes.showGetSnackbar(
           titulo: 'Mensaje',
@@ -134,8 +138,6 @@ class RegistrarVehiculoController extends GetxController {
             Icons.save_outlined,
             color: Colors.white,
           ));
-      //Testear
-      await Future.delayed(const Duration(seconds: 1));
       //
 
       Navigator.pop(context);

@@ -154,17 +154,58 @@ class Validacion {
   }
 
   //VEHICULO
-    static String? validarAnio(String? value) {
+
+  //Metodo para validar placa 3 primeras caracteres 4 ultimos digitos
+
+  static String? validarPlaca(String? value) {
     if (value == null) {
       return null;
     }
-//
-int actual=Timestamp.now().toDate().year;
+    if (value.isEmpty) {
+      return 'Ingrese una placa';
+    } else if (value.length < 5) {
+      return 'Ingrese una placa válida';
+    } else {
+      var aux1 = value.substring(0, 3).contains(RegExp(r'[0-9]'));
+      var aux2 = value.substring(3, value.length).contains(RegExp(r'[a-zA-Z]'));
+      /*print(value.substring(0, 3));
+      print(value.substring(3, value.length));
+      print(aux1);
+      print(aux2);*/
+      if (aux1 == true || aux2 == true) {
+        return 'Ingrese una placa válida';
+      }
+    }
+    return null;
+  }
+
+  static String? validarAnio(String? value) {
+    if (value == null) {
+      return null;
+    }
+
+    //Obtener anio actual
+    int actual = Timestamp.now().toDate().year;
 
     if (value.isEmpty) {
       return 'Ingrese un año';
     } else if (int.parse(value) < 2000 || int.parse(value) > actual) {
       return 'El año debe estar entre 2000 y $actual';
+    }
+
+    return null;
+  }
+
+  //Metodo para validar que el nombre nu sea nulo y vacio
+
+  static String? validarValor(String? value) {
+    if (value == null) {
+      return null;
+    }
+    if (value.isEmpty) {
+      return 'Ingrese un valor';
+    } else if (value.length < 3 || value.length > 32) {
+      return 'El valor debe tener al menos 3 caracteres';
     }
 
     return null;

@@ -7,8 +7,7 @@ import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/models/vehiculo_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/data/repository/vehiculo_repository.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
+import 'package:gasjm/app/data/repository/vehiculo_repository.dart'; 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 

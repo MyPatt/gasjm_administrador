@@ -152,7 +152,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.detalleCliente,
-      page: () => DetallePersonaPage(),
+      page: () =>const DetallePersonaPage(),
       binding: EditarClienteBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),

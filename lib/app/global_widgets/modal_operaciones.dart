@@ -95,10 +95,7 @@ class ModalOperaciones extends StatelessWidget {
                                 (Get.offAllNamed(AppRoutes.repartidor));
                                 break;
                               case 3:
-                                //(Get.offAllNamed(AppRoutes.operacionVehiculo));
-                                print("lllllll");
-                                Get.toNamed(AppRoutes.operacionVehiculo);
-                                print("lllllll");
+                               (Get.offAllNamed(AppRoutes.operacionVehiculo)); 
 
                                 break;
                             }

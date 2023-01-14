@@ -5,9 +5,7 @@ import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenid
 import 'package:get/get.dart';
 
 class DetallePersonaPage extends StatelessWidget {
-  DetallePersonaPage({key}) : super(key: key);
-  final DetallePersonaController controladorDePedidos =
-      Get.put(DetallePersonaController());
+  const DetallePersonaPage({key}) : super(key: key); 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

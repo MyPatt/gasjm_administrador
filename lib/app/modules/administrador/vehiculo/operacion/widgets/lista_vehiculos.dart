@@ -23,7 +23,7 @@ class ListaVehiculos extends StatelessWidget {
                   child: Column(
                     children: [
                       Expanded(
-                        //Muestra la lista de vehiculos en caso de existir caso contrario texto de sin vehiculos
+                          //Muestra la lista de vehiculos en caso de existir caso contrario texto de sin vehiculos
                           child: Obx(
                         () => !_.listaVehiculos.isNotEmpty
                             ? const Center(

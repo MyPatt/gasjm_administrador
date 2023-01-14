@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/detalle/widgets/contenido_detalle.dart'; 
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_controller.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/widgets/contenido_detalle.dart';
+import 'package:get/get.dart'; 
 
 class DetalleVehiculoPage extends StatelessWidget {
   const DetalleVehiculoPage({
@@ -20,8 +22,12 @@ class DetalleVehiculoPage extends StatelessWidget {
         ),
         backgroundColor: AppTheme.blueBackground,
         // actions: const [MenuAppBar()],
-        title: const Text('Vehículos'),
-      ),
+        title:
+        GetBuilder<DetalleVehiculoController>(
+              builder: (_) => Text(
+                  _.vehiculo.placaVehiculo),
+            )), 
+      
       body: const ContenidoDetalleVehiculo(),
     );
   }

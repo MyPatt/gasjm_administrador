@@ -79,10 +79,18 @@ class DetalleVehiculoController extends GetxController {
       cargandoVehiculo.value = true;
 
       // obtner nombres de los repartidor
-      var aux = listaRepartidores
+ /*     var aux = listaRepartidores
           .where((element) => element.uidPersona == vehiculo.idRepartidor)
           .first;
+*/
+      //
+          //
+      if (vehiculo.fotoVehiculo != null) {
+        existeImagenPerfil.value = true;
+      }
 
+      //
+      //
       placaTextoController.text = vehiculo.placaVehiculo;
       marcaTextoController.text = vehiculo.marcaVehiculo;
       modeloTextoController.text = vehiculo.modeloVehiculo;

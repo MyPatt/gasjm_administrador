@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:gasjm/app/data/models/vehiculo_model.dart'; 
+import 'package:gasjm/app/data/models/vehiculo_model.dart';
 import 'package:path/path.dart' as path;
 
 class VehiculoProvider {
@@ -14,7 +14,7 @@ class VehiculoProvider {
   //REGISTRAR nuevo vehiculo
   Future<void> insertVehiculo(
       {required Vehiculo vehiculo, File? imagen}) async {
-      final resultado =
+    final resultado =
         await _firestoreInstance.collection('vehiculo').add(vehiculo.toMap());
 
     await _firestoreInstance
@@ -24,7 +24,6 @@ class VehiculoProvider {
 
     //Insertar la imagen del vehiculo
     if (imagen != null) {
-     
       final imagePath =
           'vehiculo/${resultado.id}/fotovehiculo${path.extension(imagen.path)}';
 
@@ -38,10 +37,9 @@ class VehiculoProvider {
     }
   }
 
+  //Obtener lista de vehiculas
 
-   //Obtener lista de vehiculas 
-
-     Future<List<Vehiculo>> getVehiculos() async {
+  Future<List<Vehiculo>> getVehiculos() async {
     final snapshot = await _firestoreInstance.collection('vehiculo').get();
 
     return (snapshot.docs)
@@ -51,9 +49,20 @@ class VehiculoProvider {
 
   //Eliminar un vehiculo
   Future<void> deleteVehiculo({required String uid}) async {
+    //Referencia del documento del storage del vehiculo
+
+    final pathStorage = 'vehiculo/$uid';
+
+    final storageRef = _storageInstance.ref(pathStorage);
+
+    //Eliminar datos del vehiculo de storage
+    await storageRef.delete();
+
+    //Eliminar  datos del vehiculo de firestore
     await _firestoreInstance.collection('vehiculo').doc(uid).delete();
+    //
   }
-  
+
   //Actualizar
   Future<void> updateVehiculo(
       {required Vehiculo vehiculo, File? imagen}) async {
@@ -62,17 +71,16 @@ class VehiculoProvider {
         .doc(vehiculo.idVehiculo)
         .update(vehiculo.toMap());
     if (imagen != null) {
-
       final imagePath =
           'vehiculo/${vehiculo.idVehiculo}/fotovehiculo${path.extension(imagen.path)}';
- 
+
       final storageRef = _storageInstance.ref(imagePath);
       await storageRef.putFile(imagen);
       final url = await storageRef.getDownloadURL();
       _firestoreInstance
           .collection("vehiculo")
           .doc(vehiculo.idVehiculo)
-          .update({"fotoVehiculo": url}); 
-    } 
+          .update({"fotoVehiculo": url});
+    }
   }
 }

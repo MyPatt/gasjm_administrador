@@ -87,10 +87,6 @@ class RegistrarVehiculoController extends GetxController {
       }
       _listaRepartidores = lista;
 
-      // dropdownRepartidorInicial.value = _listaRepartidores.first.nombrePersona;
-      //
-      print("RRRRRRRRRRRRRRRR");
-      print(_listaRepartidores.length);
       //
     } catch (e) {
       //
@@ -128,8 +124,6 @@ class RegistrarVehiculoController extends GetxController {
       _vehiculoRepository.insertVehiculo(
           vehiculo: vehiculo, imagen: pickedImage.value);
 
-      //Testear
-      await Future.delayed(const Duration(seconds: 1));
       //Mensaje de ingreso
       Mensajes.showGetSnackbar(
           titulo: 'Mensaje',
@@ -138,8 +132,10 @@ class RegistrarVehiculoController extends GetxController {
             Icons.save_outlined,
             color: Colors.white,
           ));
-      //
 
+      //Testear
+      await Future.delayed(const Duration(seconds: 1));
+      //
       Navigator.pop(context);
     } catch (e) {
       Mensajes.showGetSnackbar(

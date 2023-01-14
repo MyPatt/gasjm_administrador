@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
+import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_controller.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/operacion/widgets/card_vehiculo.dart';
 import 'package:get/get.dart';
@@ -22,18 +23,24 @@ class ListaVehiculos extends StatelessWidget {
                   child: Column(
                     children: [
                       Expanded(
+                        //Muestra la lista de vehiculos en caso de existir caso contrario texto de sin vehiculos
                           child: Obx(
-                        () => ListView(
-                          children: _.listaVehiculos.map((vehiculo) {
-                            return CardVehiculo(
-                                vehiculo: vehiculo,
-                                editarDatosVehiculo: () =>
-                                    _.editarDatosVehiculo(vehiculo),
-                                eliminarVehiculo: () =>
-                                    _.eliminarVehiculo(vehiculo.idVehiculo!),
-                                verDatosVehiculo: () => _.verDatosVehiculo(vehiculo));
-                          }).toList(),
-                        ),
+                        () => !_.listaVehiculos.isNotEmpty
+                            ? const Center(
+                                child: TextDescription(text: "Sin vehículos!"))
+                            : ListView(
+                                children: _.listaVehiculos.map((vehiculo) {
+                                  return CardVehiculo(
+                                      vehiculo: vehiculo,
+                                      editarDatosVehiculo: () =>
+                                          _.editarDatosVehiculo(vehiculo),
+                                      eliminarVehiculo: () =>
+                                          _.eliminarVehiculo(
+                                              vehiculo.idVehiculo!),
+                                      verDatosVehiculo: () =>
+                                          _.verDatosVehiculo(vehiculo));
+                                }).toList(),
+                              ),
                       ))
                     ],
                   ),

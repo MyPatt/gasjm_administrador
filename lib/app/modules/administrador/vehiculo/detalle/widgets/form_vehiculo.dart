@@ -93,23 +93,7 @@ class FormVehiculo extends StatelessWidget {
                     ),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .02),
-                    Obx(
-                      () => DropdownButton(
-                          icon: const Icon(Icons.person_outline_outlined),
-                          value: _.dropdownRepartidorInicial.value,
-                          items: _.listaRepartidores
-                              .map((e) => DropdownMenuItem(
-                                  value: e.uidPersona,
-                                  child: Text(
-                                      '${e.nombrePersona} ${e.apellidoPersona}')))
-                              .toList(),
-                          onChanged: (String? nuevoValor) {
-                            if (nuevoValor != null) {
-                              _.dropdownRepartidorInicial.value = nuevoValor;
-                              print(nuevoValor);
-                            }
-                          }),
-                    ),
+              
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .02),
                     InputText(

@@ -21,8 +21,8 @@ class DetalleVehiculoController extends GetxController {
   RxString imagenPerfil = Get.find<AutenticacionController>().imagenUsuario;
 
   //Variable para guardar datos del vehiculo
-  late Vehiculo _cliente;
-  Vehiculo get cliente => _cliente;
+  late Vehiculo _vehiculo;
+  Vehiculo get vehiculo => _vehiculo;
 
   //
   //Clave del formulario de resgistro de vehiculo
@@ -48,7 +48,6 @@ class DetalleVehiculoController extends GetxController {
   List<PersonaModel> get listaRepartidores => _listaRepartidores;
 
   //Valor inicial de la lista de repartidores dropdown
-  RxString dropdownRepartidorInicial = 'Sin repartidor'.obs;
 
   //Variable para foto del vehiculo
   final picker = ImagePicker();
@@ -59,11 +58,13 @@ class DetalleVehiculoController extends GetxController {
   void onInit() {
     //Obtner argumentos
 
-    _cliente = Get.arguments[0];
+    _vehiculo = Get.arguments[0];
     vehiculoEditable = Get.arguments[1];
+    //
+    print(vehiculo.idVehiculo);
 
     //
-    Future.wait([_cargarDatosDelFormCliente()]);
+    Future.wait([_cargarDatosDelFormVehiculo()]);
 
     //Obtener lista de repartidores
     _cargarListaDeRepartidores();
@@ -73,18 +74,20 @@ class DetalleVehiculoController extends GetxController {
 
   /* METODOS PARA VEHICULO */
 
-  Future<void> _cargarDatosDelFormCliente() async {
+  Future<void> _cargarDatosDelFormVehiculo() async {
     try {
       cargandoVehiculo.value = true;
 
       // obtner nombres de los repartidor
-var aux=listaRepartidores.where((element) => element.uidPersona==cliente.idRepartidor).first;
-     dropdownRepartidorInicial.value='${aux.nombrePersona} ${aux.apellidoPersona}';
-     placaTextoController.text=cliente.placaVehiculo;
-      marcaTextoController.text=cliente.marcaVehiculo;
-    modeloTextoController.text=cliente.modeloVehiculo;
-      anioTextoController.text='${cliente.anioVehiculo}';
-    observacionTextoController.text=cliente.observacionVehiculo??'';
+      var aux = listaRepartidores
+          .where((element) => element.uidPersona == vehiculo.idRepartidor)
+          .first;
+
+      placaTextoController.text = vehiculo.placaVehiculo;
+      marcaTextoController.text = vehiculo.marcaVehiculo;
+      modeloTextoController.text = vehiculo.modeloVehiculo;
+      anioTextoController.text = '${vehiculo.anioVehiculo}';
+      observacionTextoController.text = vehiculo.observacionVehiculo ?? '';
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: "Error",
@@ -123,7 +126,7 @@ var aux=listaRepartidores.where((element) => element.uidPersona==cliente.idRepar
 //Registrar nuevo vehiculo
   registrarVehiculo() {
     //Obtener datos
-    String idRepartidor = dropdownRepartidorInicial.value;
+    String idRepartidor = '';
     String placaVehiculo = placaTextoController.text;
     String marcaVehiculo = marcaTextoController.text;
     String modeloVehiculo = modeloTextoController.text;
@@ -191,8 +194,8 @@ var aux=listaRepartidores.where((element) => element.uidPersona==cliente.idRepar
 
 //Actualizar datos de vehiculo
   actualizarVehiculo() {
-     //Obtener datos
-      String idRepartidor = dropdownRepartidorInicial.value;
+    //Obtener datos
+    String idRepartidor = '';
     String placaVehiculo = placaTextoController.text;
     String marcaVehiculo = marcaTextoController.text;
     String modeloVehiculo = modeloTextoController.text;
@@ -200,9 +203,8 @@ var aux=listaRepartidores.where((element) => element.uidPersona==cliente.idRepar
     String observacionVehiculo = observacionTextoController.text;
 
     try {
-    cargandoVehiculo.value = true;
+      cargandoVehiculo.value = true;
       errorParaDatosVehiculo.value = null;
- 
 
       Vehiculo vehiculo = Vehiculo(
           idRepartidor: idRepartidor,
@@ -223,9 +225,8 @@ var aux=listaRepartidores.where((element) => element.uidPersona==cliente.idRepar
             Icons.save_outlined,
             color: Colors.white,
           ));
- 
     } catch (e) {
-       Mensajes.showGetSnackbar(
+      Mensajes.showGetSnackbar(
           titulo: 'Alerta',
           mensaje:
               'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',

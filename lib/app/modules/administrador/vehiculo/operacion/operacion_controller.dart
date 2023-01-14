@@ -54,10 +54,10 @@ class OperacionVehiculoController extends GetxController {
 
   Future<void> editarDatosVehiculo(Vehiculo vehiculo) async {
     await Future.delayed(const Duration(seconds: 1));
-    Get.toNamed(AppRoutes.detalleVehiculo, arguments: [
+    /*  Get.toNamed(AppRoutes.detalleVehiculo, arguments: [
       vehiculo,
       true,
-    ]);
+    ]);*/
   }
 
   //Actualizar lista de vehiculos

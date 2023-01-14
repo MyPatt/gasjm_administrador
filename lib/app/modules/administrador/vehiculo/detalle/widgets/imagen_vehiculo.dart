@@ -2,30 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_controller.dart'; 
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_controller.dart';
 import 'package:get/get.dart';
 
 class ImagenVehiculo extends StatelessWidget {
-  const ImagenVehiculo({Key? key}) : super(key: key); 
+  const ImagenVehiculo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
- 
     return Center(
+      child: CircleAvatar(
+        radius: 75.0,
+        backgroundColor: AppTheme.light,
         child: CircleAvatar(
-          radius: 75.0,
-          backgroundColor: AppTheme.light,
-          child: CircleAvatar(
-            radius: 74.50,
-            backgroundColor: Colors.white,
-            child: 
-            
-            GetBuilder<DetalleVehiculoController>(
-      builder: (_) => 
-            Obx(
+          radius: 74.50,
+          backgroundColor: Colors.white,
+          child: GetBuilder<DetalleVehiculoController>(
+            builder: (_) => Obx(
               () => Stack(children: [
                 buildImage(_.existeImagenPerfil.value, _.pickedImage.value,
-                    _.cliente.fotoVehiculo),
+                    _.vehiculo.fotoVehiculo),
                 Positioned(
                   child: CircleAvatar(
                       backgroundColor: Colors.white,

@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
+import 'package:flutter/material.dart'; 
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_detalle.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/widgets/contenido_detalle.dart'; 
 
 class DetalleVehiculoPage extends StatelessWidget {
   const DetalleVehiculoPage({
@@ -23,7 +22,7 @@ class DetalleVehiculoPage extends StatelessWidget {
         // actions: const [MenuAppBar()],
         title: const Text('Vehículos'),
       ),
-      body: const ContenidoDetalle(),
+      body: const ContenidoDetalleVehiculo(),
     );
   }
 }

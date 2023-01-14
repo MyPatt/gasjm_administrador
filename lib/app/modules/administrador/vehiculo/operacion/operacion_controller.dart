@@ -23,7 +23,7 @@ class OperacionVehiculoController extends GetxController {
   /* METODOS PROPIOS */
   @override
   void onInit() {
-    //_cargarListaDeVehiculos();
+    _cargarListaDeVehiculos();
 
     super.onInit();
   }

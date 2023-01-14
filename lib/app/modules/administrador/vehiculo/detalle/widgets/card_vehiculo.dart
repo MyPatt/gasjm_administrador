@@ -6,11 +6,17 @@ import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 
 class CardVehiculo extends StatelessWidget {
-  const CardVehiculo({Key? key, required this.vehiculo,required this.editarDatosVehiculo, required this.eliminarVehiculo, required this.verDatosVehiculo}) : super(key: key);
+  const CardVehiculo(
+      {Key? key,
+      required this.vehiculo,
+      required this.editarDatosVehiculo,
+      required this.eliminarVehiculo,
+      required this.verDatosVehiculo})
+      : super(key: key);
   final Vehiculo vehiculo;
   final void Function() verDatosVehiculo;
   final void Function() editarDatosVehiculo;
-   final void Function()  eliminarVehiculo;
+  final void Function() eliminarVehiculo;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -20,8 +26,8 @@ class CardVehiculo extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Padding(
-          padding:
-              const EdgeInsets.only(right: 8.0, left: 8.0, top: 0.0, bottom: 0.0),
+          padding: const EdgeInsets.only(
+              right: 8.0, left: 8.0, top: 0.0, bottom: 0.0),
           child: Row(children: [
             ImagenUsuario(urlfotoPerfil: vehiculo.fotoVehiculo ?? ''),
             Column(
@@ -31,7 +37,9 @@ class CardVehiculo extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
                 TextDescription(
-                    text: '${vehiculo.marcaVehiculo} ${vehiculo.modeloVehiculo}', textAlign: TextAlign.justify),
+                    text:
+                        '${vehiculo.marcaVehiculo} ${vehiculo.modeloVehiculo}',
+                    textAlign: TextAlign.justify),
               ],
             ),
             const Spacer(),
@@ -39,7 +47,7 @@ class CardVehiculo extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: editarDatosVehiculo,
-                 /* onPressed: () {
+                  /* onPressed: () {
                     Get.toNamed(AppRoutes.detalleCliente,
                         arguments: [persona, true]);
                   },*/

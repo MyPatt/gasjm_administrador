@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/registrar/widget/form_vehiculo.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/registrar/widget/imagen_vehiculo.dart';
+import 'package:flutter/material.dart'; 
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/widgets/form_vehiculo.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/widgets/imagen_vehiculo.dart';
 
-class ContenidoDetalle extends StatelessWidget {
-  const ContenidoDetalle({Key? key} ) : super(key: key);
+class ContenidoDetalleVehiculo extends StatelessWidget {
+  const ContenidoDetalleVehiculo({Key? key} ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

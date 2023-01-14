@@ -4,9 +4,9 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/global_widgets/text_description.dart'; 
+import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_controller.dart'; 
+import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_controller.dart';
 
 import 'package:get/get.dart';
 
@@ -148,13 +148,13 @@ class FormVehiculo extends StatelessWidget {
                             Visibility(
                               visible: !_.cargandoVehiculo.value,
                               child: PrimaryButton(
-                                  texto:  'Actualizar',
+                                  texto: 'Actualizar',
                                   onPressed: () {
                                     if (_.claveFormRegistrarVehiculo
                                             .currentState
                                             ?.validate() ==
                                         true) {
-                                       _.actualizarVehiculo();
+                                      _.actualizarVehiculo();
                                     }
                                   }),
                             ),

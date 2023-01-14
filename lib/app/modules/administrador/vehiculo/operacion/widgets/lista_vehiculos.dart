@@ -31,7 +31,7 @@ class ListaVehiculos extends StatelessWidget {
                                     _.editarDatosVehiculo(vehiculo),
                                 eliminarVehiculo: () =>
                                     _.eliminarVehiculo(vehiculo.idVehiculo!),
-                                verDatosVehiculo: () => _.verDatosVehiculo);
+                                verDatosVehiculo: () => _.verDatosVehiculo(vehiculo));
                           }).toList(),
                         ),
                       ))

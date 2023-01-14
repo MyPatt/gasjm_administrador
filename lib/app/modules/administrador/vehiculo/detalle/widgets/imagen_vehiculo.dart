@@ -22,31 +22,32 @@ class ImagenVehiculo extends StatelessWidget {
             radius: 74.50,
             backgroundColor: Colors.white,
             child: GetBuilder<DetalleVehiculoController>(
-              builder: (_) => 
-              (Stack(children: [
-                Obx(() => buildImage(_.existeImagenPerfil.value,
-                    _.pickedImage.value, _.vehiculo.fotoVehiculo)),
-                Positioned(
-                  child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 14.0,
-                      child: IconButton(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(3.0),
-                        iconSize: 18.0,
-                        icon: const Icon(
-                          Icons.photo_camera,
-                          color: AppTheme.light,
-                        ),
-                        onPressed: () {
-                          _.cargarImagen();
-                        },
-                      )),
-                  right: 5,
-                  bottom: 5,
-                )
-              ])),
-            ),
+                builder: (_) => _.vehiculoEditable == true
+                    ? (Stack(children: [
+                        Obx(() => buildImage(_.existeImagenPerfil.value,
+                            _.pickedImage.value, _.vehiculo.fotoVehiculo)),
+                        Positioned(
+                          child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 14.0,
+                              child: IconButton(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.all(3.0),
+                                iconSize: 18.0,
+                                icon: const Icon(
+                                  Icons.photo_camera,
+                                  color: AppTheme.light,
+                                ),
+                                onPressed: () {
+                                  _.cargarImagen();
+                                },
+                              )),
+                          right: 5,
+                          bottom: 5,
+                        )
+                      ]))
+                    : Obx(() => buildImage(_.existeImagenPerfil.value,
+                        _.pickedImage.value, _.vehiculo.fotoVehiculo))),
           ),
         ),
       ),

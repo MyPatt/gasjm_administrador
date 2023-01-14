@@ -70,11 +70,11 @@ class DetalleVehiculoController extends GetxController {
 
 
     //
-    var aux = listaRepartidores
+ /*   var aux = listaRepartidores
         .where((element) => element.uidPersona == vehiculo.idRepartidor)
         .first;
 
-    print(aux.uidPersona);
+    print(aux.uidPersona);*/
     super.onInit();
   }
 

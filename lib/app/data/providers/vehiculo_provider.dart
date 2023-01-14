@@ -49,18 +49,16 @@ class VehiculoProvider {
 
   //Eliminar un vehiculo
   Future<void> deleteVehiculo({required String uid}) async {
+    //Eliminar  datos del vehiculo de firestore
+    await _firestoreInstance.collection('vehiculo').doc(uid).delete();
+    //Eliminar datos del vehiculo de storage
+//TODO: Eliminar file storage
+/*
     //Referencia del documento del storage del vehiculo
 
     final pathStorage = 'vehiculo/$uid';
-
     final storageRef = _storageInstance.ref(pathStorage);
-
-    //Eliminar datos del vehiculo de storage
-    await storageRef.delete();
-
-    //Eliminar  datos del vehiculo de firestore
-    await _firestoreInstance.collection('vehiculo').doc(uid).delete();
-    //
+    await storageRef.delete();*/
   }
 
   //Actualizar

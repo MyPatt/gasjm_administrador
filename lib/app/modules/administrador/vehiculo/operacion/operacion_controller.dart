@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
@@ -54,7 +55,7 @@ class OperacionVehiculoController extends GetxController {
 
   Future<void> editarDatosVehiculo(Vehiculo vehiculo) async {
     await Future.delayed(const Duration(seconds: 1));
-      Get.toNamed(AppRoutes.detalleVehiculo, arguments: [
+    Get.toNamed(AppRoutes.detalleVehiculo, arguments: [
       vehiculo,
       true,
     ]);
@@ -84,8 +85,9 @@ class OperacionVehiculoController extends GetxController {
 
 //Volver a actualizar la lista de clientes activos desde firestore
       _cargarListaDeVehiculos();
-    } catch (e) {
+    } on FirebaseException catch (e) {
       //
+      print(e.message);
     }
   }
 }

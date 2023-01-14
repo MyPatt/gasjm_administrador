@@ -20,5 +20,5 @@ class VehiculoRepositoryImpl extends VehiculoRepository {
 
   @override
   Future<void> updateVehiculo({required Vehiculo vehiculo, File? imagen}) =>
-      _provider.updateVehiculo(vehiculo: vehiculo);
+      _provider.updateVehiculo(vehiculo: vehiculo,imagen: imagen);
 }

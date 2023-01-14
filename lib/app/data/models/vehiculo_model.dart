@@ -42,7 +42,7 @@ class Vehiculo {
         "marcaVehiculo": marcaVehiculo,
         "modeloVehiculo": modeloVehiculo,
         "anioVehiculo": anioVehiculo,
-        "fotoVehiculo":fotoVehiculo,
+        //"fotoVehiculo":fotoVehiculo,
         "observacionVehiculo": observacionVehiculo
       };
 }

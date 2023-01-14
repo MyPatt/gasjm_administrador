@@ -8,7 +8,6 @@ import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/models/vehiculo_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:gasjm/app/data/repository/vehiculo_repository.dart';
-import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -68,9 +67,8 @@ class DetalleVehiculoController extends GetxController {
     //
     Future.wait([_cargarDatosDelFormVehiculo()]);
 
-
     //
- /*   var aux = listaRepartidores
+    /*   var aux = listaRepartidores
         .where((element) => element.uidPersona == vehiculo.idRepartidor)
         .first;
 
@@ -135,8 +133,13 @@ class DetalleVehiculoController extends GetxController {
       lista.addAll(admin);
       //
       for (var i = 0; i < lista.length; i++) {
+        //
         lista[i].nombreUsuario =
             '${lista[i].nombrePersona} ${lista[i].apellidoPersona}';
+        //
+        if (lista[i].uidPersona == vehiculo.idRepartidor) {
+          repartidorTextoController.text = lista[i].nombreUsuario!;
+        }
       }
       _listaRepartidores = lista;
 
@@ -180,17 +183,19 @@ class DetalleVehiculoController extends GetxController {
 
       //Guardar en model
 
-      Vehiculo vehiculo = Vehiculo(
+      Vehiculo vehiculoParaActualizar = Vehiculo(
+          idVehiculo: vehiculo.idVehiculo,
           idRepartidor: idRepartidor,
           placaVehiculo: placaVehiculo,
           marcaVehiculo: marcaVehiculo,
           modeloVehiculo: modeloVehiculo,
           anioVehiculo: anioVehiculo,
+          fotoVehiculo: vehiculo.fotoVehiculo,
           observacionVehiculo: observacionVehiculo);
 
       //En firebase
       _vehiculoRepository.updateVehiculo(
-          vehiculo: vehiculo, imagen: pickedImage.value);
+          vehiculo: vehiculoParaActualizar, imagen: pickedImage.value);
 
       //Mensaje de ingreso
       Mensajes.showGetSnackbar(
@@ -204,7 +209,7 @@ class DetalleVehiculoController extends GetxController {
       //Testear
       await Future.delayed(const Duration(seconds: 1));
       //
-      Navigator.pop(context);
+     Navigator.pop(context);
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',

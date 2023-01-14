@@ -32,13 +32,15 @@ class DetalleVehiculoController extends GetxController {
   final marcaTextoController = TextEditingController();
   final modeloTextoController = TextEditingController();
   final anioTextoController = TextEditingController();
+  final repartidorTextoController = TextEditingController();
+
   final observacionTextoController = TextEditingController();
 
   //varialbe para el modo editable;
   bool vehiculoEditable = false;
 
   //Variable para visualizar el estado de carga de datos
-  final cargandoVehiculo = true.obs;
+  final cargandoVehiculo = false.obs;
 
   //Existe algun error si o no
   final errorParaDatosVehiculo = Rx<String?>(null);
@@ -47,7 +49,8 @@ class DetalleVehiculoController extends GetxController {
   List<PersonaModel> _listaRepartidores = <PersonaModel>[];
   List<PersonaModel> get listaRepartidores => _listaRepartidores;
 
-  //Valor inicial de la lista de repartidores dropdown
+  //Valor inicial de la lista de repartidores
+  RxString indiceRepartidor = 'Sin repartidor'.obs;
 
   //Variable para foto del vehiculo
   final picker = ImagePicker();
@@ -60,41 +63,55 @@ class DetalleVehiculoController extends GetxController {
 
     _vehiculo = Get.arguments[0];
     vehiculoEditable = Get.arguments[1];
-    //
-    print(vehiculo.idVehiculo);
-
+    //Obtener lista de repartidores
+    _cargarListaDeRepartidores();
     //
     Future.wait([_cargarDatosDelFormVehiculo()]);
 
-    //Obtener lista de repartidores
-    _cargarListaDeRepartidores();
 
+    //
+    var aux = listaRepartidores
+        .where((element) => element.uidPersona == vehiculo.idRepartidor)
+        .first;
+
+    print(aux.uidPersona);
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    //
+    placaTextoController.dispose();
+    marcaTextoController.dispose();
+    modeloTextoController.dispose();
+    anioTextoController.dispose();
+    repartidorTextoController.dispose();
+    observacionTextoController.dispose();
+  }
   /* METODOS PARA VEHICULO */
 
   Future<void> _cargarDatosDelFormVehiculo() async {
     try {
-      cargandoVehiculo.value = true;
-
       // obtner nombres de los repartidor
- /*     var aux = listaRepartidores
+      /*   var aux = listaRepartidores
           .where((element) => element.uidPersona == vehiculo.idRepartidor)
           .first;
 */
       //
-          //
+      indiceRepartidor.value = vehiculo.idRepartidor;
+      //
       if (vehiculo.fotoVehiculo != null) {
         existeImagenPerfil.value = true;
       }
 
       //
-      //
       placaTextoController.text = vehiculo.placaVehiculo;
       marcaTextoController.text = vehiculo.marcaVehiculo;
       modeloTextoController.text = vehiculo.modeloVehiculo;
       anioTextoController.text = '${vehiculo.anioVehiculo}';
+      /*   repartidorTextoController.text =
+          '${aux.nombrePersona} ${aux.apellidoPersona}';*/
       observacionTextoController.text = vehiculo.observacionVehiculo ?? '';
     } catch (e) {
       Mensajes.showGetSnackbar(
@@ -105,7 +122,6 @@ class DetalleVehiculoController extends GetxController {
             color: Colors.white,
           ));
     }
-    cargandoVehiculo.value = false;
   }
 
   //Obtener lista de repartisores activos
@@ -113,13 +129,17 @@ class DetalleVehiculoController extends GetxController {
     try {
       final lista = (await _personaRepository.getNombresPorField(
           field: 'idPerfil', dato: 'repartidor'));
-
+      final admin = (await _personaRepository.getNombresPorField(
+          field: 'idPerfil', dato: 'administrador'));
+      //
+      lista.addAll(admin);
       //
       for (var i = 0; i < lista.length; i++) {
         lista[i].nombreUsuario =
             '${lista[i].nombrePersona} ${lista[i].apellidoPersona}';
       }
       _listaRepartidores = lista;
+
       //
     } catch (e) {
       //
@@ -127,14 +147,26 @@ class DetalleVehiculoController extends GetxController {
     }
   }
 
-  void cargarDetalleDelRepartidor(PersonaModel cliente) {
-    Get.offNamed(AppRoutes.detalleCliente, arguments: cliente);
+  //Metodo que obtiene imagen de galeria para el vehiculo
+
+  Future<void> cargarImagen() async {
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setImage(File(pickedImage.path));
+    }
   }
 
-//Registrar nuevo vehiculo
-  registrarVehiculo() {
+  void setImage(File imageFile) async {
+    pickedImage.value = imageFile;
+
+    //  emit(state.copyWith(pickedImage: imageFile));
+  }
+
+//Actualizar datos de vehiculo
+  actualizarVehiculo(BuildContext context) async {
     //Obtener datos
-    String idRepartidor = '';
+    String idRepartidor = indiceRepartidor.value;
     String placaVehiculo = placaTextoController.text;
     String marcaVehiculo = marcaTextoController.text;
     String modeloVehiculo = modeloTextoController.text;
@@ -155,22 +187,24 @@ class DetalleVehiculoController extends GetxController {
           modeloVehiculo: modeloVehiculo,
           anioVehiculo: anioVehiculo,
           observacionVehiculo: observacionVehiculo);
-      //En firebase
-      _vehiculoRepository.insertVehiculo(
-          vehiculo: vehiculo, imagen: pickedImage.value);
 
-      //
+      //En firebase
+      _vehiculoRepository.updateVehiculo(
+          vehiculo: vehiculo, imagen: pickedImage.value);
 
       //Mensaje de ingreso
       Mensajes.showGetSnackbar(
           titulo: 'Mensaje',
-          mensaje: 'Vehículo guardado',
+          mensaje: 'Vehículo actualizado con éxito.',
           icono: const Icon(
             Icons.save_outlined,
             color: Colors.white,
           ));
 
+      //Testear
+      await Future.delayed(const Duration(seconds: 1));
       //
+      Navigator.pop(context);
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',
@@ -184,66 +218,14 @@ class DetalleVehiculoController extends GetxController {
     }
     cargandoVehiculo.value = false;
   }
-  //Metodo que obtiene imagen de galeria para el vehiculo
 
-  Future<void> cargarImagen() async {
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+  //Metodo para seleccionar repartidor
+  seleccionarOpcionRepartidor(String? valor) {
+    indiceRepartidor.value = valor!;
 
-    if (pickedImage != null) {
-      setImage(File(pickedImage.path));
-    }
-  }
-
-  void setImage(File imageFile) async {
-    pickedImage.value = imageFile;
-
-    //  emit(state.copyWith(pickedImage: imageFile));
-  }
-
-//Actualizar datos de vehiculo
-  actualizarVehiculo() {
-    //Obtener datos
-    String idRepartidor = '';
-    String placaVehiculo = placaTextoController.text;
-    String marcaVehiculo = marcaTextoController.text;
-    String modeloVehiculo = modeloTextoController.text;
-    int anioVehiculo = int.parse(anioTextoController.text);
-    String observacionVehiculo = observacionTextoController.text;
-
-    try {
-      cargandoVehiculo.value = true;
-      errorParaDatosVehiculo.value = null;
-
-      Vehiculo vehiculo = Vehiculo(
-          idRepartidor: idRepartidor,
-          placaVehiculo: placaVehiculo,
-          marcaVehiculo: marcaVehiculo,
-          modeloVehiculo: modeloVehiculo,
-          anioVehiculo: anioVehiculo,
-          observacionVehiculo: observacionVehiculo);
-      //En firebase
-      _vehiculoRepository.insertVehiculo(
-          vehiculo: vehiculo, imagen: pickedImage.value);
-
-      //Mensaje de ingreso
-      Mensajes.showGetSnackbar(
-          titulo: 'Mensaje',
-          mensaje: '¡Se actualizo con éxito!',
-          icono: const Icon(
-            Icons.save_outlined,
-            color: Colors.white,
-          ));
-    } catch (e) {
-      Mensajes.showGetSnackbar(
-          titulo: 'Alerta',
-          mensaje:
-              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
-          duracion: const Duration(seconds: 4),
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-    cargandoVehiculo.value = false;
+    var aux = listaRepartidores
+        .where((element) => element.uidPersona == valor)
+        .toList();
+    repartidorTextoController.text = aux[0].nombreUsuario!;
   }
 }

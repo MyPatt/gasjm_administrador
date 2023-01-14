@@ -7,6 +7,7 @@ import 'package:gasjm/app/global_widgets/primary_button.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_controller.dart';
+import 'package:gasjm/app/modules/administrador/vehiculo/registrar/widget/modal_repartdidores.dart';
 
 import 'package:get/get.dart';
 
@@ -41,45 +42,45 @@ class FormVehiculo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    //
+                    //  enabled: _.vehiculoEditable,
                     InputText(
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(
-                            RegExp(r'[a-zA-Z]{3}[0-9]{3}')),
+                            RegExp(r'[A-Za-z0-9]')),
                         LengthLimitingTextInputFormatter(7),
                       ],
-                      keyboardType: TextInputType.streetAddress,
                       controller: _.placaTextoController,
                       iconPrefix: Icons.directions_car_outlined,
-                      validator: Validacion.validarNombre,
                       labelText: "Placa",
+                      textCapitalization: TextCapitalization.characters,
+                      validator: Validacion.validarPlaca,
                       enabled: _.vehiculoEditable,
                     ),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .02),
                     InputText(
+                      enabled: _.vehiculoEditable,
                       labelText: "Marca",
                       iconPrefix: Icons.branding_watermark_outlined,
-                      keyboardType: TextInputType.name,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
-                      ],
                       controller: _.marcaTextoController,
-                      validator: Validacion.validarNombre,
-                      enabled: _.vehiculoEditable,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z]')),
+                      ],
+                      validator: Validacion.validarValor,
                     ),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .02),
                     InputText(
+                      enabled: _.vehiculoEditable,
                       labelText: "Modelo",
                       iconPrefix: Icons.abc_outlined,
                       controller: _.modeloTextoController,
-                      validator: Validacion.validarNombre,
-                      enabled: _.vehiculoEditable,
+                      validator: Validacion.validarValor,
                     ),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .02),
                     InputText(
+                      enabled: _.vehiculoEditable,
                       labelText: "Año",
                       iconPrefix: Icons.drag_indicator,
                       keyboardType: TextInputType.number,
@@ -88,19 +89,39 @@ class FormVehiculo extends StatelessWidget {
                         FilteringTextInputFormatter.digitsOnly,
                       ],
                       controller: _.anioTextoController,
-                      validator: Validacion.validarAnio,
-                      enabled: _.vehiculoEditable,
+                      validator: Validacion.validarValor,
                     ),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .02),
-              
+                    InkWell(
+                        onTap: () {
+                          if (_.vehiculoEditable == true) {
+                            showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) => ModalRepartidores(
+                                listaCategorias: _.listaRepartidores,
+                                selectedRadioTile: _.indiceRepartidor,
+                                onChanged: (valor) =>
+                                    _.seleccionarOpcionRepartidor(valor),
+                              ),
+                            );
+                          }
+                        },
+                        child: InputText(
+                          labelText: "Repartidor",
+                          controller: _.repartidorTextoController,
+                          iconPrefix: Icons.person_outlined,
+                          validator: Validacion.validarValor,
+                          enabled: false,
+                        )),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .02),
+
                     InputText(
                       labelText: "Observación",
                       iconPrefix: Icons.note_outlined,
                       controller: _.observacionTextoController,
-                      validator: Validacion.validarNombre,
                       enabled: _.vehiculoEditable,
                     ),
 
@@ -138,7 +159,7 @@ class FormVehiculo extends StatelessWidget {
                                             .currentState
                                             ?.validate() ==
                                         true) {
-                                      _.actualizarVehiculo();
+                                      _.actualizarVehiculo(context);
                                     }
                                   }),
                             ),

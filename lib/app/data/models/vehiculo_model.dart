@@ -30,9 +30,7 @@ class Vehiculo {
         placaVehiculo: json["placaVehiculo"],
         marcaVehiculo: json["marcaVehiculo"],
         modeloVehiculo: json["modeloVehiculo"],
-        anioVehiculo: json["anioVehiculo"],
-        colorVehiculo: json["colorVehiculo"],
-        tipoVehiculo: json["tipoVehiculo"],
+        anioVehiculo: json["anioVehiculo"], 
         fotoVehiculo: json["fotoVehiculo"],
         observacionVehiculo: json["observacionVehiculo"],
       );
@@ -44,6 +42,7 @@ class Vehiculo {
         "marcaVehiculo": marcaVehiculo,
         "modeloVehiculo": modeloVehiculo,
         "anioVehiculo": anioVehiculo,
+        "fotoVehiculo":fotoVehiculo,
         "observacionVehiculo": observacionVehiculo
       };
 }

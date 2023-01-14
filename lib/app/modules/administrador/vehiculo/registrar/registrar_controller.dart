@@ -40,8 +40,8 @@ class RegistrarVehiculoController extends GetxController {
   //Lista de repartidores
   List<PersonaModel> _listaRepartidores = <PersonaModel>[];
   List<PersonaModel> get listaRepartidores => _listaRepartidores;
+  //Valor inicial de la lista de repartidores 
   RxString indiceRepartidor = 'Sin repartidor'.obs;
-  //Valor inicial de la lista de repartidores dropdown
 
   //Variable para foto del vehiculo
   final picker = ImagePicker();
@@ -166,17 +166,15 @@ class RegistrarVehiculoController extends GetxController {
     //  emit(state.copyWith(pickedImage: imageFile));
   }
 
-//
 //Metodo para seleccionar repartidor
   seleccionarOpcionDeOrdenamiento(String? valor) {
     indiceRepartidor.value = valor!;
-    print(valor);
+ 
     var aux = listaRepartidores
         .where((element) => element.uidPersona == valor)
         .toList();
     repartidorTextoController.text = aux[0].nombreUsuario!;
   }
 
-//Actualizar datos de nuevo vehiculo
-  actualizarVehiculo() {}
+ 
 }

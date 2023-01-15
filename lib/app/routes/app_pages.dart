@@ -5,10 +5,14 @@ import 'package:gasjm/app/modules/administrador/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/administrador/cliente/widgets/buscar_page.dart';
 import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_cliente_binding.dart';
 import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_page.dart';
+import 'package:gasjm/app/modules/administrador/pedido/operacion/operacion_binding.dart';
+import 'package:gasjm/app/modules/administrador/pedido/operacion/operacion_page.dart';
+import 'package:gasjm/app/modules/administrador/pedido/registrar/registrar_binding.dart';
+import 'package:gasjm/app/modules/administrador/pedido/registrar/registrar_page.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_binding.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_page.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_binding.dart';
-import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_page.dart'; 
+import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_page.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/registrar/registrar_binding.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/registrar/registrar_page.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_binding.dart';
@@ -24,9 +28,7 @@ import 'package:gasjm/app/modules/repartidor/inicio/inicio_page.dart';
 import 'package:gasjm/app/modules/repartidor/ir/ir_binding.dart';
 import 'package:gasjm/app/modules/repartidor/ir/ir_page.dart';
 import 'package:gasjm/app/modules/login/login_binding.dart';
-import 'package:gasjm/app/modules/login/login_page.dart';
-import 'package:gasjm/app/modules/administrador/operacion_pedido/pedido_binding.dart';
-import 'package:gasjm/app/modules/administrador/operacion_pedido/pedido_page.dart';
+import 'package:gasjm/app/modules/login/login_page.dart'; 
 import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_binding.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_page.dart';
 import 'package:gasjm/app/modules/perfil/perfil_binding.dart';
@@ -118,14 +120,15 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
+
+ //Pedidos
     GetPage(
-      name: AppRoutes.repartidor,
-      page: () => RepartidorPage(),
-      binding: RepartidorBinding(),
+      name: AppRoutes.registrarPedido,
+      page: () => const RegistrarPedidoPage(),
+      binding: RegistrarPedidoBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-
     GetPage(
       name: AppRoutes.operacionPedido,
       page: () => const OperacionPedidoPage(),
@@ -138,6 +141,19 @@ class AppPages {
         page: () => const BuscarAdministradorPage(),
         binding: BuscarAdministradorBinding(),
         transition: Transition.noTransition),
+
+
+
+
+
+    GetPage(
+      name: AppRoutes.repartidor,
+      page: () => RepartidorPage(),
+      binding: RepartidorBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+   
     GetPage(
         name: AppRoutes.buscarClienteAdmin,
         page: () => const BuscarClientePage(),
@@ -152,7 +168,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.detalleCliente,
-      page: () =>const DetallePersonaPage(),
+      page: () => const DetallePersonaPage(),
       binding: EditarClienteBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
@@ -181,7 +197,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.operacionVehiculo,
-    page: () => const OperacionVehiculoPage(),
+      page: () => const OperacionVehiculoPage(),
       binding: OperacionVehiculoBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),

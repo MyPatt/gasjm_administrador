@@ -2,7 +2,7 @@ import 'package:gasjm/app/global_widgets/bottom_administrador.dart';
 import 'package:gasjm/app/global_widgets/menu_lateral.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/administrador/operacion_pedido/pedido_controller.dart';
+import 'package:gasjm/app/modules/administrador/pedido/operacion/operacion_controller.dart'; 
 import 'package:gasjm/app/modules/repartidor/pedidos/widgets/modal_ordenamiento.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 

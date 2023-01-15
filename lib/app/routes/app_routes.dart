@@ -12,8 +12,13 @@ class AppRoutes {
   static const signup = "/signup";
   //Administrador
   static const inicioAdministrador = "/inicioAdministrador";
+  //
+  static const registrarPedido = "/registrarPedido";
+
   static const operacionPedido = "/operacionPedido";
   static const buscarPedidosAdmin = "/buscarPedidosAdmin";
+
+  //
   static const buscarClienteAdmin = "/buscarCliente";
   //
   static const registrarVehiculo = "/registrarVehiculo";

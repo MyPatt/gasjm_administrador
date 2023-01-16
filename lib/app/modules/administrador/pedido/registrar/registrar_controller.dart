@@ -1,33 +1,24 @@
- 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
-import 'package:gasjm/app/core/utils/mensajes.dart'; 
+import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/horario_model.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 
-import 'package:gasjm/app/data/models/persona_model.dart'; 
+import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/horario_repository.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
-import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/data/repository/producto_repository.dart'; 
+import 'package:gasjm/app/data/repository/producto_repository.dart';
+import 'package:gasjm/app/modules/administrador/cliente/cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/cliente/widgets/buscar_page.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart'; 
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart'; 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RegistrarPedidoController extends GetxController {
- 
-  //Repositorio de usuario
-  final _usuarioRepository = Get.find<PersonaRepository>();
-
-  /* Variables para obtener datos del usuario */
-  Rx<PersonaModel?> usuario = Rx(null);
-//
-  RxString imagenUsuario = ''.obs;
   //Repositorio de pedidos
   final _pedidoRepository = Get.find<PedidoRepository>();
-  final _personaRepository = Get.find<PersonaRepository>();
 
   //Repositorio de productos
   final _productoRepository = Get.find<ProductoRepository>();
@@ -38,13 +29,12 @@ class RegistrarPedidoController extends GetxController {
   /* Variables para el form */
   final formKey = GlobalKey<FormState>();
   final direccionTextoController = TextEditingController();
+  final clienteTextoController = TextEditingController();
+
   final notaTextoController = TextEditingController();
   var cantidadTextoController = TextEditingController();
   Rx<TextEditingController> totalTextoController = TextEditingController().obs;
-  final diaDeEntregaPedidoController = TextEditingController().obs;
-  final itemSeleccionadoDia = 0.obs;
-
-  final grupoSeleccionadoFecha = "Ahora".obs;
+  final diaDeEntregaPedidoController = 'Ahora'.obs;
 
   // //Mientras se inserta el pedido mostrar circuleprobres se carga si o no
   final procensandoElNuevoPedido = RxBool(false);
@@ -68,14 +58,11 @@ class RegistrarPedidoController extends GetxController {
 /*METODOS PROPIOS */
   @override
   void onInit() {
-    //Obtiene datos del usuario que inicio sesion
-    _cargarFotoPerfil();
     //Obtiene ubicacion actual del dispositivo
 
     //Obtener datos del producto
 
     Future.wait([
-      getUsuarioActual(),
       getUbicacionUsuario(),
       getPrecioProducto(),
     ]);
@@ -96,25 +83,15 @@ class RegistrarPedidoController extends GetxController {
   @override
   void onClose() {
     direccionTextoController.dispose();
-    diaDeEntregaPedidoController.value.dispose();
     cantidadTextoController.dispose();
-
+    clienteTextoController.dispose();
+    totalTextoController.value.dispose();
     notaTextoController.dispose();
 
     super.onClose();
   }
 
   /* OTROS METODOS */
-/*METODO PARA CARGAR DATOS DE INICIO */
-  Future<void> _cargarFotoPerfil() async {
-    imagenUsuario.value =
-        await _personaRepository.getImagenUsuarioActual() ?? '';
-  }
-
-//Obtener informacion del cliente conectado
-  Future<void> getUsuarioActual() async {
-    usuario.value = await _usuarioRepository.getUsuario();
-  }
 
   //Obtener informacion del producto
   Future<void> getPrecioProducto() async {
@@ -126,6 +103,7 @@ class RegistrarPedidoController extends GetxController {
   Timestamp horarioActual = Timestamp.now();
   Timestamp horarioCierre = Timestamp.now();
   RxString cadenaHorarioAtencion = ''.obs;
+
   Future<void> getHorario() async {
     //Obtener hora actual
     horarioActual = Timestamp.now();
@@ -169,18 +147,20 @@ class RegistrarPedidoController extends GetxController {
   }
 
 //Metodos para insertar un nuevo pedido
-  insertarPedido() async {
+  Future<void> insertarPedido(BuildContext context) async {
+    print(clienteSeleccionadoNombres.value);
+
     try {
       procensandoElNuevoPedido.value = true;
       const idProducto = "glp";
-      final idCliente = _usuarioRepository.idUsuarioActual;
+      final idCliente = clienteSeleccionadoUid;
       const idRepartidor = "SinAsignar";
       final direccion = Direccion(
           latitud: _posicionInicialCliente.value.latitude,
           longitud: _posicionInicialCliente.value.longitude);
 
       const idEstadoPedido = 'estado1';
-      final diaEntregaPedido = diaDeEntregaPedidoController.value.text;
+      final diaEntregaPedido = diaDeEntregaPedidoController.value;
       final notaPedido = notaTextoController.text;
       final cantidadPedido = int.parse(cantidadTextoController.text);
       final totalPedido = double.parse(totalTextoController.value.text);
@@ -195,7 +175,8 @@ class RegistrarPedidoController extends GetxController {
         diaEntregaPedido: diaEntregaPedido,
         notaPedido: notaPedido,
         totalPedido: totalPedido,
-        cantidadPedido: cantidadPedido, idPedido: '',
+        cantidadPedido: cantidadPedido,
+        idPedido: '',
       );
 
       await _pedidoRepository.insertPedido(pedidoModel: pedidoModel);
@@ -206,7 +187,9 @@ class RegistrarPedidoController extends GetxController {
           icono: const Icon(
             Icons.check_circle_outline_outlined,
             color: Colors.white,
-          )); 
+          ));
+    Navigator.pop(context);
+          
     } on FirebaseException {
       Mensajes.showGetSnackbar(
           titulo: "Alerta",
@@ -229,30 +212,14 @@ class RegistrarPedidoController extends GetxController {
     procensandoElNuevoPedido.value = false;
   }
 
- 
-
   /*  DIA PARA AGENDAR EN FORM PEDIR GAS */
 
   //
   void _loadDatosIniciales() {
     direccionTextController.text = "Buscando dirección...";
-    diaDeEntregaPedidoController.value.text = "Ahora";
     cantidadTextoController.text = "1";
     totalTextoController.value.text = '${precioGlp.value}';
   }
-
-  final diaInicialSeleccionado = 0.obs;
-  void guardarDiaDeEntregaPedido() {
-    if (itemSeleccionadoDia.value == 0) {
-      diaDeEntregaPedidoController.value.text = "Ahora";
-      diaInicialSeleccionado.value = 0;
-    } else {
-      diaDeEntregaPedidoController.value.text = "Mañana";
-      diaInicialSeleccionado.value = 1;
-    }
-  }
-
- 
 
 /* GOOGLE MAPS */
   GoogleMapController? get mapController => _mapaController;
@@ -296,7 +263,7 @@ class RegistrarPedidoController extends GetxController {
 
       direccionTextController.text = placemark[0].name!;
       direccion.value = placemark[0].name!;
-
+//
       _agregarMarcadorCliente(
           _posicionInicialCliente.value, placemark[0].name!);
       _mapaController
@@ -312,6 +279,7 @@ class RegistrarPedidoController extends GetxController {
     // notifyListeners();
   }
 
+//Marcado del pedido
   Future<void> _agregarMarcadorCliente(
       LatLng posicion, String direccion) async {
     final markerId = MarkerId(id);
@@ -370,7 +338,18 @@ class RegistrarPedidoController extends GetxController {
     totalTextoController.value.text =
         '${precioGlp.value * (cantidadTextoController.text.isEmpty ? 0 : double.parse(cantidadTextoController.text))}';
   }
+
+//Variable para obtener los datos del cliente obtenido
+  Rx<String> clienteSeleccionadoNombres = ''.obs;
+  String clienteSeleccionadoUid = 'b';
+  //Ir a seleccionar un cliente
+  Future<void> irABuscarCliente() async {
+    await Future.delayed(const Duration(seconds: 1));
+    //Get.toNamed(AppRoutes.buscarClienteAdmin);
+    Get.to(
+        BuscarClientePage(
+          modoSeleccionarCliente: true,
+        ),
+        binding: ClienteBinding());
+  }
 }
-
-
-//TODO: Horarios de atencion

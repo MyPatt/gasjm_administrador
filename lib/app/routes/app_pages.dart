@@ -28,7 +28,7 @@ import 'package:gasjm/app/modules/repartidor/inicio/inicio_page.dart';
 import 'package:gasjm/app/modules/repartidor/ir/ir_binding.dart';
 import 'package:gasjm/app/modules/repartidor/ir/ir_page.dart';
 import 'package:gasjm/app/modules/login/login_binding.dart';
-import 'package:gasjm/app/modules/login/login_page.dart'; 
+import 'package:gasjm/app/modules/login/login_page.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_binding.dart';
 import 'package:gasjm/app/modules/repartidor/pedidos/pedidos_page.dart';
 import 'package:gasjm/app/modules/perfil/perfil_binding.dart';
@@ -121,7 +121,7 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 500),
     ),
 
- //Pedidos
+    //Pedidos
     GetPage(
       name: AppRoutes.registrarPedido,
       page: () => const RegistrarPedidoPage(),
@@ -142,9 +142,7 @@ class AppPages {
         binding: BuscarAdministradorBinding(),
         transition: Transition.noTransition),
 
-
-
-
+    //Repartidor
 
     GetPage(
       name: AppRoutes.repartidor,
@@ -153,12 +151,8 @@ class AppPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
-   
-    GetPage(
-        name: AppRoutes.buscarClienteAdmin,
-        page: () => const BuscarClientePage(),
-        binding: ClienteBinding(),
-        transition: Transition.noTransition),
+    //Cliente
+
     GetPage(
       name: AppRoutes.cliente,
       page: () => const ClientePage(),
@@ -167,6 +161,11 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
+        name: AppRoutes.buscarClienteAdmin,
+        page: () =>  BuscarClientePage(),
+        binding: ClienteBinding(),
+        transition: Transition.noTransition),
+    GetPage(
       name: AppRoutes.detalleCliente,
       page: () => const DetallePersonaPage(),
       binding: EditarClienteBinding(),
@@ -174,7 +173,8 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 500),
     ),
 
-    //
+    //***** REPARTIDOR *****
+
     GetPage(
       name: AppRoutes.inicioRepartidor,
       page: () => InicioPage(),

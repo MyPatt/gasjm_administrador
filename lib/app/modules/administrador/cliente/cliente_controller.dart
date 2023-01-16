@@ -19,7 +19,7 @@ class ClienteController extends GetxController {
   final RxList<PersonaModel> _listaClientes = <PersonaModel>[].obs;
   RxList<PersonaModel> get listaClientes => _listaClientes;
 
-//Listas para filtrar lista de clientes
+  //Listas para filtrar lista de clientes
 
   final RxList<PersonaModel> _listaFiltraDeClientes = <PersonaModel>[].obs;
   RxList<PersonaModel> get listaFiltraDeClientes => _listaFiltraDeClientes;
@@ -31,7 +31,7 @@ class ClienteController extends GetxController {
   final RxBool existeTexoParaBuscar = false.obs;
   //Controlador de texto para el input de busqueda
   final TextEditingController controladorBuscarTexto = TextEditingController();
-  /* METODOS PROPDIO */
+  /* METODOS PROPIO */
   @override
   void onInit() {
     // _categoria = Get.arguments as CategoryModel;
@@ -41,7 +41,11 @@ class ClienteController extends GetxController {
     super.onInit();
   }
 
- 
+  @override
+  void onClose() {
+    super.onClose();
+    controladorBuscarTexto.dispose();
+  }
 
   //Obtener foto de perfil del usuario
   Future<void> _cargarFotoPerfil() async {
@@ -76,20 +80,15 @@ class ClienteController extends GetxController {
       _listaClientes.value = lista;
 
       //
-    } on FirebaseException {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
+    } on FirebaseException catch (e) {
+      //print(e.message);
     }
     cargandoClientes.value = false;
   }
 
   void cargarDetalleDelCliente(PersonaModel cliente) {
-    Get.toNamed(AppRoutes.detalleCliente, arguments: [cliente, false,'cliente']);
+    Get.toNamed(AppRoutes.detalleCliente,
+        arguments: [cliente, false, 'cliente']);
   }
 
   //
@@ -107,19 +106,18 @@ class ClienteController extends GetxController {
             Icons.delete_outline_outlined,
             color: Colors.white,
           ));
-          
+
 //Volver a actualizar la lista de clientes activos desde firestore
       _cargarListaDeClientes();
 
 //Verificar si no se encuentra en la pagina de busqueda para actualizar la lista filtrada
-if(existeTexoParaBuscar.value){
-   _listaFiltraDeClientes.value = listaClientes
-        .where((pedido) => pedido.nombreUsuario!
-            .toLowerCase()
-            .contains(controladorBuscarTexto.text.toLowerCase()))
-        .toList();
-}
-
+      if (existeTexoParaBuscar.value) {
+        _listaFiltraDeClientes.value = listaClientes
+            .where((pedido) => pedido.nombreUsuario!
+                .toLowerCase()
+                .contains(controladorBuscarTexto.text.toLowerCase()))
+            .toList();
+      }
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: "Alerta",
@@ -147,7 +145,7 @@ if(existeTexoParaBuscar.value){
 
     //Filtro de lista, todo en minuscular para optimizar la busqueda
 
- _filtrarListaClientes();
+    _filtrarListaClientes();
 
     //El icono de borrar habilitar
     existeTexoParaBuscar.value = true;
@@ -164,9 +162,9 @@ if(existeTexoParaBuscar.value){
     //Limpiar lista
     _listaFiltraDeClientes.clear();
   }
-  
+
   void _filtrarListaClientes() {
-       _listaFiltraDeClientes.value = listaClientes
+    _listaFiltraDeClientes.value = listaClientes
         .where((pedido) => pedido.nombreUsuario!
             .toLowerCase()
             .contains(controladorBuscarTexto.text.toLowerCase()))

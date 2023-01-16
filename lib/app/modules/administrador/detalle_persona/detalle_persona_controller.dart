@@ -100,14 +100,10 @@ class DetallePersonaController extends GetxController {
       correoElectronicoTextoController.text = cliente.correoPersona ?? '';
       contrasenaTextoController.text = cliente.contrasenaPersona;
       //} on FirebaseException catch (e) {
-    } catch (e) {
-      Mensajes.showGetSnackbar(
-          titulo: "Error",
-          mensaje: "Se produjo un error inesperado.",
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
+  //  } catch (e) {
+      } on FirebaseException catch (e) {
+      print(e.message);
+ 
     }
     cargandoCliente.value = false;
   }

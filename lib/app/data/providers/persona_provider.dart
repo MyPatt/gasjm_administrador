@@ -14,6 +14,8 @@ class PersonaProvider {
   final _firestoreInstance = FirebaseFirestore.instance;
   //Instancia de storage
   FirebaseStorage get _storageInstance => FirebaseStorage.instance;
+//Auth
+  final _firebaseAutenticacion = FirebaseAuth.instance;
 
   //Par devolver el usuario actual conectado
   User get usuarioActual {
@@ -28,7 +30,7 @@ class PersonaProvider {
   String get idUsuarioActual => usuarioActual.uid;
   String get nombreUsuarioActual => usuarioActual.displayName ?? 'usuario';
   //
-  Future<void> insertPersona({
+  Future<void> insertPersonaFirestore({
     required PersonaModel persona,
   }) async {
     //InsertarRepartidor
@@ -45,29 +47,65 @@ class PersonaProvider {
   }
 
   //
+  Future<void> insertPersona(
+      {required PersonaModel persona, File? imagen}) async {
+    //Crear usuario en Auth de Firebase
+    //con Registro de correo y contraena
+    final resultadoAutenticacion =
+        await _firebaseAutenticacion.createUserWithEmailAndPassword(
+            email: persona.correoPersona ?? '',
+            password: persona.contrasenaPersona);
+
+    //Actualizar Nombre y apellido del usuario creado
+    await resultadoAutenticacion.user!.updateDisplayName(
+      "${persona.nombrePersona} ${persona.apellidoPersona}",
+    );
+    //
+    final uid = resultadoAutenticacion.user!.uid;
+    //guardar datos de la persona registrada en firestore
+    await _firestoreInstance
+        .collection("persona")
+        .doc(uid)
+        .set(persona.toMap());
+    //Actualizar el uid en el doxumento de l persona
+    _firestoreInstance.collection("persona").doc(uid).update({"uid": uid});
+
+    //Guardar imagen de usuario
+    await guardarFotoPerfil(uid, imagen);
+  }
+
+  //
   Future<void> updatePersona(
       {required PersonaModel persona, File? image}) async {
     await _firestoreInstance
         .collection('persona')
         .doc(persona.uidPersona)
         .update(persona.toMap());
-    if (image != null) {
-      final imagePath =
-          '${usuarioActual.uid}/perfil/fotoperfil${path.extension(image.path)}';
-      final storageRef = _storageInstance.ref(imagePath);
-      await storageRef.putFile(image);
-      final url = await storageRef.getDownloadURL();
-      _firestoreInstance
-          .collection("persona")
-          .doc(usuarioActual.uid)
-          .update({"foto": url});
-      usuarioActual.updatePhotoURL(url);
-    }
+    //
+    await guardarFotoPerfil(persona.uidPersona!, image);
     //Actualizar nombre
     usuarioActual.updateDisplayName(
         '${persona.nombrePersona} ${persona.apellidoPersona}');
 
     // usuarioActual.updateEmail(persona.correoPersona.toString());
+  }
+
+  Future<void> guardarFotoPerfil(String uid, File? image) async {
+    if (image != null) {
+      final imagePath =
+          // '${usuarioActual.uid}/perfil/fotoperfil${path.extension(image.path)}';
+          'persona/$uid/fotoperfil${path.extension(image.path)}';
+
+      final storageRef = _storageInstance.ref(imagePath);
+      await storageRef.putFile(image);
+      final url = await storageRef.getDownloadURL();
+      //
+      await _firestoreInstance
+          .collection("persona")
+          .doc(uid)
+          .update({"foto": url});
+      // usuario.updatePhotoURL(url);
+    }
   }
 //
 
@@ -199,11 +237,9 @@ class PersonaProvider {
         .where(field, isEqualTo: dato)
         .get();
 
-   return (resultado.docs)
+    return (resultado.docs)
         .map((item) => PersonaModel.fromMap(item.data()))
         .toList();
-
- 
   }
 
   //Retornar la cantidad de cleintes por field

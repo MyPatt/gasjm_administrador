@@ -70,10 +70,12 @@ class ModalOperaciones extends StatelessWidget {
                                 (Get.toNamed(AppRoutes.registrarPedido));
                                 break;
                               case 1:
-                                (Get.toNamed(AppRoutes.cliente));
+                                (Get.toNamed(AppRoutes.registrarPersona,
+                                    arguments: 'cliente'));
                                 break;
                               case 2:
-                                (Get.toNamed(AppRoutes.repartidor));
+                                (Get.toNamed(AppRoutes.registrarPersona,
+                                    arguments: 'repartidor'));
                                 break;
                               case 3:
                                 Get.toNamed(AppRoutes.registrarVehiculo);
@@ -95,7 +97,7 @@ class ModalOperaciones extends StatelessWidget {
                                 (Get.offAllNamed(AppRoutes.repartidor));
                                 break;
                               case 3:
-                               (Get.offAllNamed(AppRoutes.operacionVehiculo)); 
+                                (Get.offAllNamed(AppRoutes.operacionVehiculo));
 
                                 break;
                             }

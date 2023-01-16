@@ -39,6 +39,16 @@ class RegistrarController extends GetxController {
 
     super.onInit();
   }
+  @override
+
+  void onClose() {
+    super.onClose();
+    //
+    nombreTextoController.dispose();
+    apellidoTextoController.dispose();
+    correoElectronicoTextoController.dispose();
+    contrasenaTextoController.dispose();
+  }
 
 //Visualizar texto de lacontrasena
   void mostrarContrasena() {

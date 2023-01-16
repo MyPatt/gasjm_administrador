@@ -194,14 +194,7 @@ class PerfilController extends GetxController {
     }
   }
 
-//
-  void onChangedIdentificacion(valor) {
-    if (valor.length > 9) {
-      cedulaTextoController.text = valor;
-    }
-  }
-
-  //
+ 
   //Visualizar texto de la contrasena
 
   mostrarContrasenaActual() {

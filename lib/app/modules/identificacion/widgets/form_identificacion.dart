@@ -53,7 +53,7 @@ class FormIdentificacion extends StatelessWidget {
                         controller: _.cedulaTextoController,
                         autofocus: true,
                         iconPrefix: Icons.credit_card,
-                        keyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
                         inputFormatters: <TextInputFormatter>[
                           LengthLimitingTextInputFormatter(10),

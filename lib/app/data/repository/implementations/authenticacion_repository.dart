@@ -68,9 +68,9 @@ class AutenticacionRepositoryImpl extends AutenticacionRepository {
     );
     // //Ingresar datos de usuario
     PersonaProvider _personaProvider = PersonaProvider();
-    _personaProvider.insertPersona(persona: persona);
+    _personaProvider.insertPersonaFirestore(persona: persona);
 
-    return   _usuarioDeFirebase(resultadoAutenticacion.user);
+    return _usuarioDeFirebase(resultadoAutenticacion.user);
   }
 
 /*

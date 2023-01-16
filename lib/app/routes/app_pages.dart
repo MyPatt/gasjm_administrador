@@ -9,6 +9,8 @@ import 'package:gasjm/app/modules/administrador/pedido/operacion/operacion_bindi
 import 'package:gasjm/app/modules/administrador/pedido/operacion/operacion_page.dart';
 import 'package:gasjm/app/modules/administrador/pedido/registrar/registrar_binding.dart';
 import 'package:gasjm/app/modules/administrador/pedido/registrar/registrar_page.dart';
+import 'package:gasjm/app/modules/administrador/persona/registrar/registrar_binding.dart';
+import 'package:gasjm/app/modules/administrador/persona/registrar/registrar_page.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_binding.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/detalle/detalle_page.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_binding.dart';
@@ -141,7 +143,14 @@ class AppPages {
         page: () => const BuscarAdministradorPage(),
         binding: BuscarAdministradorBinding(),
         transition: Transition.noTransition),
-
+        //Para registro de cliente y repartidor
+    GetPage(
+      name: AppRoutes.registrarPersona,
+      page: () => const RegistrarPersonaPage(),
+      binding: RegistrarPersonaBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
     //Repartidor
 
     GetPage(

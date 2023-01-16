@@ -8,7 +8,7 @@ abstract class PersonaRepository {
   String get idUsuarioActual;
   String get nombreUsuarioActual;
 
-  Future<void> insertPersona({required PersonaModel persona});
+  Future<void> insertPersona({required PersonaModel persona, File? imagen});
   Future<void> updatePersona({required PersonaModel persona, File? image});
   Future<void> updateEstadoPersona(
       {required String uid, required String estado});

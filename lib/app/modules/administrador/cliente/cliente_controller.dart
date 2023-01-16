@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+ 
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
@@ -80,7 +80,7 @@ class ClienteController extends GetxController {
       _listaClientes.value = lista;
 
       //
-    } on FirebaseException catch (e) {
+    }    catch  (e){
       //print(e.message);
     }
     cargandoClientes.value = false;

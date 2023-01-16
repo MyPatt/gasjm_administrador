@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/horario_model.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart';
-
-import 'package:gasjm/app/data/models/persona_model.dart';
+import 'package:gasjm/app/data/models/pedido_model.dart'; 
 import 'package:gasjm/app/data/repository/horario_repository.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/producto_repository.dart';
@@ -347,7 +345,7 @@ class RegistrarPedidoController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     //Get.toNamed(AppRoutes.buscarClienteAdmin);
     Get.to(
-        BuscarClientePage(
+        const BuscarClientePage(
           modoSeleccionarCliente: true,
         ),
         binding: ClienteBinding());

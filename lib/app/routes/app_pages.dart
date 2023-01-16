@@ -162,7 +162,7 @@ class AppPages {
     ),
     GetPage(
         name: AppRoutes.buscarClienteAdmin,
-        page: () =>  BuscarClientePage(),
+        page: () =>  const BuscarClientePage(),
         binding: ClienteBinding(),
         transition: Transition.noTransition),
     GetPage(

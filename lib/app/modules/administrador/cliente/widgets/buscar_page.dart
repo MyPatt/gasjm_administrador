@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/data/models/persona_model.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart'; 
 import 'package:gasjm/app/modules/administrador/buscar/widgets/buscar.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_controller.dart';
 import 'package:gasjm/app/modules/administrador/cliente/widgets/contenido_lista.dart';
 import 'package:get/get.dart';
 
 class BuscarClientePage extends StatelessWidget {
-    BuscarClientePage({Key? key, this.modoSeleccionarCliente })
+    const BuscarClientePage({Key? key, this.modoSeleccionarCliente })
       : super(key: key);
 //Variables que se usan para registrar un  pedido como admin
   final bool? modoSeleccionarCliente; 

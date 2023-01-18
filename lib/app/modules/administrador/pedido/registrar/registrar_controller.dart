@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/horario_model.dart';
-import 'package:gasjm/app/data/models/pedido_model.dart'; 
+import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/horario_repository.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/producto_repository.dart';
@@ -22,7 +22,7 @@ class RegistrarPedidoController extends GetxController {
   final _productoRepository = Get.find<ProductoRepository>();
   final RxDouble precioGlp = 1.60.obs;
 //Repositorio para horario
-  final _horarioRepository = Get.find<HorarioRepository>();
+  final _horarioRepository = Get.find<GasJMRepository>();
 
   /* Variables para el form */
   final formKey = GlobalKey<FormState>();
@@ -186,8 +186,7 @@ class RegistrarPedidoController extends GetxController {
             Icons.check_circle_outline_outlined,
             color: Colors.white,
           ));
-    Navigator.pop(context);
-          
+      Navigator.pop(context);
     } on FirebaseException {
       Mensajes.showGetSnackbar(
           titulo: "Alerta",

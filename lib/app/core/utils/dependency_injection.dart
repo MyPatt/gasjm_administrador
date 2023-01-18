@@ -32,7 +32,7 @@ class DependencyInjection {
     Get.put<EstadoPedidoProvider>(EstadoPedidoProvider());
     Get.put<PerfilProvider>(PerfilProvider());
     Get.put<PersonaProvider>(PersonaProvider());
-    Get.put<HorarioProvider>(HorarioProvider());
+    Get.put<GasJMProvider>(GasJMProvider());
     Get.put<NotificacionProvider>(NotificacionProvider());
     Get.put<VehiculoProvider>(VehiculoProvider());
     //Local
@@ -43,8 +43,8 @@ class DependencyInjection {
     Get.put<ProductoRepository>(ProductoRepositoryImpl());
     Get.put<EstadoPedidoRepository>(EstadoPedidoRepositoryImpl());
     Get.put<PerfilRepository>(PerfilRepositoryImpl());
-    Get.put<PersonaRepository>(PersonaRepositoryImpl()); 
-    Get.put<HorarioRepository>(HorarioRepositoryImpl());
+    Get.put<PersonaRepository>(PersonaRepositoryImpl());
+    Get.put<GasJMRepository>(GasJMRepositoryImpl());
     Get.put<NotificacionRepository>(NotificacionRepositoryImpl());
     Get.put<VehiculoRepository>(VehiculoRepositoryImpl());
 

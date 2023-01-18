@@ -1,10 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gasjm/app/data/models/gasjm_model.dart';
 import 'package:gasjm/app/data/models/horario_model.dart';
+import 'package:gasjm/app/data/models/producto_model.dart';
 
-class HorarioProvider {
+class GasJMProvider {
   //Instancia de firestore
   final _firestoreInstance = FirebaseFirestore.instance;
+  /*INFORMACION */
 
+  //Retorna info de la distribuidora
+  Future<GasJm> getInformacionDistribuidora() async {
+    final snapshot = await _firestoreInstance.collection("distribuidora").get();
+
+    return GasJm.fromMap(snapshot.docs.first.data());
+  }
+  //Retorna info del producto
+
+  Future<ProductoModel> getProducto() async {
+    final snapshot = await _firestoreInstance.collection('producto').get();
+
+    return ProductoModel.fromMap(snapshot.docs.first.data());
+  }
+
+  /*HORARIOS */
   //Obtener lista de los horarios de todos los dias
   Future<List<HorarioModel>> getListaHorarios() async {
     final resultado = await _firestoreInstance.collection('horario').get();

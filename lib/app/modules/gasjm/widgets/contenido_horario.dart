@@ -33,16 +33,18 @@ class ContenidoHorario extends StatelessWidget {
                     semanticsLabel: 'Horario'),
               ),
               SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              Expanded(
-                  child: GetBuilder<GasJMController>(
-                builder: (_) => Obx(() => ListView.builder(
-                    // scrollDirection: Axis.horizontal,
-                    itemCount: _.listaHorarios.length,
-                    itemBuilder: (context, index) {
-                      return FormHorario(
-                          horario: _.listaHorarios[index], modo: _.modo);
-                    })),
-              ))
+              GetBuilder<GasJMController>(
+                  builder: (_) => Obx(
+                        () => Expanded(
+                            child: ListView.builder(
+                                // scrollDirection: Axis.horizontal,
+                                itemCount: _.listaHorarios.length,
+                                itemBuilder: (context, index) {
+                                  return FormHorario(
+                                      horario: _.listaHorarios[index],
+                                      modo: _.modo);
+                                })),
+                      ))
             ],
           ),
         ),

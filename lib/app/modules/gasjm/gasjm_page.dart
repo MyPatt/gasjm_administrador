@@ -43,10 +43,10 @@ class GasJMPage extends StatelessWidget {
             ),
             const Expanded(
                 child: TabBarView(children: [
-          
-              ContenidoInformacion(),
+              //ContenidoInformacion(),
+              ContenidoRuta(),
               ContenidoHorario(),
-              ContenidoRuta()
+              ContenidoHorario(),
             ]))
           ],
         ),

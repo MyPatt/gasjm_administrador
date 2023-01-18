@@ -35,79 +35,110 @@ class ContenidoInformacion extends StatelessWidget {
                     semanticsLabel: 'Informacion Gas J&M'),
               ),
               SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              Expanded(
-                  child: GetBuilder<GasJMController>(
+              ( GetBuilder<GasJMController>(
                 builder: (_) => Column(
                   children: [
-                    Row(children: [
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.room_outlined),
-                        label: Text(
-                            _.gasJM?.direccionGasJm ?? 'Distribuidora Gas j&M'),
-                        clipBehavior: Clip.antiAlias,
-                      ),
-                      Visibility(
-                          //admin(0) puede editar, repartidor(1) solo ver
-                          visible: _.modo == 0 ? true : false,
-                          child: IconButton(
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.room_outlined),
+                            label: Text(_.gasJM?.direccionGasJm ??
+                                'Distribuidora Gas j&M'),
+                            clipBehavior: Clip.antiAlias,
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                primary: Colors.white,
+                                onPrimary: AppTheme.light),
                             onPressed: () {},
-                            icon: const Icon(
-                              Icons.mode_edit_outlined,
-                              size: 15,
-                            ),
-                          ))
-                    ]),
-                    SizedBox(
-                        height: Responsive.getScreenSize(context).height * .02),
-                    Row(children: [
-                      ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.whatsapp_outlined),
-                          label: Text(_.gasJM?.whatsappGasJm ?? 'Sin número')),
-                      Visibility(
-                          //admin(0) puede editar, repartidor(1) solo ver
-                          visible: _.modo == 0 ? true : false,
-                          child: IconButton(
+                          ),
+                          Visibility(
+                              //admin(0) puede editar, repartidor(1) solo ver
+                              visible: _.modo == 0 ? true : false,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.mode_edit_outlined,
+                                  size: 15,
+                                  color: AppTheme.light,
+                                ),
+                              ))
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.whatsapp_outlined),
+                            label: Text(_.gasJM?.whatsappGasJm ?? 'Sin número'),
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                primary: Colors.white,
+                                onPrimary: AppTheme.light),
                             onPressed: () {},
-                            icon: const Icon(
-                              Icons.mode_edit_outlined,
-                              size: 15,
-                            ),
-                          ))
-                    ]),
+                          ),
+                          Visibility(
+                              //admin(0) puede editar, repartidor(1) solo ver
+                              visible: _.modo == 0 ? true : false,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.mode_edit_outlined,
+                                  size: 15,
+                                  color: AppTheme.light,
+                                ),
+                              ))
+                        ]),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .05),
                     Row(
-                      children: const [
-                        Handle(),
-                        TextDescription(text: 'Producto'),
-                        Handle(),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //Handle(),
+                        Container(
+                          width: Responsive.wp(context) * .25,
+                          height: 3.0,
+                          //  margin: const EdgeInsets.only(bottom: 25.0),
+                          decoration: BoxDecoration(
+                            color: AppTheme.light,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                        ),
+                        const TextDescription(text: 'Producto'),
+                        Container(
+                          width: Responsive.wp(context) * .25,
+                          height: 3.0,
+                          //  margin: const EdgeInsets.only(bottom: 25.0),
+                          decoration: BoxDecoration(
+                            color: AppTheme.light,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                        ),
                       ],
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RichText(
                           text: TextSpan(
                             text: _.productoModel?.nombreProducto ??
-                                'Gas doméstico',
+                                'Gas doméstico ',
                             style: Theme.of(context)
                                 .textTheme
-                                .headline4
+                                .caption
                                 ?.copyWith(
                                     color: AppTheme.blueDark,
-                                    fontWeight: FontWeight.w900),
+                                    fontWeight: FontWeight.w700),
                             children: [
                               TextSpan(
-                                text: _.productoModel?.precioProducto
-                                        .toString() ??
-                                    'Sin precio',
+                                text: _.productoModel != null
+                                    ? '${_.productoModel?.precioProducto ?? 0}'
+                                    : ' Sin precio',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline4
+                                    .caption
                                     ?.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w900),
+                                        color: AppTheme.light,
+                                        fontWeight: FontWeight.w700),
                               ),
                             ],
                           ),
@@ -120,6 +151,7 @@ class ContenidoInformacion extends StatelessWidget {
                               icon: const Icon(
                                 Icons.mode_edit_outlined,
                                 size: 15,
+                                color: AppTheme.light,
                               ),
                             ))
                       ],

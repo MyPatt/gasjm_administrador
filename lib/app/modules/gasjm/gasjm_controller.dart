@@ -34,23 +34,30 @@ class GasJMController extends GetxController {
   void onInit() {
     super.onInit();
     //
+    cargarDatos();
     cargarDatosHorarios();
+  }
+
+  cargarDatos() async {
+    cargarInformacionDistribuidora();
+    cargarInformacionProducto();
+    
   }
 
 //Obtner informacion de la distribuidora y del producto desde firestore
   Future<void> cargarInformacionDistribuidora() async {
     try {
-     gasJM= await _gasJMRepository.getInformacionDistribuidora();
+      gasJM = await _gasJMRepository.getInformacionDistribuidora();
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');
     }
   }
-  
+
 //Obtner informacion de la distribuidora y del producto desde firestore
   Future<void> cargarInformacionProducto() async {
     try {
-     gasJM= await _gasJMRepository.getInformacionDistribuidora();
+      gasJM = await _gasJMRepository.getInformacionDistribuidora();
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');

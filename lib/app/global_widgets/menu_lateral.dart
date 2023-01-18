@@ -52,7 +52,7 @@ class MenuLateral extends StatelessWidget {
           _buildDrawerItem(
               icon: Icons.person_outline,
               text: 'Mi cuenta',
-              onTap: () => Get.offNamed(AppRoutes.perfil)),
+              onTap: () => Get.toNamed(AppRoutes.perfil)),
           _buildDrawerItem(
               icon: Icons.manage_accounts_outlined,
               text: 'Gas J&M',

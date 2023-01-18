@@ -32,9 +32,9 @@ class ContenidoRuta extends StatelessWidget {
                     semanticsLabel: 'Ruta'),
               ),
               SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              Expanded(
-                  child: GetBuilder<GasJMController>(
-                      builder: (_) => Obx(() => ListView.builder(
+              GetBuilder<GasJMController>(
+                  builder: (_) => Obx(() => Expanded(
+                      child: ListView.builder(
                           itemCount: _.listaHorarios.length,
                           itemBuilder: (context, index) {
                             return FormRuta(

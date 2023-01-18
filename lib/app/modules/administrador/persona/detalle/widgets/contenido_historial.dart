@@ -4,7 +4,7 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_controller.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/detalle_persona_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 

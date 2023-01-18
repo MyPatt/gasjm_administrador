@@ -3,7 +3,7 @@ import 'package:gasjm/app/data/controllers/pedido_controller.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:get/get.dart';
 
-class BuscarAdministradorController extends GetxController {
+class BuscarPedidosAdminController extends GetxController {
   /* VARIABLES*/
 
   //Controlador de Pedidos (general)

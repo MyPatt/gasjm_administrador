@@ -1,10 +1,11 @@
-import 'package:gasjm/app/modules/administrador/buscar/buscar_binding.dart';
-import 'package:gasjm/app/modules/administrador/buscar/buscar_page.dart';
+ 
+import 'package:gasjm/app/modules/administrador/pedido/buscar/buscar_binding.dart';
+import 'package:gasjm/app/modules/administrador/pedido/buscar/buscar_page.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_binding.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_page.dart';
 import 'package:gasjm/app/modules/administrador/cliente/widgets/buscar_page.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_cliente_binding.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_page.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/detalle_cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/detalle_persona_page.dart';
 import 'package:gasjm/app/modules/administrador/pedido/operacion/operacion_binding.dart';
 import 'package:gasjm/app/modules/administrador/pedido/operacion/operacion_page.dart';
 import 'package:gasjm/app/modules/administrador/pedido/registrar/registrar_binding.dart';
@@ -141,9 +142,9 @@ class AppPages {
     GetPage(
         name: AppRoutes.buscarPedidosAdmin,
         page: () => const BuscarAdministradorPage(),
-        binding: BuscarAdministradorBinding(),
+        binding: BuscarPedidosAdminBinding(),
         transition: Transition.noTransition),
-        //Para registro de cliente y repartidor
+    //Para registro de cliente y repartidor
     GetPage(
       name: AppRoutes.registrarPersona,
       page: () => const RegistrarPersonaPage(),
@@ -171,7 +172,7 @@ class AppPages {
     ),
     GetPage(
         name: AppRoutes.buscarClienteAdmin,
-        page: () =>  const BuscarClientePage(),
+        page: () => const BuscarClientePage(),
         binding: ClienteBinding(),
         transition: Transition.noTransition),
     GetPage(

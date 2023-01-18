@@ -4,7 +4,7 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/global_widgets/input_text.dart';
 import 'package:gasjm/app/global_widgets/primary_button.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_controller.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/detalle_persona_controller.dart';
 import 'package:gasjm/app/core/utils/validaciones.dart';
 import 'package:get/get.dart';
 

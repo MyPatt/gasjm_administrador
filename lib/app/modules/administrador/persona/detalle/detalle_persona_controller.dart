@@ -10,8 +10,8 @@ import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/pedido_repository.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_cliente_binding.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/pedido/detalle_page.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/detalle_cliente_binding.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/widgets/pedido/detalle_page.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -100,10 +100,9 @@ class DetallePersonaController extends GetxController {
       correoElectronicoTextoController.text = cliente.correoPersona ?? '';
       contrasenaTextoController.text = cliente.contrasenaPersona;
       //} on FirebaseException catch (e) {
-  //  } catch (e) {
-      } on FirebaseException catch (e) {
+      //  } catch (e) {
+    } on FirebaseException catch (e) {
       print(e.message);
- 
     }
     cargandoCliente.value = false;
   }

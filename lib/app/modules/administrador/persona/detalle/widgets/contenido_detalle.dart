@@ -1,6 +1,6 @@
-import 'package:gasjm/app/modules/administrador/detalle_persona/detalle_persona_controller.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_perfil.dart';
-import 'package:gasjm/app/modules/administrador/detalle_persona/widgets/contenido_cliente.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/detalle_persona_controller.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/widgets/contenido_perfil.dart';
+import 'package:gasjm/app/modules/administrador/persona/detalle/widgets/contenido_cliente.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 //Obtener la pagina correspondiente segun el tipo de perfil de la persona

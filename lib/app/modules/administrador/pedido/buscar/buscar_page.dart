@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/pedido/contenido_pedido.dart';
-import 'package:gasjm/app/modules/administrador/buscar/buscar_controller.dart';
-import 'package:gasjm/app/modules/administrador/buscar/widgets/buscar.dart';
+import 'package:gasjm/app/modules/administrador/pedido/buscar/buscar_controller.dart';
+import 'package:gasjm/app/modules/administrador/pedido/buscar/widgets/buscar.dart'; 
 import 'package:get/get.dart';
 
 class BuscarAdministradorPage extends StatelessWidget {
@@ -10,7 +10,7 @@ class BuscarAdministradorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BuscarAdministradorController>(
+    return GetBuilder<BuscarPedidosAdminController>(
         builder: (_) => Scaffold(
               backgroundColor: AppTheme.background,
 

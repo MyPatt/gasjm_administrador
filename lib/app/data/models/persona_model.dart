@@ -58,10 +58,9 @@ class PersonaModel {
         "fechaNacimiento": fechaNaciPersona,
         "estado": estadoPersona,
         "idPerfil": idPerfil,
-        "contrasena": contrasenaPersona
+        "contrasena": '****'
       };
 
-
-      /*      @override 
+  /*      @override 
       List<Object?> get props => [uidPersona, cedulaPersona];*/
 }

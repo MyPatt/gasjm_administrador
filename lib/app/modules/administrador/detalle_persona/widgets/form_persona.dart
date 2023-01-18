@@ -78,6 +78,7 @@ class FormPersona extends StatelessWidget {
                       iconPrefix: Icons.email_outlined,
                       keyboardType: TextInputType.emailAddress,
                       labelText: "Correo electrónico",
+                      textCapitalization: TextCapitalization.none,
                       controller: _.correoElectronicoTextoController,
                       validator: Validacion.validarCorreoElectronico,
                       enabled: false,

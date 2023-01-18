@@ -83,6 +83,7 @@ class FormUsuario extends StatelessWidget {
                       InputText(
                         iconPrefix: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
+                        textCapitalization: TextCapitalization.none,
                         labelText: "Correo electrónico",
                         controller: _.correoElectronicoTextoController,
                         validator: Validacion.validarCorreoElectronico,

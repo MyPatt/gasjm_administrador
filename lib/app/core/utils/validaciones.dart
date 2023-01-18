@@ -74,7 +74,7 @@ class Validacion {
     if (value.isEmpty) {
       return 'Ingresar una contraseña';
     } else if (value.length < 6 || value.length > 32) {
-      return 'La contraseña debe tener al menos 6 caracteres';
+      return 'Debe tener al menos 6 caracteres';
     }
 
     return null;

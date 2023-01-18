@@ -7,7 +7,7 @@ import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/controllers/autenticacion_controller.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 
-import 'package:gasjm/app/data/models/persona_model.dart'; 
+import 'package:gasjm/app/data/models/persona_model.dart';
 import 'package:gasjm/app/data/repository/persona_repository.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,8 +26,6 @@ class RegistrarPersonaController extends GetxController {
   //Variables para ocultar el texto de la contrasena
   final RxBool _contrasenaOculta = true.obs;
   RxBool get contrasenaOculta => _contrasenaOculta;
-//Clave del formulario de resgistro de usuario
-  final claveFormRegistrar = GlobalKey<FormState>();
 
   //Variables para controladores de campos de texto del formulario
   final cedulaTextoController = TextEditingController();
@@ -103,7 +101,7 @@ class RegistrarPersonaController extends GetxController {
     final apellido = apellidoTextoController.text;
     final correo = correoElectronicoTextoController.text;
     final fechaNacimiento = fechaNacimientoTextoController.text;
-    final celular = cedulaTextoController.text;
+    final celular = celularTextoController.text;
     final contrasena = contrasenaTextoController.text;
 
     //
@@ -142,9 +140,12 @@ class RegistrarPersonaController extends GetxController {
             Icons.waving_hand_outlined,
             color: Colors.white,
           ));
-
+    
+    //
+        Future.delayed(const Duration(seconds: 1));
       //
       Navigator.pop(context);
+      //
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         errorParaDatosPersona.value = 'La contraseña es demasiado débil';
@@ -155,7 +156,9 @@ class RegistrarPersonaController extends GetxController {
         errorParaDatosPersona.value = "Se produjo un error inesperado.";
       }
     } catch (e) {
-      print(e);
+        errorParaDatosPersona.value = "Inténtelo de nuevo más tarde.";
+
+      //Exception('FooException');
       /*  Mensajes.showGetSnackbar(
           titulo: 'Alerta',
           mensaje:

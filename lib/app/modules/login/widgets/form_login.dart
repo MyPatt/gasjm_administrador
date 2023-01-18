@@ -53,7 +53,7 @@ class FormLogin extends StatelessWidget {
                           InputText(
                             controller: _.correoTextoController,
                             iconPrefix: Icons.email_outlined,
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.emailAddress,textCapitalization: TextCapitalization.none,
                             readOnly: true,
                             enabled: true,
                             validator: Validacion.validarCorreoElectronico,

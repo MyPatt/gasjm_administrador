@@ -47,19 +47,21 @@ class FormPersona extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
+                              SizedBox(
+                                  height:
+                                      Responsive.getScreenSize(context).height *
+                                          .05),
                               //
-                          InputText(
-                        controller: _.cedulaTextoController,
-                    
-                        iconPrefix: Icons.credit_card,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        inputFormatters: <TextInputFormatter>[
-                          LengthLimitingTextInputFormatter(10),
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        validator: Validacion.validarCedula,
-                        labelText: "Cédula",
+                              InputText(
+                                controller: _.cedulaTextoController,
+                                iconPrefix: Icons.credit_card,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(10),
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                validator: Validacion.validarCedula,
+                                labelText: "Cédula",
                               ),
                               SizedBox(
                                   height:
@@ -98,6 +100,7 @@ class FormPersona extends StatelessWidget {
                               InputText(
                                 iconPrefix: Icons.email_outlined,
                                 keyboardType: TextInputType.emailAddress,
+                                textCapitalization: TextCapitalization.none,
                                 labelText: "Correo electrónico",
                                 controller: _.correoElectronicoTextoController,
                                 validator: Validacion.validarCorreoElectronico,
@@ -107,18 +110,18 @@ class FormPersona extends StatelessWidget {
                                       Responsive.getScreenSize(context).height *
                                           .02),
 
-                             InkWell(
-                        onTap: () {
-                          _.seleccionarFechaDeNacimiento(context);
-                        },
-                        child: InputText(
-                          iconPrefix: Icons.calendar_month_outlined,
-                          labelText: "Fecha de nacimiento",
-                          enabled: false,
-                          keyboardType: TextInputType.datetime,
-                          controller: _.fechaNacimientoTextoController,
-                        ),
-                      ),
+                              InkWell(
+                                onTap: () {
+                                  _.seleccionarFechaDeNacimiento(context);
+                                },
+                                child: InputText(
+                                  iconPrefix: Icons.calendar_month_outlined,
+                                  labelText: "Fecha de nacimiento",
+                                  enabled: false,
+                                  keyboardType: TextInputType.datetime,
+                                  controller: _.fechaNacimientoTextoController,
+                                ),
+                              ),
 
                               SizedBox(
                                   height:
@@ -132,9 +135,9 @@ class FormPersona extends StatelessWidget {
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
                                 labelText: "Celular",
-                                controller: _.celularTextoController, 
+                                controller: _.celularTextoController,
                               ),
-                              
+
                               SizedBox(
                                   height:
                                       Responsive.getScreenSize(context).height *
@@ -146,8 +149,9 @@ class FormPersona extends StatelessWidget {
                                   obscureText: _.contrasenaOculta.value,
                                   textInputAction: TextInputAction.done,
                                   controller: _.contrasenaTextoController,
-                                  validator: Validacion.validarContrasena, 
+                                  validator: Validacion.validarContrasena,
                                   labelText: "Contraseña",
+                                  maxLines: 1,
                                   suffixIcon: GestureDetector(
                                     onTap: _.mostrarContrasena,
                                     child: Icon(
@@ -186,7 +190,8 @@ class FormPersona extends StatelessWidget {
                                       child: PrimaryButton(
                                           texto: "Registrar",
                                           onPressed: () {
-                                            if (_.claveFormRegistrar
+                                          
+                                            if (_.claveFormRegistrarPersona
                                                     .currentState
                                                     ?.validate() ==
                                                 true) {

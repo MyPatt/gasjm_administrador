@@ -185,7 +185,7 @@ class RegistrarPersonaController extends GetxController {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: AppTheme.blueBackground,
+                backgroundColor: AppTheme.blueBackground,
                 // button text color
               ),
             ),

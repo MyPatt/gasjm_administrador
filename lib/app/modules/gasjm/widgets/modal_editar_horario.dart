@@ -73,7 +73,7 @@ class ModalEditarHorario extends StatelessWidget {
                     ),
                     textButtonTheme: TextButtonThemeData(
                       style: TextButton.styleFrom(
-                        primary: AppTheme.blueBackground,
+                        backgroundColor: AppTheme.blueBackground,
                       ),
                     ),
                   ),

@@ -1,8 +1,9 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
+import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 
 import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
 import 'package:get/get.dart';
@@ -40,16 +41,18 @@ class ContenidoInformacion extends StatelessWidget {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton.icon(
-                            icon: const Icon(Icons.room_outlined),
-                            label: Text(_.gasJM.direccionGasJm ??
-                                'Distribuidora Gas j&M'),
-                            clipBehavior: Clip.antiAlias,
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                primary: Colors.white,
-                                onPrimary: AppTheme.light),
-                            onPressed: () {},
+                          Obx(
+                            () => ElevatedButton.icon(
+                              icon: const Icon(Icons.room_outlined),
+                              label: Text(_.gasJM.value.direccionGasJm ??
+                                  'Distribuidora Gas j&M'),
+                              clipBehavior: Clip.antiAlias,
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: AppTheme.light),
+                              onPressed: () {},
+                            ),
                           ),
                           Visibility(
                               //admin(0) puede editar, repartidor(1) solo ver
@@ -66,14 +69,17 @@ class ContenidoInformacion extends StatelessWidget {
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton.icon(
-                            icon: const Icon(Icons.whatsapp_outlined),
-                            label: Text(_.gasJM.whatsappGasJm ?? 'Sin número'),
-                            style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                primary: Colors.white,
-                                onPrimary: AppTheme.light),
-                            onPressed: () {},
+                          Obx(
+                            () => ElevatedButton.icon(
+                              icon: const Icon(Icons.whatsapp_outlined),
+                              label: Text(
+                                  _.gasJM.value.whatsappGasJm ?? 'Sin número'),
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: AppTheme.light),
+                              onPressed: () {},
+                            ),
                           ),
                           Visibility(
                               //admin(0) puede editar, repartidor(1) solo ver
@@ -94,51 +100,57 @@ class ContenidoInformacion extends StatelessWidget {
                       children: [
                         //Handle(),
                         Container(
-                          width: Responsive.wp(context) * .25,
-                          height: 3.0,
+                          width: Responsive.wp(context) * .3,
+                          height: 1.0,
                           //  margin: const EdgeInsets.only(bottom: 25.0),
                           decoration: BoxDecoration(
-                            color: AppTheme.light,
+                            color: AppTheme.blueBackground,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
-                        const TextDescription(text: 'Producto'),
+                        const TextSubtitle(
+                          text: 'Producto',
+                          color: AppTheme.light,
+                        ),
                         Container(
-                          width: Responsive.wp(context) * .25,
-                          height: 3.0,
+                          width: Responsive.wp(context) * .3,
+                          height: 1.0,
                           //  margin: const EdgeInsets.only(bottom: 25.0),
                           decoration: BoxDecoration(
-                            color: AppTheme.light,
+                            color: AppTheme.blueBackground,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(
+                        height: Responsive.getScreenSize(context).height * .05),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            text: _.productoModel.nombreProducto,
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption
-                                ?.copyWith(
-                                    color: AppTheme.blueDark,
-                                    fontWeight: FontWeight.w700),
-                            children: [
-                              TextSpan(
-                                text: ' ${_.productoModel.precioProducto}',
+                        Obx(() => RichText(
+                              text: TextSpan(
+                                text: _.productoModel.value.nombreProducto,
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption
                                     ?.copyWith(
-                                        color: AppTheme.light,
+                                        color: AppTheme.blueDark,
                                         fontWeight: FontWeight.w700),
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        '   \$ ${_.productoModel.value.precioProducto}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        ?.copyWith(
+                                            color: AppTheme.light,
+                                            fontWeight: FontWeight.w700),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            )),
                         Visibility(
                             //admin(0) puede editar, repartidor(1) solo ver
                             visible: _.modo == 0 ? true : false,
@@ -162,4 +174,3 @@ class ContenidoInformacion extends StatelessWidget {
     );
   }
 }
-*/

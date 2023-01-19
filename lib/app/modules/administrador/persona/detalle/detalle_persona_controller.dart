@@ -120,7 +120,7 @@ class DetallePersonaController extends GetxController {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: AppTheme.blueBackground,
+                backgroundColor: AppTheme.blueBackground,
                 // button text color
               ),
             ),

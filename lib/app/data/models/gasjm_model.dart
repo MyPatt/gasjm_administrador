@@ -9,13 +9,13 @@ class GasJm {
   final String? whatsappGasJm;
 
   factory GasJm.fromMap(Map<String, dynamic> json) => GasJm(
-        direccionGasJm: json["direccionGasJM"],
-        whatsappGasJm: json["whatsappGasJM"],
+        direccionGasJm: json["direccionGasJm"],
+        whatsappGasJm: json["whatsappGasJm"],
       );
 
   Map<String, dynamic> toMap() => {
-        "direccionGasJM": direccionGasJm,
-        "whatsappGasJM": whatsappGasJm,
+        "direccionGasJm": direccionGasJm,
+        "whatsappGasJm": whatsappGasJm,
       };
 }
   /*

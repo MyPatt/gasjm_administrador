@@ -17,7 +17,7 @@ class _CalificarServicioState extends State<CalificarServicio> {
             child: const Text('Rating Dialog',
                 style: TextStyle(color: Colors.white, fontSize: 25)),
             style: ElevatedButton.styleFrom(
-                primary: Colors.redAccent,
+                backgroundColor: Colors.redAccent,
                 elevation: 5,
                 shape: const BeveledRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5))),

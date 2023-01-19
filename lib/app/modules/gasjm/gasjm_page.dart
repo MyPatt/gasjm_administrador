@@ -28,17 +28,18 @@ class GasJMPage extends StatelessWidget {
                 title: const Text("Gas J&M"),
               ),
               body: DefaultTabController(
-                length: 2,
+                length: 3,
                 child: Column(
                   children: [
                     Container(
                       color: Colors.white,
-                      child:   TabBar(
+                      child: const  TabBar(
                         indicatorColor: AppTheme.blueBackground,
                         labelColor: AppTheme.blueBackground,
                         unselectedLabelColor: AppTheme.light,
                         // El repartidor vera todos los pedidos en espera, en camabio  aceptados y finalizados solo por el
                         tabs: [
+                          Tab(text: 'Información'),
                           Tab(text: 'Horarios'),
                           Tab(text: 'Rutas'),
                         ],
@@ -46,6 +47,7 @@ class GasJMPage extends StatelessWidget {
                     ),
                     Expanded(
                         child: TabBarView(children: [
+                          const ContenidoInformacion(),
                       //se envia el modo para cargar la lista de los pedidos el administrador carga de todos
                       //y el repartidor solo los correspondientes y al actualizar se cargan de nuevo la lista
                       //refactorizado el codigo actualizar para usar por el administrador y repartidor
@@ -55,6 +57,7 @@ class GasJMPage extends StatelessWidget {
                       indiceCategoriaPedido: 0,
                       modo: 1,
                     ),*/
+
                       ContenidoHorario(modo: _.modo),
                       ContenidoRuta(modo: _.modo)
                     ]))

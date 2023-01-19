@@ -55,7 +55,7 @@ class AppPermission extends State<AppState> {
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.lightBlue,
+              backgroundColor: Colors.lightBlue,
               padding:  const EdgeInsets.all(8),
               textStyle:  const TextStyle(fontSize: 20),
             ),
@@ -67,7 +67,7 @@ class AppPermission extends State<AppState> {
           margin: const EdgeInsets.all(10),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.lightBlue,
+              backgroundColor: Colors.lightBlue,
               padding: const EdgeInsets.all(8),
               textStyle: const TextStyle(fontSize: 20),
             ),

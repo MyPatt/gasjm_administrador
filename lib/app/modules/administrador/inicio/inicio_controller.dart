@@ -107,7 +107,7 @@ class InicioAdministradorController extends GetxController {
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: const Color.fromRGBO(33, 116, 212, 1),
+                backgroundColor: const Color.fromRGBO(33, 116, 212, 1),
                 // button text color
               ),
             ),

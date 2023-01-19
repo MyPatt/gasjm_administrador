@@ -154,7 +154,7 @@ class ModalEditarHorario extends StatelessWidget {
                   //
                   await Future.delayed(const Duration(seconds: 1));
                   //
-                  controlador.cargarDatosHorarios();
+                  controlador.cargarDatos();
                   Navigator.pop(context);
                 },
               ),

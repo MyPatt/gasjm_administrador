@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
+import 'package:flutter/material.dart'; 
+import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart'; 
 import 'package:gasjm/app/modules/gasjm/widgets/form_ruta.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ContenidoRuta extends StatelessWidget {
-  const ContenidoRuta({Key? key}) : super(key: key);
-
+  ContenidoRuta({Key? key, required this.modo}) : super(key: key);
+  final GasJMController _ = Get.put(GasJMController());
+  final int modo;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -24,22 +25,25 @@ class ContenidoRuta extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              SizedBox(
-                height: 100,
-                width: 100,
-                child: SvgPicture.asset("assets/icons/ruta.svg",
-                    semanticsLabel: 'Ruta'),
-              ),
-              SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              GetBuilder<GasJMController>(
-                  builder: (_) => Obx(() => Expanded(
-                      child: ListView.builder(
-                          itemCount: _.listaHorarios.length,
-                          itemBuilder: (context, index) {
-                            return FormRuta(
-                                horario: _.listaHorarios[index], modo: _.modo);
-                          }))))
+               SizedBox(height: Responsive.getScreenSize(context).height * .05),
+
+                SizedBox(
+                      height:100, width:100,
+                      child:SvgPicture.asset(
+                 "assets/icons/ruta.svg", 
+                        semanticsLabel: 'Ruta'
+                      ),
+                    ),
+           
+               SizedBox(height: Responsive.getScreenSize(context).height * .05),
+              Obx(() => Expanded(
+                  child: ListView.builder(
+                      // scrollDirection: Axis.horizontal,
+                      itemCount: _.listaHorarios.length,
+                      itemBuilder: (context, index) {
+                        return FormRuta(
+                            horario: _.listaHorarios[index], modo: modo);
+                      })))
             ],
           ),
         ),

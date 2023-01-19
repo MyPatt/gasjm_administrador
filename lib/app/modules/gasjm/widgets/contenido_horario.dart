@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
@@ -7,8 +8,9 @@ import 'package:gasjm/app/modules/gasjm/widgets/form_horario.dart';
 import 'package:get/get.dart';
 
 class ContenidoHorario extends StatelessWidget {
-  const ContenidoHorario({Key? key}) : super(key: key);
-
+  ContenidoHorario({Key? key, required this.modo}) : super(key: key);
+  final GasJMController _ = Get.put(GasJMController());
+  final int modo;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -25,26 +27,23 @@ class ContenidoHorario extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              SizedBox(
-                height: 100,
-                width: 100,
-                child: SvgPicture.asset("assets/icons/horario.svg",
-                    semanticsLabel: 'Horario'),
-              ),
-              SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              GetBuilder<GasJMController>(
-                  builder: (_) => Obx(
-                        () => Expanded(
-                            child: ListView.builder(
-                                // scrollDirection: Axis.horizontal,
-                                itemCount: _.listaHorarios.length,
-                                itemBuilder: (context, index) {
-                                  return FormHorario(
-                                      horario: _.listaHorarios[index],
-                                      modo: _.modo);
-                                })),
-                      ))
+               SizedBox(height: Responsive.getScreenSize(context).height * .05),
+
+                SizedBox(
+                      height:100, width:100,
+                      child:SvgPicture.asset(
+                 "assets/icons/horario.svg", 
+                        semanticsLabel: 'Horario'
+                      ),
+                    ),
+               SizedBox(height: Responsive.getScreenSize(context).height * .05),
+              Obx(() => Expanded(
+                  child: ListView.builder(
+                      // scrollDirection: Axis.horizontal,
+                      itemCount: _.listaHorarios.length,
+                      itemBuilder: (context, index) {
+                        return FormHorario(horario: _.listaHorarios[index], modo:modo);
+                      })))
             ],
           ),
         ),

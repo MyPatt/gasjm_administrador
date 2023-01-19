@@ -52,4 +52,13 @@ class GasJMProvider {
         .doc(uidHorario)
         .update({"aperturaHorario": horaApertura, "cierreHorario": horaCierre});
   }
+
+  //Actualizar datos de la distribuidora
+    Future<void> updateDatosDistribuidora(
+      {required String field,required  dato}) async {
+    await _firestoreInstance
+        .collection('distribuidora')
+        .doc()
+        .update({field:dato });
+  }
 }

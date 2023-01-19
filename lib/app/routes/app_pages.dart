@@ -1,4 +1,3 @@
- 
 import 'package:gasjm/app/modules/administrador/pedido/buscar/buscar_binding.dart';
 import 'package:gasjm/app/modules/administrador/pedido/buscar/buscar_page.dart';
 import 'package:gasjm/app/modules/administrador/cliente/cliente_binding.dart';
@@ -18,6 +17,8 @@ import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_bin
 import 'package:gasjm/app/modules/administrador/vehiculo/operacion/operacion_page.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/registrar/registrar_binding.dart';
 import 'package:gasjm/app/modules/administrador/vehiculo/registrar/registrar_page.dart';
+import 'package:gasjm/app/modules/direccion/direcccion_page.dart';
+import 'package:gasjm/app/modules/direccion/direccion_binding.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_binding.dart';
 import 'package:gasjm/app/modules/gasjm/gasjm_page.dart';
 import 'package:gasjm/app/modules/administrador/inicio/inicio_binding.dart';
@@ -102,7 +103,7 @@ class AppPages {
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
-      name: AppRoutes.direccion,
+      name: AppRoutes.direccionUsuario,
       page: () => const FormDireccion(),
       // binding: PerfilBinding(),
       transition: Transition.fade,
@@ -112,6 +113,13 @@ class AppPages {
       name: AppRoutes.gasjm,
       page: () => const GasJMPage(),
       binding: GasJMBinding(),
+      transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+        GetPage(
+      name: AppRoutes.direccionDistribuidora,
+      page: () => const DireccionPage(),
+        binding: DireccionBinding(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
     ),

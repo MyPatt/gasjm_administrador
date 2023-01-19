@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/modules/direccion/direccion_controller.dart';
-import 'package:gasjm/app/modules/direccion/widget/form_direccion.dart';
-import 'package:gasjm/app/modules/perfil/perfil_controller.dart';
+import 'package:gasjm/app/modules/direccion/widget/form_direccion.dart'; 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -20,17 +20,26 @@ class ContenidoMapa extends StatelessWidget {
           ),
           Expanded(
               child: FutureBuilder(
-            future: _.agregarMarcadorCliente(),
+            future: _.obtenerDireccion(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Obx(() => GoogleMap(
                       mapType: MapType.normal,
-                      markers: Set.of(_.marcadores),
+                      // markers: Set.of(_.marcadores),
+                      markers: {
+                        Marker(
+                            markerId: const MarkerId('IdMarcadorDistribuidora'),
+                            position: _.posicionAuxDistribuidora.value,
+                            draggable: true,
+                            icon: BitmapDescriptor.defaultMarkerWithHue(
+                                AppTheme.blueBackground.blue.toDouble()) 
+                            )
+                      },
                       initialCameraPosition: CameraPosition(
                           /*  target: LatLng(
                                     _.usuario.direccionPersona?.latitud ?? 0,
                                     _.usuario.direccionPersona?.longitud ?? 0)*/
-                          target: _.posicionAuxCliente.value,
+                          target: _.posicionAuxDistribuidora.value,
                           zoom: 15.0),
                       myLocationButtonEnabled: true,
                       compassEnabled: true,

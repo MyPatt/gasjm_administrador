@@ -14,7 +14,7 @@ final void Function() onPressed;
             margin:
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
             child: PrimaryButton(
-                texto: "Seleccionar",
+                texto: "Guardar",
                 onPressed: onPressed)));
   }
 }

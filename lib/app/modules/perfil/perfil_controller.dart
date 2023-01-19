@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -57,12 +56,12 @@ class PerfilController extends GetxController {
 
   //Existe algun error si o no
   final errorDeDatos = Rx<String?>(null);
-  //Se cago si o no
+  //Se cargo si o no
   final cargandoDatos = RxBool(false);
 
   //Existe algun error si o no
   final errorDeContrasena = Rx<String?>(null);
-  //Se cago si o no
+  //Se cargo si o no
   final cargandoDeContrasena = RxBool(false);
 
   /* Variables para google maps */
@@ -194,7 +193,6 @@ class PerfilController extends GetxController {
     }
   }
 
- 
   //Visualizar texto de la contrasena
 
   mostrarContrasenaActual() {
@@ -367,7 +365,7 @@ class PerfilController extends GetxController {
   cargarDireccionActual() {
     _posicionAuxCliente.value = posicionInicialCliente.value;
 
-    Get.toNamed(AppRoutes.direccion);
+    Get.toNamed(AppRoutes.direccionUsuario);
   }
 
   Future<void> cargarImagen() async {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/global_widgets/text_description.dart';
+import 'package:gasjm/app/core/utils/responsive.dart'; 
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 
-import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
+import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart'; 
+import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class ContenidoInformacion extends StatelessWidget {
@@ -51,7 +51,7 @@ class ContenidoInformacion extends StatelessWidget {
                                   elevation: 0,
                                   backgroundColor: Colors.white,
                                   foregroundColor: AppTheme.light),
-                              onPressed: () {},
+                              onPressed: () => Get.toNamed(AppRoutes.direccionDistribuidora,arguments: _.gasJM.value.direccionGasJm)
                             ),
                           ),
                           Visibility(

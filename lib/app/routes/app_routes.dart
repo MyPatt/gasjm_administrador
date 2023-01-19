@@ -7,8 +7,10 @@ class AppRoutes {
 
   static const perfil = "/perfil";
   static const contrasena = "/contrasena";
-  static const direccion = "/direccion";
+  static const direccionUsuario = "/direccionUsuario";
   static const gasjm = "/gasjm";
+  static const direccionDistribuidora = "/direccionDistribuidora";
+
   static const signup = "/signup";
   //***** Administrador *****
   static const inicioAdministrador = "/inicioAdministrador";
@@ -21,11 +23,11 @@ class AppRoutes {
   static const registrarPersona = "/registrarPersona";
 
   //
-    static const cliente = "/cliente";
+  static const cliente = "/cliente";
   static const detalleCliente = "/detalleCliente";
   static const buscarClienteAdmin = "/buscarCliente";
   //
-  
+
   static const repartidor = "/repartidor";
   static const buscarRepartidor = "/buscarRepartidor";
   //
@@ -33,8 +35,6 @@ class AppRoutes {
   static const operacionVehiculo = "/operacionVehiculo";
   static const detalleVehiculo = "/detalleVehiculo";
   //***** Repartidor *****
-
-
 
   static const inicioRepartidor = "/inicioRepartidor";
   static const pedidos = "/pedidos";

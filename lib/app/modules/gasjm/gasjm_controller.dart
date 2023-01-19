@@ -7,8 +7,8 @@ import 'package:gasjm/app/data/repository/horario_repository.dart';
 import 'package:get/get.dart';
 
 class GasJMController extends GetxController {
-  //Repositorio de horario
-  final _gasJMRepository = Get.find<GasJMRepository>();
+    //Repositorio de horario
+    final _gasJMRepository = Get.find<GasJMRepository>();
 
   /* Variables para obtener datos del horario*/
   final RxList<HorarioModel> _lista = <HorarioModel>[].obs;

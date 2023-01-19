@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
-import 'package:gasjm/app/global_widgets/handle.dart';
 import 'package:gasjm/app/global_widgets/text_description.dart';
 
 import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
@@ -35,7 +34,7 @@ class ContenidoInformacion extends StatelessWidget {
                     semanticsLabel: 'Informacion Gas J&M'),
               ),
               SizedBox(height: Responsive.getScreenSize(context).height * .05),
-              ( GetBuilder<GasJMController>(
+              (GetBuilder<GasJMController>(
                 builder: (_) => Column(
                   children: [
                     Row(
@@ -43,7 +42,7 @@ class ContenidoInformacion extends StatelessWidget {
                         children: [
                           ElevatedButton.icon(
                             icon: const Icon(Icons.room_outlined),
-                            label: Text(_.gasJM?.direccionGasJm ??
+                            label: Text(_.gasJM.direccionGasJm ??
                                 'Distribuidora Gas j&M'),
                             clipBehavior: Clip.antiAlias,
                             style: ElevatedButton.styleFrom(
@@ -69,7 +68,7 @@ class ContenidoInformacion extends StatelessWidget {
                         children: [
                           ElevatedButton.icon(
                             icon: const Icon(Icons.whatsapp_outlined),
-                            label: Text(_.gasJM?.whatsappGasJm ?? 'Sin número'),
+                            label: Text(_.gasJM.whatsappGasJm ?? 'Sin número'),
                             style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 primary: Colors.white,
@@ -120,8 +119,7 @@ class ContenidoInformacion extends StatelessWidget {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: _.productoModel?.nombreProducto ??
-                                'Gas doméstico ',
+                            text: _.productoModel.nombreProducto,
                             style: Theme.of(context)
                                 .textTheme
                                 .caption
@@ -130,9 +128,7 @@ class ContenidoInformacion extends StatelessWidget {
                                     fontWeight: FontWeight.w700),
                             children: [
                               TextSpan(
-                                text: _.productoModel != null
-                                    ? '${_.productoModel?.precioProducto ?? 0}'
-                                    : ' Sin precio',
+                                text: ' ${_.productoModel.precioProducto}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .caption

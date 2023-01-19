@@ -27,18 +27,18 @@ class GasJMController extends GetxController {
   int modo = Get.arguments;
 
   //Variables para el tabarview Informacion
-  GasJm? gasJM;
-  ProductoModel? productoModel;
+  GasJm gasJM=GasJm();
+  ProductoModel productoModel=const ProductoModel(nombreProducto: '', precioProducto: 0.0);
   //aMETODSO PROPIOS
   @override
   void onInit() {
     super.onInit();
     //
-    cargarDatos();
+    //cargarDatos();
     cargarDatosHorarios();
   }
 
-  cargarDatos() async {
+  cargarDatos()   {
     cargarInformacionDistribuidora();
     cargarInformacionProducto();
     
@@ -57,7 +57,7 @@ class GasJMController extends GetxController {
 //Obtner informacion de la distribuidora y del producto desde firestore
   Future<void> cargarInformacionProducto() async {
     try {
-      gasJM = await _gasJMRepository.getInformacionDistribuidora();
+      productoModel = await _gasJMRepository.getProducto();
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');

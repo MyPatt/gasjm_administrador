@@ -25,7 +25,7 @@ class GasJMPage extends StatelessWidget {
         title: const Text("Gas J&M"),
       ),
       body: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Column(
           children: [
             Container(
@@ -35,7 +35,7 @@ class GasJMPage extends StatelessWidget {
                 labelColor: AppTheme.blueBackground,
                 unselectedLabelColor: AppTheme.light,
                 tabs: [
-                  Tab(text: 'Información'),
+               //   Tab(text: 'Información'),
                   Tab(text: 'Horarios'),
                   Tab(text: 'Rutas'),
                 ],
@@ -43,10 +43,9 @@ class GasJMPage extends StatelessWidget {
             ),
             const Expanded(
                 child: TabBarView(children: [
-              //ContenidoInformacion(),
+            //  ContenidoInformacion(),
+              ContenidoHorario(),
               ContenidoRuta(),
-              ContenidoHorario(),
-              ContenidoHorario(),
             ]))
           ],
         ),

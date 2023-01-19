@@ -4,12 +4,13 @@ class ProductoModel extends Equatable {
   final String? idProducto;
   final String nombreProducto;
   final double precioProducto;
-  final String descripcionProducto;
+  final String? descripcionProducto;
+  
   const ProductoModel({
     this.idProducto,
     required this.nombreProducto,
     required this.precioProducto,
-    required this.descripcionProducto,
+      this.descripcionProducto,
   });
 
   factory ProductoModel.fromMap(Map<String, dynamic> json) => ProductoModel(

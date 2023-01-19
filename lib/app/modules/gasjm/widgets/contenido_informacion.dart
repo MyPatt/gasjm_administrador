@@ -44,7 +44,7 @@ class ContenidoInformacion extends StatelessWidget {
                           Obx(
                             () => ElevatedButton.icon(
                               icon: const Icon(Icons.room_outlined),
-                              label: Text(_.gasJM.value.direccionGasJm ??
+                              label: Text(_.gasJM.value.nombreLugar ??
                                   'Distribuidora Gas j&M'),
                               clipBehavior: Clip.antiAlias,
                               style: ElevatedButton.styleFrom(

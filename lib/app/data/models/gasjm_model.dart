@@ -1,21 +1,26 @@
+import 'pedido_model.dart';
 
 class GasJm {
   GasJm({
     this.direccionGasJm,
     this.whatsappGasJm,
+    this.nombreLugar,
   });
+  final Direccion? direccionGasJm;
 
-  final String? direccionGasJm;
   final String? whatsappGasJm;
+  final String? nombreLugar;
 
   factory GasJm.fromMap(Map<String, dynamic> json) => GasJm(
-        direccionGasJm: json["direccionGasJm"],
+        direccionGasJm: Direccion.fromMap(json["direccionGasJm"]),
         whatsappGasJm: json["whatsappGasJm"],
+        nombreLugar: json["nombreLugar"],
       );
 
   Map<String, dynamic> toMap() => {
         "direccionGasJm": direccionGasJm,
         "whatsappGasJm": whatsappGasJm,
+        "nombreLugar": nombreLugar
       };
 }
   /*

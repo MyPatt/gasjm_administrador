@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
 import 'package:gasjm/app/global_widgets/circular_progress.dart';
 import 'package:gasjm/app/modules/direccion/direccion_controller.dart';
-import 'package:gasjm/app/modules/direccion/widget/form_direccion.dart'; 
+import 'package:gasjm/app/modules/direccion/widget/form_direccion.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -15,7 +15,7 @@ class ContenidoMapa extends StatelessWidget {
       builder: (_) => Positioned.fill(
           child: Column(
         children: [
-          FormDireccion(
+          FormDireccionm(
             controladorDeTexto: _.direccionAuxTextoController,
           ),
           Expanded(
@@ -32,8 +32,7 @@ class ContenidoMapa extends StatelessWidget {
                             position: _.posicionAuxDistribuidora.value,
                             draggable: true,
                             icon: BitmapDescriptor.defaultMarkerWithHue(
-                                AppTheme.blueBackground.blue.toDouble()) 
-                            )
+                                AppTheme.blueBackground.blue.toDouble()))
                       },
                       initialCameraPosition: CameraPosition(
                           /*  target: LatLng(
@@ -60,7 +59,7 @@ class ContenidoMapa extends StatelessWidget {
                       },
                     ));
               } else {
-                return const CircularProgress();
+                return const Center(child: CircularProgress());
               }
             },
           ))

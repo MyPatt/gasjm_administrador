@@ -42,6 +42,7 @@ class DirecccionController extends GetxController {
     super.onClose();
     //Limpiar campos
     direccionAuxTextoController.dispose();
+    
   }
 
   /* METODOS PARA OBTENER DIRECCION */
@@ -127,6 +128,7 @@ class DirecccionController extends GetxController {
 
   void onMapaCreado(GoogleMapController controller) {
     controller.setMapStyle(estiloMapa);
+    
     // _agregarMarcadorCliente();
     // notifyListeners();
   }
@@ -144,16 +146,30 @@ class DirecccionController extends GetxController {
   }
 
   seleccionarNuevaDireccion() {
-    nuevaDireccionSeleccionada = Direccion(
-        latitud: posicionAuxDistribuidora.value.latitude,
-        longitud: posicionAuxDistribuidora.value.longitude);
-
-    //Actualizar
-    _gasJMRepository.updateDatosDistribuidora(
-        field: 'direccionGasJm', dato: nuevaDireccionSeleccionada);
-    _gasJMRepository.updateDatosDistribuidora(
-        field: 'nombreLugar', dato: direccionAuxTextoController.text);
-    //
-    Get.back();
+    try {
+      nuevaDireccionSeleccionada = Direccion(
+          latitud: posicionAuxDistribuidora.value.latitude,
+          longitud: posicionAuxDistribuidora.value.longitude);
+//
+      print(nuevaDireccionSeleccionada.latitud);
+      print(nuevaDireccionSeleccionada.longitud);
+      //Actualizar
+      _gasJMRepository.updateDatosDistribuidora(
+          field: 'direccionGasJm', dato: nuevaDireccionSeleccionada);
+      _gasJMRepository.updateDatosDistribuidora(
+          field: 'nombreLugar', dato: direccionAuxTextoController.text);
+      //
+      Mensajes.showGetSnackbar(
+          titulo: 'Mensaje',
+          mensaje: '¡Se guardo con éxito!',
+          icono: const Icon(
+            Icons.save_outlined,
+            color: Colors.white,
+          ));
+      //
+      Get.back();
+    } catch (e) {
+      print(e);
+    }
   }
 }

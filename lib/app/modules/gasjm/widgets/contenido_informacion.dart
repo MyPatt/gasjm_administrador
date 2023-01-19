@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gasjm/app/core/theme/app_theme.dart';
-import 'package:gasjm/app/core/utils/responsive.dart'; 
+import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 
-import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart'; 
+import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -43,22 +43,25 @@ class ContenidoInformacion extends StatelessWidget {
                         children: [
                           Obx(
                             () => ElevatedButton.icon(
-                              icon: const Icon(Icons.room_outlined),
-                              label: Text(_.gasJM.value.nombreLugar ??
-                                  'Distribuidora Gas j&M'),
-                              clipBehavior: Clip.antiAlias,
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: AppTheme.light),
-                              onPressed: () => Get.toNamed(AppRoutes.direccionDistribuidora,arguments: _.gasJM.value.direccionGasJm)
-                            ),
+                                icon: const Icon(Icons.room_outlined),
+                                label: Text(_.gasJM.value.nombreLugar ??
+                                    'Distribuidora Gas j&M'),
+                                clipBehavior: Clip.antiAlias,
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: AppTheme.light),
+                                onPressed: () => Get.toNamed(
+                                    AppRoutes.direccionDistribuidora,
+                                    arguments: _.gasJM.value.direccionGasJm)),
                           ),
                           Visibility(
                               //admin(0) puede editar, repartidor(1) solo ver
                               visible: _.modo == 0 ? true : false,
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () => Get.toNamed(
+                                    AppRoutes.direccionDistribuidora,
+                                    arguments: _.gasJM.value.direccionGasJm),
                                 icon: const Icon(
                                   Icons.mode_edit_outlined,
                                   size: 15,

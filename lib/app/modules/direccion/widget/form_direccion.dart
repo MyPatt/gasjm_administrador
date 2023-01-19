@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/responsive.dart';
 
-class FormDireccion extends StatelessWidget {
-  const FormDireccion({Key? key, required this.controladorDeTexto})
+class FormDireccionm extends StatelessWidget {
+  const FormDireccionm({Key? key, required this.controladorDeTexto})
       : super(key: key);
   final TextEditingController controladorDeTexto;
   @override

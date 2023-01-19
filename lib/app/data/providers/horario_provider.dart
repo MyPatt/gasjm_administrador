@@ -11,8 +11,11 @@ class GasJMProvider {
   //Retorna info de la distribuidora
   Future<GasJm> getInformacionDistribuidora() async {
     final snapshot = await _firestoreInstance.collection("distribuidora").get();
+    print(snapshot.docs.first.data());
 
-    return GasJm.fromMap(snapshot.docs.first.data());
+    var aux = GasJm.fromMap(snapshot.docs.first.data());
+    print(aux.whatsappGasJm);
+    return aux;
   }
   //Retorna info del producto
 
@@ -54,11 +57,11 @@ class GasJMProvider {
   }
 
   //Actualizar datos de la distribuidora
-    Future<void> updateDatosDistribuidora(
-      {required String field,required  dato}) async {
+  Future<void> updateDatosDistribuidora(
+      {required String field, required dato}) async {
     await _firestoreInstance
         .collection('distribuidora')
-        .doc()
-        .update({field:dato });
+        .doc('XE8lqaJ5sx59bAxTjlhM')
+        .update({field: dato});
   }
 }

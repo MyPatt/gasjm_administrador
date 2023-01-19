@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/gasjm_model.dart';
@@ -7,8 +8,8 @@ import 'package:gasjm/app/data/repository/horario_repository.dart';
 import 'package:get/get.dart';
 
 class GasJMController extends GetxController {
-    //Repositorio de horario
-    final _gasJMRepository = Get.find<GasJMRepository>();
+  //Repositorio de horario
+  final _gasJMRepository = Get.find<GasJMRepository>();
 
   /* Variables para obtener datos del horario*/
   final RxList<HorarioModel> _lista = <HorarioModel>[].obs;
@@ -27,8 +28,9 @@ class GasJMController extends GetxController {
   int modo = Get.arguments;
 
   //Variables para el tabarview Informacion
-  Rx<GasJm> gasJM=GasJm().obs;
-    Rx<ProductoModel> productoModel=const ProductoModel(nombreProducto: '', precioProducto: 0.0).obs;
+  Rx<GasJm> gasJM = GasJm().obs;
+  Rx<ProductoModel> productoModel =
+      const ProductoModel(nombreProducto: '', precioProducto: 0.0).obs;
   //aMETODSO PROPIOS
   @override
   void onInit() {
@@ -38,16 +40,21 @@ class GasJMController extends GetxController {
     cargarDatosHorarios();
   }
 
-  void cargarDatos()   {
+  void cargarDatos() {
     cargarInformacionDistribuidora();
     cargarInformacionProducto();
-    
   }
 
 //Obtner informacion de la distribuidora y del producto desde firestore
   Future<void> cargarInformacionDistribuidora() async {
     try {
+      print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+
       gasJM.value = await _gasJMRepository.getInformacionDistribuidora();
+      print(gasJM.value.whatsappGasJm);
+    } on FirebaseException catch (e) {
+      print("oooooooooooooooooooooo");
+      print(e.message);
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');
@@ -57,7 +64,7 @@ class GasJMController extends GetxController {
 //Obtner informacion de la distribuidora y del producto desde firestore
   Future<void> cargarInformacionProducto() async {
     try {
-      productoModel.value= await _gasJMRepository.getProducto();
+      productoModel.value = await _gasJMRepository.getProducto();
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');

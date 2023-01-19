@@ -155,7 +155,7 @@ class DirecccionController extends GetxController {
       print(nuevaDireccionSeleccionada.longitud);
       //Actualizar
       _gasJMRepository.updateDatosDistribuidora(
-          field: 'direccionGasJm', dato: nuevaDireccionSeleccionada);
+          field: 'direccionGasJm', dato: nuevaDireccionSeleccionada.toMap());
       _gasJMRepository.updateDatosDistribuidora(
           field: 'nombreLugar', dato: direccionAuxTextoController.text);
       //

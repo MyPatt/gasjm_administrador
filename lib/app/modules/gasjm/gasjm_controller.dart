@@ -19,6 +19,7 @@ class GasJMController extends GetxController {
   RxList<HorarioModel> get listaHorarios => _lista;
   // //Mientras se inserta el pedido mostrar circuleprobres se carga si o no
   final actualizandoHorario = RxBool(false);
+  final actualizandoDistribuidora = RxBool(false);
 
   //se envia el modo para cargar la lista de los pedidos el administrador carga de todos
   //y el repartidor solo los correspondientes y al actualizar se cargan de nuevo la lista
@@ -31,6 +32,10 @@ class GasJMController extends GetxController {
   Rx<GasJm> gasJM = GasJm().obs;
   Rx<ProductoModel> productoModel =
       const ProductoModel(nombreProducto: '', precioProducto: 0.0).obs;
+
+  //
+  final celularTextoController = TextEditingController();
+  final precioTextoController = TextEditingController();
   //aMETODSO PROPIOS
   @override
   void onInit() {
@@ -109,5 +114,62 @@ class GasJMController extends GetxController {
           ));
     }
     actualizandoHorario.value = false;
+  }
+
+  //En modo admin se puede aditar el numero de celular para whatsap
+  Future<void> actualizarCelular() async {
+    try {
+      actualizandoDistribuidora.value = true;
+      //
+      await _gasJMRepository.updateDatosDistribuidora(
+          field: 'whatsappGasJm', dato: celularTextoController.text);
+      //
+      Mensajes.showGetSnackbar(
+          titulo: "Mensaje",
+          mensaje: "Número de celular actualizado con éxito.",
+          icono: const Icon(
+            Icons.check_circle_outlined,
+            color: Colors.white,
+          ));
+    } catch (e) {
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
+    actualizandoDistribuidora.value = false;
+  }
+
+  //En modo admin se puede aditar el precio del gas
+  Future<void> actualizarPrecioProducto() async {
+    try {
+      actualizandoDistribuidora.value = true;
+      //
+      await _gasJMRepository.updateDatosProducto(
+          field: 'precioProducto',
+          dato: double.parse(precioTextoController.text));
+      //
+      Mensajes.showGetSnackbar(
+          titulo: "Mensaje",
+          mensaje: "Precio del producto actualizado con éxito.",
+          icono: const Icon(
+            Icons.check_circle_outlined,
+            color: Colors.white,
+          ));
+    } catch (e) {
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
+    }
+    actualizandoDistribuidora.value = false;
   }
 }

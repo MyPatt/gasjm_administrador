@@ -5,6 +5,7 @@ import 'package:gasjm/app/core/utils/responsive.dart';
 import 'package:gasjm/app/global_widgets/text_subtitle.dart';
 
 import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
+import 'package:gasjm/app/modules/gasjm/widgets/modal_editar.dart';
 import 'package:gasjm/app/routes/app_routes.dart';
 import 'package:get/get.dart';
 
@@ -88,7 +89,14 @@ class ContenidoInformacion extends StatelessWidget {
                               //admin(0) puede editar, repartidor(1) solo ver
                               visible: _.modo == 0 ? true : false,
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () =>  showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return const ModalEditarGasJm(
+                               nombreDato: 'celular',
+                            );
+                          }),
                                 icon: const Icon(
                                   Icons.mode_edit_outlined,
                                   size: 15,
@@ -158,7 +166,17 @@ class ContenidoInformacion extends StatelessWidget {
                             //admin(0) puede editar, repartidor(1) solo ver
                             visible: _.modo == 0 ? true : false,
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+
+                                 showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          builder: (context) {
+                            return const ModalEditarGasJm(
+                               nombreDato: 'producto',
+                            );
+                          });
+                              },
                               icon: const Icon(
                                 Icons.mode_edit_outlined,
                                 size: 15,

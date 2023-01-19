@@ -3,8 +3,7 @@ import 'package:gasjm/app/data/models/horario_model.dart';
 import 'package:gasjm/app/data/models/producto_model.dart';
 import 'package:gasjm/app/data/providers/horario_provider.dart';
 import 'package:gasjm/app/data/repository/horario_repository.dart';
-import 'package:get/get.dart';
-import 'package:pod/pod.dart';
+import 'package:get/get.dart'; 
 
 class GasJMRepositoryImpl extends GasJMRepository {
   final _provider = Get.find<GasJMProvider>();
@@ -33,4 +32,7 @@ class GasJMRepositoryImpl extends GasJMRepository {
   Future<void> updateDatosDistribuidora(
           {required String field, required dato}) =>
       _provider.updateDatosDistribuidora(field: field, dato: dato);
+  @override
+  Future<void> updateDatosProducto({required String field, required dato}) =>
+      _provider.updateDatosProducto(field: field, dato: dato);
 }

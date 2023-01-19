@@ -18,7 +18,7 @@ class GasJm {
       );
 
   Map<String, dynamic> toMap() => {
-        "direccionGasJm": direccionGasJm,
+        "direccionGasJm": direccionGasJm?.toMap(),
         "whatsappGasJm": whatsappGasJm,
         "nombreLugar": nombreLugar
       };

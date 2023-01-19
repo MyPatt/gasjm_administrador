@@ -210,4 +210,6 @@ class Validacion {
 
     return null;
   }
+  /*PRODUCTO*/
+  //verificar un numero double
 }

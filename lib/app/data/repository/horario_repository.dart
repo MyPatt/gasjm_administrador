@@ -12,4 +12,5 @@ abstract class GasJMRepository {
       required String horaApertura,
       required String horaCierre});
   Future<void> updateDatosDistribuidora({required String field, required dato});
+  Future<void> updateDatosProducto({required String field, required dato});
 }

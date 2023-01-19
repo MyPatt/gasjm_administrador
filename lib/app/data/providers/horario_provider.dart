@@ -59,9 +59,22 @@ class GasJMProvider {
   //Actualizar datos de la distribuidora
   Future<void> updateDatosDistribuidora(
       {required String field, required dato}) async {
+    var snapshot = await _firestoreInstance.collection('distribuidora').get();
+    var id = snapshot.docs.first.id;
     await _firestoreInstance
         .collection('distribuidora')
-        .doc('XE8lqaJ5sx59bAxTjlhM')
+        .doc(id)
+        .update({field: dato});
+  }
+
+  //Actualizar datos de producto
+  Future<void> updateDatosProducto(
+      {required String field, required dato}) async {
+    var snapshot = await _firestoreInstance.collection('producto').get();
+    var id = snapshot.docs.first.id;
+    await _firestoreInstance
+        .collection('producto')
+        .doc(id)
         .update({field: dato});
   }
 }

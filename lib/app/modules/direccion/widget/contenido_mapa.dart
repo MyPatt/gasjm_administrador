@@ -25,7 +25,6 @@ class ContenidoMapa extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Obx(() => GoogleMap(
                       mapType: MapType.normal,
-                      // markers: Set.of(_.marcadores),
                       markers: {
                         Marker(
                             markerId: const MarkerId('IdMarcadorDistribuidora'),
@@ -35,11 +34,7 @@ class ContenidoMapa extends StatelessWidget {
                                 AppTheme.blueBackground.blue.toDouble()))
                       },
                       initialCameraPosition: CameraPosition(
-                          /*  target: LatLng(
-                                    _.usuario.direccionPersona?.latitud ?? 0,
-                                    _.usuario.direccionPersona?.longitud ?? 0)*/
-                          target: _.posicionAuxDistribuidora.value,
-                          zoom: 15.0),
+                          target: _.posicionAuxDistribuidora.value, zoom: 15.0),
                       myLocationButtonEnabled: true,
                       compassEnabled: true,
                       zoomControlsEnabled: false,
@@ -47,7 +42,9 @@ class ContenidoMapa extends StatelessWidget {
                       mapToolbarEnabled: false,
                       trafficEnabled: false,
                       tiltGesturesEnabled: false,
-                      scrollGesturesEnabled: true,
+                      //scrollGesturesEnabled: true,
+                      scrollGesturesEnabled: _.permisoParaEditarMapa,
+
                       rotateGesturesEnabled: false,
                       myLocationEnabled: true,
                       liteModeEnabled: false,

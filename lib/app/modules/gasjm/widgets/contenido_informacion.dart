@@ -39,9 +39,11 @@ class ContenidoInformacion extends StatelessWidget {
               (GetBuilder<GasJMController>(
                 builder: (_) => Column(
                   children: [
+                    //Muestra la direccion de la distribuidora
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          //Nombre del lugar
                           Obx(
                             () => ElevatedButton.icon(
                                 icon: const Icon(Icons.room_outlined),
@@ -52,17 +54,26 @@ class ContenidoInformacion extends StatelessWidget {
                                     elevation: 0,
                                     backgroundColor: Colors.white,
                                     foregroundColor: AppTheme.light),
+                                    //se visualiza en el mapa 
+                                    //  1er parametro  => direccion 
+                                    //  2do parametro  => modo de edicion del mapa
+                                    //  si esta en true solo  se visualiza la ubic... 
+                                    //  y en false se puede cambiar nueva ubicacion
+
                                 onPressed: () => Get.toNamed(
                                     AppRoutes.direccionDistribuidora,
-                                    arguments: _.gasJM.value.direccionGasJm)),
+                                    arguments: [_.gasJM.value.direccionGasJm,true])),
                           ),
+                          //Icono para editar la ubicacion
                           Visibility(
                               //admin(0) puede editar, repartidor(1) solo ver
                               visible: _.modo == 0 ? true : false,
                               child: IconButton(
+                                    //  y en false se puede cambiar nueva ubicacion
+
                                 onPressed: () => Get.toNamed(
                                     AppRoutes.direccionDistribuidora,
-                                    arguments: _.gasJM.value.direccionGasJm),
+                                    arguments:[ _.gasJM.value.direccionGasJm,false]),
                                 icon: const Icon(
                                   Icons.mode_edit_outlined,
                                   size: 15,
@@ -70,9 +81,11 @@ class ContenidoInformacion extends StatelessWidget {
                                 ),
                               ))
                         ]),
+                        //Muestra el numero de celular de la distribuidora
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          //al tocar el numero se va al chat de wehatsapp
                           Obx(
                             () => ElevatedButton.icon(
                               icon: const Icon(Icons.whatsapp_outlined),
@@ -82,21 +95,22 @@ class ContenidoInformacion extends StatelessWidget {
                                   elevation: 0,
                                   backgroundColor: Colors.white,
                                   foregroundColor: AppTheme.light),
-                              onPressed: () =>_.whatsapp(),
+                              onPressed: () => _.abrirChatWhatsapp(),
                             ),
                           ),
+                          //editar el numero
                           Visibility(
                               //admin(0) puede editar, repartidor(1) solo ver
                               visible: _.modo == 0 ? true : false,
                               child: IconButton(
-                                onPressed: () =>  showModalBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) {
-                            return const ModalEditarGasJm(
-                               nombreDato: 'celular',
-                            );
-                          }),
+                                onPressed: () => showModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) {
+                                      return const ModalEditarGasJm(
+                                        nombreDato: 'celular',
+                                      );
+                                    }),
                                 icon: const Icon(
                                   Icons.mode_edit_outlined,
                                   size: 15,
@@ -136,9 +150,11 @@ class ContenidoInformacion extends StatelessWidget {
                     ),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .05),
+                        //Datos del producto
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        //Nombre y precio
                         Obx(() => RichText(
                               text: TextSpan(
                                 text: _.productoModel.value.nombreProducto,
@@ -162,20 +178,20 @@ class ContenidoInformacion extends StatelessWidget {
                                 ],
                               ),
                             )),
+                            //icono permite editar el precio del producto
                         Visibility(
                             //admin(0) puede editar, repartidor(1) solo ver
                             visible: _.modo == 0 ? true : false,
                             child: IconButton(
                               onPressed: () {
-
-                                 showModalBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) {
-                            return const ModalEditarGasJm(
-                               nombreDato: 'producto',
-                            );
-                          });
+                                showModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) {
+                                      return const ModalEditarGasJm(
+                                        nombreDato: 'producto',
+                                      );
+                                    });
                               },
                               icon: const Icon(
                                 Icons.mode_edit_outlined,

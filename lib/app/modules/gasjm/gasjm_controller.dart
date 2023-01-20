@@ -48,6 +48,15 @@ class GasJMController extends GetxController {
     cargarDatosHorarios();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    //
+    celularTextoController.dispose();
+    precioTextoController.dispose();
+  }
+
+  ///
   void cargarDatos() {
     cargarInformacionDistribuidora();
     cargarInformacionProducto();
@@ -139,6 +148,8 @@ class GasJMController extends GetxController {
             Icons.check_circle_outlined,
             color: Colors.white,
           ));
+      //
+      cargarInformacionDistribuidora();
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',
@@ -168,6 +179,8 @@ class GasJMController extends GetxController {
             Icons.check_circle_outlined,
             color: Colors.white,
           ));
+      //
+      cargarInformacionProducto();
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',
@@ -182,11 +195,10 @@ class GasJMController extends GetxController {
   }
 
   //
-  whatsapp() async {
+  abrirChatWhatsapp() async {
     var contact = "+593${gasJM.value.whatsappGasJm}";
-    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
-    var iosUrl =
-        "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hola";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hola')}";
 
     try {
       if (Platform.isIOS) {
@@ -195,7 +207,14 @@ class GasJMController extends GetxController {
         await launchUrl(Uri.parse(androidUrl));
       }
     } on Exception {
-      print('WhatsApp is not installed.');
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:gasjm/app/core/utils/map_style.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/pedido_model.dart';
 import 'package:gasjm/app/data/repository/horario_repository.dart';
+import 'package:gasjm/app/modules/gasjm/gasjm_controller.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -29,6 +30,9 @@ class DirecccionController extends GetxController {
   Rx<LatLng> get posicionAuxDistribuidora =>
       _posicionAuxDistribuidora.value.obs;
 
+  //
+  bool permisoParaEditarMapa = false;
+
   /* METODOS PROPIOS */
 
   @override
@@ -48,13 +52,17 @@ class DirecccionController extends GetxController {
 
   Future<void> obtenerDireccion() async {
     try {
-      Direccion? direccionGasJm = Get.arguments;
+      //obtener parametros
+      //  1er parametro  => direccion
+      //  2do parametro  => modo de edicion del mapa
+      Direccion? direccionGasJm = Get.arguments[0];
+      permisoParaEditarMapa = Get.arguments[1];
       //
-      posicionAuxDistribuidora.value =
-          LatLng(direccionGasJm?.latitud ?? 0, direccionGasJm?.longitud ?? 0);
+      _posicionAuxDistribuidora.value = LatLng(
+          direccionGasJm?.latitud ?? 0.0, direccionGasJm?.longitud ?? 0.0);
       //
-      direccionAuxTextoController.text = await _getDireccionXLatLng(
-          LatLng(direccionGasJm?.latitud ?? 0, direccionGasJm?.longitud ?? 0));
+      direccionAuxTextoController.text = await _getDireccionXLatLng(LatLng(
+          direccionGasJm?.latitud ?? 0.0, direccionGasJm?.longitud ?? 0.0));
     } on FirebaseException {
       Mensajes.showGetSnackbar(
           titulo: "Error",
@@ -85,44 +93,6 @@ class DirecccionController extends GetxController {
     }
   }
 
-  //
-  //Metodo para actualizar datos
-
-  Future<void> guaardarUsuario() async {
-    try {
-      cargandoDatos.value = true;
-      //errorDeDatos.value = null;
-
-      //Guardar en model
-
-      //  direccionPersonaa,En firebase
-
-      //
-
-      //Mensaje de ingreso
-      Mensajes.showGetSnackbar(
-          titulo: 'Mensaje',
-          mensaje: '¡Se guardo con éxito!',
-          icono: const Icon(
-            Icons.save_outlined,
-            color: Colors.white,
-          ));
-
-      //
-    } catch (e) {
-      Mensajes.showGetSnackbar(
-          titulo: 'Alerta',
-          mensaje:
-              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
-          duracion: const Duration(seconds: 4),
-          icono: const Icon(
-            Icons.error_outline_outlined,
-            color: Colors.white,
-          ));
-    }
-    cargandoDatos.value = false;
-  }
-
   /* ACTUALIZAR DIRECCION - GOOGLE MAP*/
 
   void onMapaCreado(GoogleMapController controller) {
@@ -144,19 +114,20 @@ class DirecccionController extends GetxController {
     direccionAuxTextoController.text = placemark[0].name!;
   }
 
-  seleccionarNuevaDireccion() {
+  void actualizarNuevaDireccion() {
     try {
       nuevaDireccionSeleccionada = Direccion(
           latitud: posicionAuxDistribuidora.value.latitude,
           longitud: posicionAuxDistribuidora.value.longitude);
 //
       print(nuevaDireccionSeleccionada.latitud);
-      print(nuevaDireccionSeleccionada.longitud);
       //Actualizar
       _gasJMRepository.updateDatosDistribuidora(
           field: 'direccionGasJm', dato: nuevaDireccionSeleccionada.toMap());
-      /*  _gasJMRepository.updateDatosDistribuidora(
-          field: 'nombreLugar', dato: direccionAuxTextoController.text);*/
+      _gasJMRepository.updateDatosDistribuidora(
+          field: 'nombreLugar', dato: direccionAuxTextoController.text);
+      print(nuevaDireccionSeleccionada.longitud);
+
       //
       Mensajes.showGetSnackbar(
           titulo: 'Mensaje',
@@ -166,12 +137,17 @@ class DirecccionController extends GetxController {
             color: Colors.white,
           ));
       //
-      Get.back();
-    } on FirebaseException catch (e) {
-      print("uuuuuuuuuu");
-      print(e.message);
+      Get.find<GasJMController>().cargarInformacionDistribuidora();
     } catch (e) {
-      print(e);
+      Mensajes.showGetSnackbar(
+          titulo: 'Alerta',
+          mensaje:
+              'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.',
+          duracion: const Duration(seconds: 4),
+          icono: const Icon(
+            Icons.error_outline_outlined,
+            color: Colors.white,
+          ));
     }
   }
 }

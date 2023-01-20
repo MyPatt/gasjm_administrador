@@ -67,7 +67,7 @@ class ModalEditarGasJm extends StatelessWidget {
                               ],
                               labelText: "Celular",
                               controller: _.celularTextoController,
-                              validator: Validacion.validarCelular,
+                              validator: Validacion.validarCelularObligatorio,
                             ),
                           ),
                           Visibility(
@@ -83,6 +83,7 @@ class ModalEditarGasJm extends StatelessWidget {
                               ],
                               labelText: "Producto",
                               controller: _.precioTextoController,
+                              validator: Validacion.validarPrecioProducto,
                             ),
                           ),
                           SizedBox(
@@ -105,14 +106,9 @@ class ModalEditarGasJm extends StatelessWidget {
                                           break;
                                         case 'producto':
                                           _.actualizarPrecioProducto();
+                                          Navigator.pop(context);
                                           break;
                                       }
-                                      //
-                                      Future.delayed(
-                                          const Duration(seconds: 1));
-                                      //
-                                      _.cargarDatos();
-                                      Navigator.pop(context);
                                     },
                                   ),
                                 ),

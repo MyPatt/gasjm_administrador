@@ -211,5 +211,28 @@ class Validacion {
     return null;
   }
   /*PRODUCTO*/
+    static String? validarPrecioProducto(String? value) {
+    if (value == null) {
+      return null;
+    }
+ 
+      if (value.isEmpty) {
+      return 'Ingrese un valor';
+    }  
+    return null;
+  }
+  //
+  static String? validarCelularObligatorio(String? value) {
+    if (value == null) {
+      return null;
+    }
+ 
+      if (value.isEmpty) {
+      return 'Ingrese un valor';
+    } else if (value.length < 10 || value.length > 10) {
+      return 'El número celular debe tener 10 caracteres';
+    }
+    return null;
+  }
   //verificar un numero double
 }

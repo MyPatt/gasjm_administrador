@@ -42,7 +42,6 @@ class DirecccionController extends GetxController {
     super.onClose();
     //Limpiar campos
     direccionAuxTextoController.dispose();
-    
   }
 
   /* METODOS PARA OBTENER DIRECCION */
@@ -128,7 +127,7 @@ class DirecccionController extends GetxController {
 
   void onMapaCreado(GoogleMapController controller) {
     controller.setMapStyle(estiloMapa);
-    
+
     // _agregarMarcadorCliente();
     // notifyListeners();
   }
@@ -156,8 +155,8 @@ class DirecccionController extends GetxController {
       //Actualizar
       _gasJMRepository.updateDatosDistribuidora(
           field: 'direccionGasJm', dato: nuevaDireccionSeleccionada.toMap());
-      _gasJMRepository.updateDatosDistribuidora(
-          field: 'nombreLugar', dato: direccionAuxTextoController.text);
+      /*  _gasJMRepository.updateDatosDistribuidora(
+          field: 'nombreLugar', dato: direccionAuxTextoController.text);*/
       //
       Mensajes.showGetSnackbar(
           titulo: 'Mensaje',
@@ -168,6 +167,9 @@ class DirecccionController extends GetxController {
           ));
       //
       Get.back();
+    } on FirebaseException catch (e) {
+      print("uuuuuuuuuu");
+      print(e.message);
     } catch (e) {
       print(e);
     }

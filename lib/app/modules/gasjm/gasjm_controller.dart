@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
@@ -5,6 +7,7 @@ import 'package:gasjm/app/data/models/gasjm_model.dart';
 import 'package:gasjm/app/data/models/horario_model.dart';
 import 'package:gasjm/app/data/models/producto_model.dart';
 import 'package:gasjm/app/data/repository/horario_repository.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 
 class GasJMController extends GetxController {
@@ -56,6 +59,8 @@ class GasJMController extends GetxController {
       print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
       gasJM.value = await _gasJMRepository.getInformacionDistribuidora();
+      //asignar los valores al form de editar
+      celularTextoController.text = gasJM.value.whatsappGasJm ?? '';
       print(gasJM.value.whatsappGasJm);
     } on FirebaseException catch (e) {
       print("oooooooooooooooooooooo");
@@ -70,6 +75,9 @@ class GasJMController extends GetxController {
   Future<void> cargarInformacionProducto() async {
     try {
       productoModel.value = await _gasJMRepository.getProducto();
+      //asignar los valores al form de editar
+
+      precioTextoController.text = '${productoModel.value.precioProducto}';
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');
@@ -171,5 +179,23 @@ class GasJMController extends GetxController {
           ));
     }
     actualizandoDistribuidora.value = false;
+  }
+
+  //
+  whatsapp() async {
+    var contact = "+593${gasJM.value.whatsappGasJm}";
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hi, I need some help";
+    var iosUrl =
+        "https://wa.me/$contact?text=${Uri.parse('Hi, I need some help')}";
+
+    try {
+      if (Platform.isIOS) {
+        await launchUrl(Uri.parse(iosUrl));
+      } else {
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    } on Exception {
+      print('WhatsApp is not installed.');
+    }
   }
 }

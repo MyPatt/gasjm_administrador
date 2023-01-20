@@ -82,7 +82,7 @@ class ContenidoInformacion extends StatelessWidget {
                                   elevation: 0,
                                   backgroundColor: Colors.white,
                                   foregroundColor: AppTheme.light),
-                              onPressed: () {},
+                              onPressed: () =>_.whatsapp(),
                             ),
                           ),
                           Visibility(

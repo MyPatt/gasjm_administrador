@@ -1,4 +1,4 @@
-import 'dart:io'; 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/gasjm_model.dart';
@@ -64,15 +64,15 @@ class GasJMController extends GetxController {
 //Obtner informacion de la distribuidora y del producto desde firestore
   Future<void> cargarInformacionDistribuidora() async {
     try {
-     // print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+      // print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
       gasJM.value = await _gasJMRepository.getInformacionDistribuidora();
       //asignar los valores al form de editar
       celularTextoController.text = gasJM.value.whatsappGasJm ?? '';
-     // print(gasJM.value.whatsappGasJm);
-    //} on FirebaseException catch (e) {
-   //   print("oooooooooooooooooooooo");
-    //  print(e.message);
+      // print(gasJM.value.whatsappGasJm);
+      //} on FirebaseException catch (e) {
+      //   print("oooooooooooooooooooooo");
+      //  print(e.message);
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');
@@ -119,6 +119,7 @@ class GasJMController extends GetxController {
             Icons.check_circle_outlined,
             color: Colors.white,
           ));
+      Future.delayed(const Duration(seconds: 1));
     } catch (e) {
       Mensajes.showGetSnackbar(
           titulo: 'Alerta',
@@ -136,6 +137,8 @@ class GasJMController extends GetxController {
   Future<void> actualizarCelular() async {
     try {
       actualizandoDistribuidora.value = true;
+      //
+      Future.delayed(const Duration(seconds: 1));
       //
       await _gasJMRepository.updateDatosDistribuidora(
           field: 'whatsappGasJm', dato: celularTextoController.text);
@@ -166,6 +169,8 @@ class GasJMController extends GetxController {
   Future<void> actualizarPrecioProducto() async {
     try {
       actualizandoDistribuidora.value = true;
+      //
+      Future.delayed(const Duration(seconds: 1));
       //
       await _gasJMRepository.updateDatosProducto(
           field: 'precioProducto',

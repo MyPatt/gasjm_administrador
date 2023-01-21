@@ -116,6 +116,10 @@ class DirecccionController extends GetxController {
 
   void actualizarNuevaDireccion() {
     try {
+      cargandoDatos.value = true;
+       //
+          Future.delayed(
+                                              const Duration(seconds: 1));
       nuevaDireccionSeleccionada = Direccion(
           latitud: posicionAuxDistribuidora.value.latitude,
           longitud: posicionAuxDistribuidora.value.longitude);
@@ -149,5 +153,6 @@ class DirecccionController extends GetxController {
             color: Colors.white,
           ));
     }
+      cargandoDatos.value = false;
   }
 }

@@ -116,8 +116,7 @@ class ModalEditarGasJm extends StatelessWidget {
                                               break;
                                           }
 
-                                          Future.delayed(
-                                              const Duration(seconds: 1));
+                                      
                                           Navigator.pop(context);
                                         }
                                       },

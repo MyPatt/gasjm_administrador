@@ -1,6 +1,4 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io'; 
 import 'package:flutter/material.dart';
 import 'package:gasjm/app/core/utils/mensajes.dart';
 import 'package:gasjm/app/data/models/gasjm_model.dart';
@@ -35,7 +33,8 @@ class GasJMController extends GetxController {
   Rx<GasJm> gasJM = GasJm().obs;
   Rx<ProductoModel> productoModel =
       const ProductoModel(nombreProducto: '', precioProducto: 0.0).obs;
-
+//Clave del formulario para actualizar
+  final claveFormActualizar = GlobalKey<FormState>();
   //
   final celularTextoController = TextEditingController();
   final precioTextoController = TextEditingController();
@@ -65,15 +64,15 @@ class GasJMController extends GetxController {
 //Obtner informacion de la distribuidora y del producto desde firestore
   Future<void> cargarInformacionDistribuidora() async {
     try {
-      print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+     // print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
       gasJM.value = await _gasJMRepository.getInformacionDistribuidora();
       //asignar los valores al form de editar
       celularTextoController.text = gasJM.value.whatsappGasJm ?? '';
-      print(gasJM.value.whatsappGasJm);
-    } on FirebaseException catch (e) {
-      print("oooooooooooooooooooooo");
-      print(e.message);
+     // print(gasJM.value.whatsappGasJm);
+    //} on FirebaseException catch (e) {
+   //   print("oooooooooooooooooooooo");
+    //  print(e.message);
     } catch (e) {
       Exception(
           'Ha ocurrido un error, por favor inténtelo de nuevo más tarde.');
@@ -197,8 +196,8 @@ class GasJMController extends GetxController {
   //
   abrirChatWhatsapp() async {
     var contact = "+593${gasJM.value.whatsappGasJm}";
-    var androidUrl = "whatsapp://send?phone=$contact&text=Hola";
-    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hola')}";
+    var androidUrl = "whatsapp://send?phone=$contact&text=Hola ";
+    var iosUrl = "https://wa.me/$contact?text=${Uri.parse('Hola ')}";
 
     try {
       if (Platform.isIOS) {

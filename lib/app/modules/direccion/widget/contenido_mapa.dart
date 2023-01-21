@@ -42,7 +42,6 @@ class ContenidoMapa extends StatelessWidget {
                       mapToolbarEnabled: false,
                       trafficEnabled: false,
                       tiltGesturesEnabled: false,
-                      //scrollGesturesEnabled: true,
                       scrollGesturesEnabled: _.permisoParaEditarMapa,
 
                       rotateGesturesEnabled: false,

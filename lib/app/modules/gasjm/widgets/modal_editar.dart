@@ -35,90 +35,103 @@ class ModalEditarGasJm extends StatelessWidget {
               ),
             ),
             child: GetBuilder<GasJMController>(
-                builder: (_) => Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Center(
-                            child: Container(
-                              width: 50.0,
-                              height: 5.0,
-                              margin: const EdgeInsets.only(bottom: 25.0),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[400],
-                                borderRadius: BorderRadius.circular(20.0),
+                builder: (_) => Form(
+                      key: _.claveFormActualizar,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: Container(
+                                width: 50.0,
+                                height: 5.0,
+                                margin: const EdgeInsets.only(bottom: 25.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[400],
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
                               ),
                             ),
-                          ),
-                          TextSubtitle(
-                            text: 'Editar $nombreDato',
-                          ),
-                          const TextDescription(text: "Ingrese los datos"),
-                          SizedBox(
-                              height: Responsive.getScreenSize(context).height *
-                                  .03),
-                          Visibility(
-                            visible: nombreDato == 'celular',
-                            child: InputText(
-                              iconPrefix: Icons.phone_android_outlined,
-                              keyboardType: TextInputType.phone,
-                              inputFormatters: <TextInputFormatter>[
-                                LengthLimitingTextInputFormatter(10),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                              labelText: "Celular",
-                              controller: _.celularTextoController,
-                              validator: Validacion.validarCelularObligatorio,
+                            TextSubtitle(
+                              text: 'Editar $nombreDato',
                             ),
-                          ),
-                          Visibility(
-                            visible: nombreDato == 'producto',
-                            child: InputText(
-                              iconPrefix: Icons.attach_money_outlined,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true),
-                              inputFormatters: <TextInputFormatter>[
-                                LengthLimitingTextInputFormatter(4),
-                                // FilteringTextInputFormatter.digitsOnly,
-                              ],
-                              labelText: "Producto",
-                              controller: _.precioTextoController,
-                              validator: Validacion.validarPrecioProducto,
+                            const TextDescription(text: "Ingrese los datos"),
+                            SizedBox(
+                                height:
+                                    Responsive.getScreenSize(context).height *
+                                        .03),
+                            Visibility(
+                              visible: nombreDato == 'celular',
+                              child: InputText(
+                                iconPrefix: Icons.phone_android_outlined,
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(10),
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                labelText: "Celular",
+                                controller: _.celularTextoController,
+                                validator: Validacion.validarCelularObligatorio,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                              height: Responsive.getScreenSize(context).height *
-                                  .05),
-                          Obx(() {
-                            final estadoGuardar =
-                                _.actualizandoDistribuidora.value;
-                            return Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Visibility(
-                                  visible: !_.actualizandoDistribuidora.value,
-                                  child: PrimaryButton(
-                                    texto: "Guardar",
-                                    onPressed: () {
-                                      switch (nombreDato) {
-                                        case 'celular':
-                                          _.actualizarCelular();
-                                          break;
-                                        case 'producto':
-                                          _.actualizarPrecioProducto();
+                            Visibility(
+                              visible: nombreDato == 'producto',
+                              child: InputText(
+                                iconPrefix: Icons.attach_money_outlined,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        decimal: true),
+                                inputFormatters: <TextInputFormatter>[
+                                  LengthLimitingTextInputFormatter(4),
+                                  // FilteringTextInputFormatter.digitsOnly,
+                                ],
+                                labelText: "Producto",
+                                controller: _.precioTextoController,
+                                validator: Validacion.validarPrecioProducto,
+                              ),
+                            ),
+                            SizedBox(
+                                height:
+                                    Responsive.getScreenSize(context).height *
+                                        .05),
+                            Obx(() {
+                              final estadoGuardar =
+                                  _.actualizandoDistribuidora.value;
+                              return Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Visibility(
+                                    visible: !_.actualizandoDistribuidora.value,
+                                    child: PrimaryButton(
+                                      texto: "Guardar",
+                                      onPressed: () {
+                                        if (_.claveFormActualizar.currentState
+                                                ?.validate() ==
+                                            true) {
+                                          switch (nombreDato) {
+                                            case 'celular':
+                                              _.actualizarCelular();
+                                              break;
+                                            case 'producto':
+                                              _.actualizarPrecioProducto();
+                                              break;
+                                          }
+
+                                          Future.delayed(
+                                              const Duration(seconds: 1));
                                           Navigator.pop(context);
-                                          break;
-                                      }
-                                    },
+                                        }
+                                      },
+                                    ),
                                   ),
-                                ),
-                                if (estadoGuardar) const CircularProgress()
-                              ],
-                            );
-                          }),
-                          SizedBox(
-                              height: Responsive.getScreenSize(context).height *
-                                  .03),
-                        ]))));
+                                  if (estadoGuardar) const CircularProgress()
+                                ],
+                              );
+                            }),
+                            SizedBox(
+                                height:
+                                    Responsive.getScreenSize(context).height *
+                                        .03),
+                          ]),
+                    ))));
   }
 }

@@ -11,10 +11,10 @@ class GasJMProvider {
   //Retorna info de la distribuidora
   Future<GasJm> getInformacionDistribuidora() async {
     final snapshot = await _firestoreInstance.collection("distribuidora").get();
-    print(snapshot.docs.first.data());
+    //print(snapshot.docs.first.data());
 
     var aux = GasJm.fromMap(snapshot.docs.first.data());
-    print(aux.whatsappGasJm);
+   // print(aux.whatsappGasJm);
     return aux;
   }
   //Retorna info del producto

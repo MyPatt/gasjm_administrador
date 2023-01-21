@@ -146,7 +146,7 @@ class RegistrarPedidoController extends GetxController {
 
 //Metodos para insertar un nuevo pedido
   Future<void> insertarPedido(BuildContext context) async {
-    print(clienteSeleccionadoNombres.value);
+    //print(clienteSeleccionadoNombres.value);
 
     try {
       procensandoElNuevoPedido.value = true;

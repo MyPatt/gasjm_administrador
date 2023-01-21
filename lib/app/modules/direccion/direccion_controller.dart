@@ -120,13 +120,13 @@ class DirecccionController extends GetxController {
           latitud: posicionAuxDistribuidora.value.latitude,
           longitud: posicionAuxDistribuidora.value.longitude);
 //
-      print(nuevaDireccionSeleccionada.latitud);
+      //print(nuevaDireccionSeleccionada.latitud);
       //Actualizar
       _gasJMRepository.updateDatosDistribuidora(
           field: 'direccionGasJm', dato: nuevaDireccionSeleccionada.toMap());
       _gasJMRepository.updateDatosDistribuidora(
           field: 'nombreLugar', dato: direccionAuxTextoController.text);
-      print(nuevaDireccionSeleccionada.longitud);
+      //print(nuevaDireccionSeleccionada.longitud);
 
       //
       Mensajes.showGetSnackbar(

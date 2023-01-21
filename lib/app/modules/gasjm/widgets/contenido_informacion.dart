@@ -54,26 +54,32 @@ class ContenidoInformacion extends StatelessWidget {
                                     elevation: 0,
                                     backgroundColor: Colors.white,
                                     foregroundColor: AppTheme.light),
-                                    //se visualiza en el mapa 
-                                    //  1er parametro  => direccion 
-                                    //  2do parametro  => modo de edicion del mapa
-                                    //  si esta en true solo  se visualiza la ubic... 
-                                    //  y en false se puede cambiar nueva ubicacion
+                                //se visualiza en el mapa
+                                //  1er parametro  => direccion
+                                //  2do parametro  => modo de edicion del mapa
+                                //  si esta en true solo  se visualiza la ubic...
+                                //  y en false se puede cambiar nueva ubicacion
 
                                 onPressed: () => Get.toNamed(
-                                    AppRoutes.direccionDistribuidora,
-                                    arguments: [_.gasJM.value.direccionGasJm,true])),
+                                        AppRoutes.direccionDistribuidora,
+                                        arguments: [
+                                          _.gasJM.value.direccionGasJm,
+                                          false
+                                        ])),
                           ),
                           //Icono para editar la ubicacion
                           Visibility(
                               //admin(0) puede editar, repartidor(1) solo ver
                               visible: _.modo == 0 ? true : false,
                               child: IconButton(
-                                    //  y en false se puede cambiar nueva ubicacion
+                                //  y en false se puede cambiar nueva ubicacion
 
                                 onPressed: () => Get.toNamed(
                                     AppRoutes.direccionDistribuidora,
-                                    arguments:[ _.gasJM.value.direccionGasJm,false]),
+                                    arguments: [
+                                      _.gasJM.value.direccionGasJm,
+                                      true
+                                    ]),
                                 icon: const Icon(
                                   Icons.mode_edit_outlined,
                                   size: 15,
@@ -81,7 +87,7 @@ class ContenidoInformacion extends StatelessWidget {
                                 ),
                               ))
                         ]),
-                        //Muestra el numero de celular de la distribuidora
+                    //Muestra el numero de celular de la distribuidora
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -150,7 +156,7 @@ class ContenidoInformacion extends StatelessWidget {
                     ),
                     SizedBox(
                         height: Responsive.getScreenSize(context).height * .05),
-                        //Datos del producto
+                    //Datos del producto
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -178,7 +184,7 @@ class ContenidoInformacion extends StatelessWidget {
                                 ],
                               ),
                             )),
-                            //icono permite editar el precio del producto
+                        //icono permite editar el precio del producto
                         Visibility(
                             //admin(0) puede editar, repartidor(1) solo ver
                             visible: _.modo == 0 ? true : false,

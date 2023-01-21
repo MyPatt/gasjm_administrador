@@ -116,12 +116,12 @@ class ContenidoLista extends StatelessWidget {
   _seleccionarCliente(BuildContext context) {
     Get.find<RegistrarPedidoController>().clienteSeleccionadoNombres.value =
         persona.nombreUsuario!;
-    print(Get.find<RegistrarPedidoController>().clienteSeleccionadoNombres);
+   // print(Get.find<RegistrarPedidoController>().clienteSeleccionadoNombres);
 
     //
  Get.find<RegistrarPedidoController>().clienteSeleccionadoUid =
         persona.uidPersona!;
-    print( Get.find<RegistrarPedidoController>()..clienteSeleccionadoUid);
+  //  print( Get.find<RegistrarPedidoController>()..clienteSeleccionadoUid);
 
     Navigator.pop(context);
   }

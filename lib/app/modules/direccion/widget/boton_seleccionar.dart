@@ -10,19 +10,16 @@ class BotonSeleccionar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DirecccionController>(
-        builder: (_) => Visibility(
-              visible: _.permisoParaEditarMapa,
-              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 30.0),
-                      child: PrimaryButton(
-                          texto: "Guardar",
-                          onPressed: () {
-                            _.actualizarNuevaDireccion();
-                            Navigator.pop(context);
-                          }))),
-            ));
+        builder: (_) => Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 30.0),
+                child: PrimaryButton(
+                    texto: "Guardar",
+                    onPressed: () {
+                      _.actualizarNuevaDireccion();
+                      Navigator.pop(context);
+                    }))));
   }
 }

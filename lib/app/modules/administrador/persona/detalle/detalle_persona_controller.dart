@@ -101,8 +101,10 @@ class DetallePersonaController extends GetxController {
       contrasenaTextoController.text = cliente.contrasenaPersona;
       //} on FirebaseException catch (e) {
       //  } catch (e) {
-    } on FirebaseException catch (e) {
-      print(e.message);
+    } catch (e) {
+      // print(e.message);
+      Exception(
+          "Ha ocurrido un error, por favor inténtelo de nuevo más tarde.");
     }
     cargandoCliente.value = false;
   }

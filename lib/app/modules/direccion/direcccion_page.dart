@@ -25,9 +25,16 @@ class DireccionPage extends StatelessWidget {
         ),
         body: SafeArea(
             bottom: false,
-            child: Stack(children: const <Widget>[
+            child:
+            
+Get.find<DirecccionController>().permisoParaEditarMapa?
+
+             Stack(children: const <Widget>[
               ContenidoMapa(),
               BotonSeleccionar()
-            ])));
+            ])
+            :
+            const      ContenidoMapa()
+            ));
   }
 }
